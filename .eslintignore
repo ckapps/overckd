@@ -1,0 +1,7 @@
+# Frontent uses tslint for linting
+packages/frontend/**
+
+#
+dist
+**/dist
+**/*.d.ts

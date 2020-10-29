@@ -1,0 +1,35 @@
+overckd: 1.0.0
+recipe:
+  name: Some delicous salty recipe
+  stepsEnumerated: true
+  ingredientsFor: For 2
+  ingredients:
+    - name: vegan pulled pork
+    - amount: 2
+      name: Pita
+    - amount: 4
+      name: Tomatoes
+    - amount: ½
+      name: Onions
+    - name: Rucola
+    - amount: ¼
+      name: Cucumber
+    - name: Chilliflocks
+  steps:
+    - Put the vegan pulled pork in a pan
+    - Cut bread
+    - Cut the veggies
+    - Put everything in the bread
+    - Give it some chilliflocks
+  tips:
+    - Try it with zucchinis!
+    - You may also try Thymian or Oregano
+  images:
+    - /images/recipe-3-1.jpeg
+    - /images/recipe-3-1.jpeg
+  styles:
+    imagesContainer: 'col-12 px-0 '
+    secondaryImagesContainer: col-12 order-12   px-0
+    images:
+      - w-50
+      - w-50 ml-auto

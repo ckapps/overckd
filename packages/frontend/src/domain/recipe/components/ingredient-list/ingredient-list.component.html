@@ -1,0 +1,9 @@
+<div *ngFor="let group of this.ingredientGroups">
+  <cb-ingredient-group [ingredientGroup]="group"></cb-ingredient-group>
+</div>
+
+<ul>
+  <li *ngFor="let ingredient of this.ingredientList">
+    <cb-ingredient [ingredient]="ingredient"></cb-ingredient>
+  </li>
+</ul>

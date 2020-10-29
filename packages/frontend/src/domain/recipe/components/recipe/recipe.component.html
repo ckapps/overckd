@@ -1,0 +1,79 @@
+<div class="row">
+  <h3
+    [class]="
+      [
+        'title--v1',
+        'w-100',
+        'd-flex',
+        'flex-row',
+        'align-items-center',
+        this.recipe.styles.title || ''
+      ].join(' ')
+    "
+  >
+    {{ this.recipe.name }}
+
+    <span
+      *ngIf="this.recipe.ingredientsFor"
+      style="font-size: 1rem"
+      [class]="
+        ['d-none', 'ml-auto', 'subtitle--v2', 'text-muted', 'badge-pill'].join(
+          ' '
+        )
+      "
+    >
+      {{ this.recipe.ingredientsFor }}
+    </span>
+  </h3>
+</div>
+
+<div class="row flex-grow-1">
+  <div [class]="this.leftColCssClass">
+    <div>
+      <h4 class="d-none subtitle--v2">Zutaten</h4>
+      <cb-ingredient-list
+        [ingredients]="this.recipe.ingredients"
+      ></cb-ingredient-list>
+    </div>
+
+    <ng-template [ngIf]="this.recipe.tips.length > 0">
+      <img src="./assets/divider.png" [class]="this.dividerCssClass" />
+      <div>
+        <h4 class="subtitle--v2">Tipps</h4>
+        <cb-recipe-tips [recipe]="this.recipe"></cb-recipe-tips>
+      </div>
+    </ng-template>
+
+    <img src="./assets/divider.png" [class]="this.dividerCssClass" />
+    <div>
+      <h4 class="subtitle--v2">Verbesserungen</h4>
+      <cb-improvement-notes
+        [numberOfLines]="this.numberOfLines"
+      ></cb-improvement-notes>
+    </div>
+  </div>
+
+  <div class="col d-flex flex-column px-0">
+    <div>
+      <h4 class="d-none subtitle--v2">Zubereitung</h4>
+      <cb-preparation [recipe]="this.recipe"></cb-preparation>
+    </div>
+
+    <div class="container-fluid mt-5" *ngIf="this.primaryImage">
+      <div class="row">
+        <div [class]="this.secondaryImageContainerCssClass">
+          <div
+            *ngFor="let image of this.secondaryImages; let i = index"
+            [class]="'d-flex ' + this.getImageCssClass(i + 1)"
+          >
+            <img [src]="image" class="w-100" />
+          </div>
+        </div>
+
+        <div [class]="this.primaryImageContainerCssClass">
+          <img [src]="this.primaryImage" [class]="this.getImageCssClass(0)" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

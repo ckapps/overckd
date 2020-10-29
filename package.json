@@ -1,0 +1,30 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build:desktop": "lerna run build:desktop",
+    "build": "lerna run build",
+    "start:desktop": "lerna run build:desktop && lerna run start:desktop --parallel",
+    "start": "",
+    "app:desktop:dev": "lerna run app:desktop:dev",
+    "app:desktop": "lerna run desktop:run",
+    "test": "lerna run test --parallel",
+    "lint": "lerna run lint --parallel",
+    "npm:lerna": "lerna"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.12.1",
+    "eslint-plugin-import": "^2.22.1",
+    "husky": "^4.3.0",
+    "lerna": "^3.22.1",
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
+  }
+}

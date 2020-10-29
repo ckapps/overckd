@@ -1,0 +1,207 @@
+openapi: 3.0.1
+info:
+  title: overcookd API
+  description: API for overcookd.
+  termsOfService: http://ckapp.net/terms/
+  contact:
+    name: Chris
+    email: me@ckapp.net
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about overcookd
+  url: http://ckapp.net
+servers:
+- url: https://overcookd.io/api/v1
+- url: http://overcookd.io/api/v1
+
+tags:
+- name: collection
+  description: Everything about collections
+- name: recipe
+  description: Everything about recipes
+  
+paths:
+  /collections:
+    get:
+      tags:
+      - collection
+      summary: Get all collections
+      description: This will return all available collections
+      operationId: getCollections
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collection'
+  /collection:
+    post:
+      tags:
+      - collection
+      summary: Add a new collection
+      operationId: addCollection
+      requestBody:
+        description: Collection object that needs to be added
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Collection'
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+  /collection/{collectionId}:
+    get:
+      tags:
+      - collection
+      summary: Find collection by ID
+      description: Returns a single collection
+      operationId: getCollectionById
+      parameters:
+      - $ref: '#/components/parameters/collectionId'
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Collection'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Collection not found
+          content: {}
+    delete:
+      tags:
+      - collection
+      summary: Deletes a collection
+      operationId: deleteCollection
+      parameters:
+      - $ref: '#/components/parameters/collectionId'
+      responses:
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Collection not found
+          content: {}
+  
+  /recipe:
+    post:
+      tags:
+      - recipe
+      summary: Adds a new recipe
+      operationId: createRecipe
+      requestBody:
+        description: Created recipe object
+        content:
+          application/json':
+            schema:
+              $ref: '#/components/schemas/Recipe'
+        required: true
+      responses:
+        default:
+          description: successful operation
+          content: {}
+  /recipe/{recipeId}:
+    get:
+      tags:
+      - recipe
+      summary: Get recipe with ID
+      operationId: getRecipeById
+      parameters:
+      - $ref: '#/components/parameters/recipeId'
+      responses:
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+        400:
+          description: Invalid ID supplied
+          content: {}
+        404:
+          description: Recipe not found
+          content: {}
+    put:
+      tags:
+      - recipe
+      summary: Update recipe
+      operationId: updateRecipe
+      parameters:
+      - $ref: '#/components/parameters/recipeId'
+      requestBody:
+        $ref: '#/components/requestBodies/Recipe'
+      responses:
+        400:
+          description: Invalid recipe supplied
+          content: {}
+        404:
+          description: Recipe not found
+          content: {}
+    delete:
+      tags:
+      - recipe
+      summary: Delete recipe
+      operationId: deleteRecipe
+      parameters:
+      - $ref: '#/components/parameters/recipeId'
+      responses:
+        404:
+          description: Recipe not found
+          content: {}
+
+components:
+  parameters:
+    collectionId:
+      name: collectionId
+      in: path
+      description: ID of the recipe
+      required: true
+      schema:
+        type: string
+    recipeId:
+      name: recipeId
+      in: path
+      description: ID of the recipe
+      required: true
+      schema:
+        type: string
+      
+  responses:
+    Recipe:
+      description: something
+      
+  requestBodies:
+    Recipe:
+      description: Recipe
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Recipe'
+    
+  schemas:
+    Collection:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string

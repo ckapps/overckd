@@ -1,0 +1,7 @@
+<ul class="list-group list-group-flush">
+  <li
+    *ngFor="let tip of this.recipe.tips"
+    class="list-group-item px-0 text-center"
+    [innerHTML]="tip"
+  ></li>
+</ul>

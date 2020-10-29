@@ -1,0 +1,36 @@
+overckd: 1.0.0
+
+collections:
+  - &sweet
+    id: sweet
+    name: Sweets
+    description: Something sweet
+
+  - &salty
+    id: salty
+    name: Salty
+    description: Something salty
+
+recipes:
+  #######################
+  # All the sweet stuff #
+  #######################
+  recipe_1:
+    name: Recipe 1
+    uri: overckd://localhost
+    collections:
+      - *sweet
+  recipe_2:
+    name: Some other sweet sweet recipe
+    uri: overckd://localhost
+    collections:
+      - *sweet
+
+  #######################
+  # All the salty stuff #
+  #######################
+  recipe_3:
+    name: Some delicous salty recipe
+    uri: overckd://localhost
+    collections:
+      - *salty

@@ -1,0 +1,75 @@
+overckd: 1.0.0
+
+recipe:
+  name: Recipe 1
+
+  ingredients:
+    - group: Filling
+      label: For the filling
+      ingredients:
+        - amount: 150
+          unit: g
+          name: Blueberry jam
+    - group: Sprinkle
+      label: To Sprinkle
+      ingredients:
+        - amount: 80
+          unit: g
+          name: powdered sugar
+        - amount: 1-2
+          unit: TL
+          name: Lemon juice
+
+  steps:
+    - Lorem ipsum
+    - dolor sit amet, consetetur sadipscing elitr
+    - sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat
+    - sed diam voluptua
+    - At vero eos et accusam et justo duo dolores et ea rebum
+    - Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet
+
+  groups:
+    - label: 'For the dough'
+      name: 'Basic-Dough'
+      basedOn:
+        - 'https://duckduckgo.com'
+
+      ingredients:
+        - amount: 150
+          unit: ml
+          name: soy milk
+        - amount: 21
+          unit: g
+          name: Yeast (fresh)
+        - amount: 290
+          unit: g
+          name: Flour
+        - amount: 40
+          unit: g
+          name: Sugar
+        - amount: 70
+          unit: g
+          name: vegan butter
+        - amount: 0.5
+          unit: TL
+          name: Salt
+
+      steps:
+        - Lorem ipsum
+        - dolor sit amet, consetetur sadipscing elitr
+        - sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat
+        - sed diam voluptua
+        - At vero eos et accusam et justo duo dolores et ea rebum
+        - Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet
+
+      stepsEnumerated: true
+      tips: []
+
+  tips: []
+
+  images:
+    - /images/recipe-1-1.jpeg
+
+  styles:
+    imagesContainer: justify-content-end
+    secondaryImagesContainer: flex-column justify-content-between col-5 px-0

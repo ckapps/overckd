@@ -1,0 +1,36 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "desktop-shell",
+      "path": "packages/desktop-shell"
+    },
+    {
+      "name": "frontend",
+      "path": "packages/frontend"
+    },
+    {
+      "name": "server",
+      "path": "packages/server"
+    },
+    {
+      "name": "server-cli",
+      "path": "packages/server-cli"
+    },
+    {
+      "name": "yaml-parser",
+      "path": "packages/yaml-parser"
+    },
+    {
+      "name": "domain-rx",
+      "path": "packages/domain-rx"
+    },
+    {
+      "name": "domain",
+      "path": "packages/domain"
+    }
+  ]
+}

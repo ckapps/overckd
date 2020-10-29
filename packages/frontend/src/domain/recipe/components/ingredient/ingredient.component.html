@@ -1,0 +1,18 @@
+<span>
+  <span *ngIf="this.ingredient.optional">
+    optional:
+  </span>
+
+  <span *ngIf="this.ingredient.amount !== undefined" class="font-weight-bold">
+    {{ this.ingredient.amount }}
+  </span>
+
+  <span *ngIf="this.ingredient.unit"> {{ this.ingredient.unit }} </span>
+
+  <span [innerHTML]="this.ingredient.name"></span>
+</span>
+
+<ng-template [ngIf]="this.ingredient.alternatives">
+  <br />
+  (alternativ: {{ this.alternatives }})
+</ng-template>

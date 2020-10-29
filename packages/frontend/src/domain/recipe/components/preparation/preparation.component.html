@@ -1,0 +1,13 @@
+<div
+  class="text-justify"
+  *ngIf="this.asList === false; else listTemplate"
+  [innerHTML]="this.steps"
+></div>
+
+<ng-template #listTemplate>
+  <ol [class]="this.recipe.stepsEnumerated ? '' : 'list-unstyled'">
+    <li *ngFor="let step of this.steps" class="mb-1">
+      {{ step }}
+    </li>
+  </ol>
+</ng-template>

@@ -1,0 +1,13 @@
+:host {
+  > ol {
+    [asdf] {
+      list-style-type: none;
+    }
+  }
+
+  > ol.list-unstyled {
+    > li {
+      margin-bottom: 0.5rem;
+    }
+  }
+}

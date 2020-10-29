@@ -1,0 +1,15 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { NotFoundPageComponent } from './pages/not-found/not-found.component';
+
+@NgModule({
+  declarations: [AppComponent, NotFoundPageComponent],
+  imports: [BrowserModule, AppRoutingModule, HttpClientModule],
+  providers: [],
+  bootstrap: [AppComponent],
+})
+export class AppModule {}

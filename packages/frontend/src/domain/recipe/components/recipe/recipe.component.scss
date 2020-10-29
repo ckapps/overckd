@@ -1,0 +1,38 @@
+@import '../../../../styles/variables';
+
+$make-full-height: true;
+// $make-full-height: false;
+
+:host {
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+
+  @if $make-full-height == true {
+    @media print {
+      height: 135vh;
+      max-height: 135vh;
+    }
+  }
+
+  .row > .title {
+    &--v1 {
+      margin-bottom: 3rem;
+      font-family: $font-heading1;
+      font-size: xxx-large;
+      font-weight: 400;
+    }
+  }
+
+  .subtitle {
+    &--v2 {
+      font-family: $font-heading2;
+      text-align: center;
+      font-weight: 300;
+    }
+  }
+
+  img {
+    border-radius: 0.75rem;
+  }
+}

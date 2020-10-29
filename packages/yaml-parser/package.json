@@ -1,0 +1,21 @@
+{
+  "name": "@overckd/yaml-parser",
+  "private": true,
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "npm run build -- --watch",
+    "lint": "eslint --ext .ts ."
+  },
+  "dependencies": {
+    "@overckd/domain": "^0.0.0",
+    "js-yaml": "^3.3.0",
+    "rxjs": "~6.6.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^3.12.5",
+    "typescript": "~4.0.2"
+  }
+}
