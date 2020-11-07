@@ -1,0 +1,3 @@
+# Make sure that eslint doesn't try to do any shenanigans here
+# because we really want to use tslint here (at least for now)
+**/*

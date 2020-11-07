@@ -14,8 +14,9 @@
     "build:web": "npm run cmd:build",
     "build": "npm run build:web && npm run build:desktop",
     "test": "ng test",
-    "lint:disabled": "ng lint",
-    "e2e": "ng e2e"
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@angular/animations": "~10.1.5",
@@ -48,6 +49,7 @@
     "karma-coverage-istanbul-reporter": "~3.0.2",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "lint-staged": "^10.5.1",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
