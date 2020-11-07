@@ -10,7 +10,7 @@ import { Recipe } from '@overckd/domain';
 export class RecipeComponent implements OnInit {
   @HostBinding('class') componentClass = 'container-fluid';
   @Input() recipe: Recipe;
-  @Input() numberOfLines: number = 5;
+  @Input() numberOfLines = 5;
 
   public get leftColCssClass() {
     const justify = true;

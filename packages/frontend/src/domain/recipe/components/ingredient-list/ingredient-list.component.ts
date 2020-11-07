@@ -19,6 +19,7 @@ export class IngredientListComponent implements OnInit {
   public isIngredientGroup(
     o: Ingredient | IngredientGroup,
   ): o is IngredientGroup {
+    // tslint:disable-next-line
     return Array.isArray(o['ingredients']);
   }
 
