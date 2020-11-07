@@ -7,9 +7,11 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "npm run build -- --watch",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "precommit": "lint-staged"
   },
   "devDependencies": {
+    "lint-staged": "^10.5.1",
     "typescript": "~4.0.2"
   }
 }
