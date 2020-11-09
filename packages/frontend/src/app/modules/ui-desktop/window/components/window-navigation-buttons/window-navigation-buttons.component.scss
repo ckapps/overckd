@@ -1,0 +1,14 @@
+@import '../../styles/window-base.module';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  align-items: center;
+  -webkit-app-region: no-drag;
+
+  > .btn {
+    color: $ui-desktop-window-title-bar--color;
+  }
+}

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Recipe } from '@overckd/domain';
 
-import { RecipeService } from 'src/domain/recipe/services/recipe.service';
+import { RecipeService } from '../modules/domain/recipe/services/recipe.service';
 import { UrlBuilderService } from './url-builder.service';
 
 @Injectable()

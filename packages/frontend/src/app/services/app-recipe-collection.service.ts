@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 import { RecipeCollection } from '@overckd/domain';
 
-import { RecipeCollectionService } from 'src/domain/recipe/services/recipe-collection.service';
 import { UrlBuilderService } from './url-builder.service';
+import { RecipeCollectionService } from '../modules/domain/recipe/services/recipe-collection.service';
 
 @Injectable()
 export class AppRecipeCollectionService implements RecipeCollectionService {
