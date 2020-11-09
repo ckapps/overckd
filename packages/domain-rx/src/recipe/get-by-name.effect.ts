@@ -1,4 +1,4 @@
-import { from, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { act, useContext, matchEvent } from '@marblejs/core';
@@ -26,7 +26,6 @@ export const getRecipeByName: MsgEffect = (event$, ctx) => {
       pipe(
         event.payload.name,
         repo.getByName,
-        x => from(x),
         map(payload => reply(event)({ type: `${eventType}_RESULT`, payload })),
         // catchError(error =>
         //   of({

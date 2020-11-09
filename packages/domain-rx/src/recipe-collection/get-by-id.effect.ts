@@ -1,4 +1,4 @@
-import { from, of } from 'rxjs';
+import { of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { act, useContext, matchEvent } from '@marblejs/core';
@@ -18,7 +18,6 @@ export const getById: MsgEffect = (event$, ctx) => {
       pipe(
         event.payload.id,
         repo.getById,
-        x => from(x),
         map(payload =>
           reply(event)({ type: 'GET_COLLECTION_RESULT', payload }),
         ),

@@ -1,4 +1,3 @@
-import { from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { act, useContext, matchEvent } from '@marblejs/core';
@@ -27,7 +26,6 @@ export const createCollection: MsgEffect = (event$, ctx) => {
         event.payload,
         createRecipeCollection,
         repo.add,
-        x => from(x),
         mergeMap(collection => [
           RecipeCollectionCreatedEvent.create(collection),
           reply(event)(RecipeCollectionCreatedEvent.create(collection)),

@@ -5,6 +5,8 @@ import { map } from 'rxjs/operators';
 
 import * as yaml from 'js-yaml';
 
+import { parseYamlSafe as parse } from '../../yaml';
+
 export function parseYamlSafe<T>(
   opts?: yaml.LoadOptions,
 ): OperatorFunction<string, T>;
@@ -21,5 +23,5 @@ export function parseYamlSafe(
 export function parseYamlSafe(
   opts?: yaml.LoadOptions,
 ): OperatorFunction<string, string | object | undefined> {
-  return map(fileContent => yaml.safeLoad(fileContent, opts));
+  return map(fileContent => parse(fileContent, opts));
 }

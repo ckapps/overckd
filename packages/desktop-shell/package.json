@@ -9,7 +9,7 @@
     "cmd:build": "tsc",
     "cmd:start": "electron-forge start",
     "build:desktop": "npm run cmd:build",
-    "build:watch": "npm run build -- --watch",
+    "build:watch": "tsc --watch",
     "build": "npm run build:desktop",
     "start:desktop": "npm run build:watch",
     "start": "npm run cmd:start",
@@ -68,6 +68,7 @@
     "typescript": "~4.0.2"
   },
   "dependencies": {
+    "@ckapp/rxjs": "^0.0.9",
     "@marblejs/core": "^3.4.3",
     "@marblejs/messaging": "^3.4.3",
     "@marblejs/middleware-body": "^3.4.3",
