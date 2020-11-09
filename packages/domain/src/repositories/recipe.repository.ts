@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+
 import { Recipe } from '../recipe';
 
 /**
@@ -7,24 +9,24 @@ export interface RecipeRepository {
   /**
    * Get all recipes
    */
-  getAll(): Promise<Recipe[]>;
+  getAll(): Observable<Recipe[]>;
 
   /**
    * Creates a new recipe
    */
-  add(recipe: Recipe): Promise<Recipe>;
+  add(recipe: Recipe): Observable<Recipe>;
 
   /**
    * Deletes a recipe
    * @param name
    */
-  removeByName(name: Recipe['name']): Promise<boolean>;
+  removeByName(name: Recipe['name']): Observable<boolean>;
 
   /**
    * Gets a recipe by its name
    * @param name
    */
-  getByName(name: Recipe['name']): Promise<Recipe | undefined>;
+  getByName(name: Recipe['name']): Observable<Recipe | undefined>;
 
   /**
    * Update a recipe
@@ -32,5 +34,5 @@ export interface RecipeRepository {
    * @param recipe
    * @param name
    */
-  update(recipe: Recipe, name: Recipe['name']): Promise<Recipe>;
+  update(recipe: Recipe, name: Recipe['name']): Observable<Recipe | undefined>;
 }

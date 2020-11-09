@@ -20,8 +20,6 @@ export class RecipePageComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('lol?');
-
     this.recipe$ = this.route.paramMap.pipe(
       switchMap(paramMap => this.recipeService.get(paramMap.get('id'))),
     );

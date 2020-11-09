@@ -1,7 +1,7 @@
-import { r, HttpStatus, useContext, use, combineRoutes } from '@marblejs/core';
-import { map, mapTo, mergeMap } from 'rxjs/operators';
+import { r, HttpStatus, useContext, combineRoutes } from '@marblejs/core';
+import { map, mergeMap } from 'rxjs/operators';
 import { EventBusClientToken } from '@marblejs/messaging';
-import { requestValidator$, t } from '@marblejs/middleware-io';
+import { requestValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 import { GetRecipeByNameEvent, RecipeNameDto } from '@overckd/domain-rx';
@@ -54,8 +54,11 @@ const getRecipeByName$ = r.pipe(
 
         return pipe(GetRecipeByNameEvent.create(params), eventBusClient.send);
       }),
-      map(value => ({ body: value.payload })),
-      // mapTo({ status: HttpStatus.OK, b }),
+      map(value =>
+        value.payload === undefined
+          ? { status: HttpStatus.NOT_FOUND }
+          : { body: value.payload },
+      ),
     );
   }),
 );

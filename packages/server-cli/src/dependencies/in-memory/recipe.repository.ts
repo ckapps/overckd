@@ -1,44 +1,44 @@
 import { Context, createReader } from '@marblejs/core';
 import { Reader } from 'fp-ts/lib/Reader';
+import { Observable } from 'rxjs';
 
 import { Recipe } from '@overckd/domain/dist/recipe';
-
-import { InMemoryRepo } from './in-memory-repo';
 import { RecipeRepository } from '@overckd/domain/dist/repositories';
 
+import { InMemoryRepo } from './in-memory-repo';
+
 class RecipeRepo extends InMemoryRepo<Recipe> implements RecipeRepository {
-  async add(recipe: Recipe): Promise<Recipe> {
-    this._add(recipe);
-    return recipe;
+  constructor() {
+    super([
+      {
+        name: 'recipe 1',
+        images: [],
+        ingredients: [],
+        steps: [],
+        styles: {},
+        tips: [],
+      },
+    ]);
   }
 
-  async getAll(): Promise<Recipe[]> {
-    return this.all;
+  getAll(): Observable<Recipe[]> {
+    return this.all.asObservable();
   }
 
-  async removeByName(name: string): Promise<boolean> {
-    const recipe = this.findByName(name);
-    if (!recipe) {
-      return false;
-    }
-
-    return this._remove(recipe);
+  getByName(name: string): Observable<Recipe | undefined> {
+    return this.findItem({ name });
   }
 
-  async getByName(name: string): Promise<Recipe | undefined> {
-    return this.findByName(name);
+  add(recipe: Recipe): Observable<Recipe> {
+    return this._add(recipe);
   }
 
-  async update(recipe: Recipe, name: string): Promise<Recipe> {
+  removeByName(name: string): Observable<boolean> {
+    return this._remove({ name });
+  }
+
+  update(recipe: Recipe, name: string): Observable<Recipe | undefined> {
     throw new Error('Method not implemented.');
-  }
-
-  findByName(name: string): Recipe | undefined {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const fakeRecipe: Recipe = { name };
-
-    return this.all.find(i => this.equals(i, fakeRecipe));
   }
 
   equals(a: Recipe, b: Recipe): boolean {
