@@ -1,0 +1,14 @@
+@import './window-navigation-buttons.variables.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  align-items: center;
+  -webkit-app-region: no-drag;
+
+  > .btn {
+    color: $ckad-desktop-window-title-bar--color;
+  }
+}

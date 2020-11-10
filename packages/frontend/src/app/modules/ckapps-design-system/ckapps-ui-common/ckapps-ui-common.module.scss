@@ -1,0 +1,22 @@
+// Import module stuff
+@import './scss/ckapps-ui-common.submodules.scss';
+@import './scss/ckapps-ui-common.variables.scss';
+
+// ====================================================
+// resetting and initial values
+// ====================================================
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+// ====================================================
+// Customizing
+// ====================================================
+body {
+  background-color: $ckad-body--background-color;
+}

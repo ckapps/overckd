@@ -1,0 +1,25 @@
+@import './window-title-bar.variables.scss';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+
+  align-items: center;
+
+  // Make some space for the native icons
+  padding-left: 100px;
+  padding-right: 100px;
+
+  color: $ckad-desktop-window-title-bar--color;
+  background-color: $ckad-desktop-window-title-bar--background-color;
+  height: $ckad-desktop-window-title-bar--height;
+
+  border-bottom: $ckad-desktop-window-title-bar--border-bottom;
+
+  &.inset {
+    height: $ckad-desktop-window-title-bar--inset--height;
+  }
+}
