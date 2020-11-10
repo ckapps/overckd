@@ -39,8 +39,8 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
-    // titleBarStyle: 'hiddenInset',
-    titleBarStyle: 'hidden',
+    titleBarStyle: 'hiddenInset',
+    // titleBarStyle: 'hidden',
   });
 
   // ----------------------------------------

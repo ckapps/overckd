@@ -5,7 +5,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { Recipe } from '@overckd/domain';
 
-import { RecipeService } from '../../../../domain/recipe/services/recipe.service';
+import { RecipeService } from 'src/app/modules/domain/recipe/services/recipe.service';
 
 @Component({
   templateUrl: './recipe.component.html',

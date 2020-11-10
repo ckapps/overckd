@@ -1,0 +1,25 @@
+@import '../../styles/window-base.module';
+
+:host {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+
+  align-items: center;
+
+  // Make some space for the native icons
+  padding-left: 100px;
+  padding-right: 100px;
+
+  color: $ui-desktop-window-title-bar--color;
+  background-color: $ui-desktop-window-title-bar--background-color;
+  height: $ui-desktop-window-title-bar--height;
+
+  border-bottom: $ui-desktop-window-title-bar--border-bottom;
+
+  &.inset {
+    height: $ui-desktop-window-title-bar--inset--height;
+  }
+}

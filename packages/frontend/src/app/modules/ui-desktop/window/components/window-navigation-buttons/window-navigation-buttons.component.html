@@ -1,0 +1,10 @@
+<button class="btn" (click)="this.onNavigateBack()">
+  <fa-icon [icon]="this.faChevronLeft"></fa-icon>
+</button>
+<button
+  class="btn"
+  [disabled]="(this.forwardCount | async) === 0"
+  (click)="this.onNavigateForward()"
+>
+  <fa-icon [icon]="this.faChevronRight"></fa-icon>
+</button>
