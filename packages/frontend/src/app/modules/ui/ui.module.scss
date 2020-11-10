@@ -1,0 +1,5 @@
+// Import local stylings
+@import './scss/ui.variables.scss';
+
+// Import stylings from submodules
+@import '../ckapps-design-system/ckapps-ui-common/ckapps-ui-common.module.scss';

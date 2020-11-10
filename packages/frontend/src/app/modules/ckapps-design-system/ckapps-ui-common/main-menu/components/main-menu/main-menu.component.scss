@@ -1,0 +1,11 @@
+@import './main-menu.variables.scss';
+
+:host {
+  width: $ckad-main-menu--width;
+  height: 100%;
+
+  > nav {
+    display: flex;
+    flex-direction: column;
+  }
+}

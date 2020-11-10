@@ -1,0 +1,7 @@
+{
+  "extends": "../tslint.json",
+  "rules": {
+    "directive-selector": [true, "attribute", "ckad-desktop", "camelCase"],
+    "component-selector": [true, "element", "ckad-desktop", "kebab-case"]
+  }
+}

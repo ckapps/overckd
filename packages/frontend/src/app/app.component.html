@@ -1,24 +1,24 @@
-<ocui-window-title-bar
+<ckad-desktop-window-title-bar
   *ngIf="this.shell !== 'desktop'"
   title="overckd"
   class="inset"
-></ocui-window-title-bar>
+></ckad-desktop-window-title-bar>
 
 <div class="d-flex flex-row flex-grow-1">
-  <ocui-main-menu class="flex-grow-0 flex-shrink-0">
-    <ocui-main-menu-item
+  <ckad-main-menu class="flex-grow-0 flex-shrink-0">
+    <ckad-main-menu-item
       [icon]="this.faHome"
       text="Home"
       [routerLink]="'./home'"
       routerLinkActive="active"
-    ></ocui-main-menu-item>
-    <ocui-main-menu-item
+    ></ckad-main-menu-item>
+    <ckad-main-menu-item
       [icon]="this.faUtensils"
       text="Recipes"
       [routerLink]="'./recipes/list'"
       routerLinkActive="active"
-    ></ocui-main-menu-item>
-  </ocui-main-menu>
+    ></ckad-main-menu-item>
+  </ckad-main-menu>
 
   <router-outlet></router-outlet>
 </div>
