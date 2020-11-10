@@ -11,9 +11,10 @@ import { UiDesktopModule } from './modules/ui-desktop/ui-desktop.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NotFoundPageComponent } from './pages/not-found/not-found.component';
+import { HomePageComponent } from './pages/home/home.component';
 
 @NgModule({
-  declarations: [AppComponent, NotFoundPageComponent],
+  declarations: [AppComponent, NotFoundPageComponent, HomePageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

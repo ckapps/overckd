@@ -14,14 +14,17 @@ import { EmptyRecipePageComponent } from './pages/empty-recipe/empty-recipe.comp
 import { RecipePageComponent } from './pages/recipe/recipe.component';
 import { RecipesPageComponent } from './pages/recipes/recipes.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
+import { RecipesPagesWrapperComponent } from './pages/recipes-pages-wrapper.component';
+import { UiModule } from '../modules/ui/ui.module';
 
 @NgModule({
   declarations: [
     EmptyRecipePageComponent,
     RecipePageComponent,
     RecipesPageComponent,
+    RecipesPagesWrapperComponent,
   ],
-  imports: [CommonModule, RecipesRoutingModule, DomainModule],
+  imports: [CommonModule, RecipesRoutingModule, DomainModule, UiModule],
   providers: [
     {
       provide: RecipeService,

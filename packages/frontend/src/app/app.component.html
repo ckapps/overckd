@@ -4,4 +4,21 @@
   class="inset"
 ></ocui-window-title-bar>
 
-<router-outlet></router-outlet>
+<div class="d-flex flex-row flex-grow-1">
+  <ocui-main-menu class="flex-grow-0 flex-shrink-0">
+    <ocui-main-menu-item
+      [icon]="this.faHome"
+      text="Home"
+      [routerLink]="'./home'"
+      routerLinkActive="active"
+    ></ocui-main-menu-item>
+    <ocui-main-menu-item
+      [icon]="this.faUtensils"
+      text="Recipes"
+      [routerLink]="'./recipes/list'"
+      routerLinkActive="active"
+    ></ocui-main-menu-item>
+  </ocui-main-menu>
+
+  <router-outlet></router-outlet>
+</div>
