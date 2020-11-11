@@ -5,7 +5,7 @@ import { Recipe, Ingredient, IngredientGroup } from '@overckd/domain';
 type Ingredients = Recipe['ingredients'];
 
 @Component({
-  selector: 'cb-ingredient-list',
+  selector: 'overckd-ingredient-list',
   templateUrl: './ingredient-list.component.html',
   styleUrls: ['./ingredient-list.component.scss'],
 })

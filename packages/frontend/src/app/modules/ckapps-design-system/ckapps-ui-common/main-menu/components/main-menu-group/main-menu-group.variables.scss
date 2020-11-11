@@ -1,0 +1,18 @@
+// ====================================================
+// main-menu-group
+// ====================================================
+$ckad-main-menu-group--background-color: green !default;
+
+// ====================================================
+// main-menu-group: title
+// ====================================================
+$ckad-main-menu-group--title--hspacing: 0.5rem !default;
+$ckad-main-menu-group--title--font: inherit !default;
+$ckad-main-menu-group--title--font-size: 1.2rem !default;
+$ckad-main-menu-group--title--color: white !default;
+
+// ====================================================
+// main-menu-group: hr
+// ====================================================
+$ckad-main-menu-group--hr--color: orange !default;
+$ckad-main-menu-group--hr--hspacing: $ckad-main-menu-group--title--hspacing !default;

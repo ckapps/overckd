@@ -1,0 +1,6 @@
+<article *ngIf="this.recipeCollection$ | async as recipeCollection">
+  <overckd-recipe-collection
+    [recipeCollection]="recipeCollection"
+    (recipeSelected)="this.onRecipeSelected($event)"
+  ></overckd-recipe-collection>
+</article>

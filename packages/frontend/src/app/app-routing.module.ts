@@ -20,6 +20,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./recipes/recipes.module').then(m => m.RecipesModule),
   },
+  {
+    path: 'collections',
+    loadChildren: () =>
+      import('./recipe-collections/recipe-collections.module').then(
+        m => m.RecipeCollectionsModule,
+      ),
+  },
   { path: '**', component: NotFoundPageComponent },
 ];
 

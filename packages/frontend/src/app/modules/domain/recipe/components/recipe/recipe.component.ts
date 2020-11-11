@@ -3,7 +3,7 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { Recipe } from '@overckd/domain';
 
 @Component({
-  selector: 'cb-recipe',
+  selector: 'overckd-recipe',
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.scss'],
 })
