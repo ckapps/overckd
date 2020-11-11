@@ -31,32 +31,32 @@
   <div [class]="this.leftColCssClass">
     <div>
       <h4 class="d-none subtitle--v2">Zutaten</h4>
-      <cb-ingredient-list
+      <overckd-ingredient-list
         [ingredients]="this.recipe.ingredients"
-      ></cb-ingredient-list>
+      ></overckd-ingredient-list>
     </div>
 
     <ng-template [ngIf]="this.recipe.tips.length > 0">
       <img src="./assets/divider.png" [class]="this.dividerCssClass" />
       <div>
         <h4 class="subtitle--v2">Tipps</h4>
-        <cb-recipe-tips [recipe]="this.recipe"></cb-recipe-tips>
+        <overckd-recipe-tips [recipe]="this.recipe"></overckd-recipe-tips>
       </div>
     </ng-template>
 
     <img src="./assets/divider.png" [class]="this.dividerCssClass" />
     <div>
       <h4 class="subtitle--v2">Verbesserungen</h4>
-      <cb-improvement-notes
+      <overckd-improvement-notes
         [numberOfLines]="this.numberOfLines"
-      ></cb-improvement-notes>
+      ></overckd-improvement-notes>
     </div>
   </div>
 
   <div class="col d-flex flex-column px-0">
     <div>
       <h4 class="d-none subtitle--v2">Zubereitung</h4>
-      <cb-preparation [recipe]="this.recipe"></cb-preparation>
+      <overckd-preparation [recipe]="this.recipe"></overckd-preparation>
     </div>
 
     <div class="container-fluid mt-5" *ngIf="this.primaryImage">

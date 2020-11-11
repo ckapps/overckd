@@ -1,0 +1,11 @@
+<h2>{{ this.recipeCollection.name }}</h2>
+
+<ul class="list-group">
+  <li
+    *ngFor="let recipe of this.recipeCollection.recipes"
+    class="list-group-item list-group-item-action"
+    (click)="this.onRecipeClicked(recipe)"
+  >
+    {{ recipe.name }}
+  </li>
+</ul>

@@ -1,6 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+// External modules
+import { UiModule } from '../../ui/ui.module';
+
+// Components
 import { IngredientComponent } from './components/ingredient/ingredient.component';
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
 import { PreparationComponent } from './components/preparation/preparation.component';
@@ -20,7 +24,7 @@ import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.compon
     IngredientGroupComponent,
     RecipeTipsComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, UiModule],
   exports: [RecipeComponent],
 })
 export class RecipeModule {}

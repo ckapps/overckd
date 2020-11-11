@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
-  selector: 'cb-improvement-notes',
+  selector: 'overckd-improvement-notes',
   templateUrl: './improvement-notes.component.html',
   styleUrls: ['./improvement-notes.component.scss'],
 })

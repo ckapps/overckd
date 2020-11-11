@@ -13,4 +13,13 @@ export class UrlBuilderService {
     console.log('request url:', url);
     return url;
   }
+
+  /**
+   * Build the request URL from given `pathSegments`
+   *
+   * @param pathSegmets The segments of the url
+   */
+  urlFromSegments(pathSegmets: string[]) {
+    return this.url(pathSegmets.join('/'));
+  }
 }

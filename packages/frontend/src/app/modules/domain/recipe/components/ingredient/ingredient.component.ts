@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Ingredient } from '@overckd/domain';
 
 @Component({
-  selector: 'cb-ingredient',
+  selector: 'overckd-ingredient',
   templateUrl: './ingredient.component.html',
   styleUrls: ['./ingredient.component.scss'],
 })

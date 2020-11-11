@@ -5,20 +5,7 @@
 ></ckad-desktop-window-title-bar>
 
 <div class="d-flex flex-row flex-grow-1 overflow-hidden">
-  <ckad-main-menu class="flex-grow-0 flex-shrink-0">
-    <ckad-main-menu-item
-      [icon]="this.faHome"
-      text="Home"
-      [routerLink]="'./home'"
-      routerLinkActive="active"
-    ></ckad-main-menu-item>
-    <ckad-main-menu-item
-      [icon]="this.faUtensils"
-      text="Recipes"
-      [routerLink]="'./recipes/list'"
-      routerLinkActive="active"
-    ></ckad-main-menu-item>
-  </ckad-main-menu>
+  <app-app-main-menu></app-app-main-menu>
 
   <router-outlet></router-outlet>
 </div>

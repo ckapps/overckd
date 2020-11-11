@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IngredientGroup } from '@overckd/domain';
 
 @Component({
-  selector: 'cb-ingredient-group',
+  selector: 'overckd-ingredient-group',
   templateUrl: './ingredient-group.component.html',
   styleUrls: ['./ingredient-group.component.scss'],
 })
