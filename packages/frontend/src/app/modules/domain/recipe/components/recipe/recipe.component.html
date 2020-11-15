@@ -12,27 +12,23 @@
     "
   >
     {{ this.recipe.name }}
-
-    <span
-      *ngIf="this.recipe.ingredientsFor"
-      style="font-size: 1rem"
-      [class]="
-        ['d-none', 'ml-auto', 'subtitle--v2', 'text-muted', 'badge-pill'].join(
-          ' '
-        )
-      "
-    >
-      {{ this.recipe.ingredientsFor }}
-    </span>
   </h3>
 </div>
 
 <div class="row flex-grow-1">
   <div [class]="this.leftColCssClass">
+    <overckd-portion-converter
+      *ngIf="this.recipe.portion"
+      [source]="this.recipe.portion"
+      (scaleFactorChanged)="this.onScaleFactorChanged($event)"
+    >
+    </overckd-portion-converter>
+
     <div>
       <h4 class="d-none subtitle--v2">Zutaten</h4>
       <overckd-ingredient-list
         [ingredients]="this.recipe.ingredients"
+        [amountScale]="this.portionScaling"
       ></overckd-ingredient-list>
     </div>
 

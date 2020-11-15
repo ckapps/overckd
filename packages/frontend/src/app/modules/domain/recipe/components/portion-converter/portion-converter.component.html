@@ -1,0 +1,21 @@
+<ng-container [ngSwitch]="this.source.kind">
+  <div *ngSwitchCase="this.PortionKind.Label">
+    {{ this.labelPortionQuantifier.label }}
+  </div>
+
+  <div *ngSwitchCase="this.PortionKind.Quantity">
+    <label class="">
+      {{ 'For' }}
+      <input
+        type="number"
+        min="1"
+        [(ngModel)]="this.amount"
+        class="form-control"
+      />
+    </label>
+  </div>
+
+  <div *ngSwitchCase="this.PortionKind.Springform">
+    {{ this.springformPortionQuantifier.diameter }}
+  </div>
+</ng-container>

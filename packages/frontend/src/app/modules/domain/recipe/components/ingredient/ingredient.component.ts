@@ -1,26 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Ingredient } from '@overckd/domain';
-
-function scaledAmount(i: Ingredient, scalar: number) {
-  const { amount, scaleFactor = 1 } = i;
-
-  if (typeof amount !== 'number' || scalar === 1) {
-    return amount;
-  }
-
-  // Factor in the ingredient specific scale factor
-  return amount + amount * (scalar - 1) * scaleFactor;
-}
+import { PortionConverterService } from '../../services/portion-converter.service';
 
 @Component({
   selector: 'overckd-ingredient',
   templateUrl: './ingredient.component.html',
   styleUrls: ['./ingredient.component.scss'],
 })
-export class IngredientComponent implements OnInit {
+export class IngredientComponent implements OnInit, OnChanges {
   /**
    * The ingredient
    */
@@ -43,7 +39,7 @@ export class IngredientComponent implements OnInit {
   private passedIngredient$: BehaviorSubject<Ingredient>;
   private passedAmountScale$ = new BehaviorSubject<number>(this.amountScale);
 
-  constructor() {}
+  constructor(private portionConverterService: PortionConverterService) {}
 
   ngOnInit() {
     this.passedIngredient$ = new BehaviorSubject(this.ingredient);
@@ -54,16 +50,17 @@ export class IngredientComponent implements OnInit {
       this.passedIngredient$.asObservable(),
       this.passedAmountScale$.asObservable(),
     ]).pipe(
-      map(([ingredient, overallScaleFactor]) => ({
+      this.portionConverterService.scaleIngredientAmount$(),
+      map(([ingredient, amount]) => ({
         ...ingredient,
-        amount: scaledAmount(ingredient, overallScaleFactor),
+        amount,
       })),
     );
 
     // Set up alternatives$
     this.alternatives$ = this.passedIngredient$.pipe(
       map(({ alternatives }) =>
-        alternatives.length === 0
+        (alternatives || []).length === 0
           ? null
           : alternatives.reduce((acc, cur, i) => {
               let separator = '';
@@ -77,5 +74,12 @@ export class IngredientComponent implements OnInit {
             }, ''),
       ),
     );
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const { amountScale } = changes;
+    if (amountScale && !amountScale.firstChange) {
+      this.passedAmountScale$.next(amountScale.currentValue);
+    }
   }
 }
