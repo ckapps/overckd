@@ -1,0 +1,13 @@
+:host {
+  font-size: 1rem;
+
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+
+    > input {
+      margin-left: 0.25rem;
+    }
+  }
+}

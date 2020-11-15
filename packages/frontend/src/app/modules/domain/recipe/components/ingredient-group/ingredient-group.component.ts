@@ -8,7 +8,16 @@ import { IngredientGroup } from '@overckd/domain';
   styleUrls: ['./ingredient-group.component.scss'],
 })
 export class IngredientGroupComponent implements OnInit {
+  /**
+   * The ingredient group to display
+   */
   @Input() ingredientGroup: IngredientGroup;
+
+  /**
+   * Scaling factor for the ingredient amount
+   */
+  @Input() amountScale = 1;
+
   constructor() {}
 
   ngOnInit() {}

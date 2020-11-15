@@ -2,7 +2,9 @@ overckd: 1.0.0
 recipe:
   name: Some delicous salty recipe
   stepsEnumerated: true
-  ingredientsFor: For 2
+  portion:
+    kind: 'quantity'
+    count: 2
   ingredients:
     - name: vegan pulled pork
     - amount: 2

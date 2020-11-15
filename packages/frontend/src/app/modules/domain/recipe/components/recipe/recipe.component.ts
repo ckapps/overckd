@@ -2,6 +2,9 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 import { Recipe } from '@overckd/domain';
 
+/**
+ * Component to display a recipe
+ */
 @Component({
   selector: 'overckd-recipe',
   templateUrl: './recipe.component.html',
@@ -11,6 +14,11 @@ export class RecipeComponent implements OnInit {
   @HostBinding('class') componentClass = 'container-fluid';
   @Input() recipe: Recipe;
   @Input() numberOfLines = 5;
+
+  /**
+   * This is the target amount for the portion size
+   */
+  public portionScaling = 1;
 
   public get leftColCssClass() {
     const justify = true;
@@ -59,5 +67,9 @@ export class RecipeComponent implements OnInit {
       this.secondaryImages.length > 0 ? 'd-flex' : 'd-none',
       this.recipe.styles.secondaryImagesContainer || 'flex-column',
     ].join(' ');
+  }
+
+  public onScaleFactorChanged(scaleFactor: number) {
+    this.portionScaling = scaleFactor;
   }
 }

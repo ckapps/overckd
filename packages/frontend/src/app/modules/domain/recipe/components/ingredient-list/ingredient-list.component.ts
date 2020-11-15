@@ -1,6 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Recipe, Ingredient, IngredientGroup } from '@overckd/domain';
+import {
+  Recipe,
+  IngredientGroup,
+  Ingredient,
+  isIngredientGroup,
+  isIngredient,
+} from '@overckd/domain';
 
 type Ingredients = Recipe['ingredients'];
 
@@ -10,24 +18,43 @@ type Ingredients = Recipe['ingredients'];
   styleUrls: ['./ingredient-list.component.scss'],
 })
 export class IngredientListComponent implements OnInit {
+  /**
+   * The ingredients to show
+   */
   @Input() ingredients: Ingredients;
+
+  /**
+   * Scaling factor for the ingredient amount
+   */
+  @Input() amountScale = 1;
+
+  /**
+   * Ingredient groups from the passed ingredients
+   */
+  public ingredientGroups$: Observable<IngredientGroup[]>;
+  /**
+   * Ingredient list from the passed ingredients
+   */
+  public ingredientList$: Observable<Ingredient[]>;
+
+  private passedIngredients$: BehaviorSubject<Ingredients>;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.passedIngredients$ = new BehaviorSubject(this.ingredients);
 
-  public isIngredientGroup(
-    o: Ingredient | IngredientGroup,
-  ): o is IngredientGroup {
-    // tslint:disable-next-line
-    return Array.isArray(o['ingredients']);
-  }
+    this.ingredientGroups$ = this.passedIngredients$.pipe(
+      map(
+        ingredients =>
+          ingredients.filter(f => isIngredientGroup(f)) as IngredientGroup[],
+      ),
+    );
 
-  public get ingredientGroups() {
-    return this.ingredients.filter(f => this.isIngredientGroup(f));
-  }
-
-  public get ingredientList() {
-    return this.ingredients.filter(f => !this.isIngredientGroup(f));
+    this.ingredientList$ = this.passedIngredients$.pipe(
+      map(
+        ingredients => ingredients.filter(f => isIngredient(f)) as Ingredient[],
+      ),
+    );
   }
 }

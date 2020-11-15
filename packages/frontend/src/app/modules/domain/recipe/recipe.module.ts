@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 // External modules
 import { UiModule } from '../../ui/ui.module';
@@ -13,6 +14,7 @@ import { IngredientGroupComponent } from './components/ingredient-group/ingredie
 
 import { ImprovementNotesComponent } from './components/improvement-notes/improvement-notes.component';
 import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.component';
+import { PortionConverterComponent } from './components/portion-converter/portion-converter.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +25,9 @@ import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.compon
     ImprovementNotesComponent,
     IngredientGroupComponent,
     RecipeTipsComponent,
+    PortionConverterComponent,
   ],
-  imports: [CommonModule, UiModule],
+  imports: [CommonModule, FormsModule, UiModule],
   exports: [RecipeComponent],
 })
 export class RecipeModule {}
