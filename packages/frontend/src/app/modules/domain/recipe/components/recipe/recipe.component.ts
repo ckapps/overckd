@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Recipe } from '@overckd/domain';
+import { Recipe, IngredientGroup } from '@overckd/domain';
 
 /**
  * Component to display a recipe
@@ -14,6 +16,9 @@ export class RecipeComponent implements OnInit {
   @HostBinding('class') componentClass = 'container-fluid';
   @Input() recipe: Recipe;
   @Input() numberOfLines = 5;
+
+  public recipe$: BehaviorSubject<Recipe>;
+  public ingredients$: Observable<Recipe['ingredients']>;
 
   /**
    * This is the target amount for the portion size
@@ -35,7 +40,24 @@ export class RecipeComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.recipe$ = new BehaviorSubject(this.recipe);
+
+    this.ingredients$ = this.recipe$.pipe(
+      map(recipe => {
+        const { groups } = recipe;
+        const ingredientGroups = groups
+          ? groups.map<IngredientGroup>(g => ({
+              label: g.label,
+              group: g.name,
+              ingredients: g.ingredients,
+            }))
+          : [];
+
+        return [...ingredientGroups, ...recipe.ingredients];
+      }),
+    );
+  }
 
   get primaryImage() {
     return this.recipe.images[0];
