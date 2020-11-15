@@ -1,8 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Ingredient } from '@overckd/domain';
+
+function scaledAmount(i: Ingredient, scalar: number) {
+  const { amount, scaleFactor = 1 } = i;
+
+  if (typeof amount !== 'number' || scalar === 1) {
+    return amount;
+  }
+
+  // Factor in the ingredient specific scale factor
+  return amount + amount * (scalar - 1) * scaleFactor;
+}
 
 @Component({
   selector: 'overckd-ingredient',
@@ -16,6 +27,11 @@ export class IngredientComponent implements OnInit {
   @Input() ingredient: Ingredient;
 
   /**
+   * Scaling factor for the ingredient amount
+   */
+  @Input() amountScale = 1;
+
+  /**
    * The ingredient
    */
   public ingredient$: Observable<Ingredient>;
@@ -25,12 +41,24 @@ export class IngredientComponent implements OnInit {
   public alternatives$: Observable<string>;
 
   private passedIngredient$: BehaviorSubject<Ingredient>;
+  private passedAmountScale$ = new BehaviorSubject<number>(this.amountScale);
 
   constructor() {}
 
   ngOnInit() {
     this.passedIngredient$ = new BehaviorSubject(this.ingredient);
-    this.ingredient$ = this.passedIngredient$.asObservable();
+    this.passedAmountScale$.next(this.amountScale);
+
+    // Set up the actual ingredient
+    this.ingredient$ = combineLatest([
+      this.passedIngredient$.asObservable(),
+      this.passedAmountScale$.asObservable(),
+    ]).pipe(
+      map(([ingredient, overallScaleFactor]) => ({
+        ...ingredient,
+        amount: scaledAmount(ingredient, overallScaleFactor),
+      })),
+    );
 
     // Set up alternatives$
     this.alternatives$ = this.passedIngredient$.pipe(

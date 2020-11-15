@@ -24,6 +24,11 @@ export class IngredientListComponent implements OnInit {
   @Input() ingredients: Ingredients;
 
   /**
+   * Scaling factor for the ingredient amount
+   */
+  @Input() amountScale = 1;
+
+  /**
    * Ingredient groups from the passed ingredients
    */
   public ingredientGroups$: Observable<IngredientGroup[]>;

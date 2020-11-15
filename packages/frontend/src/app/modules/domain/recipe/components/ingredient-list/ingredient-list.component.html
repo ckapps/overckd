@@ -1,6 +1,7 @@
 <div *ngFor="let group of this.ingredientGroups$ | async">
   <overckd-ingredient-group
     [ingredientGroup]="group"
+    [amountScale]="this.amountScale"
   ></overckd-ingredient-group>
 </div>
 
@@ -8,5 +9,6 @@
   <overckd-ingredient
     *ngFor="let ingredient of this.ingredientList$ | async"
     [ingredient]="ingredient"
+    [amountScale]="this.amountScale"
   ></overckd-ingredient>
 </ul>
