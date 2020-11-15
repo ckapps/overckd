@@ -24,10 +24,10 @@
     >
     </overckd-portion-converter>
 
-    <div>
+    <div *ngIf="this.ingredients$ | async as ingredients">
       <h4 class="d-none subtitle--v2">Zutaten</h4>
       <overckd-ingredient-list
-        [ingredients]="this.recipe.ingredients"
+        [ingredients]="ingredients"
         [amountScale]="this.portionScaling"
       ></overckd-ingredient-list>
     </div>
