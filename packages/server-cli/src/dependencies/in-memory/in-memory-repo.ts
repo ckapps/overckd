@@ -27,9 +27,8 @@ export abstract class InMemoryRepo<T> {
   }
 
   _update(item: T): Observable<T | undefined> {
-    // return of(item).pipe
     return this.all.pipe(
-      this.findItem2(item),
+      this.findItemOperator(item),
       tap(x => {
         if (x) {
           const indexOfItem = this.all.value.indexOf(x);
@@ -42,10 +41,10 @@ export abstract class InMemoryRepo<T> {
   }
 
   findItem(item: Partial<T>): Observable<T | undefined> {
-    return this.all.pipe(map(items => items.find(i => this.equals(i, item))));
+    return this.all.pipe(this.findItemOperator(item));
   }
 
-  findItem2(item: Partial<T>): OperatorFunction<T[], T | undefined> {
+  findItemOperator(item: Partial<T>): OperatorFunction<T[], T | undefined> {
     return map(items => items.find(i => this.equals(i, item)));
   }
 
