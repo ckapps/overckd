@@ -1,3 +1,5 @@
+import { PortionQuantifier } from './portion-quantifier';
+
 export interface BaseRecipe<TIngredient> {
   /**
    * Name of the recipe
@@ -10,7 +12,7 @@ export interface BaseRecipe<TIngredient> {
   /**
    * An indicator for how many portions/plates the amounts in the recipe are
    */
-  ingredientsFor?: string;
+  portion?: PortionQuantifier;
   /**
    * The ingredients
    */

@@ -1,6 +1,7 @@
 // Types
 export * from './ingredient';
 export * from './ingredient-group';
+export * from './portion-quantifier';
 export * from './recipe';
 export * from './recipe-collection';
 
