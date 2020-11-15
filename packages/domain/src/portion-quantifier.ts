@@ -33,7 +33,7 @@ export interface QuantityPortionQuantifier extends IPortionQuantifier {
 export interface SpringformPortionQuantifier extends IPortionQuantifier {
   kind: PortionKind.Springform;
   /**
-   * The diameter in meter
+   * The diameter in centimeter
    */
   diameter: number;
 }
