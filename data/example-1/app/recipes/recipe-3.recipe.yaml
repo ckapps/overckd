@@ -11,10 +11,10 @@ recipe:
       name: Pita
     - amount: 4
       name: Tomatoes
-    - amount: ½
+    - amount: 0.5
       name: Onions
     - name: Rucola
-    - amount: ¼
+    - amount: 0.25
       name: Cucumber
     - name: Chilliflocks
   steps:
