@@ -3,15 +3,25 @@
     {{ this.labelPortionQuantifier.label }}
   </div>
 
-  <div *ngSwitchCase="this.PortionKind.Quantity">
-    <label class="">
+  <div
+    *ngSwitchCase="this.PortionKind.Quantity"
+    class="portion-converter portion-converter--quantity"
+  >
+    <label class="portion-converter__label">
       {{ 'For' }}
       <input
         type="number"
         min="1"
         [(ngModel)]="this.amount"
-        class="form-control"
+        class="form-control portion-converter__input"
       />
+
+      <span
+        *ngIf="this.quantityPortionQuantifier.label as label"
+        class="portion-converter__additional-label"
+      >
+        {{ label }}
+      </span>
     </label>
   </div>
 

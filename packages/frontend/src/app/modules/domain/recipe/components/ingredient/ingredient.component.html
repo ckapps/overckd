@@ -3,7 +3,7 @@
     <span *ngIf="_ingredient.optional"> optional: </span>
 
     <span *ngIf="_ingredient.amount !== undefined" class="font-weight-bold">
-      {{ _ingredient.amount }}
+      {{ _ingredient | ingredientAmount }}
     </span>
 
     <span *ngIf="_ingredient.unit"> {{ _ingredient.unit }} </span>

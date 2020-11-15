@@ -15,6 +15,7 @@ import { IngredientGroupComponent } from './components/ingredient-group/ingredie
 import { ImprovementNotesComponent } from './components/improvement-notes/improvement-notes.component';
 import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.component';
 import { PortionConverterComponent } from './components/portion-converter/portion-converter.component';
+import { IngredientModule } from '../ingredient/ingredient.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { PortionConverterComponent } from './components/portion-converter/portio
     RecipeTipsComponent,
     PortionConverterComponent,
   ],
-  imports: [CommonModule, FormsModule, UiModule],
+  imports: [CommonModule, FormsModule, UiModule, IngredientModule],
   exports: [RecipeComponent],
 })
 export class RecipeModule {}

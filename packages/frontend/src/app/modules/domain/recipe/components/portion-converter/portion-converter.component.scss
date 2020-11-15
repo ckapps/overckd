@@ -1,13 +1,21 @@
 :host {
   font-size: 1rem;
 
-  label {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
+  .portion-converter {
+    $hspacing: 0.25rem;
 
-    > input {
-      margin-left: 0.25rem;
+    &__label {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+    }
+
+    &__input {
+      margin-left: $hspacing;
+    }
+
+    &__additional-label {
+      margin-left: $hspacing;
     }
   }
 }
