@@ -29,8 +29,6 @@ export class RecipeCollectionPageComponent implements OnInit {
   }
 
   onRecipeSelected(recipe: CollectionRecipe) {
-    console.log('someone wants some recipe', recipe);
-
     this.router.navigate(['../../../', 'recipes', 'recipe', recipe.name]);
   }
 }
