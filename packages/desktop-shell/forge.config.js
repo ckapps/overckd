@@ -6,6 +6,15 @@ module.exports = {
   packagerConfig: {
     // With lerna, the other packages are symlinked, so we need to deref them
     derefSymlinks: true,
+    ignore: [
+      /\.eslintrc\.js/,
+      /\.gitignore/,
+      /\.lintstagedrc\.js/,
+      /forge\.config\.js/,
+      /package-lock\.json/,
+      /tsconfig\.json/,
+      /\/src/,
+    ],
   },
   makers: [
     {
