@@ -89,3 +89,9 @@ typings/
 out/
 
 /dist
+
+####################################
+# Generated assets
+####################################
+# app icon files
+assets/app-icon/app-icon*

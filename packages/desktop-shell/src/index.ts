@@ -1,5 +1,4 @@
-import { app, BrowserWindow } from 'electron';
-import * as path from 'path';
+import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
 import log from 'electron-log';
 
@@ -10,6 +9,7 @@ import { AppConfig, loadConfig } from './config';
 
 import { LogScope } from './log-scope.enum';
 import { configureDeps } from './configure-dependencies';
+import { getPathFromSegments, PathId } from './paths';
 import { parseArgs } from './process-args';
 
 const appLog = log.scope(LogScope.App);
@@ -35,13 +35,24 @@ appLog.debug('called with args', args);
 const createWindow = (): void => {
   appLog.silly('createWindow');
 
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  const windowOptions: BrowserWindowConstructorOptions = {
     height: 600,
     width: 800,
     titleBarStyle: 'hiddenInset',
     // titleBarStyle: 'hidden',
-  });
+  };
+
+  if (process.platform !== 'win32') {
+    // Set window icon for main window
+    windowOptions.icon = getPathFromSegments(PathId.AppAssets, [
+      'app-icon',
+      'png',
+      'app-icon-512.png',
+    ]);
+  }
+
+  // Create the browser window.
+  const mainWindow = new BrowserWindow(windowOptions);
 
   // ----------------------------------------
   // Startup for development
