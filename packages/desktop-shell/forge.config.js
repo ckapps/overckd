@@ -67,12 +67,30 @@ async function generateAppIcons(png, outPath) {
   ]);
 }
 
+/**
+ * Copies the built frontend.
+ *
+ * @param {string} htmlDir Path to the html files
+ */
+async function copyFrontend(htmlDir) {
+  // Remove previously copied html
+  await rimraf(`${htmlDir}/*`);
+
+  // Copy frontend files
+  await Promise.all([fse.copy(frontendDistPath, path.join(htmlDir, 'main'))]);
+}
 
 // ========================================================
 // Shared resources
 // ========================================================
 /** ROOT path that points to the workspace */
 const workspaceRoot = path.join(__dirname, '../..');
+
+/** Path to the build folder for the angular project */
+const frontendDistPath = path.resolve(
+  workspaceRoot,
+  'packages/frontend/dist/frontend-electron',
+);
 
 /** Assets directory */
 const dirAssets = 'assets';
@@ -84,6 +102,9 @@ const appIcon = `${dirAssets}/app-icon/app-icon`;
 // ========================================================
 module.exports = {
   hooks: {
+    generateAssets: async () => {
+      await Promise.all([copyFrontend(path.join(dirAssets, 'html'))]);
+    },
     prePackage: async () => {
       await Promise.all([
         generateAppIcons(

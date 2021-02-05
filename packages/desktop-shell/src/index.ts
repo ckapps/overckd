@@ -71,12 +71,12 @@ const createWindow = (): void => {
   // ----------------------------------------
   // Normal startup
   // ----------------------------------------
-  const angularProjectPath = 'packages/frontend/dist/frontend-electron';
-  const indexFile = 'index.html';
+  const pathname = getPathFromSegments(PathId.AppAssets, [
+    'html',
+    'main',
+    'index.html',
+  ]);
 
-  const ROOT = path.join(__dirname, '../../..');
-
-  const pathname = path.join(ROOT, angularProjectPath, indexFile);
   appLog.info('loading main window from:', pathname);
 
   mainWindow.loadURL(

@@ -95,3 +95,5 @@ out/
 ####################################
 # app icon files
 assets/app-icon/app-icon*
+# html files copied from the frontend project
+assets/html/*
