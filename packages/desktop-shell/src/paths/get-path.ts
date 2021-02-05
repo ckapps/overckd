@@ -22,6 +22,24 @@ export function getPath(pathId: PathId): string {
     case PathId.AppAssets:
       return path.resolve(paths.appRoot, 'assets');
     default:
-      return undefined;
+      throw new Error(`Unknown path id ${pathId}`);
   }
+}
+
+/**
+ * Resolves a path starting from a defined root.
+ *
+ * @param start The root to start resolving from
+ * @param segments Path segments
+ *
+ * @returns
+ * Resolved path starting from `start` and using the given `segments`
+ */
+export function getPathFromSegments(start: PathId, segments: string[]): string {
+  const root = getPath(start);
+  if (!root) {
+    return undefined;
+  }
+
+  return path.resolve(root, ...segments);
 }
