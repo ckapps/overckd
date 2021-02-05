@@ -4,7 +4,7 @@ import { Reader } from 'fp-ts/lib/Reader';
 import { BehaviorSubject, from, of } from 'rxjs';
 import { map, mapTo, mergeMap, tap, toArray } from 'rxjs/operators';
 
-import { filterEndsWith } from '@ckapp/rxjs/lib/cjs/string/operators';
+import { filterEndsWith } from '@ckapp/rxjs-snafu/lib/cjs/string/operators';
 
 import { Recipe } from '@overckd/domain';
 import { RecipeRepository } from '@overckd/domain/dist/repositories';
