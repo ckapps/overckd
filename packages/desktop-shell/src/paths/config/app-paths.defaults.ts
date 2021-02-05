@@ -1,4 +1,5 @@
 import { app } from 'electron';
+import * as path from 'path';
 
 import { AppPaths } from './app-paths.types';
 
@@ -7,6 +8,7 @@ import { AppPaths } from './app-paths.types';
  */
 export const defaultAppPathsConfig: AppPaths = {
   app: app.getPath('userData'),
+  appRoot: path.resolve(__dirname, '../../..'),
   cache: app.getPath('cache'),
   logs: app.getPath('logs'),
   temp: app.getPath('temp'),
