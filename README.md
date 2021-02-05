@@ -100,20 +100,38 @@ npm run build
 
 The start command is used to be able to `start` a process.
 
-#### As desktop app (development)
+#### As desktop app
 
-To start overckd as an desktop application, you should do the following
+##### App Live Development (local dev server)
 
-First, run the following to watch for changes and compile files (keep running)
+If you want to develop overckd as an desktop application, but still be able to have the benefits of hot reloading, you can do the following:
+
+1. Run the following to compile files and watch for changes in `desktop-shell` and start a local web server with the `frontend` (keep running)
 
 ```sh
 npm run start:desktop
 ```
 
-Now run the following to actually start the desktop-shell
+2. Run the following to actually start the desktop-shell
 
 ```sh
 npm run app:desktop:dev
+```
+
+##### With built frontend
+
+In some cases you may want to have the same behaviour, as if when the app was more or less already built. To achieve this, you can do:
+
+1. Compile and build everything for desktop
+
+```sh
+npm run build:desktop
+```
+
+2. Start the desktop-shell
+
+```sh
+npm run app:desktop
 ```
 
 [conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg

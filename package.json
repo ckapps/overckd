@@ -10,7 +10,7 @@
     "start:desktop": "lerna run build:desktop && lerna run start:desktop --parallel",
     "start": "",
     "app:desktop:dev": "lerna run app:desktop:dev",
-    "app:desktop": "lerna run desktop:run",
+    "app:desktop": "lerna run app:desktop",
     "test": "lerna run test --parallel",
     "lint": "lerna run lint --parallel",
     "npm:lerna": "lerna"
