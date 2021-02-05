@@ -103,7 +103,8 @@ module.exports = {
       /forge\.config\.js/,
       /package-lock\.json/,
       /tsconfig\.json/,
-      /\/src/,
+      // Somehow it seems like the src folder is needed
+      // /\/src/,
     ],
     icon: appIcon,
   },
