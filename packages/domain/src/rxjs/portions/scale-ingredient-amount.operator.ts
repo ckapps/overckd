@@ -1,7 +1,7 @@
 import { OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Ingredient } from '../../ingredient';
+import { RecipeIngredient } from '../../recipe-ingredient';
 import { scaleIngredientAmount } from '../../portions';
 
 /**
@@ -10,8 +10,8 @@ import { scaleIngredientAmount } from '../../portions';
  * this ingredient.
  */
 export function scaleIngredientAmount$(): OperatorFunction<
-  [Ingredient, number],
-  [Ingredient, Ingredient['amount']]
+  [RecipeIngredient, number],
+  [RecipeIngredient, RecipeIngredient['amount']]
 > {
   return map(([ingredient, scalar]) => [
     ingredient,

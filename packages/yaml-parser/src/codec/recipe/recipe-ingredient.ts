@@ -1,6 +1,8 @@
 import * as t from 'io-ts';
 
-export const ingredient = t.intersection([
+import { overckdUri } from '../overckd-uri';
+
+export const recipeIngredient = t.intersection([
   t.type({
     name: t.string,
   }),
@@ -10,8 +12,9 @@ export const ingredient = t.intersection([
     scaleFactor: t.number,
     optional: t.boolean,
     alternatives: t.array(t.string),
+    uri: overckdUri,
   }),
 ]);
 
-export type IngredientC = typeof ingredient;
-export type IngredientDTO = t.TypeOf<IngredientC>;
+type RecipeIngredientC = typeof recipeIngredient;
+export type RecipeIngredientDTO = t.TypeOf<RecipeIngredientC>;

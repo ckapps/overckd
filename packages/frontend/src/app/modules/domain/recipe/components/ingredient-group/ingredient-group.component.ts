@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { IngredientGroup } from '@overckd/domain';
+import { RecipeIngredientGroup } from '@overckd/domain';
 
 @Component({
   selector: 'overckd-ingredient-group',
@@ -11,7 +11,7 @@ export class IngredientGroupComponent implements OnInit {
   /**
    * The ingredient group to display
    */
-  @Input() ingredientGroup: IngredientGroup;
+  @Input() ingredientGroup: RecipeIngredientGroup;
 
   /**
    * Scaling factor for the ingredient amount

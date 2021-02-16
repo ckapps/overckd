@@ -8,7 +8,7 @@ import {
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Ingredient } from '@overckd/domain';
+import { RecipeIngredient } from '@overckd/domain';
 import { PortionConverterService } from '../../services/portion-converter.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class IngredientComponent implements OnInit, OnChanges {
   /**
    * The ingredient
    */
-  @Input() ingredient: Ingredient;
+  @Input() ingredient: RecipeIngredient;
 
   /**
    * Scaling factor for the ingredient amount
@@ -30,13 +30,13 @@ export class IngredientComponent implements OnInit, OnChanges {
   /**
    * The ingredient
    */
-  public ingredient$: Observable<Ingredient>;
+  public ingredient$: Observable<RecipeIngredient>;
   /**
    * Alternatives for the ingredient
    */
   public alternatives$: Observable<string>;
 
-  private passedIngredient$: BehaviorSubject<Ingredient>;
+  private passedIngredient$: BehaviorSubject<RecipeIngredient>;
   private passedAmountScale$ = new BehaviorSubject<number>(this.amountScale);
 
   constructor(private portionConverterService: PortionConverterService) {}

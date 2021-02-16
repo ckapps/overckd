@@ -1,15 +1,16 @@
-import { Ingredient } from './ingredient';
-import { IngredientGroup } from './ingredient-group';
+import { RecipeIngredient } from './recipe-ingredient';
+import { RecipeIngredientGroup } from './recipe-ingredient-group';
 import { BaseRecipe } from './recipe-base';
 
 export type Labeled<T> = T & {
   label: string;
 };
 
-export interface Recipe extends BaseRecipe<Ingredient | IngredientGroup> {
+export interface Recipe
+  extends BaseRecipe<RecipeIngredient | RecipeIngredientGroup> {
   images: string[];
 
-  groups?: Labeled<BaseRecipe<Ingredient>>[];
+  groups?: Labeled<BaseRecipe<RecipeIngredient>>[];
 
   // Style visual appearances
   styles: {

@@ -44,9 +44,10 @@ recipe:
         - amount: 290
           unit: g
           name: Flour
-        - amount: 40
-          unit: g
+        - uri: overckd://common/ingredients/sugar
           name: Sugar
+          amount: 40
+          unit: g
         - amount: 70
           unit: g
           name: vegan butter

@@ -1,7 +1,7 @@
 import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 import { formatNumber } from '@angular/common';
 
-import { Ingredient } from '@overckd/domain';
+import { RecipeIngredient } from '@overckd/domain';
 
 /**
  * Formats the amount for an ingredient
@@ -17,7 +17,7 @@ export class IngredientAmountPipe implements PipeTransform {
 
   constructor(@Inject(LOCALE_ID) private locale: string) {}
 
-  transform(value: Ingredient, ...args: unknown[]): string {
+  transform(value: RecipeIngredient, ...args: unknown[]): string {
     const { amount } = value;
 
     // Nothing to do, if amount isn't a number

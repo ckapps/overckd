@@ -4,10 +4,10 @@ import { map } from 'rxjs/operators';
 
 import {
   Recipe,
-  IngredientGroup,
-  Ingredient,
-  isIngredientGroup,
-  isIngredient,
+  RecipeIngredientGroup,
+  RecipeIngredient,
+  isRecipeIngredientGroup,
+  isRecipeIngredient,
 } from '@overckd/domain';
 
 type Ingredients = Recipe['ingredients'];
@@ -31,11 +31,11 @@ export class IngredientListComponent implements OnInit {
   /**
    * Ingredient groups from the passed ingredients
    */
-  public ingredientGroups$: Observable<IngredientGroup[]>;
+  public ingredientGroups$: Observable<RecipeIngredientGroup[]>;
   /**
    * Ingredient list from the passed ingredients
    */
-  public ingredientList$: Observable<Ingredient[]>;
+  public ingredientList$: Observable<RecipeIngredient[]>;
 
   private passedIngredients$: BehaviorSubject<Ingredients>;
 
@@ -47,13 +47,16 @@ export class IngredientListComponent implements OnInit {
     this.ingredientGroups$ = this.passedIngredients$.pipe(
       map(
         ingredients =>
-          ingredients.filter(f => isIngredientGroup(f)) as IngredientGroup[],
+          ingredients.filter(f =>
+            isRecipeIngredientGroup(f),
+          ) as RecipeIngredientGroup[],
       ),
     );
 
     this.ingredientList$ = this.passedIngredients$.pipe(
       map(
-        ingredients => ingredients.filter(f => isIngredient(f)) as Ingredient[],
+        ingredients =>
+          ingredients.filter(f => isRecipeIngredient(f)) as RecipeIngredient[],
       ),
     );
   }

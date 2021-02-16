@@ -2,7 +2,7 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Recipe, IngredientGroup } from '@overckd/domain';
+import { Recipe, RecipeIngredientGroup } from '@overckd/domain';
 
 /**
  * Component to display a recipe
@@ -47,7 +47,7 @@ export class RecipeComponent implements OnInit {
       map(recipe => {
         const { groups } = recipe;
         const ingredientGroups = groups
-          ? groups.map<IngredientGroup>(g => ({
+          ? groups.map<RecipeIngredientGroup>(g => ({
               label: g.label,
               group: g.name,
               ingredients: g.ingredients,

@@ -36,5 +36,5 @@ export const portionQuantifier = t.union([
   ),
 ]);
 
-export type PortionQuantifierC = typeof portionQuantifier;
+type PortionQuantifierC = typeof portionQuantifier;
 export type PortionQuantifierDTO = t.TypeOf<PortionQuantifierC>;

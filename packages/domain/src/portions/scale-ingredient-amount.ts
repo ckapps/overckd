@@ -1,4 +1,4 @@
-import { Ingredient } from '../ingredient';
+import { RecipeIngredient } from '../recipe-ingredient';
 
 /**
  * Scales the amount of a given `ingredient` by using
@@ -11,9 +11,9 @@ import { Ingredient } from '../ingredient';
  * The new amount for the given ingredient
  */
 export function scaleIngredientAmount(
-  ingredient: Ingredient,
+  ingredient: RecipeIngredient,
   scalar: number,
-): Ingredient['amount'] {
+): RecipeIngredient['amount'] {
   const { amount, scaleFactor = 1 } = ingredient;
 
   if (typeof amount !== 'number' || scalar === 1) {
