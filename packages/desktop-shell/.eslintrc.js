@@ -4,4 +4,9 @@ module.exports = {
     es6: true,
     node: true,
   },
+
+  parserOptions: {
+    project: './tsconfig.json',
+    tsconfigRootDir: './',
+  },
 };

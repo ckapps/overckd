@@ -32,5 +32,13 @@
       "name": "domain",
       "path": "packages/domain"
     }
-  ]
+  ],
+  "settings": {
+    "files.exclude": {
+      // "**/@overckd/**.d.ts": true,
+      // "**/@overckd/**.js": true,
+      // "dist": true,
+      // "packages/*/dist": true
+    }
+  }
 }

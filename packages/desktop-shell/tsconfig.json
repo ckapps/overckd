@@ -1,5 +1,7 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "allowJs": true,
     "module": "commonjs",
     "noImplicitAny": true,
