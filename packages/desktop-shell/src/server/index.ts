@@ -1,25 +1,17 @@
-import log from 'electron-log';
-
 import { BoundDependency, ContextDependency } from '@marblejs/core';
+import log from 'electron-log';
+import { from, Observable } from 'rxjs';
 
 import { server, ServerConfig } from '@overckd/server';
 
-import { ServerLogScope } from './server-log-scope.enum';
 import { getPath, PathId } from '../paths';
+import { ServerLogScope } from './server-log-scope.enum';
 
 const serverLog = log.scope(ServerLogScope.Server);
 
 type Deps = BoundDependency<unknown, ContextDependency>[];
 
-/**
- * Initializes the server.
- *
- * @param config The server configuration
- */
-export async function initServer(
-  deps: Deps,
-  config: ServerConfig,
-): Promise<boolean> {
+function prepareConfig(config: ServerConfig): ServerConfig {
   const { port: serverPort } = config;
 
   if (serverPort) {
@@ -31,10 +23,31 @@ export async function initServer(
   // Set up serving images
   const imagePath = getPath(PathId.Images);
   serverLog.info('serving images from', imagePath);
-  config.paths.images = imagePath;
 
+  return {
+    ...config,
+    paths: {
+      ...config.paths,
+      images: imagePath,
+    },
+  };
+}
+
+async function startServer(deps: Deps, config: ServerConfig) {
   // Start server
   await (await server(deps, config))();
 
   return true;
+}
+
+/**
+ * Initializes the server.
+ *
+ * @param config The server configuration
+ */
+export function initServer(
+  deps: Deps,
+  config: ServerConfig,
+): Observable<boolean> {
+  return from(startServer(deps, prepareConfig(config)));
 }

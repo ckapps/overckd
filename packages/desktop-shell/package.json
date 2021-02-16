@@ -47,6 +47,7 @@
     "typescript": "~4.0.2"
   },
   "dependencies": {
+    "@ckapp/rxjs-node-fs": "^0.3.0",
     "@ckapp/rxjs-snafu": "^0.0.14",
     "@marblejs/core": "^3.4.3",
     "@marblejs/messaging": "^3.4.3",

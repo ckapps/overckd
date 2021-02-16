@@ -1,6 +1,8 @@
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
 import log from 'electron-log';
+import { of, from, throwError, Observable, combineLatest } from 'rxjs';
+import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
 import { initServer } from './server';
@@ -18,7 +20,6 @@ const appEventLog = log.scope(LogScope.AppEvent);
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   appLog.info('creating/removing shortcuts on windows. Quitting...');
-  // eslint-disable-line global-require
   app.quit();
 }
 
@@ -88,63 +89,119 @@ const createWindow = (): void => {
   );
 };
 
+class AppInitError extends Error {
+  constructor(
+    public readonly exitCode: ExitCode,
+    message: string,
+    public readonly innerError?: Error,
+  ) {
+    super(message);
+  }
+}
+
 /**
- * Initializes the application.
+ * @param fromArgs App arguments
  *
  * @returns
- * A promise that resolves with an exit code or with `undefined`.
- * If an exit code was returned, the application should exit.
+ * An observable that emits with the resolved `AppConfig`.
  */
-const initApp = async (): Promise<ExitCode | undefined> => {
-  appLog.silly('initApp');
+function initConfig$(fromArgs: typeof args): Observable<AppConfig> {
+  return loadConfig(fromArgs.config).pipe(
+    catchError(loadConfigError =>
+      throwError(
+        new AppInitError(
+          ExitCode.ConfigFileInvalid,
+          'could not parse config file',
+          loadConfigError,
+        ),
+      ),
+    ),
+  );
+}
 
-  // Loading the application configuration
-  let config: AppConfig;
-  try {
-    config = await loadConfig(args.config);
-  } catch (loadConfigError) {
-    appLog.error('could not parse config file', loadConfigError);
-    return ExitCode.ConfigFileInvalid;
-  }
+/**
+ * @returns
+ * An observable that emits with `true`, when the protocols where
+ * initialized
+ */
+function initProtocols$(): Observable<boolean> {
+  return of(initProtocols()).pipe(
+    map(initialized => {
+      if (!initialized) {
+        throw new AppInitError(
+          ExitCode.ProtocolRegistrationFailed,
+          'could not initialize protocols',
+        );
+      }
+      return true;
+    }),
+  );
+}
 
+/**
+ *
+ * @param config App configuration
+ *
+ * @returns
+ * An observable that emits with `true`, when the server
+ * was successfully initialized
+ */
+function startServer$(config: AppConfig): Observable<boolean> {
   // Setting up the dependencies for marble.js
   appLog.debug('marble.js dependencies:: setting up');
   const deps = configureDeps();
   appLog.debug('marble.js dependencies: done');
 
-  // Initialize protocols
-  if (!initProtocols()) {
-    appLog.error('could not initialize protocols');
-    return ExitCode.ProtocolRegistrationFailed;
-  }
-
   // Initialize server
-  const result = await initServer(deps, config.server);
-  if (!result) {
-    appLog.error('could not initialize server');
-    return ExitCode.ServerStartFailed;
-  }
+  return initServer(deps, config.server).pipe(
+    map(initialized => {
+      if (!initialized) {
+        throw new AppInitError(
+          ExitCode.ServerStartFailed,
+          'could not initialize server',
+        );
+      }
+      return true;
+    }),
+  );
+}
 
-  // All initialized OK
-  return undefined;
-};
+/**
+ * Initializes the application.
+ *
+ * @returns
+ * An Observable that emits with `true` when initialization was successful.
+ * If an error occurs, it will throw an `AppInitError`
+ */
+function appStable$(fromArgs: typeof args): Observable<boolean> {
+  appLog.silly('initApp');
+
+  return initConfig$(fromArgs).pipe(
+    mergeMap(config => combineLatest([of(config), initProtocols$()])),
+    mergeMap(([config]) => startServer$(config)),
+  );
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', async () => {
-  appEventLog.debug('ready');
-
-  const exitCode = await initApp();
-
-  // If some exit code was returned, terminate the app
-  if (exitCode !== undefined) {
-    app.exit(exitCode);
-    return;
-  }
-
-  createWindow();
-});
+from(app.whenReady())
+  .pipe(
+    tap(() => appEventLog.debug('ready')),
+    mergeMap(() => appStable$(args)),
+    tap(() => appEventLog.debug('app stable')),
+  )
+  .subscribe(
+    () => createWindow(),
+    // If some exit code was returned, terminate the app
+    (error: AppInitError) => {
+      appLog.error(error.message);
+      if (error.innerError) {
+        appLog.error(`${error.innerError.name}: ${error.innerError.message}`);
+      }
+      app.exit(error.exitCode);
+    },
+  );
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

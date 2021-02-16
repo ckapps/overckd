@@ -35,10 +35,8 @@ function overcookedProtocol() {
 const protocols = new Map<string, () => boolean>();
 protocols.set(SCHEMA, overcookedProtocol);
 
-export function initProtocols() {
+export function initProtocols(): boolean {
   logger.silly('called: initProtocols()');
-
-  const x = Array.from(protocols);
 
   return Array.from(protocols.entries()).every(([key, registerFn]) => {
     logger.silly('registring protocol', key);
