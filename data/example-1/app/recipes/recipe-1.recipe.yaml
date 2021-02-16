@@ -22,10 +22,19 @@ recipe:
 
   steps:
     - Lorem ipsum
-    - dolor sit amet, consetetur sadipscing elitr
+    - text: dolor sit amet, consetetur sadipscing elitr
+      timers:
+        start: [timer_1]
+
     - sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat
-    - sed diam voluptua
-    - At vero eos et accusam et justo duo dolores et ea rebum
+    - text: sed diam voluptua
+      timers:
+        await: [timer_1]
+        start: [timer_2]
+    - text: At vero eos et accusam et justo duo dolores et ea rebum
+      timers:
+        await:
+          - timer_2
     - Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet
 
   groups:
@@ -67,6 +76,12 @@ recipe:
       tips: []
 
   tips: []
+  timers:
+    timer_1:
+      duration: 100
+      units: s
+    timer_2:
+      duration: 500
 
   images:
     - /images/recipe-1-1.jpeg

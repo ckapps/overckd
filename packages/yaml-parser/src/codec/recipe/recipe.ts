@@ -4,6 +4,7 @@ import { recipeIngredient } from './recipe-ingredient';
 import { recipeIngredientGroup } from './recipe-ingredient-group';
 import { labeled } from './labeled';
 import { recipeBase } from './recipe-base';
+import { recipeTimer, recipeTimerId } from './recipe-timer';
 
 const recipeStyle = t.partial({
   title: t.string,
@@ -20,6 +21,7 @@ export const recipe = t.intersection([
   }),
   t.partial({
     groups: t.array(labeled(recipeBase(recipeIngredient))),
+    timers: t.record(recipeTimerId, recipeTimer),
   }),
 ]);
 
