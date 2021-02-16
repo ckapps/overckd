@@ -9,14 +9,17 @@ import { getPath, PathId } from '../paths';
 
 const serverLog = log.scope(ServerLogScope.Server);
 
-type Deps = BoundDependency<any, ContextDependency>[];
+type Deps = BoundDependency<unknown, ContextDependency>[];
 
 /**
  * Initializes the server.
  *
  * @param config The server configuration
  */
-export async function initServer(deps: Deps, config: ServerConfig) {
+export async function initServer(
+  deps: Deps,
+  config: ServerConfig,
+): Promise<boolean> {
   const { port: serverPort } = config;
 
   if (serverPort) {

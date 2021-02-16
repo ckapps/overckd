@@ -1,5 +1,8 @@
-import { bindEagerlyTo } from '@marblejs/core';
-import { ContextDependency, BoundDependency } from '@marblejs/core';
+import {
+  bindEagerlyTo,
+  ContextDependency,
+  BoundDependency,
+} from '@marblejs/core';
 
 import {
   RecipeCollectionRepositoryToken,
@@ -12,7 +15,10 @@ import {
   RecipeCollectionFileRespository,
 } from './repositories';
 
-export const configureDeps = (): BoundDependency<any, ContextDependency>[] => {
+export const configureDeps = (): BoundDependency<
+  unknown,
+  ContextDependency
+>[] => {
   return [
     // Dependency for the application configuration
     bindEagerlyTo(AppConfigToken)(AppConfigReader),
