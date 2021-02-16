@@ -1,4 +1,5 @@
 import { PortionQuantifier } from './portion-quantifier';
+import { RecipePreparationStep } from './recipe-preparation-step';
 
 export interface BaseRecipe<TIngredient> {
   /**
@@ -20,7 +21,7 @@ export interface BaseRecipe<TIngredient> {
   /**
    * The steps of preparation
    */
-  steps: string[] | string;
+  steps: RecipePreparationStep[];
   /**
    * A list of tips
    */

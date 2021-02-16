@@ -9,6 +9,7 @@ import { UiModule } from '../../ui/ui.module';
 import { IngredientComponent } from './components/ingredient/ingredient.component';
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
 import { PreparationComponent } from './components/preparation/preparation.component';
+import { PreparationStepComponent } from './components/preparation-step/preparation-step.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { IngredientGroupComponent } from './components/ingredient-group/ingredient-group.component';
 
@@ -22,6 +23,7 @@ import { IngredientModule } from '../ingredient/ingredient.module';
     IngredientComponent,
     IngredientListComponent,
     PreparationComponent,
+    PreparationStepComponent,
     RecipeComponent,
     ImprovementNotesComponent,
     IngredientGroupComponent,

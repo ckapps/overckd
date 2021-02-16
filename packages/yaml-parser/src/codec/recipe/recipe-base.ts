@@ -2,12 +2,13 @@
 import * as t from 'io-ts';
 
 import { portionQuantifier } from './portion-quantifier';
+import { recipePreparationStep } from './recipe-preparation-step';
 
 export function recipeBase<T extends t.Mixed>(ingredientCodec: T) {
   return t.intersection([
     t.type({
       name: t.string,
-      steps: t.union([t.string, t.array(t.string)]),
+      steps: t.array(recipePreparationStep),
       tips: t.array(t.string),
       ingredients: t.array(ingredientCodec),
     }),

@@ -1,20 +1,21 @@
 <div class="mb-2" *ngFor="let group of this.preparationGroups$ | async">
   <h5 *ngIf="group.label">{{ group.label }}</h5>
 
-  <div
-    class="text-justify"
-    *ngIf="!this.isArray(group.steps); else listTemplate"
-    [innerHTML]="group.steps"
-  ></div>
+  <div class="text-justify" *ngIf="!group.stepsEnumerated; else listTemplate">
+    <overckd-preparation-step
+      *ngFor="let step of group.steps"
+      [step]="step"
+      [stepsEnumerated]="group.stepsEnumerated"
+    ></overckd-preparation-step>
+  </div>
 
   <ng-template #listTemplate>
-    <ol
-      [class.list-unstyled]="!group.stepsEnumerated"
-      [start]="group.start || 1"
-    >
-      <li *ngFor="let step of group.steps" class="mb-1">
-        {{ step }}
-      </li>
+    <ol [start]="group.start || 1">
+      <overckd-preparation-step
+        *ngFor="let step of group.steps"
+        [step]="step"
+        [stepsEnumerated]="group.stepsEnumerated"
+      ></overckd-preparation-step>
     </ol>
   </ng-template>
 </div>

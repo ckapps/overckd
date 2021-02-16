@@ -61,7 +61,7 @@ export class PreparationComponent implements OnInit {
           stepsEnumerated,
         };
 
-        start += this.isArray(steps) ? steps.length : 1;
+        start += steps.length;
 
         return group;
       },
