@@ -1,0 +1,33 @@
+$ckad-button-border-radius: 2px !default;
+$ckad-button-line-height: 36px !default;
+$ckad-button-min-width: 90px !default;
+$ckad-button-padding-x: 0 !default;
+$ckad-button-padding-y: 16px !default;
+
+.ckad-button {
+  box-sizing: border-box;
+  position: relative;
+  user-select: none;
+  cursor: pointer;
+  outline: 0;
+  border: none;
+  -webkit-tap-highlight-color: transparent;
+  display: inline-block;
+  white-space: nowrap;
+  text-decoration: none;
+  vertical-align: baseline;
+  text-align: center;
+  margin: 0;
+
+  // from variables
+  min-width: $ckad-button-min-width;
+  line-height: $ckad-button-line-height;
+  padding: $ckad-button-padding-x $ckad-button-padding-y;
+  border-radius: $ckad-button-border-radius;
+}
+
+@mixin create-button-variant($variant, $color) {
+  .ckad-button--color-#{$variant} {
+    background-color: $color;
+  }
+}

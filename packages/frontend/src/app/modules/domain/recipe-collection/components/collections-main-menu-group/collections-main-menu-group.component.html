@@ -2,9 +2,10 @@
   <ul *ngIf="this.collections$ | async as collections" class="pl-0">
     <ckad-main-menu-item
       *ngFor="let collection of collections"
-      [text]="collection.name"
       [routerLink]="['./collections/', 'collection', collection.id]"
       [routerLinkActive]="'active'"
-    ></ckad-main-menu-item>
+    >
+      {{ collection.name }}
+    </ckad-main-menu-item>
   </ul>
 </ckad-main-menu-group>

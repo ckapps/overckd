@@ -15,7 +15,6 @@ export class MainMenuItemComponent implements OnInit {
   // @HostBinding('class.text-light') cssTextLight = true;
 
   @Input() icon: IconDefinition;
-  @Input() text: string;
 
   constructor() {}
 
