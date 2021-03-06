@@ -1,0 +1,47 @@
+@mixin md-up {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin ckad-grid-cols-from-fractions($cols, $fractions, $prefix: '') {
+  @each $fraction in $fractions {
+    @for $i from 1 to $fraction {
+      .#{$prefix}w-#{$i}\/#{$fraction} {
+        grid-column-end: span ($i * $cols / $fraction);
+      }
+    }
+  }
+}
+@mixin ckad-grid-cols($cols, $fractions, $breakpoints) {
+  @include ckad-grid-cols-from-fractions($cols, $fractions);
+
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+    @debug $infix;
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      @include ckad-grid-cols-from-fractions($cols, $fractions, $infix);
+    }
+  }
+}
+
+@mixin ckad-grid($cols, $grid-gap, $fractions, $breakpoints) {
+  display: grid;
+  grid-template-columns: repeat($cols, minmax(0, 1fr));
+  grid-gap: $grid-gap;
+
+  .w-full {
+    grid-column-end: span $cols;
+  }
+
+  @include ckad-grid-cols($cols, $fractions, $breakpoints);
+}
+
+@mixin ckad-grid--defaults() {
+  @include ckad-grid(
+    $ckad-grid-cols,
+    $ckad-grid-gap,
+    $ckad-grid-fractions,
+    $ckad-breakpoints
+  );
+}

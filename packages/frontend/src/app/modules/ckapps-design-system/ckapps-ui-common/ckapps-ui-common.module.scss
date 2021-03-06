@@ -1,22 +1,22 @@
-// Import module stuff
-@import './scss/ckapps-ui-common.submodules.scss';
+// ====================================================
+// Required imports
+// ====================================================
+// Import styling base
+@import '../ckapps-ui-base/ckapps-ui-base.module.scss';
+
+// Import module related stuff
 @import './scss/ckapps-ui-common.variables.scss';
+@import './scss/ckapps-ui-common.mixins.scss';
+
+// Import submodules
+@import './scss/ckapps-ui-common.submodules.scss';
 
 // ====================================================
 // resetting and initial values
 // ====================================================
-html,
-body {
-  height: 100%;
-}
-
-body {
-  margin: 0;
-}
+@include html-normalize();
 
 // ====================================================
-// Customizing
+// Add module elements
 // ====================================================
-body {
-  background-color: $ckad-body--background-color;
-}
+@import './scss/ckapps-ui-common.elements.scss';
