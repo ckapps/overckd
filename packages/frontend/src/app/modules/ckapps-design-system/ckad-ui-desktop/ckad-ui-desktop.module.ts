@@ -9,4 +9,4 @@ import { WindowModule } from './window/window.module';
   imports: [CommonModule, WindowModule],
   exports: [WindowModule],
 })
-export class CkappsUiDesktopModule {}
+export class CkadUiDesktopModule {}

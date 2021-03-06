@@ -11,4 +11,4 @@ import { CkadButtonDirective } from './directives/ckad-button.directive';
   exports: [CkadButtonDirective],
   imports: [CommonModule],
 })
-export class CkappsUiButtonModule {}
+export class CkadButtonModule {}

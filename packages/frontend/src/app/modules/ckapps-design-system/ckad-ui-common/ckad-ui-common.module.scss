@@ -2,14 +2,14 @@
 // Required imports
 // ====================================================
 // Import styling base
-@import '../ckapps-ui-base/ckapps-ui-base.module.scss';
+@import '../ckad-ui-base/ckad-ui-base.module.scss';
 
 // Import module related stuff
-@import './scss/ckapps-ui-common.variables.scss';
-@import './scss/ckapps-ui-common.mixins.scss';
+@import './scss/ckad-ui-common.variables.scss';
+@import './scss/ckad-ui-common.mixins.scss';
 
 // Import submodules
-@import './scss/ckapps-ui-common.submodules.scss';
+@import './scss/ckad-ui-common.submodules.scss';
 
 // ====================================================
 // resetting and initial values
@@ -19,4 +19,4 @@
 // ====================================================
 // Add module elements
 // ====================================================
-@import './scss/ckapps-ui-common.elements.scss';
+@import './scss/ckad-ui-common.elements.scss';
