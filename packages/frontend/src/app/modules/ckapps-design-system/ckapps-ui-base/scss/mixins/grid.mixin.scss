@@ -18,7 +18,6 @@
 
   @each $breakpoint in map-keys($breakpoints) {
     $infix: breakpoint-infix($breakpoint, $breakpoints);
-    @debug $infix;
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       @include ckad-grid-cols-from-fractions($cols, $fractions, $infix);
     }

@@ -6,7 +6,7 @@ import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
   templateUrl: './main-menu-group.component.html',
   styleUrls: ['./main-menu-group.component.scss'],
 })
-export class MainMenuGroupComponent implements OnInit {
+export class CkadMainMenuGroupComponent implements OnInit {
   @Input() groupName: string;
   @Input() icon: IconDefinition;
 

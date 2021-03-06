@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainMenuItemComponent } from './main-menu-item.component';
+import { CkadMainMenuItemComponent } from './main-menu-item.component';
 
 describe('MainMenuItemComponent', () => {
-  let component: MainMenuItemComponent;
-  let fixture: ComponentFixture<MainMenuItemComponent>;
+  let component: CkadMainMenuItemComponent;
+  let fixture: ComponentFixture<CkadMainMenuItemComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainMenuItemComponent],
+      declarations: [CkadMainMenuItemComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainMenuItemComponent);
+    fixture = TestBed.createComponent(CkadMainMenuItemComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

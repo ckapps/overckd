@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainMenuGroupComponent } from './main-menu-group.component';
+import { CkadInputFieldComponent } from './input-field.component';
 
-describe('MainMenuGroupComponent', () => {
-  let component: MainMenuGroupComponent;
-  let fixture: ComponentFixture<MainMenuGroupComponent>;
+describe('CkadInputFieldComponent', () => {
+  let component: CkadInputFieldComponent;
+  let fixture: ComponentFixture<CkadInputFieldComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MainMenuGroupComponent],
+      declarations: [CkadInputFieldComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainMenuGroupComponent);
+    fixture = TestBed.createComponent(CkadInputFieldComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
