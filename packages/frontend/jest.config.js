@@ -13,5 +13,5 @@ module.exports = {
     '^@app/(.*)$': '<rootDir>/src/app/$1',
   },
   setupFiles: ['jest-canvas-mock'],
-  setupFilesAfterEnv: ['<rootDir>/test/setup-jest.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/setup-jest.ts'],
 };
