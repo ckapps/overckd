@@ -4,20 +4,27 @@ import { FormsModule } from '@angular/forms';
 
 // External modules
 import { UiModule } from '../../ui/ui.module';
+import { IngredientModule } from '../ingredient/ingredient.module';
 
-// Components
+// Module submodules
+import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
+
+// Module components
+import { ImprovementNotesComponent } from './components/improvement-notes/improvement-notes.component';
 import { IngredientComponent } from './components/ingredient/ingredient.component';
+import { IngredientGroupComponent } from './components/ingredient-group/ingredient-group.component';
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
 import { PreparationComponent } from './components/preparation/preparation.component';
 import { PreparationStepComponent } from './components/preparation-step/preparation-step.component';
-import { RecipeComponent } from './components/recipe/recipe.component';
-import { IngredientGroupComponent } from './components/ingredient-group/ingredient-group.component';
-
-import { ImprovementNotesComponent } from './components/improvement-notes/improvement-notes.component';
-import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.component';
 import { PortionConverterComponent } from './components/portion-converter/portion-converter.component';
-import { IngredientModule } from '../ingredient/ingredient.module';
+import { RecipeComponent } from './components/recipe/recipe.component';
+import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.component';
 
+/**
+ * **overckd/module**
+ *
+ * Module that provides everything for working with `Recipe`s.
+ */
 @NgModule({
   declarations: [
     IngredientComponent,
@@ -30,7 +37,20 @@ import { IngredientModule } from '../ingredient/ingredient.module';
     RecipeTipsComponent,
     PortionConverterComponent,
   ],
-  imports: [CommonModule, FormsModule, UiModule, IngredientModule],
-  exports: [RecipeComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    // External modules
+    UiModule,
+    IngredientModule,
+    // Module submodules
+    RecipeInputModule,
+  ],
+  exports: [
+    // Module submodules
+    RecipeInputModule,
+    // Module components
+    RecipeComponent,
+  ],
 })
 export class RecipeModule {}

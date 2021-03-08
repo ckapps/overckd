@@ -26,9 +26,6 @@ export class CkadInputFieldComponent implements OnInit, ControlValueAccessor {
   @HostBinding('class.ckad-input-field') readonly componentClass =
     'ckad-input-field';
 
-  private _onChange: Function = () => {};
-  private _onTouched: Function = () => {};
-
   @Input() type: string;
   /**
    * The placeholder
@@ -55,6 +52,9 @@ export class CkadInputFieldComponent implements OnInit, ControlValueAccessor {
     this._onTouched();
   }
 
+  private _onChange: (v: unknown) => void = () => {};
+  private _onTouched: () => void = () => {};
+
   constructor() {}
   ngOnInit(): void {}
 
@@ -68,9 +68,9 @@ export class CkadInputFieldComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn: any): void {
     this._onTouched = fn;
   }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
-  }
+  // setDisabledState?(isDisabled: boolean): void {
+  //   throw new Error('Method not implemented.');
+  // }
 
   public css(...parts: string[]) {
     return [this.componentClass, ...parts].join();

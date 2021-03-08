@@ -6,9 +6,11 @@
     "ng": "ng",
     "cmd:build": "ng build",
     "cmd:serve": "ng serve",
+    "clean": "rimraf dist",
     "start:electron": "npm run cmd:serve -- --configuration=electron",
     "start:proxy-server": "npm run cmd:serve -- --proxy-config ./server/local-server.proxy.json",
     "start:desktop": "npm run start:proxy-server",
+    "start:web": "npm run start:proxy-server",
     "start": "npm run cmd:serve",
     "build:desktop": "npm run cmd:build -- --configuration=electron",
     "build:web": "npm run cmd:build",
@@ -42,6 +44,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
+    "@angular-builders/jest": "^11.1.0",
     "@angular-devkit/build-angular": "~0.1001.5",
     "@angular/cli": "~10.1.5",
     "@angular/compiler-cli": "~10.1.5",

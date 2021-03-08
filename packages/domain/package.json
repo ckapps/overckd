@@ -7,8 +7,10 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "npm run build -- --watch",
+    "clean": "rimraf dist",
     "lint": "eslint --ext .ts .",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "test": "jest ."
   },
   "dependencies": {
     "rxjs": "~6.6.0"

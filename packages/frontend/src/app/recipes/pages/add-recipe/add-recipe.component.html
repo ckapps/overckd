@@ -3,10 +3,20 @@
 <article>
   <form [formGroup]="this.recipeForm" class="grid">
     <ckad-input-field
-      formControlName="title"
+      formControlName="name"
       label="Title"
       type="text"
       class="w-full"
     ></ckad-input-field>
+
+    <overckd-recipe-input-sources-list
+      formControlName="basedOn"
+      label="Based on"
+      class="w-full"
+    ></overckd-recipe-input-sources-list>
+
+    <overckd-ingredient-list-input
+      class="w-full"
+    ></overckd-ingredient-list-input>
   </form>
 </article>

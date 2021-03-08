@@ -11,6 +11,7 @@
     "build:desktop": "npm run cmd:build",
     "build:watch": "tsc --watch",
     "build": "npm run build:desktop",
+    "clean": "rimraf dist",
     "start:desktop": "npm run build:watch",
     "start": "npm run cmd:start",
     "app:desktop:dev": "electron-forge start -- --dev --from-url --config=../../data/example-1",
@@ -18,7 +19,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts ."
+    "lint": "eslint --ext .ts .",
+    "test": "jest ."
   },
   "keywords": [],
   "author": {
@@ -48,7 +50,7 @@
   },
   "dependencies": {
     "@ckapp/rxjs-node-fs": "^0.3.0",
-    "@ckapp/rxjs-snafu": "^0.0.14",
+    "@ckapp/rxjs-snafu": "0.0.18",
     "@marblejs/core": "^3.4.3",
     "@marblejs/messaging": "^3.4.3",
     "@marblejs/middleware-body": "^3.4.3",
