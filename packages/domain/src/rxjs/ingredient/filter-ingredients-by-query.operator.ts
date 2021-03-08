@@ -15,7 +15,7 @@ export function filterIngredientsByQuery(): MonoTypeOperatorFunction<
 > {
   return filterByQuery(([item, query]) => {
     const {
-      query: { name, tags },
+      query: { name, tags = [] },
     } = query;
 
     // Filter by name
@@ -26,7 +26,11 @@ export function filterIngredientsByQuery(): MonoTypeOperatorFunction<
     }
 
     // Filter by tags
-    if (tags) {
+    if (tags.length > 0) {
+      if (item.tags.length === 0) {
+        return false;
+      }
+
       const itemTagUris = item.tags.map(({ uri }) => uri);
       const hasMatchingTags = tags.some(uri => itemTagUris.includes(uri));
 
