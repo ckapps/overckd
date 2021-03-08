@@ -1,11 +1,11 @@
 <ckad-desktop-window-title-bar
   *ngIf="this.shell === 'desktop'"
   title="overckd"
-  class="inset"
+  class="inset title-bar"
 ></ckad-desktop-window-title-bar>
 
-<div class="d-flex flex-row flex-grow-1 overflow-hidden">
-  <app-app-main-menu></app-app-main-menu>
+<app-main-menu class="main-menu"></app-main-menu>
 
+<main>
   <router-outlet></router-outlet>
-</div>
+</main>

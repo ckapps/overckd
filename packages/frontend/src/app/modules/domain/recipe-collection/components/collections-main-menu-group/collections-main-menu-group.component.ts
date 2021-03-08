@@ -14,22 +14,13 @@ import { RecipeCollectionService } from '../../services/recipe-collection.servic
 })
 export class CollectionsMainMenuGroupComponent implements OnInit, OnDestroy {
   public faListAlt = faListAlt;
-  public collections$: Observable<RecipeCollection[]>;
+  public collections$ = this.recipeCollectionService.collections$;
 
   private destroyed$ = new ReplaySubject(1);
 
-  constructor(private recipeCollectionService: RecipeCollectionService) {
-    // Keep collections up to date
-    this.collections$ = this.recipeCollectionService.collections$;
-  }
+  constructor(private recipeCollectionService: RecipeCollectionService) {}
 
-  ngOnInit(): void {
-    // Make an initial request to the collections
-    this.recipeCollectionService
-      .getAll()
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

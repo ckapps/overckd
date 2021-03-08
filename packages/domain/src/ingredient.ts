@@ -1,3 +1,5 @@
+import { Tag } from './tag';
+
 export interface BaseIngredient {
   /**
    * URI identifying this ingredient
@@ -8,3 +10,12 @@ export interface BaseIngredient {
    */
   name: string;
 }
+
+/**
+ * Ingredient
+ */
+export interface Ingredient extends BaseIngredient {
+  tags: Tag[];
+}
+
+export type IngredientTag = Tag;

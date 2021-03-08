@@ -1,24 +1,34 @@
 <ckad-main-menu class="flex-grow-0 flex-shrink-0">
   <ckad-main-menu-item
     [icon]="this.faHome"
-    text="Home"
     [routerLink]="'./home'"
     routerLinkActive="active"
-  ></ckad-main-menu-item>
+  >
+    Home
+  </ckad-main-menu-item>
 
   <ckad-main-menu-group [groupName]="'Recipes'" [icon]="this.faUtensils">
     <ckad-main-menu-item
       [icon]="this.faWallet"
-      text="All"
       [routerLink]="'./recipes/list'"
       routerLinkActive="active"
-    ></ckad-main-menu-item>
+    >
+      All
+    </ckad-main-menu-item>
     <ckad-main-menu-item
-      [text]="'Print template'"
       [icon]="this.faFileContract"
       [routerLink]="['./recipes', 'empty']"
       [routerLinkActive]="'active'"
-    ></ckad-main-menu-item>
+    >
+      Print template
+    </ckad-main-menu-item>
+    <ckad-main-menu-item
+      [icon]="this.iconAdd"
+      [routerLink]="['./recipes', 'add']"
+      [routerLinkActive]="'active'"
+    >
+      Add recipe
+    </ckad-main-menu-item>
   </ckad-main-menu-group>
 
   <overckd-collections-main-menu-group></overckd-collections-main-menu-group>

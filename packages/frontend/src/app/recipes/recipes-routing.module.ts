@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { RecipesPageComponent } from './pages/recipes/recipes.component';
+import { AddRecipePageComponent } from './pages/add-recipe/add-recipe.component';
 import { EmptyRecipePageComponent } from './pages/empty-recipe/empty-recipe.component';
 import { RecipePageComponent } from './pages/recipe/recipe.component';
+import { RecipesPageComponent } from './pages/recipes/recipes.component';
 import { RecipesPagesWrapperComponent } from './pages/recipes-pages-wrapper.component';
 
 const routes: Routes = [
@@ -15,6 +16,10 @@ const routes: Routes = [
       {
         path: 'list',
         component: RecipesPageComponent,
+      },
+      {
+        path: 'add',
+        component: AddRecipePageComponent,
       },
       {
         path: 'empty',

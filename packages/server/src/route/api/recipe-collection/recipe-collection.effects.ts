@@ -1,7 +1,7 @@
-import { r, HttpStatus, useContext, use, combineRoutes } from '@marblejs/core';
+import { r, HttpStatus, useContext } from '@marblejs/core';
 import { map, mapTo, mergeMap } from 'rxjs/operators';
 import { EventBusClientToken } from '@marblejs/messaging';
-import { requestValidator$, t } from '@marblejs/middleware-io';
+import { requestValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/lib/pipeable';
 
 import {
@@ -99,15 +99,3 @@ export const getCollectionsById$ = r.pipe(
     );
   }),
 );
-
-// ----------------------------------------------------------------------------
-// routes
-// ----------------------------------------------------------------------------
-/**
- * Combined routes for collections
- */
-export const collections$ = combineRoutes('/collections', [
-  getCollections$,
-  postRecipeCollection$,
-  getCollectionsById$,
-]);

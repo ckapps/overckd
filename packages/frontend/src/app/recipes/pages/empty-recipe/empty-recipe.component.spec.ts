@@ -1,18 +1,28 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EmptyRecipePageComponent } from './empty-recipe.component';
+
+@Component({
+  selector: 'overckd-recipe',
+  template: '',
+})
+class MockRecipeComponent {}
 
 describe('EmptyComponent', () => {
   let component: EmptyRecipePageComponent;
   let fixture: ComponentFixture<EmptyRecipePageComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [EmptyRecipePageComponent],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        EmptyRecipePageComponent,
+        // Mocked
+        MockRecipeComponent,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EmptyRecipePageComponent);

@@ -8,7 +8,8 @@
 
 <br>
 
-![ci](https://github.com/ckapps/overckd/workflows/ci/badge.svg)
+![ci](https://github.com/ckapps/overckd/workflows/CI/badge.svg)
+[![Coverage Status](https://coveralls.io/repos/github/ckapps/overckd/badge.svg?branch=master)](https://coveralls.io/github/ckapps/overckd?branch=master)
 [![Conventional Commits][conventional-commits-image]][conventional-commits-url]
 
 ## Description

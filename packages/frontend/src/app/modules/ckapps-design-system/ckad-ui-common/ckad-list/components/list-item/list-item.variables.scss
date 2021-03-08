@@ -1,0 +1,12 @@
+// Default
+$ckad-list-item--default--border-color: rgba(0, 0, 0, 0.125) !default;
+$ckad-list-item--default--border: 1px solid
+  $ckad-list-item--default--border-color !default;
+$ckad-list-item--default--bg-color: #fff !default;
+$ckad-list-item--default--padding: 0.5rem 1rem !default;
+
+// When active
+$ckad-list-item--active--bg-color: #0d6efd !default;
+$ckad-list-item--active--border-color: #0d6efd !default;
+$ckad-list-item--active--color: #fff !default;
+$ckad-list-item--active--z-index: 2 !default;

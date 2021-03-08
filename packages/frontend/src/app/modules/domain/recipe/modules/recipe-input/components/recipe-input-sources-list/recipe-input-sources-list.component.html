@@ -1,0 +1,36 @@
+<h2 class="d-flex flex-row justify-content-between">
+  <span>
+    {{ this.label }}
+  </span>
+
+  <ckad-button-raised (click)="this.onOpenAddViewClicked()"
+    >Add
+  </ckad-button-raised>
+</h2>
+
+<ckad-mutable-list>
+  <ckad-mutable-list-item *ngFor="let item of this.items$ | async">
+    <fa-icon [icon]="this.iconLink"></fa-icon>
+    {{ item }}
+  </ckad-mutable-list-item>
+</ckad-mutable-list>
+
+<div [class.d-none]="(this.isAdding$ | async) !== true">
+  <overckd-recipe-input-source
+    [value]="this.newItem$ | async"
+    (itemChanged)="this.onNewItemChanged($event)"
+  >
+  </overckd-recipe-input-source>
+
+  <div class="d-flex flex-row justify-content-end">
+    <ckad-button-raised color="primary" (click)="this.onAddClicked()"
+      >Add
+    </ckad-button-raised>
+
+    <ckad-button
+      *ngIf="this.isAdding$ | async"
+      (click)="this.onCancelAddClicked()"
+      >Cancel
+    </ckad-button>
+  </div>
+</div>

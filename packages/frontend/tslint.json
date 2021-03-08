@@ -35,6 +35,7 @@
     "no-inferrable-types": [true, "ignore-params"],
     "no-non-null-assertion": true,
     "no-redundant-jsdoc": true,
+    "no-string-literal": false,
     "no-switch-case-fall-through": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [true, "as-needed"],
@@ -69,9 +70,7 @@
         }
       ]
     },
-    "variable-name": {
-      "options": ["ban-keywords", "check-format", "allow-pascal-case"]
-    },
+    "variable-name": false,
     "whitespace": {
       "options": [
         "check-branch",
@@ -99,5 +98,8 @@
     "use-pipe-transform-interface": true,
     "directive-selector": [true, "attribute", "app", "camelCase"],
     "component-selector": [true, "element", "app", "kebab-case"]
+  },
+  "linterOptions": {
+    "exclude": ["**/*.spec.ts", "**/*jest*"]
   }
 }

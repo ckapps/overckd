@@ -1,1 +1,1 @@
-export * from './recipe-collection.effects';
+export * from './recipe-collection.routes';

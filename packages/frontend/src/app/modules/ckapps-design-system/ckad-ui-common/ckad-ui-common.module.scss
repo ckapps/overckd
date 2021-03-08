@@ -1,0 +1,22 @@
+// ====================================================
+// Required imports
+// ====================================================
+// Import styling base
+@import '../ckad-ui-base/ckad-ui-base.module.scss';
+
+// Import module related stuff
+@import './scss/ckad-ui-common.variables.scss';
+@import './scss/ckad-ui-common.mixins.scss';
+
+// Import submodules
+@import './scss/ckad-ui-common.submodules.scss';
+
+// ====================================================
+// resetting and initial values
+// ====================================================
+@include html-normalize();
+
+// ====================================================
+// Add module elements
+// ====================================================
+@import './scss/ckad-ui-common.elements.scss';
