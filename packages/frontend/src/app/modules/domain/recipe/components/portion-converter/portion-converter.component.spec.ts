@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortionKind } from '@overckd/domain';
 import { PortionConverterService } from '../../services/portion-converter.service';
 
@@ -25,6 +26,7 @@ describe('PortionQuantifierComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PortionConverterComponent],
+      imports: [FormsModule, ReactiveFormsModule],
       providers: [
         {
           provide: PortionConverterService,

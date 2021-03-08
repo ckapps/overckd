@@ -1,9 +1,16 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY } from 'rxjs';
 import { RecipeCollectionService } from 'src/app/modules/domain/recipe-collection/services/recipe-collection.service';
 
 import { RecipeCollectionPageComponent } from './recipe-collection-page.component';
+
+@Component({
+  selector: 'overckd-recipe-collection',
+  template: '',
+})
+class MockRecipeCollectionComponent {}
 
 describe('RecipeCollectionPageComponent', () => {
   let component: RecipeCollectionPageComponent;
@@ -21,7 +28,11 @@ describe('RecipeCollectionPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecipeCollectionPageComponent],
+      declarations: [
+        RecipeCollectionPageComponent,
+        // Mocked
+        MockRecipeCollectionComponent,
+      ],
       providers: [
         {
           provide: ActivatedRoute,

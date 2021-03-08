@@ -1,6 +1,13 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CkadMainMenuItemComponent } from './main-menu-item.component';
+
+@Component({
+  selector: 'fa-icon',
+  template: '',
+})
+class MockFontawesomeIconComponent {}
 
 describe('MainMenuItemComponent', () => {
   let component: CkadMainMenuItemComponent;
@@ -8,7 +15,11 @@ describe('MainMenuItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CkadMainMenuItemComponent],
+      declarations: [
+        CkadMainMenuItemComponent,
+        // Mocked
+        MockFontawesomeIconComponent,
+      ],
     }).compileComponents();
   });
 

@@ -1,4 +1,5 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { EMPTY, of } from 'rxjs';
 import { RecipeCollectionService } from 'src/app/modules/domain/recipe-collection/services/recipe-collection.service';
 
@@ -12,19 +13,18 @@ describe('RecipesComponent', () => {
     collections$: EMPTY,
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [RecipesPageComponent],
-        providers: [
-          {
-            provide: RecipeCollectionService,
-            useValue: mockRecipeCollectionService,
-          },
-        ],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [RecipesPageComponent],
+      imports: [RouterTestingModule],
+      providers: [
+        {
+          provide: RecipeCollectionService,
+          useValue: mockRecipeCollectionService,
+        },
+      ],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecipesPageComponent);

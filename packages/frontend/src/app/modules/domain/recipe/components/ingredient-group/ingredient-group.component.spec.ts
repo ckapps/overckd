@@ -1,5 +1,5 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IngredientGroupComponent } from './ingredient-group.component';
 
@@ -23,19 +23,17 @@ describe('IngredientGroupComponent', () => {
     };
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          IngredientGroupComponent,
-          // Mocked
-          MockIngredientListInputComponent,
-        ],
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        IngredientGroupComponent,
+        // Mocked
+        MockIngredientListInputComponent,
+      ],
 
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    }),
-  );
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IngredientGroupComponent);

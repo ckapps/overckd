@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -12,6 +13,12 @@ import { IngredientService } from '../../../ingredient-common/services/ingredien
 
 import { IngredientShelfFilterComponent } from './ingredient-shelf-filter.component';
 
+@Component({
+  selector: 'fa-icon',
+  template: '',
+})
+class MockFontawesomeIconComponent {}
+
 describe('IngredientShelfFilterComponent', () => {
   let component: IngredientShelfFilterComponent;
   let fixture: ComponentFixture<IngredientShelfFilterComponent>;
@@ -25,7 +32,11 @@ describe('IngredientShelfFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IngredientShelfFilterComponent],
+      declarations: [
+        IngredientShelfFilterComponent,
+        // Mocked
+        MockFontawesomeIconComponent,
+      ],
       imports: [
         NoopAnimationsModule,
         // Forms modules

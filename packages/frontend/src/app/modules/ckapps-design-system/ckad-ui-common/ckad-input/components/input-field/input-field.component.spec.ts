@@ -2,6 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CkadInputFieldComponent } from './input-field.component';
@@ -21,6 +23,7 @@ describe('CkadInputFieldComponent', () => {
         // Material modules
         MatButtonModule,
         MatInputModule,
+        MatIconModule,
       ],
     }).compileComponents();
   });

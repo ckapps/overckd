@@ -1,5 +1,5 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecipeComponent } from './recipe.component';
 
@@ -49,22 +49,20 @@ describe('RecipeComponent', () => {
     };
   });
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [
-          RecipeComponent,
-          // Mocked
-          MockPortionConverterComponent,
-          MockIngredientListComponent,
-          MockRecipeTipsComponent,
-          MockImprovementNotesComponent,
-          MockPreparatinoComponent,
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        RecipeComponent,
+        // Mocked
+        MockPortionConverterComponent,
+        MockIngredientListComponent,
+        MockRecipeTipsComponent,
+        MockImprovementNotesComponent,
+        MockPreparatinoComponent,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecipeComponent);

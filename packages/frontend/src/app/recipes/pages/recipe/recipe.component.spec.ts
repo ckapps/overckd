@@ -1,9 +1,16 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Component } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RecipeService } from 'src/app/modules/domain/recipe/services/recipe.service';
 
 import { RecipePageComponent } from './recipe.component';
+
+@Component({
+  selector: 'overckd-recipe',
+  template: '',
+})
+class MockRecipeComponent {}
 
 describe('RecipesComponent', () => {
   let component: RecipePageComponent;
@@ -16,23 +23,25 @@ describe('RecipesComponent', () => {
   };
   const mockRecipeService = {};
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [RecipePageComponent],
-        providers: [
-          {
-            provide: ActivatedRoute,
-            useValue: mockRoute,
-          },
-          {
-            provide: RecipeService,
-            useValue: mockRecipeService,
-          },
-        ],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [
+        RecipePageComponent,
+        // Mocked
+        MockRecipeComponent,
+      ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: mockRoute,
+        },
+        {
+          provide: RecipeService,
+          useValue: mockRecipeService,
+        },
+      ],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecipePageComponent);
