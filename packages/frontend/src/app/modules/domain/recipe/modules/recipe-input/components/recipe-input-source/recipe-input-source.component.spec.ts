@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core';
+import { Component, forwardRef, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import {
   ControlValueAccessor,
@@ -44,6 +44,7 @@ describe('RecipeInputSourceComponent', () => {
         MockCkadInputFieldComponent,
       ],
       imports: [FormsModule, ReactiveFormsModule],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 

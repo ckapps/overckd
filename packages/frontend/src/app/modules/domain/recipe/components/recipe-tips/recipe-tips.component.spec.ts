@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecipeTipsComponent } from './recipe-tips.component';
@@ -22,6 +23,7 @@ describe('RecipeTipsComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [RecipeTipsComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 

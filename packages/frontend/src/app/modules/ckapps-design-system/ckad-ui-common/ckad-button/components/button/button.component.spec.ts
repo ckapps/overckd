@@ -1,3 +1,4 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -11,6 +12,7 @@ describe('CkadButtonButton', () => {
     await TestBed.configureTestingModule({
       declarations: [CkadButtonButtonComponent],
       imports: [MatButtonModule],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 

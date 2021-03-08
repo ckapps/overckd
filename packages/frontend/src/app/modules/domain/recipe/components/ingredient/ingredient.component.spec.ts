@@ -1,4 +1,4 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IngredientComponent } from './ingredient.component';
@@ -38,6 +38,7 @@ describe('IngredientComponent', () => {
         // Mocked
         MockIngredientAmountPipe,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   });
 
