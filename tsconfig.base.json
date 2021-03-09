@@ -1,9 +1,4 @@
 {
-  "compileOnSave": false,
-
-  "compilerOptions": {
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "strict": true
-  }
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compileOnSave": false
 }
