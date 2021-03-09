@@ -2,14 +2,14 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      // "@overckd/domain": ["../domain/src"],
-      // "@overckd/domain/dist/*": ["../domain/src/*"],
-      // "@overckd/domain-rx": ["../domain-rx/src"],
-      // "@overckd/domain-rx/dist/*": ["../domain-rx/src/*"],
-      // "@overckd/server": ["../server/src"],
-      // "@overckd/server/dist/*": ["../server/src/*"],
-      // "@overckd/yaml-parser": ["../yaml-parser/src"],
-      // "@overckd/yaml-parser/dist/*": ["../yaml-parser/src/*"]
+      "@overckd/domain": ["./packages/domain/src"],
+      "@overckd/domain/dist/*": ["./packages/domain/src/*"],
+      "@overckd/domain-rx": ["./packages/domain-rx/src"],
+      "@overckd/domain-rx/dist/*": ["./packages/domain-rx/src/*"],
+      "@overckd/server": ["./packages/server/src"],
+      "@overckd/server/dist/*": ["./packages/server/src/*"],
+      "@overckd/yaml-parser": ["./packages/yaml-parser/src"],
+      "@overckd/yaml-parser/dist/*": ["./packages/yaml-parser/src/*"]
     }
   }
 }
