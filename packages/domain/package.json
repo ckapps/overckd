@@ -13,6 +13,7 @@
     "test": "jest ."
   },
   "dependencies": {
+    "@ckapp/rxjs-snafu": "0.0.20",
     "rxjs": "~6.6.0"
   },
   "devDependencies": {

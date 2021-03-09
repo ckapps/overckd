@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@ckapp/rxjs-node-fs": "^0.3.0",
-    "@ckapp/rxjs-snafu": "0.0.18",
+    "@ckapp/rxjs-snafu": "0.0.20",
     "@marblejs/core": "^3.4.3",
     "@marblejs/messaging": "^3.4.3",
     "@marblejs/middleware-body": "^3.4.3",
