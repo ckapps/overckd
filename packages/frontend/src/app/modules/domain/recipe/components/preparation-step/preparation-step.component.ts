@@ -15,7 +15,16 @@ export class PreparationStepComponent {
   @Input() stepsEnumerated: boolean;
 
   public get isHtml() {
-    return typeof this.step !== 'string' && !!this.step.html;
+    return !!this.stepHtml;
+  }
+
+  public get stepHtml() {
+    const { step } = this;
+    if (typeof step === 'string') {
+      return undefined;
+    }
+
+    return step.html;
   }
 
   public get stepText() {

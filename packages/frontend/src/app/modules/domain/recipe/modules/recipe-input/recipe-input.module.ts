@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CkadButtonModule } from 'src/app/modules/ckapps-design-system/ckad-ui-common/ckad-button/ckad-button.module';
 import { CkadInputModule } from 'src/app/modules/ckapps-design-system/ckad-ui-common/ckad-input/ckad-input.module';
 import { CkadListModule } from 'src/app/modules/ckapps-design-system/ckad-ui-common/ckad-list/ckad-list.module';
+import { UiModule } from 'src/app/modules/ui/ui.module';
 
 // Module components
 import { RecipeInputSourcesListComponent } from './components/recipe-input-sources-list/recipe-input-sources-list.component';
@@ -28,6 +29,7 @@ import { RecipeInputSourceComponent } from './components/recipe-input-source/rec
     FormsModule,
     ReactiveFormsModule,
     // External modules
+    UiModule,
     CkadButtonModule,
     CkadInputModule,
     CkadListModule,

@@ -14,5 +14,11 @@
     "target": "es2015",
     "module": "es2020",
     "lib": ["es2018", "dom"]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "preserveWhitespaces": true,
+    "strictInjectionParameters": true,
+    "strictTemplates": true
   }
 }
