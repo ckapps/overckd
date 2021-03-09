@@ -3,6 +3,20 @@ import * as path from 'path';
 import { PathId } from './path-id.enum';
 import { getPaths } from './paths';
 
+class GetPathError extends Error {
+  name = 'desktop-shell.Get-Path-Error';
+
+  constructor(
+    message: string,
+    /**
+     * Path id
+     */
+    public pathId?: PathId,
+  ) {
+    super(`GetPathError(${pathId}): ${message}`);
+  }
+}
+
 /**
  * Returns the fully resolved path for the given `pathId`.
  *
@@ -22,7 +36,7 @@ export function getPath(pathId: PathId): string {
     case PathId.AppAssets:
       return path.resolve(paths.appRoot, 'assets');
     default:
-      throw new Error(`Unknown path id ${pathId}`);
+      throw new GetPathError(`Unknown path id`);
   }
 }
 
@@ -38,7 +52,7 @@ export function getPath(pathId: PathId): string {
 export function getPathFromSegments(start: PathId, segments: string[]): string {
   const root = getPath(start);
   if (!root) {
-    return undefined;
+    throw new GetPathError(`Could not resolve root`);
   }
 
   return path.resolve(root, ...segments);

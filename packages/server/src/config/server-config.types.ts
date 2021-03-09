@@ -18,3 +18,13 @@ export interface ServerConfig {
     images: string;
   };
 }
+
+/**
+ * Represents a server configuration file
+ */
+export interface ServerConfigFile {
+  port?: number;
+  paths?: {
+    images?: string;
+  };
+}

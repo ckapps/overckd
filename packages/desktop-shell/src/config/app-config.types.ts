@@ -1,4 +1,4 @@
-import { ServerConfig } from '@overckd/server';
+import { ServerConfig, ServerConfigFile } from '@overckd/server';
 
 import { AppPaths } from '../paths/config/app-paths.types';
 
@@ -16,10 +16,7 @@ export interface AppConfig {
   server: ServerConfig;
 }
 
-/**
- * Structure of the YAML config file
- */
-export interface YamlConfig {
+export interface DecodedAppConfigFile {
   /**
    * Root path
    */
@@ -27,9 +24,14 @@ export interface YamlConfig {
   /**
    * Configure the paths of the app
    */
-  paths: Partial<AppPaths>;
+  paths?: Partial<AppPaths>;
   /**
    * Server configuration
    */
-  server: Partial<ServerConfig>;
+  server?: Partial<ServerConfigFile>;
 }
+
+/**
+ * Structure of the YAML config file
+ */
+export type AppConfigFile = Partial<DecodedAppConfigFile>;

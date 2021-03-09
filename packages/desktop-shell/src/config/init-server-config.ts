@@ -1,6 +1,6 @@
 import { ServerConfig } from '@overckd/server';
 
-import { YamlConfig } from './app-config.types';
+import { AppConfigFile } from './app-config.types';
 
 /**
  * Initializes the server configuration from YAML file and defaults
@@ -9,13 +9,19 @@ import { YamlConfig } from './app-config.types';
  * @param defaults
  */
 export function initServerConfig(
-  yaml: YamlConfig,
+  yaml: AppConfigFile,
   defaults: ServerConfig,
 ): ServerConfig {
-  const { server } = yaml;
+  const { server = {} } = yaml;
+
+  const { paths: serverPaths = {} } = server;
 
   return {
     ...defaults,
     ...server,
+    paths: {
+      ...defaults.paths,
+      ...serverPaths,
+    },
   };
 }

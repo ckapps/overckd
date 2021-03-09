@@ -5,9 +5,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 
 import { yamlDecode } from '@overckd/yaml-parser';
-import { generalYamlFile } from '@overckd/yaml-parser/dist/file-codec';
+import { appConfigFile } from '@overckd/yaml-parser/dist/modules/desktop-shell';
 
-import { AppConfig, YamlConfig } from './app-config.types';
+import { AppConfig, AppConfigFile } from './app-config.types';
 import { config } from './config';
 import { finalizeAppConfig } from './finalize-config';
 import { DEFAULT_CONFIG_FILE_NAME } from './defaults';
@@ -16,9 +16,9 @@ const logger = log.scope('config');
 
 function decodeConfig(pathToConfigFile: string) {
   return readFile(pathToConfigFile, { encoding: 'utf8' }).pipe(
-    yamlDecode(generalYamlFile),
+    yamlDecode(appConfigFile),
     tap(() => logger.debug(`parsed config from file ${pathToConfigFile}`)),
-    map((yaml: YamlConfig) => ({
+    map((yaml: AppConfigFile) => ({
       ...yaml,
       // If the root is not set, we provide the enclosing folder of the file
       pathRoot: yaml.pathRoot || path.dirname(path.resolve(pathToConfigFile)),
@@ -55,7 +55,13 @@ function resolveConfigFilePath(pathToConfigFile: string): Observable<string> {
   );
 }
 
-function chooseConfig(pathToConfigFile: string): Observable<AppConfig> {
+/**
+ * @param pathToConfigFile Optional path to the config file
+ *
+ * @returns
+ * An observable that emits with the app configuration
+ */
+function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
   // If no path was provided, we return the default configuration
   if (!pathToConfigFile) {
     logger.debug('using default configuration');
@@ -75,12 +81,12 @@ function chooseConfig(pathToConfigFile: string): Observable<AppConfig> {
 }
 
 /**
- * @param pathToConfigFile Path to the configuration file
+ * @param pathToConfigFile Optional path to the configuration file
  *
  * @returns
  * An observable that emits with the loaded app configuration
  */
-export function loadConfig(pathToConfigFile: string): Observable<AppConfig> {
+export function loadConfig(pathToConfigFile?: string): Observable<AppConfig> {
   logger.silly('called: loadConfig');
 
   return chooseConfig(pathToConfigFile).pipe(
