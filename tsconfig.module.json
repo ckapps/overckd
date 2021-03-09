@@ -2,7 +2,7 @@
   "extends": "./tsconfig.base.json",
 
   "compilerOptions": {
-    "module": "ES2020",
+    "module": "CommonJS",
     "moduleResolution": "node",
     "lib": ["es2019", "es2020.promise", "es2020.bigint", "es2020.string"],
     "target": "es2019",
