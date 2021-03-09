@@ -1,12 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
+    "noEmit": true,
     "baseUrl": ".",
     "allowJs": true,
     "module": "commonjs",
     "noImplicitAny": true,
-    "sourceMap": true,
-    "outDir": "dist",
     "moduleResolution": "node",
     "resolveJsonModule": true
   },

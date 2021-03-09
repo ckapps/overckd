@@ -6,10 +6,10 @@
   "description": "App for managing recipes",
   "main": "dist/index.js",
   "scripts": {
-    "cmd:build": "tsc",
+    "cmd:build": "tsc --project tsconfig.build.json",
     "cmd:start": "electron-forge start",
     "build:desktop": "npm run cmd:build",
-    "build:watch": "tsc --watch",
+    "build:watch": "npm run cmd:build -- --watch",
     "build": "npm run build:desktop",
     "clean": "rimraf dist",
     "start:desktop": "npm run build:watch",

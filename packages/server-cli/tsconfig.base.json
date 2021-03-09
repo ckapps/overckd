@@ -1,13 +1,8 @@
 {
   "extends": "../../tsconfig.node.json",
+
   "compilerOptions": {
-    "outDir": "./dist",
-    "sourceMap": true,
-    "declaration": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "noEmit": true
   },
   "include": ["./src"]
 }
