@@ -1,40 +1,42 @@
 <mat-form-field class="example-chip-list w-100">
-  <mat-label>Search for ingredients</mat-label>
-  <mat-chip-list #chipList aria-label="Ingredient query">
-    <mat-chip
-      *ngFor="let tag of this.selectedTags$ | async"
-      [selectable]="this.selectable"
-      [removable]="this.removable"
-      (removed)="this.remove(tag)"
-    >
-      {{ tag.label }}
-
-      <fa-icon matChipRemove *ngIf="this.removable" [icon]="'times'"></fa-icon>
-      <!-- <mat-icon matChipRemove *ngIf="this.removable">cancel</mat-icon> -->
-    </mat-chip>
-    <input
-      placeholder="Search for ingredients via name and tags"
-      #fruitInput
-      [formControl]="this.inputCtrl"
-      [matAutocomplete]="auto"
-      [matChipInputFor]="chipList"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      (matChipInputTokenEnd)="this.add($event)"
-    />
-  </mat-chip-list>
-  <mat-autocomplete
+  <mat-label>Search or add ingredients</mat-label>
+  <input
+    matInput
+    placeholder="Add ingredients"
+    #searchInput
+    [formControl]="this.inputCtrl"
+    [matChipInputFor]="chipList"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    (matChipInputTokenEnd)="this.add($event)"
+  />
+  <!-- <mat-autocomplete
     #auto="matAutocomplete"
     (optionSelected)="this.selected($event)"
   >
     <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
       {{ tag.label }}
     </mat-option>
-  </mat-autocomplete>
+  </mat-autocomplete> -->
 </mat-form-field>
 
-<!-- Show the result list -->
-<mat-list>
-  <mat-list-item *ngFor="let ingredient of filteredIngredients$ | async">
-    {{ ingredient.name }}
-  </mat-list-item>
-</mat-list>
+<mat-chip-list #chipList aria-label="Ingredient tags">
+  <mat-chip
+    *ngFor="let selectedTag of this.selectedTags$ | async"
+    selected
+    [selectable]="this.selectable"
+    [removable]="this.removable"
+    (removed)="this.removeTag(selectedTag)"
+  >
+    {{ selectedTag.label }}
+
+    <fa-icon matChipRemove *ngIf="this.removable" [icon]="'times'"></fa-icon>
+  </mat-chip>
+
+  <mat-chip
+    *ngFor="let tag of this.filteredTags$ | async"
+    [selectable]="true"
+    (click)="this.addTag(tag)"
+  >
+    {{ tag.label }}
+  </mat-chip>
+</mat-chip-list>

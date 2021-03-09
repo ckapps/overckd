@@ -1,1 +1,58 @@
-<overckd-ingredient-shelf-filter></overckd-ingredient-shelf-filter>
+<overckd-ingredient-shelf-filter
+  (added)="this.onAddedFromInput($event)"
+  (queryChanged)="this.onQueryChanged($event)"
+></overckd-ingredient-shelf-filter>
+
+<mat-selection-list (selectionChange)="this.onSelectionChanged($event)">
+  <div mat-subheader>Zutaten</div>
+  <ng-container
+    *ngIf="this.filteredIngredients$ | async as filteredIngredients"
+  >
+    <div
+      class="d-flex flex-row align-items-center justify-content-center text-muted"
+      *ngIf="filteredIngredients.length === 0"
+    >
+      <fa-icon [icon]="this.emptyByQueryIcon" [size]="'3x'"></fa-icon>
+      <span class="ml-2">Keine Zutaten gefunden</span>
+    </div>
+
+    <mat-list-option
+      *ngFor="let ingredient of filteredIngredients"
+      [value]="ingredient"
+      [selected]="false"
+    >
+      {{ ingredient.name }}
+    </mat-list-option>
+  </ng-container>
+
+  <div mat-subheader>Ausgewählte Zutaten</div>
+  <ng-container
+    *ngIf="this.selectedIngredients$ | async as selectedIngredients"
+  >
+    <div
+      class="d-flex flex-row align-items-center justify-content-center text-muted"
+      *ngIf="selectedIngredients.length === 0"
+    >
+      <fa-icon [icon]="this.emptyByNoSelectionIcon" [size]="'3x'"></fa-icon>
+      <span class="ml-2">Keine Zutaten ausgewählt</span>
+    </div>
+
+    <mat-list-option
+      *ngFor="let selectedIngredient of this.selectedIngredients"
+      [value]="selectedIngredient"
+      selected
+    >
+      <fa-layers [fixedWidth]="true" mat-list-icon>
+        <fa-icon [icon]="this.selectedIcon"></fa-icon>
+        <fa-icon
+          *ngIf="!selectedIngredient.uri"
+          [icon]="this.newIngredientIcon"
+          transform="shrink-6 up-8 right-8"
+          [classes]="['text-primary']"
+        ></fa-icon>
+      </fa-layers>
+
+      {{ selectedIngredient.name }}
+    </mat-list-option>
+  </ng-container>
+</mat-selection-list>
