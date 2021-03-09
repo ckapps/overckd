@@ -28,7 +28,7 @@ export const findIngredientsByQuery: MsgEffect = (event$, ctx) => {
     act(event =>
       pipe(
         event.payload,
-        ({ page, size, ...query }) => repo.findByQuery({ page, size, query }),
+        repo.findByQuery,
         map(payload => reply(event)({ type: `${eventType}_RESULT`, payload })),
         // catchError(error =>
         //   of({

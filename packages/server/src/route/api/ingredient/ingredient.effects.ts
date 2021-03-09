@@ -8,6 +8,7 @@ import {
   FindIngredientByQueryEvent,
   FlattenIngredientByQueryDto,
 } from '@overckd/domain-rx';
+import { unflattenQuery } from '@overckd/domain-rx/dist/search';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -16,7 +17,7 @@ import {
  * Validates request: `GET` byId
  */
 const validateFindByQueryRequest = requestValidator$({
-  params: FlattenIngredientByQueryDto,
+  query: FlattenIngredientByQueryDto,
 });
 
 // ----------------------------------------------------------------------------
@@ -55,7 +56,7 @@ export const findIngredientByQuery$ = r.pipe(
     return req$.pipe(
       validateFindByQueryRequest,
       mergeMap(req => {
-        const { params } = req;
+        const params = unflattenQuery(req.query);
 
         return pipe(
           FindIngredientByQueryEvent.create(params),

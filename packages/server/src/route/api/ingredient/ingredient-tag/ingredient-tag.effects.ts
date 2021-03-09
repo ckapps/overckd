@@ -8,6 +8,7 @@ import {
   FindIngredientTagByQueryEvent,
   FlattenIngredientTagByQueryDto,
 } from '@overckd/domain-rx';
+import { unflattenQuery } from '@overckd/domain-rx/dist/search';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -53,10 +54,7 @@ export const findIngredientTagsByQuery$ = r.pipe(
     return req$.pipe(
       validateFindByQueryRequest,
       mergeMap(req => {
-        const {
-          query: { size, page, ...query },
-        } = req;
-        const params = { size, page, query };
+        const params = unflattenQuery(req.query);
 
         return pipe(
           FindIngredientTagByQueryEvent.create(params),

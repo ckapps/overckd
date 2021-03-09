@@ -1,6 +1,6 @@
 import { event } from '@marblejs/core';
 
-import { FlattenIngredientByQueryDto } from './ingredient.type';
+import { IngredientByQueryDto } from './ingredient.type';
 
 /**
  *
@@ -17,7 +17,7 @@ export enum IngredientQueryType {
  */
 export const FindIngredientByQueryEvent = event(
   IngredientQueryType.FindByQuery,
-)(FlattenIngredientByQueryDto);
+)(IngredientByQueryDto);
 
 /**
  * Event for `getAll`

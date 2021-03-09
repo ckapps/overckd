@@ -62,7 +62,7 @@ export class RecipeInputSourcesListComponent
 
   ngOnInit(): void {
     this.newItems$.subscribe(x => {
-      console.log('lol', x);
+      // TODO implement
     });
   }
 
