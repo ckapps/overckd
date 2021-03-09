@@ -1,4 +1,9 @@
 {
   "compileOnSave": false,
-  "compilerOptions": {}
+
+  "compilerOptions": {
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "strict": true
+  }
 }

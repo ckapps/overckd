@@ -7,6 +7,7 @@
   "scripts": {
     "build:desktop": "lerna run build:desktop",
     "build": "lerna run build",
+    "build:watch": "lerna run build:watch --parallel --stream",
     "clean": "lerna run clean --parallel",
     "start:desktop": "lerna run build:desktop && lerna run start:desktop --parallel",
     "start:web": "lerna run start:web --parallel",
