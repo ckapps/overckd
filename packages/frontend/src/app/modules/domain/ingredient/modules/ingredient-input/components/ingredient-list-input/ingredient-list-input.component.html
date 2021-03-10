@@ -25,16 +25,18 @@
     </mat-list-option>
   </ng-container>
 
-  <div mat-subheader>Ausgewählte Zutaten</div>
   <ng-container
     *ngIf="this.selectedIngredients$ | async as selectedIngredients"
   >
     <div
-      class="d-flex flex-row align-items-center justify-content-center text-muted"
+      class="d-flex flex-row align-items-center justify-content-center text-primary"
       *ngIf="selectedIngredients.length === 0"
     >
       <fa-icon [icon]="this.emptyByNoSelectionIcon" [size]="'3x'"></fa-icon>
-      <span class="ml-2">Keine Zutaten ausgewählt</span>
+      <span class="ml-4 text-muted lead">Keine Zutaten ausgewählt</span>
+    </div>
+    <div mat-subheader *ngIf="selectedIngredients.length > 0">
+      Ausgewählte Zutaten
     </div>
 
     <mat-list-option
