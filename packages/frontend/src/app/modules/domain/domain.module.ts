@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RecipeModule } from './recipe/recipe.module';
 import { RecipeCollectionModule } from './recipe-collection/recipe-collection.module';
 import { IngredientModule } from './ingredient/ingredient.module';
+import { PortionModule } from './portion/portion.module';
 
 @NgModule({
   declarations: [],
@@ -13,7 +14,13 @@ import { IngredientModule } from './ingredient/ingredient.module';
     RecipeModule,
     RecipeCollectionModule,
     IngredientModule,
+    PortionModule,
   ],
-  exports: [RecipeModule, RecipeCollectionModule, IngredientModule],
+  exports: [
+    RecipeModule,
+    RecipeCollectionModule,
+    IngredientModule,
+    PortionModule,
+  ],
 })
 export class DomainModule {}

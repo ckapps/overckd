@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 // External modules
 import { UiModule } from '../../ui/ui.module';
 import { IngredientModule } from '../ingredient/ingredient.module';
+import { PortionCommonModule } from '../portion/modules/portion-common/portion-common.module';
 
 // Module submodules
 import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
@@ -16,7 +17,6 @@ import { IngredientGroupComponent } from './components/ingredient-group/ingredie
 import { IngredientListComponent } from './components/ingredient-list/ingredient-list.component';
 import { PreparationComponent } from './components/preparation/preparation.component';
 import { PreparationStepComponent } from './components/preparation-step/preparation-step.component';
-import { PortionConverterComponent } from './components/portion-converter/portion-converter.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
 import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.component';
 
@@ -35,7 +35,6 @@ import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.compon
     ImprovementNotesComponent,
     IngredientGroupComponent,
     RecipeTipsComponent,
-    PortionConverterComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +42,7 @@ import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.compon
     // External modules
     UiModule,
     IngredientModule,
+    PortionCommonModule,
     // Module submodules
     RecipeInputModule,
   ],

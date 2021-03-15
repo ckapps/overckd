@@ -9,7 +9,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { RecipeIngredient } from '@overckd/domain';
-import { PortionConverterService } from '../../services/portion-converter.service';
+import { PortionConverterService } from '../../../portion/modules/portion-common/services/portion-converter.service';
 
 @Component({
   selector: 'overckd-ingredient',
