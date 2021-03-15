@@ -28,6 +28,10 @@ import { AppIngredientService } from './services/app-ingredient.service';
 import { AppIngredientTagService } from './services/app-ingredient-tag.service';
 import { AppRecipeService } from './services/app-recipe.service';
 import { AppRecipeCollectionService } from './services/app-recipe-collection.service';
+import {
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher,
+} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -46,6 +50,9 @@ import { AppRecipeCollectionService } from './services/app-recipe-collection.ser
     BrowserAnimationsModule,
   ],
   providers: [
+    // External modules
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    // Our modules
     {
       provide: IngredientService,
       useClass: AppIngredientService,
