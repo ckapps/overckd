@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "name": "🖥 desktop-shell",
+      "path": "packages/desktop-shell"
+    },
+    {
+      "name": "🤵 server",
+      "path": "../packages/server"
+    },
+    {
+      "name": "⚙️ domain-rx",
+      "path": "../packages/domain-rx"
+    },
+    {
+      "name": "⚙️ domain",
+      "path": "../packages/domain"
+    },
+    {
+      "name": "📦 yaml-parser",
+      "path": "../packages/server-cli"
+    },
+    {
+      "name": "🍿 root",
+      "path": ".."
+    }
+  ]
+}

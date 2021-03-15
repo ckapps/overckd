@@ -1,0 +1,16 @@
+{
+  "folders": [
+    {
+      "name": "🎨 frontend",
+      "path": "../packages/frontend"
+    },
+    {
+      "name": "⚙️ domain",
+      "path": "../packages/domain"
+    },
+    {
+      "name": "🍿 root",
+      "path": ".."
+    }
+  ]
+}

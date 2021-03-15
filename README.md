@@ -34,7 +34,7 @@ The project uses different tools
 As an IDE i use [VSCode](https://code.visualstudio.com/), which means that I try to keep the configuration for it up to date. If you want to use VSCode as well, you can open the project as a workspace using
 `File -> Open workspace... -> ./overckd.code-workspace`
 
-If you do so, you can check out the recommended extensions.
+Be sure to checkout the recommended extensions 🙂
 
 ### Prequisites
 
@@ -86,6 +86,12 @@ The following section tries to give you an overview how overckd is structured on
   - [`domain-rx`](./packages/domain-rx/README.md): An provider-agnostic domain abstraction for `marble-js`
   - [`server`](./packages/server/README.md): Server implemention based on `marble-js`
   - [`server-cli`](./packages/server-cli/README.md): CLI for `@overckd/server`
+
+In order to provide a better experience, there are several VS code workspaces in the [.vscode](./.vscode) folder, which lets you focus on the system you are changing.
+
+- [`frontend`](./.vscode/overckd-frontend.code-workspace)
+- [`desktop`](./.vscode/overckd-deskop.code-workspace)
+- [`server`](./.vscode/overckd-server.code-workspace)
 
 ## The important scripts and what they do
 
