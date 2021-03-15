@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PortionKind } from '@overckd/domain';
-import { PortionConverterService } from '../../../../../recipe/services/portion-converter.service';
+import { PortionConverterService } from '../../services/portion-converter.service';
 
 import { PortionConverterComponent } from './portion-converter.component';
 
