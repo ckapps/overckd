@@ -1,1 +1,1 @@
-export * from './recipe-timer';
+export * from './recipe-timer.codec';

@@ -4,7 +4,7 @@ import {
   LabelPortionQuantifier,
   QuantityPortionQuantifier,
   SpringformPortionQuantifier,
-} from './portion-quantifier.model';
+} from './portion-quantifier.types';
 
 /**
  * Checks if `q` is a `LabelPortionQuantifier`

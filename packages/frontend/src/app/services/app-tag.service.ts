@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Tag, TagQuery } from '@overckd/domain';
+import { Tag, TagQuery } from '@overckd/domain/dist/models/tag/tag.model';
 import { Page } from '@overckd/domain/dist/search';
 
 import { UrlBuilderService } from './url-builder.service';

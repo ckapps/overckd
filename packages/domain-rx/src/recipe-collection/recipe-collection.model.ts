@@ -1,7 +1,7 @@
 import {
   RecipeCollection,
   CollectionRecipe,
-} from '@overckd/domain/dist/recipe-collection';
+} from '@overckd/domain/dist/models/recipe-collection/recipe-collection.model';
 
 import {
   CollectionRecipeDto,

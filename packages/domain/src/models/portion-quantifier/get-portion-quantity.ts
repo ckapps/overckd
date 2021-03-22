@@ -1,4 +1,4 @@
-import { PortionQuantifier } from './portion-quantifier.model';
+import { PortionQuantifier } from './portion-quantifier.types';
 import {
   isLabelPortionQuantifier,
   isQuantityPortionQuantifier,

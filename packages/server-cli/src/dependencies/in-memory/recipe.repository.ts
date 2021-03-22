@@ -2,8 +2,8 @@ import { Context, createReader } from '@marblejs/core';
 import { Reader } from 'fp-ts/lib/Reader';
 import { Observable } from 'rxjs';
 
-import { PortionKind } from '@overckd/domain/dist/portion-quantifier';
-import { Recipe } from '@overckd/domain/dist/recipe';
+import { PortionKind } from '@overckd/domain/dist/models/portion-quantifier/portion-quantifier.model';
+import { Recipe } from '@overckd/domain/dist/models/recipe/recipe.model';
 import { RecipeRepository } from '@overckd/domain/dist/repositories';
 
 import { InMemoryRepo } from './in-memory-repo';
