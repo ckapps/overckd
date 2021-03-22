@@ -3,4 +3,12 @@
   flex-direction: column;
   flex-shrink: 0;
   flex-grow: 0;
+
+  // background-color: purple;
+
+  .mat-list-item {
+    &.active {
+      background-color: rgba(63, 81, 181, 0.15);
+    }
+  }
 }

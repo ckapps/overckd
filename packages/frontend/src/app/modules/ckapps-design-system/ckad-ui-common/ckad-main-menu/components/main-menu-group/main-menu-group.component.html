@@ -1,5 +1,14 @@
-<hr />
+<mat-expansion-panel
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+  expanded
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title> {{ groupName }} </mat-panel-title>
+    <!-- <mat-panel-description>
+      Currently I am {{ panelOpenState ? 'open' : 'closed' }}
+    </mat-panel-description> -->
+  </mat-expansion-panel-header>
 
-<div>{{ groupName }}</div>
-
-<ng-content></ng-content>
+  <ng-content></ng-content>
+</mat-expansion-panel>

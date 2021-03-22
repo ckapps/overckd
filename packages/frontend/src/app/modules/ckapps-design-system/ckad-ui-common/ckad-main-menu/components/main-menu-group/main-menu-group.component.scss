@@ -1,36 +1,42 @@
 @import './main-menu-group.variables.scss';
 
 :host {
-  display: flex;
-  flex-direction: column;
+  display: block;
+  // flex-direction: column;
 
   margin-top: 1rem;
+  margin-bottom: 1rem;
   padding-top: 0.5rem;
 
-  > hr {
-    width: auto;
-    border-top: 1px solid;
-
-    // from variables: spacing
-    margin-left: $ckad-main-menu-group--hr--hspacing;
-    margin-right: $ckad-main-menu-group--hr--hspacing;
-
-    // from variables
-    border-top-color: $ckad-main-menu-group--hr--color;
+  ::ng-deep .mat-expansion-panel-body {
+    padding-left: 0;
+    padding-right: 0;
   }
 
-  > div {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1rem;
+  // > hr {
+  //   width: auto;
+  //   border-top: 1px solid;
 
-    // from variables: spacing
-    margin-left: $ckad-main-menu-group--title--hspacing;
-    margin-right: $ckad-main-menu-group--title--hspacing;
+  //   // from variables: spacing
+  //   margin-left: $ckad-main-menu-group--hr--hspacing;
+  //   margin-right: $ckad-main-menu-group--hr--hspacing;
 
-    // from variables: font / text
-    font-size: $ckad-main-menu-group--title--font-size;
-    font-family: $ckad-main-menu-group--title--font;
-    color: $ckad-main-menu-group--title--color;
-  }
+  //   // from variables
+  //   border-top-color: $ckad-main-menu-group--hr--color;
+  // }
+
+  // > div {
+  //   display: flex;
+  //   flex-direction: row;
+  //   margin-bottom: 1rem;
+
+  //   // from variables: spacing
+  //   margin-left: $ckad-main-menu-group--title--hspacing;
+  //   margin-right: $ckad-main-menu-group--title--hspacing;
+
+  //   // from variables: font / text
+  //   font-size: $ckad-main-menu-group--title--font-size;
+  //   font-family: $ckad-main-menu-group--title--font;
+  //   color: $ckad-main-menu-group--title--color;
+  // }
 }

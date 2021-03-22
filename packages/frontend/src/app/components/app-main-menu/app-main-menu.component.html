@@ -1,34 +1,40 @@
 <ckad-main-menu class="flex-grow-0 flex-shrink-0">
-  <ckad-main-menu-item
-    [icon]="this.faHome"
-    [routerLink]="'./home'"
-    routerLinkActive="active"
-  >
-    Home
-  </ckad-main-menu-item>
+  <mat-nav-list>
+    <a mat-list-item [routerLink]="'./home'" class="text-light">
+      <ckad-main-menu-item [icon]="this.faHome"> overckd </ckad-main-menu-item>
+    </a>
+  </mat-nav-list>
 
   <ckad-main-menu-group [groupName]="'Recipes'" [icon]="this.faUtensils">
-    <ckad-main-menu-item
-      [icon]="this.faWallet"
-      [routerLink]="'./recipes/list'"
-      routerLinkActive="active"
-    >
-      All
-    </ckad-main-menu-item>
-    <ckad-main-menu-item
-      [icon]="this.faFileContract"
-      [routerLink]="['./recipes', 'empty']"
-      [routerLinkActive]="'active'"
-    >
-      Print template
-    </ckad-main-menu-item>
-    <ckad-main-menu-item
-      [icon]="this.iconAdd"
-      [routerLink]="['./recipes', 'add']"
-      [routerLinkActive]="'active'"
-    >
-      Add recipe
-    </ckad-main-menu-item>
+    <mat-nav-list>
+      <a
+        mat-list-item
+        [routerLink]="['./recipes', 'list']"
+        routerLinkActive="active"
+      >
+        <ckad-main-menu-item [icon]="this.faWallet"> All </ckad-main-menu-item>
+      </a>
+
+      <a
+        mat-list-item
+        [routerLink]="['./recipes', 'empty']"
+        [routerLinkActive]="'active'"
+      >
+        <ckad-main-menu-item [icon]="this.faFileContract">
+          Print template
+        </ckad-main-menu-item>
+      </a>
+
+      <a
+        mat-list-item
+        [routerLink]="['./recipes', 'add']"
+        [routerLinkActive]="'active'"
+      >
+        <ckad-main-menu-item [icon]="this.iconAdd">
+          Add recipe
+        </ckad-main-menu-item>
+      </a>
+    </mat-nav-list>
   </ckad-main-menu-group>
 
   <overckd-collections-main-menu-group></overckd-collections-main-menu-group>

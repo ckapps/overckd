@@ -10,6 +10,8 @@ export class CkadMainMenuGroupComponent implements OnInit {
   @Input() groupName: string;
   @Input() icon: IconDefinition;
 
+  panelOpenState = true;
+
   constructor() {}
 
   ngOnInit(): void {}

@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 
 // External submodules
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -15,7 +17,7 @@ import { CkadMainMenuGroupComponent } from './components/main-menu-group/main-me
     CkadMainMenuItemComponent,
     CkadMainMenuGroupComponent,
   ],
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [CommonModule, FontAwesomeModule, MatExpansionModule, MatListModule],
   exports: [
     CkadMainMenuComponent,
     CkadMainMenuItemComponent,

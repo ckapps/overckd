@@ -32,6 +32,7 @@ import { AppIngredientService } from './services/app-ingredient.service';
 import { AppRecipeService } from './services/app-recipe.service';
 import { AppRecipeCollectionService } from './services/app-recipe-collection.service';
 import { AppTagService } from './services/app-tag.service';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,8 @@ import { AppTagService } from './services/app-tag.service';
     UiModule,
     UiDesktopModule,
     BrowserAnimationsModule,
+    // Material modules
+    MatListModule,
   ],
   providers: [
     // External modules
