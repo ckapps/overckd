@@ -78,7 +78,6 @@ export const RecipeFileRespository: Reader<
           return true;
         }),
       ),
-    // add: recipe =>
     update: (r, name) => {
       throw new Error('Method not implemented.');
     },

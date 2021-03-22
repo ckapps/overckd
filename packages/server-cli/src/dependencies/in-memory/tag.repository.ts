@@ -4,7 +4,7 @@ import { Reader } from 'fp-ts/lib/Reader';
 import { Observable, of } from 'rxjs';
 import { take, withLatestFrom } from 'rxjs/operators';
 
-import { Tag, TagQuery } from '@overckd/domain';
+import { BaseTag, Tag, TagQuery } from '@overckd/domain';
 import { TagRepository } from '@overckd/domain/dist/repositories';
 import { filterTagsByQuery } from '@overckd/domain/dist/rxjs/tag';
 import { asPagedResult } from '@overckd/domain/dist/rxjs/search';
@@ -25,6 +25,18 @@ function makeTag(label: string, color?: string, icon?: string): Tag {
 }
 
 class TagRepo extends InMemoryRepo<Tag> implements TagRepository {
+  add(tag: BaseTag): Observable<Tag> {
+    return this._add(tag);
+  }
+  removeByUri(uri: string): Observable<boolean> {
+    return this._remove({ uri });
+  }
+  getByUri(uri: string): Observable<Tag | undefined> {
+    return this.findItem({ uri });
+  }
+  update(uri: string, tag: Tag): Observable<Tag | undefined> {
+    return this._update(tag);
+  }
   findByQuery(query: TagQuery): Observable<Page<Tag>> {
     const query$ = of(query);
     const items$ = this.all.pipe(take(1), switchExpandItems());
@@ -53,6 +65,10 @@ export const MockTagRespository: Reader<Context, TagRepository> = createReader<
   const repo = new TagRepo(initialValue);
 
   return {
+    add: (...args) => repo.add(...args),
+    getByUri: (...args) => repo.getByUri(...args),
     findByQuery: (...args) => repo.findByQuery(...args),
+    removeByUri: (...args) => repo.removeByUri(...args),
+    update: (...args) => repo.update(...args),
   };
 });

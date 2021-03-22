@@ -4,7 +4,12 @@ import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/lib/pipeable';
 
-import { FindTagByQueryEvent, FlattenTagByQueryDto } from '@overckd/domain-rx';
+import {
+  FindTagByQueryEvent,
+  FlattenTagByQueryDto,
+  GetTagByIdEvent,
+} from '@overckd/domain-rx';
+import { UriIdQueryDto } from '@overckd/domain-rx/dist/shared/uri.codec';
 import { unflattenQuery } from '@overckd/domain-rx/dist/search';
 
 // ----------------------------------------------------------------------------
@@ -15,6 +20,13 @@ import { unflattenQuery } from '@overckd/domain-rx/dist/search';
  */
 const validateFindByQueryRequest = requestValidator$({
   query: FlattenTagByQueryDto,
+});
+
+/**
+ * Validates request: `GET` byId
+ */
+const validateGetByIdRequest = requestValidator$({
+  params: UriIdQueryDto,
 });
 
 // ----------------------------------------------------------------------------
@@ -40,7 +52,7 @@ const validateFindByQueryRequest = requestValidator$({
 // );
 
 /**
- * `GET` Query ingredients
+ * `GET` Query tag
  */
 export const findTagsByQuery$ = r.pipe(
   r.matchPath('/query'),
@@ -60,6 +72,28 @@ export const findTagsByQuery$ = r.pipe(
           ? { status: HttpStatus.NOT_FOUND }
           : { body: value.payload },
       ),
+    );
+  }),
+);
+
+/**
+ * `GET` tag by ID
+ */
+export const getTagByUri$ = r.pipe(
+  r.matchPath('/:uri'),
+  r.matchType('GET'),
+  r.useEffect((req$, ctx) => {
+    const eventBusClient = useContext(EventBusClientToken)(ctx.ask);
+
+    return req$.pipe(
+      validateGetByIdRequest,
+      mergeMap(req => {
+        const { params } = req;
+
+        return pipe(GetTagByIdEvent.create(params), eventBusClient.send);
+      }),
+      map(value => ({ body: value.payload })),
+      // mapTo({ status: HttpStatus.OK, b }),
     );
   }),
 );

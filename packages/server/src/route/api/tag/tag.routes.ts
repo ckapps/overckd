@@ -1,6 +1,6 @@
 import { combineRoutes } from '@marblejs/core';
 
-import { findTagsByQuery$ } from './tag.effects';
+import { findTagsByQuery$, getTagByUri$ } from './tag.effects';
 
 // ----------------------------------------------------------------------------
 // routes
@@ -8,4 +8,7 @@ import { findTagsByQuery$ } from './tag.effects';
 /**
  * Combined routes for ingredient tags
  */
-export const tagRoutes$ = combineRoutes('/tags', [findTagsByQuery$]);
+export const tagRoutes$ = combineRoutes('/tags', [
+  findTagsByQuery$,
+  getTagByUri$,
+]);
