@@ -1,5 +1,7 @@
 import { t } from '@marblejs/middleware-io';
 
+import { dataQueryDto, flattenDataQueryDto } from '../codecs';
+
 // ----------------------------------------------------------------------------
 // Consts
 // ----------------------------------------------------------------------------
@@ -22,8 +24,20 @@ export const BaseTagDto = t.intersection([
 export function tagDto() {
   return BaseTagDto;
 }
+
+export const TagDto = tagDto();
+
+export const TagSearchDto = t.partial({
+  label: t.string,
+});
+
+export const TagByQueryDto = dataQueryDto(TagSearchDto);
+export const FlattenTagByQueryDto = flattenDataQueryDto(TagSearchDto);
+
 // ----------------------------------------------------------------------------
 // Types
 // ----------------------------------------------------------------------------
+export type TagDto = t.TypeOf<typeof TagDto>;
 
-export type TagDto = t.TypeOf<typeof BaseTagDto>;
+export type TagByQueryDto = t.TypeOf<typeof TagByQueryDto>;
+export type FlattenTagByQueryDto = t.TypeOf<typeof FlattenTagByQueryDto>;

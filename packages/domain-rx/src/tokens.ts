@@ -2,9 +2,9 @@ import { createContextToken } from '@marblejs/core';
 
 import {
   IngredientRepository,
-  IngredientTagRepository,
   RecipeCollectionRepository,
   RecipeRepository,
+  TagRepository,
 } from '@overckd/domain/dist/repositories';
 
 const TOKEN_PREFIX = 'overckd-';
@@ -36,9 +36,12 @@ export const IngredientRepositoryToken = createContextToken<
   IngredientRepository
 >(`${TOKEN_PREFIX}IngredientRepository`);
 
+// ----------------------------------------------------------------------------
+// Repositories - Tags
+// ----------------------------------------------------------------------------
 /**
- * DI token for ingredient repository
+ * DI token for tag repository
  */
-export const IngredientTagRepositoryToken = createContextToken<
-  IngredientTagRepository
->(`${TOKEN_PREFIX}IngredientTagRepository`);
+export const TagRepositoryToken = createContextToken<TagRepository>(
+  `${TOKEN_PREFIX}TagRepositoryToken`,
+);

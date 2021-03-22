@@ -1,8 +1,10 @@
 import { MonoTypeOperatorFunction } from 'rxjs';
 
 import { regexpFromString } from '../../core/regexp';
-import { Ingredient } from '../../ingredient';
-import { IngredientQuery } from '../../ingredient-queries';
+import {
+  Ingredient,
+  IngredientQuery,
+} from '../../models/ingredient/ingredient.model';
 import { filterByQuery } from '../search';
 
 /**

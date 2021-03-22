@@ -1,6 +1,6 @@
 import {
   IngredientRepositoryToken,
-  IngredientTagRepositoryToken,
+  TagRepositoryToken,
   RecipeCollectionRepositoryToken,
   RecipeRepositoryToken,
 } from './tokens';
@@ -10,7 +10,7 @@ describe('tokens', () => {
     ['RecipeCollectionRepositoryToken', RecipeCollectionRepositoryToken],
     ['RecipeRepositoryToken', RecipeRepositoryToken],
     ['IngredientRepositoryToken', IngredientRepositoryToken],
-    ['IngredientTagRepositoryToken', IngredientTagRepositoryToken],
+    ['TagRepositoryToken', TagRepositoryToken],
   ])('should define token %p', (tokenName, token) => {
     expect(token).toBeDefined();
   });

@@ -1,6 +1,5 @@
 import { combineRoutes } from '@marblejs/core';
 
-import { ingredientsTagRoutes$ } from './ingredient-tag/ingredient-tag.routes';
 import { findIngredientByQuery$ } from './ingredient.effects';
 
 // ----------------------------------------------------------------------------
@@ -11,6 +10,4 @@ import { findIngredientByQuery$ } from './ingredient.effects';
  */
 export const ingredientRoutes$ = combineRoutes('/ingredients', [
   findIngredientByQuery$,
-  // routes from sub resources
-  ingredientsTagRoutes$,
 ]);

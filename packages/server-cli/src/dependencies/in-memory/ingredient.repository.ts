@@ -4,7 +4,7 @@ import { Reader } from 'fp-ts/lib/Reader';
 import { Observable, of } from 'rxjs';
 import { take, withLatestFrom } from 'rxjs/operators';
 
-import { Ingredient, IngredientQuery, IngredientTag } from '@overckd/domain';
+import { Ingredient, IngredientQuery, Tag } from '@overckd/domain';
 import { IngredientRepository } from '@overckd/domain/dist/repositories';
 import { filterIngredientsByQuery } from '@overckd/domain/dist/rxjs/ingredient';
 import { asPagedResult } from '@overckd/domain/dist/rxjs/search';
@@ -15,7 +15,7 @@ import { InMemoryRepo } from './in-memory-repo';
 
 const uri = UriFactory(['kitchen', 'ingredients']);
 
-function makeIngredient(name: string, tags: IngredientTag[]): Ingredient {
+function makeIngredient(name: string, tags: Tag[]): Ingredient {
   return {
     name,
     tags,

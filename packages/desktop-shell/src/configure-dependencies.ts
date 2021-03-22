@@ -5,6 +5,7 @@ import {
 } from '@marblejs/core';
 
 import {
+  TagRepositoryToken,
   RecipeCollectionRepositoryToken,
   RecipeRepositoryToken,
 } from '@overckd/domain-rx';
@@ -13,6 +14,7 @@ import { AppConfigReader, AppConfigToken } from './config/config.token';
 import {
   RecipeFileRespository,
   RecipeCollectionFileRespository,
+  TagFileRepository,
 } from './repositories';
 
 export const configureDeps = (): BoundDependency<
@@ -27,5 +29,6 @@ export const configureDeps = (): BoundDependency<
     bindEagerlyTo(RecipeCollectionRepositoryToken)(
       RecipeCollectionFileRespository,
     ),
+    bindEagerlyTo(TagRepositoryToken)(TagFileRepository),
   ];
 };

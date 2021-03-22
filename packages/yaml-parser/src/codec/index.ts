@@ -1,7 +1,25 @@
-import { recipe, RecipeDTO } from './recipe';
-import { recipeCollection, recipeCollectionRecipe } from './recipe-collection';
+import {
+  ingredient,
+  IngredientDTO,
+  recipe,
+  RecipeDTO,
+  recipeCollection,
+  recipeCollectionRecipe,
+  tag,
+  TagDTO,
+} from './domain.codec';
 
-// Recipes
-export { recipe, RecipeDTO };
-// Recipe collections
-export { recipeCollection, recipeCollectionRecipe };
+export {
+  // Ingredients
+  ingredient,
+  IngredientDTO,
+  // Recipes
+  recipe,
+  RecipeDTO,
+  // Recipe collections
+  recipeCollection,
+  recipeCollectionRecipe,
+  // Tags
+  tag,
+  TagDTO,
+};

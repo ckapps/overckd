@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { EMPTY } from 'rxjs';
 
-import { IngredientTagService } from '../../../ingredient-common/services/ingredient-tag.service';
+import { TagService } from '../../../../../tag/modules/tag-common/services/tag.service';
 import { IngredientService } from '../../../ingredient-common/services/ingredient.service';
 
 import { IngredientShelfFilterComponent } from './ingredient-shelf-filter.component';
@@ -26,7 +26,7 @@ describe('IngredientShelfFilterComponent', () => {
   const mockIngredientService = {
     findByQuery: jest.fn().mockReturnValue(EMPTY),
   };
-  const mockIngredientTagService = {
+  const mockTagService = {
     findByQuery: jest.fn().mockReturnValue(EMPTY),
   };
 
@@ -54,8 +54,8 @@ describe('IngredientShelfFilterComponent', () => {
           useValue: mockIngredientService,
         },
         {
-          provide: IngredientTagService,
-          useValue: mockIngredientTagService,
+          provide: TagService,
+          useValue: mockTagService,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

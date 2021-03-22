@@ -6,6 +6,7 @@ import { RecipeModule } from './recipe/recipe.module';
 import { RecipeCollectionModule } from './recipe-collection/recipe-collection.module';
 import { IngredientModule } from './ingredient/ingredient.module';
 import { PortionModule } from './portion/portion.module';
+import { TagModule } from './tag/tag.module';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { PortionModule } from './portion/portion.module';
     RecipeCollectionModule,
     IngredientModule,
     PortionModule,
+    TagModule,
   ],
   exports: [
     RecipeModule,

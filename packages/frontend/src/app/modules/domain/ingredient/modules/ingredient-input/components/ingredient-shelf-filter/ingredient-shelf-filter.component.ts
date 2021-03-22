@@ -14,11 +14,7 @@ import {
   MatChipInputEvent,
   MatChipSelectionChange,
 } from '@angular/material/chips';
-import {
-  IngredientQuery,
-  IngredientTag,
-  IngredientTagQuery,
-} from '@overckd/domain';
+import { IngredientQuery, Tag, TagQuery } from '@overckd/domain';
 import { isString } from '@overckd/domain/dist/core/string';
 import {
   switchMapFilterFromUris,
@@ -39,7 +35,7 @@ import {
   takeUntil,
 } from 'rxjs/operators';
 
-import { IngredientTagService } from '../../../ingredient-common/services/ingredient-tag.service';
+import { TagService } from '../../../../../tag/modules/tag-common/services/tag.service';
 
 @Component({
   selector: 'overckd-ingredient-shelf-filter',
@@ -48,7 +44,7 @@ import { IngredientTagService } from '../../../ingredient-common/services/ingred
 })
 export class IngredientShelfFilterComponent implements OnDestroy {
   private destroyed$ = new ReplaySubject<boolean>(1);
-  private ingredientTagSubject = new BehaviorSubject<IngredientTag[]>([]);
+  private tagSubject = new BehaviorSubject<Tag[]>([]);
 
   @Input() selectable = true;
   @Input() removable = true;
@@ -72,7 +68,7 @@ export class IngredientShelfFilterComponent implements OnDestroy {
   /**
    * Observable that emits with the selected tags
    */
-  public selectedTags$ = this.ingredientTagSubject.asObservable();
+  public selectedTags$ = this.tagSubject.asObservable();
 
   /**
    * Observable that emits with the URIs of the selected tags
@@ -90,15 +86,15 @@ export class IngredientShelfFilterComponent implements OnDestroy {
   /**
    * Observable that emits
    */
-  private ingredientTagQuery$: Observable<
-    IngredientTagQuery
-  > = this.searchName$.pipe(map(label => ({ query: { label } })));
+  private tagQuery$: Observable<TagQuery> = this.searchName$.pipe(
+    map(label => ({ query: { label } })),
+  );
 
   /**
    * Filtered ingredients
    */
-  public filteredTags$ = this.ingredientTagQuery$.pipe(
-    switchMap(query => this.ingredientTagService.findByQuery(query)),
+  public filteredTags$ = this.tagQuery$.pipe(
+    switchMap(query => this.tagService.findByQuery(query)),
     pluck('result'),
     switchMapFilterFromUris(this.selectedTagUris$),
   );
@@ -112,7 +108,7 @@ export class IngredientShelfFilterComponent implements OnDestroy {
     this.selectedTagUris$,
   ]).pipe(map(([name, tags]) => ({ query: { name, tags } })));
 
-  constructor(private ingredientTagService: IngredientTagService) {
+  constructor(private tagService: TagService) {
     this.ingredientQuery$
       .pipe(takeUntil(this.destroyed$))
       .subscribe(query => this.queryChanged.emit(query));
@@ -138,7 +134,7 @@ export class IngredientShelfFilterComponent implements OnDestroy {
     this.addTag(value);
   }
 
-  public onTagselectionChange(ev: MatChipSelectionChange, tag: IngredientTag) {
+  public onTagselectionChange(ev: MatChipSelectionChange, tag: Tag) {
     if (ev.selected) {
       this.addTag(tag);
     }
@@ -149,8 +145,8 @@ export class IngredientShelfFilterComponent implements OnDestroy {
    *
    * @param tag Tag to add
    */
-  public addTag(tag: IngredientTag) {
-    this.ingredientTagSubject.next([...this.ingredientTagSubject.value, tag]);
+  public addTag(tag: Tag) {
+    this.tagSubject.next([...this.tagSubject.value, tag]);
     this.resetInput();
   }
 
@@ -158,13 +154,11 @@ export class IngredientShelfFilterComponent implements OnDestroy {
    * Removes tag from selection
    * @param tag Tag to remove
    */
-  public removeTag(tag: IngredientTag) {
-    const index = this.ingredientTagSubject.value.indexOf(tag);
+  public removeTag(tag: Tag) {
+    const index = this.tagSubject.value.indexOf(tag);
 
     if (index >= 0) {
-      this.ingredientTagSubject.next(
-        this.ingredientTagSubject.value.filter((_, i) => i !== index),
-      );
+      this.tagSubject.next(this.tagSubject.value.filter((_, i) => i !== index));
     }
   }
 
