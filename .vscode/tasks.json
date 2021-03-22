@@ -19,6 +19,14 @@
     },
     {
       "type": "npm",
+      "script": "app:desktop:dev",
+      "problemMatcher": [],
+      "label": "run > app-dev",
+      "detail": "Run in desktop-shell",
+      "group": "build"
+    },
+    {
+      "type": "npm",
       "script": "build:watch",
       "problemMatcher": [],
       "label": "build > watch",
