@@ -16,6 +16,7 @@
     "start": "npm run cmd:start",
     "app:desktop:dev": "electron-forge start -- --dev --from-url --config=../../data/example-1",
     "app:desktop": "npm run cmd:start",
+    "app:desktop:debug": "electron-forge start --inspect-electron -- --dev --from-url --config=../../data/example-1",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
