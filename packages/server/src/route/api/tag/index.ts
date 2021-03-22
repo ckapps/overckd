@@ -1,1 +1,1 @@
-export * from './tag.effects';
+export * from './tag.routes';

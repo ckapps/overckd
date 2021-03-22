@@ -5,6 +5,7 @@ import {
 } from '@marblejs/core';
 
 import {
+  IngredientRepositoryToken,
   TagRepositoryToken,
   RecipeCollectionRepositoryToken,
   RecipeRepositoryToken,
@@ -12,6 +13,7 @@ import {
 
 import { AppConfigReader, AppConfigToken } from './config/config.token';
 import {
+  IngredientFileRepository,
   RecipeFileRespository,
   RecipeCollectionFileRespository,
   TagFileRepository,
@@ -25,6 +27,7 @@ export const configureDeps = (): BoundDependency<
     // Dependency for the application configuration
     bindEagerlyTo(AppConfigToken)(AppConfigReader),
     // Dependencies for repositories
+    bindEagerlyTo(IngredientRepositoryToken)(IngredientFileRepository),
     bindEagerlyTo(RecipeRepositoryToken)(RecipeFileRespository),
     bindEagerlyTo(RecipeCollectionRepositoryToken)(
       RecipeCollectionFileRespository,

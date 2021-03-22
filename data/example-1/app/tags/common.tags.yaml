@@ -1,0 +1,34 @@
+overckd: 1.0.0
+
+tags:
+  - uri: vegan
+    label: vegan
+    color: '#00ff11'
+
+  - uri: vegetables
+    label: Gemüse
+    color: '#123789'
+
+  - uri: baking
+    label: Backen
+
+  - uri: sweet
+    label: süß
+
+  - uri: salty
+    label: salzig
+
+  - uri: sour
+    label: sauer
+
+  - uri: spicy
+    label: scharf
+
+  - uri: hearty
+    label: deftig
+
+  - uri: lactose-free
+    label: laktosefrei
+
+  - uri: vegeterian
+    label: vegetarisch

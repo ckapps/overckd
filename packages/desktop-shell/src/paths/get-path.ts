@@ -29,8 +29,12 @@ export function getPath(pathId: PathId): string {
   const paths = getPaths();
 
   switch (pathId) {
+    case PathId.Ingredients:
+      return path.resolve(paths.app, 'ingredients');
     case PathId.Recipes:
       return path.resolve(paths.app, 'recipes');
+    case PathId.Tags:
+      return path.resolve(paths.app, 'tags');
     case PathId.Images:
       return path.resolve(paths.app, 'images');
     case PathId.AppAssets:

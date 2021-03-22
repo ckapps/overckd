@@ -11,13 +11,13 @@ import { ingredientsFile } from '@overckd/yaml-parser/dist/file-codec';
 import * as path from 'path';
 import { Reader } from 'fp-ts/lib/Reader';
 
-import { BehaviorSubject, from, Observable, of } from 'rxjs';
+import { from, of, OperatorFunction } from 'rxjs';
 import {
   map,
   mergeMap,
+  reduce,
   shareReplay,
   take,
-  toArray,
   withLatestFrom,
 } from 'rxjs/operators';
 import { AppConfigToken } from '../config/config.token';
@@ -30,8 +30,12 @@ function readAllIngredientFiles(dir: string) {
     map(filename => path.resolve(dir, filename)),
     mergeMap(path => readFile(path, { encoding: 'utf-8' })),
     yamlDecode(ingredientsFile),
-    toArray(),
+    reduceIngredients(),
   );
+}
+
+function reduceIngredients(): OperatorFunction<Ingredient[], Ingredient[]> {
+  return reduce((acc, cur) => [...acc, ...cur], [] as Ingredient[]);
 }
 
 export const IngredientFileRepository: Reader<
