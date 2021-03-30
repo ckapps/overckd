@@ -1,6 +1,6 @@
 import { combineEffects } from '@marblejs/core';
 
-import { getRecipeByName } from './get-by-name.effect';
+import { getRecipeByNameEffect } from './get-by-name.effect';
 
 // export * from './recipe.command';
 // export * from './recipe.event';
@@ -8,9 +8,9 @@ export * from './recipe.query';
 export * from './recipe.type';
 
 /**
- * Effects for the recipe collection events
+ * Effects for the recipe events
  */
-const recipeEventEffects = [getRecipeByName];
+const recipeEventEffects = [getRecipeByNameEffect];
 
 /**
  * Combined effects
