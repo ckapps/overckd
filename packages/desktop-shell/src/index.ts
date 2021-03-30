@@ -1,21 +1,21 @@
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
-import log from 'electron-log';
-import { of, from, throwError, Observable, combineLatest } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { of, throwError, Observable, combineLatest } from 'rxjs';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
 import { initServer } from './server';
 import { ExitCode } from './exit-code.enum';
 import { AppConfig, loadConfig } from './config';
 
-import { LogScope } from './log-scope.enum';
+import { LogScope, scoped } from './logging';
 import { configureDeps } from './configure-dependencies';
 import { getPathFromSegments, PathId } from './paths';
 import { parseArgs } from './process-args';
+import { appIsStable$ } from './core/electron/app-is-stable';
 
-const appLog = log.scope(LogScope.App);
-const appEventLog = log.scope(LogScope.AppEvent);
+const appLog = scoped(LogScope.App);
+const appEventLog = scoped(LogScope.AppEvent);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -173,9 +173,7 @@ function startServer$(config: AppConfig): Observable<boolean> {
  * An Observable that emits with `true` when initialization was successful.
  * If an error occurs, it will throw an `AppInitError`
  */
-function appStable$(fromArgs: typeof args): Observable<boolean> {
-  appLog.silly('initApp');
-
+function stabilize$(fromArgs: typeof args): Observable<boolean> {
   return initConfig$(fromArgs).pipe(
     mergeMap(config => combineLatest([of(config), initProtocols$()])),
     mergeMap(([config]) => startServer$(config)),
@@ -185,13 +183,7 @@ function appStable$(fromArgs: typeof args): Observable<boolean> {
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-from(app.whenReady())
-  .pipe(
-    tap(() => appEventLog.debug('ready')),
-    mergeMap(() => appStable$(args)),
-    tap(() => appEventLog.debug('app stable')),
-  )
-  .subscribe(
+appIsStable$(() => stabilize$(args)).subscribe(
     () => createWindow(),
     // If some exit code was returned, terminate the app
     (error: AppInitError) => {
