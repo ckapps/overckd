@@ -1,31 +1,19 @@
-import { stat, readFile } from '@ckapp/rxjs-node-fs';
+import { stat } from '@ckapp/rxjs-node-fs';
+import { LogLevel } from '@overckd/domain';
 import * as log from 'electron-log';
 import * as path from 'path';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
-import { yamlDecode } from '@overckd/yaml-parser';
-import { appConfigFile } from '@overckd/yaml-parser/dist/modules/desktop-shell';
-
-import { AppConfig, AppConfigFile } from './app-config.types';
+import { AppConfig } from './app-config.types';
 import { config } from './config';
 import { finalizeAppConfig } from './finalize-config';
 import { DEFAULT_CONFIG_FILE_NAME } from './defaults';
+import { logEnterExit } from '../core/electron/log-enter-exit';
+import { tapElectronLog } from '../core/electron/tap-electron-log';
+import { readAppConfigFile } from '../filesystem/read-app-config-file';
 
 const logger = log.scope('config');
-
-function decodeConfig(pathToConfigFile: string) {
-  return readFile(pathToConfigFile, { encoding: 'utf8' }).pipe(
-    yamlDecode(appConfigFile),
-    tap(() => logger.debug(`parsed config from file ${pathToConfigFile}`)),
-    map((yaml: AppConfigFile) => ({
-      ...yaml,
-      // If the root is not set, we provide the enclosing folder of the file
-      pathRoot: yaml.pathRoot || path.dirname(path.resolve(pathToConfigFile)),
-    })),
-    map(yaml => finalizeAppConfig(yaml)),
-  );
-}
 
 /**
  * @param pathToConfigFile Path where to look for the config file
@@ -46,7 +34,7 @@ function resolveConfigFilePath(pathToConfigFile: string): Observable<string> {
         DEFAULT_CONFIG_FILE_NAME,
       );
 
-      logger.debug(
+      logger.silly(
         `passed path ${pathToConfigFile} is a directory, searching for file with default name ${DEFAULT_CONFIG_FILE_NAME}`,
       );
 
@@ -64,14 +52,30 @@ function resolveConfigFilePath(pathToConfigFile: string): Observable<string> {
 function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
   // If no path was provided, we return the default configuration
   if (!pathToConfigFile) {
-    logger.debug('using default configuration');
-    return of(config);
+    return of(config).pipe(
+      tapElectronLog({
+        logger,
+        level: LogLevel.Verbose,
+        prefixes: ['Using default configuration'],
+        withEmittedValues: true,
+      }),
+    );
   }
 
   return resolveConfigFilePath(pathToConfigFile).pipe(
-    tap(filename => logger.info(`loading configuration file from ${filename}`)),
+    tapElectronLog({
+      logger,
+      level: LogLevel.Silly,
+      prefixes: ['Loading app configuration from file'],
+      withEmittedValues: true,
+    }),
     mergeMap(actualFilename =>
-      decodeConfig(actualFilename).pipe(
+      readAppConfigFile(actualFilename).pipe(
+        map(finalizeAppConfig),
+        logEnterExit('Parsing configuration file', {
+          logger,
+          level: LogLevel.Silly,
+        }),
         catchError(e =>
           throwError(new Error(`could not read config file ${actualFilename}`)),
         ),
@@ -87,9 +91,11 @@ function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
  * An observable that emits with the loaded app configuration
  */
 export function loadConfig(pathToConfigFile?: string): Observable<AppConfig> {
-  logger.silly('called: loadConfig');
-
   return chooseConfig(pathToConfigFile).pipe(
-    tap(config => logger.debug('finalized app config', config)),
+    logEnterExit('Loading app configuration', {
+      logger,
+      level: LogLevel.Verbose,
+      withEmittedValues: true,
+    }),
   );
 }
