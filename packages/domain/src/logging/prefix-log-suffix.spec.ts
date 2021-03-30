@@ -1,4 +1,4 @@
-import { Logger, LogLevel } from '@overckd/domain';
+import { Logger, LogLevel } from './logger.type';
 
 import { prefixLogSuffix } from './prefix-log-suffix';
 

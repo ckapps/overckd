@@ -1,9 +1,10 @@
+import { prefixLogSuffix } from '@overckd/domain/dist/logging/prefix-log-suffix';
+
 import { Logger } from './log';
-import { prefixLogSuffix } from './prefix-log-suffix';
 
 /**
- * @param logger
- * @param filename
+ * @param logger The logger used for logging
+ * @param filename Filename
  *
  * @returns
  * A logger that prepends the filename on every message

@@ -1,4 +1,4 @@
-import { LogFunction, LogLevel } from '@overckd/domain';
+import { LogFunction, LogLevel } from './logger.type';
 
 export type LogIO = (opts: LoggerOptions) => LogFunction;
 

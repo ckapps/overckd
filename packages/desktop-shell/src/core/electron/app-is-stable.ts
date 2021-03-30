@@ -1,10 +1,12 @@
-import { LogLevel } from '@overckd/domain';
+import {
+  LogLevel,
+  logEnterExit$,
+} from '@overckd/domain/dist/logging/logging.operators';
 import { Observable } from 'rxjs';
 import { mergeMap, shareReplay } from 'rxjs/operators';
 
 import { ElectronLogScope, scoped } from '../../logging';
 import { appIsReady$ } from './app-is-ready';
-import { logEnterExit } from './log-enter-exit';
 
 const logger = scoped(ElectronLogScope.App);
 
@@ -20,7 +22,7 @@ export function appIsStable$<T>(
 ): Observable<T> {
   return appIsReady$.pipe(
     mergeMap(observableFactory),
-    logEnterExit('stabilizing', { logger, level: LogLevel.Verbose }),
+    logEnterExit$('stabilizing', { logger, level: LogLevel.Verbose }),
     shareReplay(1),
   );
 }
