@@ -2,4 +2,4 @@
 export * from './models/domain.model';
 
 // Logging
-export * from './logger';
+export * from './logging';

@@ -12,8 +12,8 @@ import { Logger } from '@overckd/domain';
  */
 export function prefixLogSuffix(
   logger: Logger,
-  prefixes: string[] = [],
-  suffixes: string[] = [],
+  prefixes: unknown[] = [],
+  suffixes: unknown[] = [],
 ): Logger {
   const logFn = (fnName: keyof LogFunctions) => (...args: any[]) =>
     logger[fnName](...prefixes, ...args, ...suffixes);
