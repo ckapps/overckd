@@ -1,4 +1,4 @@
-import { LogFunctions } from 'electron-log';
+import { Logger, LogLevel } from '@overckd/domain';
 
 import { prefixLogSuffix } from './prefix-log-suffix';
 
@@ -13,7 +13,7 @@ describe('logging/prefix-log-suffix', () => {
     log: jest.fn(),
   };
 
-  let logger: LogFunctions;
+  let logger: Logger;
   beforeEach(() => {
     logger = prefixLogSuffix(mockLogger);
   });
@@ -22,18 +22,18 @@ describe('logging/prefix-log-suffix', () => {
     expect(logger).toBeDefined();
   });
 
-  type TestCase = [keyof LogFunctions];
+  type TestCase = [keyof Logger];
   test.each([
-    ['debug'],
-    ['error'],
-    ['info'],
+    [LogLevel.Debug],
+    [LogLevel.Error],
+    [LogLevel.Info],
     ['log'],
-    ['silly'],
-    ['verbose'],
-    ['warn'],
+    [LogLevel.Debug],
+    [LogLevel.Verbose],
+    [LogLevel.Warning],
   ] as TestCase[])(
     'should call log function %p',
-    (logFunction: keyof LogFunctions) => {
+    (logFunction: keyof Logger) => {
       logger[logFunction]();
 
       expect(mockLogger[logFunction]).toBeCalled();

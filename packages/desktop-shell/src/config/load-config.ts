@@ -1,19 +1,19 @@
 import { stat } from '@ckapp/rxjs-node-fs';
 import { LogLevel } from '@overckd/domain';
-import * as log from 'electron-log';
 import * as path from 'path';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 
+import { LogScope, scoped } from '../logging';
+import { logEnterExit } from '../core/electron/log-enter-exit';
+import { tapElectronLog } from '../core/electron/tap-electron-log';
+import { readAppConfigFile } from '../filesystem/read-app-config-file';
 import { AppConfig } from './app-config.types';
 import { config } from './config';
 import { finalizeAppConfig } from './finalize-config';
 import { DEFAULT_CONFIG_FILE_NAME } from './defaults';
-import { logEnterExit } from '../core/electron/log-enter-exit';
-import { tapElectronLog } from '../core/electron/tap-electron-log';
-import { readAppConfigFile } from '../filesystem/read-app-config-file';
 
-const logger = log.scope('config');
+const logger = scoped(LogScope.Config);
 
 /**
  * @param pathToConfigFile Path where to look for the config file

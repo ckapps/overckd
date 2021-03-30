@@ -1,4 +1,4 @@
-import { LogFunctions } from 'electron-log';
+import { Logger, LogLevel } from '@overckd/domain';
 
 import { createFileLogger } from './create-file-logger';
 
@@ -13,7 +13,7 @@ describe('logging/create-file-logger', () => {
     log: jest.fn(),
   };
 
-  let fileLogger: LogFunctions;
+  let fileLogger: Logger;
 
   describe('with file-name', () => {
     beforeEach(() => {
@@ -34,18 +34,18 @@ describe('logging/create-file-logger', () => {
       expect(fileLogger).toBeDefined();
     });
 
-    type TestCase = [keyof LogFunctions];
+    type TestCase = [keyof Logger];
     test.each([
-      ['debug'],
-      ['error'],
-      ['info'],
+      [LogLevel.Debug],
+      [LogLevel.Error],
+      [LogLevel.Info],
       ['log'],
-      ['silly'],
-      ['verbose'],
-      ['warn'],
+      [LogLevel.Debug],
+      [LogLevel.Verbose],
+      [LogLevel.Warning],
     ] as TestCase[])(
       'should call log function %p',
-      (logFunction: keyof LogFunctions) => {
+      (logFunction: keyof Logger) => {
         fileLogger[logFunction]();
 
         expect(mockLogger[logFunction]).toBeCalled();

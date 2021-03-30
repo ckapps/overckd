@@ -1,6 +1,4 @@
-import { LogFunctions } from 'electron-log';
-
-import { Logger } from '@overckd/domain';
+import { Logger, LogLevel } from '@overckd/domain';
 
 /**
  * @param logger The log instance on which messages should be transformed
@@ -15,16 +13,16 @@ export function prefixLogSuffix(
   prefixes: unknown[] = [],
   suffixes: unknown[] = [],
 ): Logger {
-  const logFn = (fnName: keyof LogFunctions) => (...args: any[]) =>
+  const logFn = (fnName: keyof Logger) => (...args: any[]) =>
     logger[fnName](...prefixes, ...args, ...suffixes);
 
   return {
-    debug: logFn('debug'),
-    error: logFn('error'),
-    info: logFn('info'),
+    debug: logFn(LogLevel.Debug),
+    error: logFn(LogLevel.Error),
+    info: logFn(LogLevel.Info),
     log: logFn('log'),
-    silly: logFn('silly'),
-    verbose: logFn('verbose'),
-    warn: logFn('warn'),
+    silly: logFn(LogLevel.Silly),
+    verbose: logFn(LogLevel.Verbose),
+    warn: logFn(LogLevel.Warning),
   };
 }

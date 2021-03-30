@@ -1,13 +1,15 @@
 import { LogLevel } from '@overckd/domain';
-import * as log from 'electron-log';
 import { MonoTypeOperatorFunction } from 'rxjs';
 import { tap } from 'rxjs/operators';
+
+import { Logger } from '../../logging';
+import { prefixLogSuffix } from '../../logging/prefix-log-suffix';
 
 export interface TapElectronLogOptions {
   /**
    * Logger that should be used
    */
-  logger: log.LogFunctions;
+  logger: Logger;
   /**
    * Logging level
    */
@@ -46,15 +48,11 @@ export function tapElectronLog<T>(
     suffixes = [],
   } = options;
 
-  const logFn = logger[level];
+  const logFn = prefixLogSuffix(logger, prefixes, suffixes)[level];
 
-  return tap((...sources) => {
-    const logArguments = [...prefixes];
-    if (withEmittedValues) {
-      logArguments.push(...sources);
-    }
-    logArguments.push(...suffixes);
+  const logIO = withEmittedValues
+    ? (...args: unknown[]) => logFn(...args)
+    : logFn;
 
-    logFn(...logArguments);
-  });
+  return tap(logIO);
 }

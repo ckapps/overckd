@@ -1,13 +1,12 @@
 import { LogLevel } from '@overckd/domain';
-import * as log from 'electron-log';
 import { Observable } from 'rxjs';
 import { mergeMap, shareReplay } from 'rxjs/operators';
-import { appIsReady$ } from './app-is-ready';
 
-import { ElectronLogScope } from './electron.log-scope';
+import { ElectronLogScope, scoped } from '../../logging';
+import { appIsReady$ } from './app-is-ready';
 import { logEnterExit } from './log-enter-exit';
 
-const logger = log.scope(ElectronLogScope.App);
+const logger = scoped(ElectronLogScope.App);
 
 /**
  * @param observableFactory

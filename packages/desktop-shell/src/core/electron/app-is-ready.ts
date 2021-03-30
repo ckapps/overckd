@@ -1,11 +1,10 @@
 import { app } from 'electron';
-import * as log from 'electron-log';
 import { from } from 'rxjs';
 import { shareReplay, tap } from 'rxjs/operators';
 
-import { ElectronLogScope } from './electron.log-scope';
+import { ElectronLogScope, scoped } from '../../logging';
 
-const logger = log.scope(ElectronLogScope.App);
+const logger = scoped(ElectronLogScope.App);
 
 /**
  * Emits and completes when electron is initialized.

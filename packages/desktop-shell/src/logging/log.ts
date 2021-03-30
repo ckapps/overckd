@@ -12,3 +12,4 @@ export function scoped<T extends string>(scope: T): log.LogFunctions {
 }
 
 export { log };
+export { Logger } from '@overckd/domain';
