@@ -2,8 +2,9 @@
 
 :host {
   background: $ckad-main-menu--background-color;
-  width: $ckad-main-menu--width;
-  height: 100%;
+  // width: $ckad-main-menu--width;
+  max-height: 100vh;
+  overflow: auto;
 
   > nav {
     display: flex;

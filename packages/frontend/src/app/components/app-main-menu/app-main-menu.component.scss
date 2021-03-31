@@ -1,14 +1,20 @@
+$app-main-menu--background-color: transparent;
+$app-main-menu--padding: 0.5rem;
+
+$app-main-menu--list-item-active--background-color: rgba(63, 81, 181, 0.15);
+
 :host {
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   flex-grow: 0;
 
-  // background-color: purple;
+  padding: $app-main-menu--padding;
+  background-color: $app-main-menu--background-color;
 
   .mat-list-item {
     &.active {
-      background-color: rgba(63, 81, 181, 0.15);
+      background-color: $app-main-menu--list-item-active--background-color;
     }
   }
 }
