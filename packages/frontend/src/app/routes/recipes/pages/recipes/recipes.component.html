@@ -1,9 +1,6 @@
-<section *ngFor="let group of this.recipeGroups$ | async">
-  <h2>{{ group.name }}</h2>
-
-  <li *ngFor="let recipe of group.recipes">
-    <a [routerLink]="'../recipe/' + recipe.name">
-      {{ recipe.name }}
-    </a>
-  </li>
+<section *ngFor="let recipeCollection of this.recipeGroups$ | async">
+  <overckd-recipe-collection
+    [recipeCollection]="recipeCollection"
+    (recipeSelected)="this.onRecipeSelected($event)"
+  ></overckd-recipe-collection>
 </section>

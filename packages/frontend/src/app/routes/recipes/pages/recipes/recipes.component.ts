@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { CollectionRecipe } from '@overckd/domain';
 
 import { RecipeCollectionService } from 'src/app/modules/domain/recipe-collection/services/recipe-collection.service';
 
@@ -10,5 +11,12 @@ import { RecipeCollectionService } from 'src/app/modules/domain/recipe-collectio
 export class RecipesPageComponent {
   recipeGroups$ = this.recipeCollectionService.collections$;
 
-  constructor(private recipeCollectionService: RecipeCollectionService) {}
+  constructor(
+    private router: Router,
+    private recipeCollectionService: RecipeCollectionService,
+  ) {}
+
+  onRecipeSelected(recipe: CollectionRecipe) {
+    this.router.navigate(['/recipes', 'recipe', recipe.name]);
+  }
 }
