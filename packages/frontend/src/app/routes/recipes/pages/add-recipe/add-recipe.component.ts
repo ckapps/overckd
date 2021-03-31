@@ -13,7 +13,9 @@ export class AddRecipePageComponent implements OnInit {
   ngOnInit(): void {
     this.recipeForm = this.fb.group({
       name: this.fb.control('', [Validators.required]),
+      portionQuantifier: this.fb.control(''),
       basedOn: this.fb.control([]),
+      ingredientAmount: this.fb.control(''),
     });
   }
 }

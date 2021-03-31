@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // External submodules
-import { DomainModule } from '../modules/domain/domain.module';
-import { UiModule } from '../modules/ui/ui.module';
+import { DomainModule } from '../../modules/domain/domain.module';
+import { UiModule } from '../../modules/ui/ui.module';
 
 // Submodules
 import { RecipesRoutingModule } from './recipes-routing.module';

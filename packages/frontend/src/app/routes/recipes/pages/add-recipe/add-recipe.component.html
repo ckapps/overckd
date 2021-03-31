@@ -1,0 +1,54 @@
+<h2>Add a new recipe</h2>
+
+<article>
+  <form [formGroup]="this.recipeForm" class="grid">
+    <ckad-input-field
+      formControlName="name"
+      label="Title"
+      type="text"
+      class="w-full field"
+    ></ckad-input-field>
+
+    <overckd-portion-quantifier-input
+      formControlName="portionQuantifier"
+      class="w-full field"
+    >
+    </overckd-portion-quantifier-input>
+
+    <overckd-recipe-input-sources-list
+      formControlName="basedOn"
+      label="Based on"
+      class="w-full field"
+    ></overckd-recipe-input-sources-list>
+
+    <overckd-ingredient-list-input
+      class="w-full field"
+    ></overckd-ingredient-list-input>
+
+    <!-- <div>
+      <mat-form-field appearance="legacy">
+        <mat-label>Legacy form field</mat-label>
+        <input matInput placeholder="Placeholder" />
+        <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        <mat-hint>Hint</mat-hint>
+      </mat-form-field>
+    </div> -->
+
+    <overckd-ingredient-amount-input
+      class="w-full field"
+      formControlName="ingredientAmount"
+    ></overckd-ingredient-amount-input>
+
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <div></div>
+    <div></div>
+  </form>
+</article>
