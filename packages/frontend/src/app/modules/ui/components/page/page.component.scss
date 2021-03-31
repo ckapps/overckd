@@ -1,7 +1,9 @@
+@import './page.mixins.scss';
+@import './page.variables.scss';
+
 :host {
-  display: grid;
-  padding: 5rem;
-  background-color: white;
-  width: 100%;
-  overflow: auto;
+  @include ui-page-fullsize();
+
+  background-color: $ui-page-background-color;
+  padding: $ui-page-padding;
 }
