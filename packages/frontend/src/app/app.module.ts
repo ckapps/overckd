@@ -6,6 +6,7 @@ import {
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
 } from '@angular/material/core';
+import { MatListModule } from '@angular/material/list';
 
 // External modules
 import { DomainModule } from './modules/domain/domain.module';
@@ -32,7 +33,6 @@ import { AppIngredientService } from './services/app-ingredient.service';
 import { AppRecipeService } from './services/app-recipe.service';
 import { AppRecipeCollectionService } from './services/app-recipe-collection.service';
 import { AppTagService } from './services/app-tag.service';
-import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
