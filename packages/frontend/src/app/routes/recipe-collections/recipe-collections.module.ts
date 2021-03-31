@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // External modules
-import { DomainModule } from '../modules/domain/domain.module';
-import { UiModule } from '../modules/ui/ui.module';
+import { DomainModule } from '../../modules/domain/domain.module';
+import { UiModule } from '../../modules/ui/ui.module';
 
 // Submodules
 import { RecipeCollectionsRoutingModule } from './recipe-collections-routing.module';

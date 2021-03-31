@@ -23,7 +23,7 @@ const routes: Routes = [
   {
     path: 'collections',
     loadChildren: () =>
-      import('./recipe-collections/recipe-collections.module').then(
+      import('./routes/recipe-collections/recipe-collections.module').then(
         m => m.RecipeCollectionsModule,
       ),
   },
