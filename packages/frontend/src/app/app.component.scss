@@ -1,6 +1,7 @@
 :host {
   height: 100%;
   display: grid;
+  overflow: hidden;
 
   grid-template:
     'title-bar title-bar' auto
@@ -18,4 +19,5 @@
 
 main {
   grid-area: main;
+  overflow: auto;
 }
