@@ -1,7 +1,7 @@
 {
   "extends": "../../../tslint.json",
   "rules": {
-    "directive-selector": [true, "attribute", "ocui", "camelCase"],
-    "component-selector": [true, "element", "ocui", "kebab-case"]
+    "directive-selector": [true, "attribute", "overckd", "camelCase"],
+    "component-selector": [true, "element", "overckd", "kebab-case"]
   }
 }

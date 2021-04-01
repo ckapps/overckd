@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'ocui-page',
+  selector: 'overckd-page',
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss'],
 })

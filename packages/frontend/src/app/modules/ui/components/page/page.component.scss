@@ -1,9 +1,5 @@
-@import './page.mixins.scss';
-@import './page.variables.scss';
+@import '../../../ckapps-design-system/ckad-ui-base/ckad-ui-base.module.scss';
 
 :host {
-  @include ui-page-fullsize();
-
-  background-color: $ui-page-background-color;
-  padding: $ui-page-padding;
+  @include ckad-page-default();
 }
