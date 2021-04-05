@@ -17,6 +17,8 @@ import {
   styleUrls: ['./app-main-menu.component.scss'],
 })
 export class AppMainMenuComponent implements OnInit {
+  readonly itemClass = 'ckapps-main-menu-item';
+  readonly itemActiveClass = 'ckapps-main-menu-item--active';
   public faHome = faHome;
   public faUtensils = faUtensils;
   public faFileContract = faFileContract;

@@ -3,8 +3,9 @@
     <a
       *ngFor="let collection of collections"
       mat-list-item
+      [class]="this.itemClass"
       [routerLink]="['./collections/', 'collection', collection.id]"
-      [routerLinkActive]="'active'"
+      [routerLinkActive]="this.itemActiveClass"
     >
       <ckad-main-menu-item>
         {{ collection.name }}

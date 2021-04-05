@@ -33,3 +33,7 @@ $overckd-app-theme: mat-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($overckd-app-theme);
+
+// Themeing our components
+@import '../../app/modules/ckapps-design-system/ckad-ui-common/ckad-ui-common.module.scss';
+@include ckapps-main-menu-item-theme($overckd-app-theme);

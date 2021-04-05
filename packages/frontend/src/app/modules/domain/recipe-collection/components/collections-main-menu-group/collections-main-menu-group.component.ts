@@ -13,6 +13,8 @@ import { RecipeCollectionService } from '../../services/recipe-collection.servic
   styleUrls: ['./collections-main-menu-group.component.scss'],
 })
 export class CollectionsMainMenuGroupComponent implements OnInit, OnDestroy {
+  readonly itemClass = 'ckapps-main-menu-item';
+  readonly itemActiveClass = 'ckapps-main-menu-item--active';
   public faListAlt = faListAlt;
   public collections$ = this.recipeCollectionService.collections$;
 
