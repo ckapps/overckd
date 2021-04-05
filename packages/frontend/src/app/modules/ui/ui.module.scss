@@ -1,6 +1,5 @@
-// Import local stylings
-@import './scss/ui.mixins.scss';
-@import './scss/ui.variables.scss';
+// Import base styles
+@import './ui.base.scss';
 
 // Import stylings from submodules
 @import '../ckapps-design-system/ckad-ui-common/ckad-ui-common.module.scss';

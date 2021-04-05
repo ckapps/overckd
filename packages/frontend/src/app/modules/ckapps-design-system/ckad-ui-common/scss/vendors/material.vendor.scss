@@ -1,0 +1,7 @@
+@import './material/material.variables.scss';
+
+.mat-list-item {
+  &.active {
+    background-color: $ckad-main-menu--list-item-active--background-color;
+  }
+}

@@ -1,7 +1,7 @@
+@import '../../../styles/overckd.variables.scss';
+
 $app-main-menu--background-color: transparent;
 $app-main-menu--padding: 0.5rem;
-
-$app-main-menu--list-item-active--background-color: rgba(63, 81, 181, 0.15);
 
 :host {
   display: flex;
@@ -11,10 +11,4 @@ $app-main-menu--list-item-active--background-color: rgba(63, 81, 181, 0.15);
 
   padding: $app-main-menu--padding;
   background-color: $app-main-menu--background-color;
-
-  .mat-list-item {
-    &.active {
-      background-color: $app-main-menu--list-item-active--background-color;
-    }
-  }
 }

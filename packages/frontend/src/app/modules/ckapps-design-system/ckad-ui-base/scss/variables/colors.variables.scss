@@ -1,0 +1,63 @@
+// ==========================================
+// Color palette
+// ==========================================
+
+// Gray
+$gray-darkest: #404040 !default;
+$gray-darker: #535353 !default;
+$gray-dark: #a0a0a0 !default;
+$gray-light: #cfcfcf !default;
+$gray-lighter: #e0e0e0 !default;
+$gray-lightest: #f2f2f2 !default;
+
+// Blue
+$blue-dark: #019dbf !default;
+$blue-default: #5da2b1 !default;
+$blue-light: #70b3e3 !default;
+
+// Green
+$green-dark: #219653 !default;
+$green-default: #27ae60 !default;
+$green-light: #70e39e !default;
+
+// Purple
+$purple-dark: #9b51e0 !default;
+$purple-default: #a14bf8 !default;
+$purple-light: #b170e3 !default;
+
+// Red
+$red-dark: #eb5757 !default;
+$red-default: #cf7777 !default;
+$red-light: #e37070 !default;
+
+// Orange
+$orange-default: #f2994a !default;
+$orange-light: #e3b570 !default;
+
+// Yellow
+$yellow-default: #f3cc00 !default;
+$yellow-light: #f3cc00 !default;
+
+// ==========================================
+// ckapps design ci
+// ==========================================
+$ckad-ci-color-primary: $purple-default !default;
+$ckad-ci-color-accent: $blue-default !default;
+$ckad-ci-color-secondary: $gray-light !default;
+$ckad-ci-color-success: $green-default !default;
+$ckad-ci-color-warning: $yellow-default !default;
+$ckad-ci-color-danger: $red-default !default;
+$ckad-ci-color-light: $gray-lightest !default;
+$ckad-ci-color-dark: $gray-darkest !default;
+
+// ==========================================
+// Color palette
+// ==========================================
+$primary: $ckad-ci-color-primary !default;
+$secondary: $ckad-ci-color-secondary !default;
+$accent: $ckad-ci-color-accent !default;
+$success: $ckad-ci-color-success !default;
+$warning: $ckad-ci-color-warning !default;
+$danger: $ckad-ci-color-danger !default;
+$light: $ckad-ci-color-light !default;
+$dark: $ckad-ci-color-dark !default;
