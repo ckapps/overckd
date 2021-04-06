@@ -22,4 +22,7 @@
   &.inset {
     height: $ckad-desktop-window-title-bar--inset--height;
   }
+  &.big {
+    height: $ckad-desktop-window-title-bar--big--height;
+  }
 }

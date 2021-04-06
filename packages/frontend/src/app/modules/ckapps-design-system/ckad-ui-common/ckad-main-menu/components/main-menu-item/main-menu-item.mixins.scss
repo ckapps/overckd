@@ -10,6 +10,8 @@
   .mat-nav-list .ckapps-main-menu-item {
     // Use mat-color to extract individual colors from a palette.
     // border-color: mat-color($accent, A400);
+    background-color: inherit;
+    color: inherit;
 
     &--active {
       &,
@@ -37,6 +39,13 @@
   }
 }
 
+@mixin ckapps-main-menu-item-customization() {
+  .ckapps-main-menu-item {
+    border-radius: 0.5em;
+    overflow: hidden;
+  }
+}
+
 @mixin ckapps-main-menu-item-theme($theme) {
   // Extracts the color and typography configurations from the theme.
   $color: mat-get-color-config($theme);
@@ -50,4 +59,6 @@
   @if $typography != null {
     @include ckapps-main-menu-item-typography($typography);
   }
+
+  @include ckapps-main-menu-item-customization();
 }
