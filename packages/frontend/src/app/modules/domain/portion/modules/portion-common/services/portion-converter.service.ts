@@ -6,12 +6,10 @@ import {
   PortionQuantifier,
   QuantityPortionQuantifier,
   SpringformPortionQuantifier,
-} from '@overckd/domain';
-
-import {
   calculateScalingFactor,
   getPortionQuantity,
-} from '@overckd/domain/dist/portions';
+} from '@overckd/domain/dist/models/portion-quantifier/portion-quantifier.model';
+
 import { scaleIngredientAmount$ } from '@overckd/domain/dist/rxjs/portions';
 
 /**

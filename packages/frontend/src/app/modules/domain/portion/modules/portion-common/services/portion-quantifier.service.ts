@@ -1,8 +1,19 @@
 import { Injectable } from '@angular/core';
 
-import { PortionQuantifier } from '@overckd/domain';
+import { PortionKind, PortionQuantifier } from '@overckd/domain';
 
-@Injectable()
-export abstract class PortionQuantifierService {
-  // getAllKinds(): PortionQuantifier
+const defaultOrder: PortionKind[] = [
+  PortionKind.Label,
+  PortionKind.Quantity,
+  PortionKind.Springform,
+];
+
+/**
+ * Services for working with portion quantifiers
+ */
+@Injectable({ providedIn: 'root' })
+export class PortionQuantifierService {
+  public getAllKinds(): PortionKind[] {
+    return defaultOrder;
+  }
 }

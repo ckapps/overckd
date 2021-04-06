@@ -7,6 +7,7 @@ import { PortionInputModule } from './modules/portion-input/portion-input.module
 
 @NgModule({
   declarations: [],
+  exports: [PortionCommonModule, PortionInputModule],
   imports: [CommonModule, PortionCommonModule, PortionInputModule],
 })
 export class PortionModule {}

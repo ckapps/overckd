@@ -1,0 +1,42 @@
+<fieldset [formGroup]="this.form">
+  <mat-form-field>
+    <mat-label>Kind</mat-label>
+    <mat-select formControlName="kind">
+      <mat-option *ngFor="let kind of this.kinds$ | async" [value]="kind">
+        <span>{{ kind | portionKind }}</span>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <ng-container
+    *ngIf="
+      this.kind === PortionKind.Quantity || this.kind === PortionKind.Label
+    "
+  >
+    <mat-form-field>
+      <mat-label>Quantity</mat-label>
+      <input
+        matInput
+        formControlName="quantity"
+        type="number"
+        placeholder="Ex. 12"
+        min="0"
+      />
+      <!-- <span matSuffix>px</span> -->
+      <!-- <mat-error *ngIf="fontSizeControl.invalid">Min size: 10px</mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Label</mat-label>
+      <input
+        matInput
+        formControlName="label"
+        type="text"
+        placeholder="Portion"
+        min="0"
+      />
+      <!-- <span matSuffix>px</span> -->
+      <!-- <mat-error *ngIf="fontSizeControl.invalid">Min size: 10px</mat-error> -->
+    </mat-form-field>
+  </ng-container>
+</fieldset>
