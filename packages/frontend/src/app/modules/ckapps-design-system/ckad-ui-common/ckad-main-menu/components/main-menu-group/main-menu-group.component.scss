@@ -19,6 +19,10 @@
     box-shadow: none;
   }
 
+  ::ng-deep .mat-expansion-panel-header {
+    padding: 0 16px;
+  }
+
   ::ng-deep .mat-expansion-panel-header-title {
     color: inherit;
   }

@@ -4,10 +4,10 @@
   expanded
 >
   <mat-expansion-panel-header>
-    <mat-panel-title> {{ groupName }} </mat-panel-title>
-    <!-- <mat-panel-description>
-      Currently I am {{ panelOpenState ? 'open' : 'closed' }}
-    </mat-panel-description> -->
+    <mat-panel-title>
+      <fa-icon *ngIf="this.icon" [icon]="this.icon" class="mr-2"></fa-icon>
+      {{ this.groupName }}
+    </mat-panel-title>
   </mat-expansion-panel-header>
 
   <ng-content></ng-content>
