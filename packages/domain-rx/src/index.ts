@@ -1,15 +1,14 @@
 import { combineEffects } from '@marblejs/core';
 
-import { ingredientEventEffects$ } from './ingredient';
-import { recipeEventEffects$ } from './recipe';
-import { recipeCollectionEventEffects$ } from './recipe-collection';
-import { tagEventEffects$ } from './tag';
+import {
+  ingredientEventEffects$,
+  recipeCollectionEventEffects$,
+  recipeEventEffects$,
+  tagEventEffects$,
+} from './models';
 
 // Export all the domain related
-export * from './ingredient';
-export * from './recipe';
-export * from './recipe-collection';
-export * from './tag';
+export * from './models';
 
 // Export the DI tokens
 export * from './tokens';

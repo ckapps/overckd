@@ -19,7 +19,7 @@ import { unflattenQuery } from '@overckd/domain-rx/dist/search';
  * Validates request: `GET` find by query
  */
 const validateFindByQueryRequest = requestValidator$({
-  query: FlattenTagByQueryDto,
+  params: FlattenTagByQueryDto,
 });
 
 /**
@@ -63,7 +63,7 @@ export const findTagsByQuery$ = r.pipe(
     return req$.pipe(
       validateFindByQueryRequest,
       mergeMap(req => {
-        const params = unflattenQuery(req.query);
+        const params = unflattenQuery(req.params);
 
         return pipe(FindTagByQueryEvent.create(params), eventBusClient.send);
       }),

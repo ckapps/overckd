@@ -6,10 +6,14 @@ import { reply, MsgEffect } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
 import { LogLevel } from '@overckd/domain';
 
+import {
+  eventCreator,
+  OverckdEventType,
+} from '../../core/events/event-creator';
 import { GetRecipeByNameEvent, RecipeQueryType } from './recipe.query';
-import { RecipeRepositoryToken, LogToken } from '../tokens';
+import { RecipeRepositoryToken, LogToken } from '../../tokens';
 
-const eventType = RecipeQueryType.GetByName;
+const createEvent = eventCreator(RecipeQueryType.GetByName);
 
 /**
  * Effect to get recipe by name
@@ -37,12 +41,15 @@ export const getRecipeByNameEffect: MsgEffect = (event$, ctx) => {
           }),
         ),
         take(1),
-        map(payload => reply(event)({ type: `${eventType}_RESULT`, payload })),
+        map(payload =>
+          reply(event)(createEvent(OverckdEventType.Result, { payload })),
+        ),
         catchError(error =>
-          of({
-            type: `${eventType}_ERROR`,
-            error: { name: error.name, message: error.message },
-          }),
+          of(
+            createEvent(OverckdEventType.Error, {
+              error: { name: error.name, message: error.message },
+            }),
+          ),
         ),
       ),
     ),

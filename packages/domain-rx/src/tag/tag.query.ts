@@ -9,6 +9,7 @@ import { TagByQueryDto } from './tag.type';
 export enum TagQueryType {
   FindByQuery = 'TAGS.FIND_BY_QUERY',
   GetById = 'TAGS.GET_BY_ID',
+  Create = 'TAGS.CREATE',
 }
 
 // ----------------------------------------------------------------------------
@@ -27,8 +28,6 @@ export const FindTagByQueryEvent = event(TagQueryType.FindByQuery)(
 export const GetTagByIdEvent = event(TagQueryType.GetById)(UriIdQueryDto);
 
 /**
- * Event for `getAll`
+ * Event for `createTag`
  */
-// export const GetAllRecipeCollectionsEvent = event(
-//   RecipeCollectionQueryType.GetAll,
-// )();
+export const CreateTagEvent = event(TagQueryType.Create)(UriIdQueryDto);
