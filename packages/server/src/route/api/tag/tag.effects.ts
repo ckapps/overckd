@@ -1,25 +1,32 @@
 import { r, HttpStatus, useContext } from '@marblejs/core';
-import { map, mergeMap } from 'rxjs/operators';
 import { EventBusClientToken } from '@marblejs/messaging';
-import { requestValidator$ } from '@marblejs/middleware-io';
+import { requestValidator$, t } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/lib/pipeable';
+import { map, mergeMap } from 'rxjs/operators';
 
 import {
+  CreateTagCommand,
   FindTagByQueryEvent,
-  FlattenTagByQueryDto,
   GetTagByIdEvent,
+  TagDto,
 } from '@overckd/domain-rx';
 import { UriIdQueryDto } from '@overckd/domain-rx/dist/shared/uri.codec';
-import { unflattenQuery } from '@overckd/domain-rx/dist/search';
+
+import { transformFromRequestProperty } from '../../../core/search/transform-from-request-property.operator';
 
 // ----------------------------------------------------------------------------
 // Validators
 // ----------------------------------------------------------------------------
+const FlattenTagByQueryStringDto = t.partial({
+  label: t.string,
+  page: t.string,
+  size: t.string,
+});
 /**
  * Validates request: `GET` find by query
  */
 const validateFindByQueryRequest = requestValidator$({
-  params: FlattenTagByQueryDto,
+  query: FlattenTagByQueryStringDto,
 });
 
 /**
@@ -27,6 +34,13 @@ const validateFindByQueryRequest = requestValidator$({
  */
 const validateGetByIdRequest = requestValidator$({
   params: UriIdQueryDto,
+});
+
+/**
+ * Validates request: `GET` byId
+ */
+const validateCreateRequest = requestValidator$({
+  body: TagDto,
 });
 
 // ----------------------------------------------------------------------------
@@ -62,11 +76,10 @@ export const findTagsByQuery$ = r.pipe(
 
     return req$.pipe(
       validateFindByQueryRequest,
-      mergeMap(req => {
-        const params = unflattenQuery(req.params);
-
-        return pipe(FindTagByQueryEvent.create(params), eventBusClient.send);
-      }),
+      transformFromRequestProperty('query'),
+      mergeMap(query =>
+        pipe(FindTagByQueryEvent.create(query), eventBusClient.send),
+      ),
       map(value =>
         value.payload === undefined
           ? { status: HttpStatus.NOT_FOUND }
@@ -91,6 +104,25 @@ export const getTagByUri$ = r.pipe(
         const { params } = req;
 
         return pipe(GetTagByIdEvent.create(params), eventBusClient.send);
+      }),
+      map(value => ({ body: value.payload })),
+      // mapTo({ status: HttpStatus.OK, b }),
+    );
+  }),
+);
+
+export const createTag$ = r.pipe(
+  r.matchPath('/'),
+  r.matchType('POST'),
+  r.useEffect((req$, ctx) => {
+    const eventBusClient = useContext(EventBusClientToken)(ctx.ask);
+
+    return req$.pipe(
+      validateCreateRequest,
+      mergeMap(req => {
+        const { body } = req;
+
+        return pipe(CreateTagCommand.create(body), eventBusClient.send);
       }),
       map(value => ({ body: value.payload })),
       // mapTo({ status: HttpStatus.OK, b }),
