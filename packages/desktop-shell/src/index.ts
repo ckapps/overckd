@@ -1,7 +1,8 @@
+import { appIsStable$ } from '@ckapp/rxjs-electron/dist/app';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
 import { of, throwError, Observable, combineLatest } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, pluck } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
 import { initServer } from './server';
@@ -12,7 +13,6 @@ import { LogScope, scoped } from './logging';
 import { configureDeps } from './configure-dependencies';
 import { getPathFromSegments, PathId } from './paths';
 import { parseArgs } from './process-args';
-import { appIsStable$ } from './core/electron/app-is-stable';
 
 const appLog = scoped(LogScope.App);
 const appEventLog = scoped(LogScope.AppEvent);
@@ -39,8 +39,10 @@ const createWindow = (): void => {
   const windowOptions: BrowserWindowConstructorOptions = {
     height: 600,
     width: 800,
-    titleBarStyle: 'hiddenInset',
+    titleBarStyle: 'hidden',
     // titleBarStyle: 'hidden',
+    vibrancy: 'window', // 'light', 'medium-light' etc
+    backgroundColor: 'transparent',
   };
 
   if (process.platform !== 'win32') {
@@ -147,13 +149,7 @@ function initProtocols$(): Observable<boolean> {
  * was successfully initialized
  */
 function startServer$(config: AppConfig): Observable<boolean> {
-  // Setting up the dependencies for marble.js
-  appLog.debug('marble.js dependencies:: setting up');
-  const deps = configureDeps();
-  appLog.debug('marble.js dependencies: done');
-
-  // Initialize server
-  return initServer(deps, config.server).pipe(
+  return initServer(config.server, configureDeps()).pipe(
     map(initialized => {
       if (!initialized) {
         throw new AppInitError(
@@ -174,9 +170,9 @@ function startServer$(config: AppConfig): Observable<boolean> {
  * If an error occurs, it will throw an `AppInitError`
  */
 function stabilize$(fromArgs: typeof args): Observable<boolean> {
-  return initConfig$(fromArgs).pipe(
-    mergeMap(config => combineLatest([of(config), initProtocols$()])),
-    mergeMap(([config]) => startServer$(config)),
+  return combineLatest([initConfig$(fromArgs), initProtocols$()]).pipe(
+    pluck(0),
+    mergeMap(config => startServer$(config)),
   );
 }
 
@@ -184,16 +180,16 @@ function stabilize$(fromArgs: typeof args): Observable<boolean> {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 appIsStable$(() => stabilize$(args)).subscribe(
-    () => createWindow(),
-    // If some exit code was returned, terminate the app
-    (error: AppInitError) => {
-      appLog.error(error.message);
-      if (error.innerError) {
-        appLog.error(`${error.innerError.name}: ${error.innerError.message}`);
-      }
-      app.exit(error.exitCode);
-    },
-  );
+  () => createWindow(),
+  // If some exit code was returned, terminate the app
+  (error: AppInitError) => {
+    appLog.error(error.message);
+    if (error.innerError) {
+      appLog.error(`${error.innerError.name}: ${error.innerError.message}`);
+    }
+    app.exit(error.exitCode);
+  },
+);
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

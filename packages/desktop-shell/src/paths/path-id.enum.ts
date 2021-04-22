@@ -1,6 +1,7 @@
 export enum PathId {
   Ingredients,
   Recipes,
+  RecipeCollections,
   /** Path to folder where tags are stored */
   Tags,
   Images,

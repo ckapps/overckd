@@ -1,13 +1,16 @@
-import { BoundDependency, ContextDependency } from '@marblejs/core';
-import log from 'electron-log';
-import { from, Observable } from 'rxjs';
-
+import { BoundDependency, ContextDependency, ServerIO } from '@marblejs/core';
+import {
+  LogLevel,
+  logEnterExit,
+} from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
 import { server, ServerConfig } from '@overckd/server';
+import { from, Observable } from 'rxjs';
+import { concatMap, mapTo, switchMap } from 'rxjs/operators';
 
 import { getPath, PathId } from '../paths';
-import { ServerLogScope } from './server-log-scope.enum';
+import { scoped, ServerLogScope } from '../logging';
 
-const serverLog = log.scope(ServerLogScope.Server);
+const serverLog = scoped(ServerLogScope.Server);
 
 type Deps = BoundDependency<unknown, ContextDependency>[];
 
@@ -33,11 +36,12 @@ function prepareConfig(config: ServerConfig): ServerConfig {
   };
 }
 
-async function startServer(deps: Deps, config: ServerConfig) {
-  // Start server
-  await (await server(deps, config))();
+function createServer(deps: Deps, config: ServerConfig) {
+  return from(server(deps, config));
+}
 
-  return true;
+function startServer<T>(serverIO: ServerIO<T>) {
+  return from(serverIO());
 }
 
 /**
@@ -46,8 +50,25 @@ async function startServer(deps: Deps, config: ServerConfig) {
  * @param config The server configuration
  */
 export function initServer(
-  deps: Deps,
   config: ServerConfig,
+  deps: Observable<Deps>,
 ): Observable<boolean> {
-  return from(startServer(deps, prepareConfig(config)));
+  const serverConfig = prepareConfig(config);
+
+  // Setting up the dependencies for marble.js
+  const deps$ = deps.pipe(
+    logEnterExit('Configuring dependencies', {
+      logger: serverLog,
+      level: LogLevel.Verbose,
+    }),
+  );
+
+  return deps$.pipe(
+    // Create the server
+    concatMap(deps => createServer(deps, serverConfig)),
+    // Start the server
+    switchMap(serverIO => startServer(serverIO)),
+    // Map the result
+    mapTo(true),
+  );
 }

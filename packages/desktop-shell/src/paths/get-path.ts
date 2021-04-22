@@ -33,6 +33,8 @@ export function getPath(pathId: PathId): string {
       return path.resolve(paths.app, 'ingredients');
     case PathId.Recipes:
       return path.resolve(paths.app, 'recipes');
+    case PathId.RecipeCollections:
+      return path.resolve(paths.app, 'overckd.collections.yaml');
     case PathId.Tags:
       return path.resolve(paths.app, 'tags');
     case PathId.Images:

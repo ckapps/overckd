@@ -1,83 +1,79 @@
-import { filterEndsWith } from '@ckapp/rxjs-snafu/lib/cjs/string/operators';
-import { readDir, readFile, writeFile } from '@ckapp/rxjs-node-fs';
-import { Context, createReader, useContext } from '@marblejs/core';
-import { Reader } from 'fp-ts/lib/Reader';
-import * as path from 'path';
-import { BehaviorSubject, from, of } from 'rxjs';
-import { map, mapTo, mergeMap, tap, toArray } from 'rxjs/operators';
-
-import { Recipe } from '@overckd/domain';
+import { writeFile } from '@ckapp/rxjs-node-fs';
+import { createReader, useContext } from '@marblejs/core';
 import { RecipeRepository } from '@overckd/domain/dist/repositories';
-import { yamlDecode, yamlEncode } from '@overckd/yaml-parser';
+import { yamlEncode } from '@overckd/yaml-parser';
 import { recipeFile } from '@overckd/yaml-parser/dist/file-codec';
+import * as path from 'path';
+import { defer, from, of } from 'rxjs';
+import { map, mapTo, mergeMap, switchMap, take } from 'rxjs/operators';
 
-import { AppConfigToken } from '../config/config.token';
 import { getPath, PathId } from '../paths';
+import { RecipeDbCollectionToken } from '../db/collections/db.collections.tokens';
+import { pluckManyData } from '../db/rxjs/pluck-many-data';
+import { pluckData } from '../db/rxjs/pluck-data';
+import { RepositoryLogScope, scoped } from '../logging';
 
-function readAllRecipeFiles(dir: string) {
-  return readDir(dir).pipe(
-    mergeMap(paths => from(paths)),
-    filterEndsWith('.recipe.yaml'),
-    map(filename => path.resolve(dir, filename)),
-    mergeMap(path => readFile(path, { encoding: 'utf-8' })),
-    yamlDecode(recipeFile),
-    toArray(),
-  );
-}
+const logger = scoped(RepositoryLogScope.Recipe);
 
-export const RecipeFileRespository: Reader<
-  Context,
-  RecipeRepository
-> = createReader<RecipeRepository>(ask => {
-  const { paths } = useContext(AppConfigToken)(ask);
-
+export const RecipeFileRespository = createReader<RecipeRepository>(ask => {
+  const recipeCollection = useContext(RecipeDbCollectionToken)(ask);
   const recipesFolder = getPath(PathId.Recipes);
-  const allRecipes = new BehaviorSubject<Recipe[]>([]);
+
+  logger.silly(`setting up RecipeFileRespository`);
+
+  // ================================================================================
+  // Set up queries
+  const findOneByNameQuery = recipeCollection.findOne().where('name');
+  const findAllQuery = recipeCollection.find().$;
+
+  // ================================================================================
+  // Logging
+  // recipeCollection.insert$.subscribe(changeEvent => console.dir(changeEvent));
+  // recipeCollection.update$.subscribe(changeEvent => console.dir(changeEvent));
+  // recipeCollection.remove$.subscribe(changeEvent => console.dir(changeEvent));
+
+  // ================================================================================
 
   const getAll: RecipeRepository['getAll'] = () =>
-    readAllRecipeFiles(recipesFolder).pipe(
-      tap(items => allRecipes.next(items)),
-    );
+    findAllQuery.pipe(pluckManyData(), take(1));
 
   const getByName: RecipeRepository['getByName'] = name =>
-    getAll().pipe(map(f => f.find(c => c.name === name)));
+    defer(() => {
+      console.log('called getByName with', name);
+      return from(findOneByNameQuery.eq(name).exec());
+    }).pipe(pluckData(), take(1));
 
   return {
     // Queries
     getAll,
     getByName,
     // Commands
-    add: recipe =>
-      of(recipe).pipe(
-        mergeMap(r => {
-          // Generate some id for saving the recipe
-          const id = recipe.name;
+    add: recipe => {
+      return from(recipeCollection.upsert(recipe)).pipe(
+        map(doc => {
+          const item = doc.toJSON();
+          const { name: id } = item;
           const filename = path.resolve(recipesFolder, `${id}.recipe.yaml`);
-
+          return { item, filename };
+        }),
+        mergeMap(({ item, filename }) => {
           // Encode for saving
-          return of(recipe).pipe(
+          return of(item).pipe(
+            // Parse to yaml
             yamlEncode(recipeFile),
-            // Now save the recipe
+            // Save
             mergeMap(fileContent =>
               writeFile(filename, fileContent, { encoding: 'utf8' }),
             ),
-            mapTo(r),
+            mapTo(item),
           );
         }),
-        tap(c => allRecipes.next([...allRecipes.value, c])),
-      ),
+      );
+    },
     removeByName: id =>
-      getByName(id).pipe(
-        map(x => {
-          if (x === undefined) {
-            return false;
-          }
-
-          const indexOfItem = allRecipes.value.indexOf(x);
-          allRecipes.next(allRecipes.value.filter((_, i) => i !== indexOfItem));
-          return true;
-        }),
-      ),
+      findOneByNameQuery
+        .eq(id)
+        .$.pipe(switchMap(doc => (!doc ? of(false) : doc.remove()))),
     update: (r, name) => {
       throw new Error('Method not implemented.');
     },
