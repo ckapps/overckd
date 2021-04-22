@@ -1,10 +1,10 @@
 import { catchError, map, take, tap } from 'rxjs/operators';
 import { pipe } from 'fp-ts/lib/pipeable';
 import { of } from 'rxjs';
+import { LogLevel } from '@ckapp/rxjs-snafu/lib/cjs/log';
 import { act, useContext, matchEvent } from '@marblejs/core';
 import { reply, MsgEffect } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import { LogLevel } from '@overckd/domain';
 
 import {
   eventCreator,

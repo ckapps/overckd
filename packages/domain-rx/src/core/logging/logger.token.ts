@@ -1,5 +1,5 @@
 import { createContextToken } from '@marblejs/core';
-import { LogIO, LoggerOptions } from '@overckd/domain/dist/logging/log-io.type';
+import { LogIO, LoggerOptions } from '@ckapp/rxjs-snafu/lib/cjs/log';
 
 /**
  * DI token for logging
