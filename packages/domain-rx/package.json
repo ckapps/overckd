@@ -14,6 +14,7 @@
     "test": "jest ."
   },
   "dependencies": {
+    "@ckapp/rxjs-snafu": "0.0.23",
     "@marblejs/core": "^3.4.3",
     "@marblejs/messaging": "^3.4.3",
     "@marblejs/middleware-body": "^3.4.3",
