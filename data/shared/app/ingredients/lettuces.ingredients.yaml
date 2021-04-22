@@ -1,0 +1,55 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-vegetable
+    label: vegetable
+    uri: vegetable
+  - &tag-lettuce
+    label: lettuce
+    uri: lettuce
+
+shared:
+  tags:
+    - *tag-vegetable
+    - *tag-lettuce
+
+ingredients:
+  frillice-lettuce:
+    name: frillice-lettuce
+    tags: []
+
+  frisee-lettuce:
+    name: frisee-lettuce
+    tags: []
+
+  iceberg-lettuce:
+    name: iceberg-lettuce
+    tags: []
+
+  lambs-lettuce:
+    name: iceberg-lettuce
+    tags: []
+
+  lettuce:
+    name: lettuce
+    tags: []
+
+  lollo-bionda-lettuce:
+    name: lollo-bionda-lettuce
+    tags: []
+
+  lollo-rosso-lettuce:
+    name: lollo-rosso-lettuce
+    tags: []
+
+  oak-leaf-lettuce:
+    name: oak-leaf-lettuce
+    tags: []
+
+  romaine-lettuce:
+    name: romaine-lettuce
+    tags: []
+
+  rucola:
+    name: rucola
+    tags: []

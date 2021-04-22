@@ -4,10 +4,17 @@ tags:
   - uri: vegan
     label: vegan
     color: '#00ff11'
+    icon: seedling
+
+  - uri: fast-food
+    label: fast food
+    color: '#00ff11'
+    icon: pizza-slice
 
   - uri: vegetables
     label: Gemüse
     color: '#123789'
+    icon: carrot
 
   - uri: baking
     label: Backen
@@ -20,6 +27,8 @@ tags:
 
   - uri: sour
     label: sauer
+    icon: lemon
+    color: '#ecdd00'
 
   - uri: spicy
     label: scharf

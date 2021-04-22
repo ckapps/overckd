@@ -1,0 +1,306 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-vegetable
+    label: vegetable
+    uri: vegetable
+  - &tag-sweet
+    label: sweet
+    uri: sweet
+  - &tag-pumpkin-plant
+    label: pumpkin-plant
+    uri: pumpkin-plant
+  - &tag-root-vegetable
+    label: root-vegetable
+    uri: root-vegetable
+
+shared:
+  tags:
+    - *tag-vegetable
+
+ingredients:
+  artichoke:
+    name: artichoke
+    tags: []
+
+  asparagus:
+    name: asparagus
+    tags: []
+
+  aubergine:
+    name: aubergine
+    tags:
+      - *tag-pumpkin-plant
+
+  bell-pepper:
+    name: bell-pepper
+    tags: []
+
+  black-radish:
+    name: black-radish
+    tags: []
+
+  broccoli:
+    name: broccoli
+    tags: []
+
+  baby-broccoli:
+    name: baby-broccoli
+    tags: []
+
+  brussels-sprout:
+    name: brussels-sprout
+    tags: []
+
+  butternut-squash:
+    name: butternut-squash
+    tags:
+      - *tag-pumpkin-plant
+
+  cabbage:
+    name: cabbage
+    tags: []
+
+  carrot:
+    name: carrot
+    tags:
+      - *tag-root-vegetable
+
+  cauliflower:
+    name: cauliflower
+    tags: []
+
+  cavolo-nero:
+    name: cavolo-nero
+    tags: []
+
+  celeriac:
+    name: celeriac
+    tags: []
+
+  celery:
+    name: celery
+    tags: []
+
+  chard:
+    name: chard
+    tags: []
+
+  chayote:
+    name: chayote
+    tags:
+      - *tag-pumpkin-plant
+
+  chicory:
+    name: chicory
+    tags: []
+
+  chili:
+    name: chili
+    tags: []
+
+  chinese-cabbage:
+    name: chinese-cabbage
+    tags: []
+
+  courgette:
+    name: courgette
+    tags:
+      - *tag-pumpkin-plant
+
+  cress:
+    name: cress
+    tags: []
+
+  cucumber:
+    name: cucumber
+    tags: []
+
+  curly-endive:
+    name: curly-endive
+    tags: []
+
+  endive:
+    name: endive
+    tags: []
+
+  fennel:
+    name: fennel
+    tags: []
+
+  garlic:
+    name: garlic
+    tags: []
+
+  horseradish:
+    name: horseradish
+    tags: []
+
+  jerusalem-artichoke:
+    name: jerusalem-artichoke
+    tags:
+      - *tag-root-vegetable
+
+  kale:
+    name: kale
+    tags: []
+
+  kohlrabi:
+    name: kohlrabi
+    tags: []
+
+  leek:
+    name: leek
+    tags: []
+
+  marrow:
+    name: marrow
+    tags:
+      - *tag-pumpkin-plant
+
+  okra:
+    name: okra
+    tags: []
+
+  olive:
+    name: olive
+    tags: []
+
+  onion:
+    name: onion
+    tags: []
+
+  oxheart-cabbage:
+    name: oxheart-cabbage
+    tags: []
+
+  pak-choi:
+    name: pak-choi
+    tags: []
+
+  parsley-root:
+    name: parsley-root
+    tags:
+      - *tag-root-vegetable
+
+  parsnip:
+    name: parsnip
+    tags:
+      - *tag-root-vegetable
+
+  pickle:
+    name: pickle
+    tags: []
+
+  potato:
+    name: potato
+    tags: []
+
+  pumpkin:
+    name: pumpkin
+    tags:
+      - *tag-pumpkin-plant
+
+  radicchio:
+    name: radicchio
+    tags: []
+
+  radish:
+    name: radish
+    tags: []
+
+  ramson:
+    name: ramson
+    tags: []
+
+  red-cabbage:
+    name: red-cabbage
+    tags: []
+
+  red-onion:
+    name: red-onion
+    tags: []
+
+  red-radish:
+    name: red-radish
+    tags: []
+
+  rutabaga:
+    name: rutabaga
+    tags: []
+
+  salsify:
+    name: salsify
+    tags: []
+
+  samphire:
+    name: samphire
+    tags: []
+
+  savoy-cabbage:
+    name: savoy-cabbage
+    tags: []
+
+  scallion:
+    name: scallion
+    tags: []
+
+  shallot:
+    name: shallot
+    tags: []
+
+  sorrel:
+    name: sorrel
+    tags: []
+
+  spinach:
+    name: spinach
+    tags: []
+
+  spring-onion:
+    name: spring-onion
+    tags: []
+
+  summer-cabbage:
+    name: summer-cabbage
+    tags: []
+
+  swede:
+    name: swede
+    tags: []
+
+  sweet-corn:
+    name: sweet-corn
+    tags: []
+
+  sweet-potato:
+    name: sweet-potato
+    tags: []
+
+  taro:
+    name: taro
+    tags: []
+
+  tomato:
+    name: tomato
+    tags: []
+
+  turnip:
+    name: turnip
+    tags: []
+
+  watercress:
+    name: watercress
+    tags: []
+
+  white-asparagus:
+    name: white-asparagus
+    tags: []
+
+  white-cabbage:
+    name: white-cabbage
+    tags: []
+
+  white-radish:
+    name: white-radish
+    tags: []

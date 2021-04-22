@@ -1,0 +1,111 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-fruit
+    label: fruit
+    uri: fruit
+  - &tag-berry
+    label: berry
+    uri: berry
+
+shared:
+  tags:
+    - *tag-fruit
+    - *tag-berry
+
+ingredients:
+  avocado:
+    name: avocado
+    tags: []
+
+  bilberry:
+    name: bilberry
+    tags: []
+
+  black-rowan:
+    name: black-rowan
+    tags: []
+
+  blackberry:
+    name: blackberry
+    tags: []
+
+  blackcurrant:
+    name: blackcurrant
+    tags: []
+
+  blackthorn:
+    name: blackthorn
+    tags: []
+
+  blue-honeysuckle-berry:
+    name: blue-honeysuckle-berry
+    tags: []
+
+  blueberry:
+    name: blueberry
+    tags: []
+
+  cherry:
+    name: cherry
+    tags: []
+
+  chokeberry:
+    name: chokeberry
+    tags: []
+
+  cloudberry:
+    name: cloudberry
+    tags: []
+
+  cranberry:
+    name: cranberry
+    tags: []
+
+  elderberry:
+    name: elderberry
+    tags: []
+
+  gooseberry:
+    name: gooseberry
+    tags: []
+
+  lingonberry:
+    name: lingonberry
+    tags: []
+
+  loganberry:
+    name: loganberry
+    tags: []
+
+  mulberry:
+    name: mulberry
+    tags: []
+
+  raspberry:
+    name: raspberry
+    tags: []
+
+  red-berry:
+    name: red-berry
+    tags: []
+
+  redcurrant:
+    name: redcurrant
+    tags: []
+
+  strawberry:
+    name: strawberry
+    tags: []
+
+  tayberry:
+    name: tayberry
+    tags: []
+
+  white-currant:
+    name: white-currant
+    tags: []
+
+  white-mulberry:
+    name: white-mulberry
+    tags: []

@@ -1,0 +1,70 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-vegetable
+    label: vegetable
+    uri: vegetable
+  - &tag-mushroom
+    label: mushroom
+    uri: mushroom
+  - &tag-sweet
+    label: sweet
+    uri: sweet
+
+shared:
+  tags:
+    - *tag-vegetable
+    - *tag-mushroom
+
+ingredients:
+  bay-bolete-mushroom:
+    name: bay-bolete-mushroom
+    tags: []
+
+  beech-hat-mushroom:
+    name: beech-hat-mushroom
+    tags: []
+
+  boletus-mushroom:
+    name: boletus-mushroom
+    tags: []
+
+  chanterelle-mushroom:
+    name: chanterelle-mushroom
+    tags: []
+
+  emperor-mushroom:
+    name: emperor-mushroom
+    tags: []
+
+  enoki-mushroom:
+    name: enoki-mushroom
+    tags: []
+
+  morel:
+    name: morel
+    tags: []
+
+  mushroom:
+    name: mushroom
+    tags: []
+
+  oyster-mushroom:
+    name: oyster-mushroom
+    tags: []
+
+  portobello-mushroom:
+    name: portobello-mushroom
+    tags: []
+
+  shiitake-mushroom:
+    name: shiitake-mushroom
+    tags: []
+
+  truffle-black:
+    name: truffle-black
+    tags: []
+
+  truffle-white:
+    name: truffle-white
+    tags: []
