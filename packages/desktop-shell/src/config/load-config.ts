@@ -1,9 +1,9 @@
 import { stat } from '@ckapp/rxjs-node-fs';
 import {
   LogLevel,
-  logEnterExit$,
-  log$,
-} from '@overckd/domain/dist/logging/logging.operators';
+  logEnterExit,
+  log,
+} from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
 import * as path from 'path';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
@@ -55,7 +55,7 @@ function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
   // If no path was provided, we return the default configuration
   if (!pathToConfigFile) {
     return of(config).pipe(
-      log$({
+      log({
         logger,
         level: LogLevel.Verbose,
         prefixes: ['Using default configuration'],
@@ -65,7 +65,7 @@ function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
   }
 
   return resolveConfigFilePath(pathToConfigFile).pipe(
-    log$({
+    log({
       logger,
       level: LogLevel.Silly,
       prefixes: ['Loading app configuration from file'],
@@ -74,7 +74,7 @@ function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
     mergeMap(actualFilename =>
       readAppConfigFile(actualFilename).pipe(
         map(finalizeAppConfig),
-        logEnterExit$('Parsing configuration file', {
+        logEnterExit('Parsing configuration file', {
           logger,
           level: LogLevel.Silly,
         }),
@@ -94,7 +94,7 @@ function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
  */
 export function loadConfig(pathToConfigFile?: string): Observable<AppConfig> {
   return chooseConfig(pathToConfigFile).pipe(
-    logEnterExit$('Loading app configuration', {
+    logEnterExit('Loading app configuration', {
       logger,
       level: LogLevel.Verbose,
       withEmittedValues: true,

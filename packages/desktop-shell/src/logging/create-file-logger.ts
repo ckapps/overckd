@@ -1,4 +1,4 @@
-import { prefixLogSuffix } from '@overckd/domain/dist/logging/prefix-log-suffix';
+import { prefixLogSuffix } from '@ckapp/rxjs-snafu/lib/cjs/log/prefix-log-suffix';
 
 import { Logger } from './log';
 

@@ -1,5 +1,5 @@
+import { LogLevel } from '@ckapp/rxjs-snafu/lib/cjs/log';
 import { createReader } from '@marblejs/core';
-import { LogLevel } from '@overckd/domain/dist/logging';
 import { LogIO } from '@overckd/domain-rx/dist/core/logging';
 
 import { scoped } from './log';
