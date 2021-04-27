@@ -2,8 +2,6 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "paths": {
-      "@ckapp/rxjs-electron": ["./packages/rxjs-electron/src"],
-      "@ckapp/rxjs-electron/dist/*": ["./packages/rxjs-electron/src/*"],
       "@overckd/domain": ["./packages/domain/src"],
       "@overckd/domain/dist/*": ["./packages/domain/src/*"],
       "@overckd/domain-rx": ["./packages/domain-rx/src"],

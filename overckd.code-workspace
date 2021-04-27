@@ -9,10 +9,6 @@
       "path": "packages/desktop-shell"
     },
     {
-      "name": "🖥 rxjs-electron",
-      "path": "packages/rxjs-electron"
-    },
-    {
       "name": "🎨 frontend",
       "path": "packages/frontend"
     },
