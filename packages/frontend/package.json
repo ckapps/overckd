@@ -9,7 +9,7 @@
     "start:desktop": "ng serve --configuration=electron",
     "start:web": "ng serve",
     "start": "yarn start:web",
-    "build:desktop": "yarn cmd:build -- --configuration=electron",
+    "build:desktop": "yarn cmd:build --configuration=electron",
     "build:web": "yarn cmd:build",
     "build": "yarn build:web && yarn build:desktop",
     "test": "ng test",
