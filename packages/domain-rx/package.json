@@ -6,15 +6,15 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc --project tsconfig.build.json",
-    "build:watch": "npm run build -- --watch",
-    "build:desktop": "npm run build",
+    "build:watch": "yarn build -- --watch",
+    "build:desktop": "yarn build",
     "clean": "rimraf dist",
     "lint": "eslint --ext .ts .",
     "precommit": "lint-staged",
     "test": "jest ."
   },
   "dependencies": {
-    "@ckapp/rxjs-snafu": "0.0.23",
+    "@ckapp/rxjs-snafu": "~0.0.24",
     "@marblejs/core": "^3.4.3",
     "@marblejs/messaging": "^3.4.3",
     "@marblejs/middleware-body": "^3.4.3",
@@ -25,7 +25,6 @@
     "rxjs": "~6.6.6"
   },
   "devDependencies": {
-    "lint-staged": "^10.5.1",
-    "typescript": "~4.0.2"
+    "typescript": "~4.2.4"
   }
 }

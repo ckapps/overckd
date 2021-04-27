@@ -1,9 +1,15 @@
 {
   "name": "root",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "**/electron",
+      "**/electron/**"
+    ]
+  },
   "scripts": {
     "build:desktop": "lerna run build:desktop",
     "build": "lerna run build",
@@ -11,14 +17,13 @@
     "clean": "lerna run clean --parallel",
     "start:desktop": "lerna run build:desktop && lerna run start:desktop --parallel",
     "start:web": "lerna run start:web --parallel",
-    "start": "npm run start:web",
+    "start": "yarn run start:web",
     "app:desktop:dev": "lerna run app:desktop:dev",
     "app:desktop": "lerna run app:desktop",
     "test": "lerna run test --parallel",
     "test:jest": "jest",
     "test:coverage": "jest --coverage",
-    "lint": "lerna run lint --parallel",
-    "npm:lerna": "lerna"
+    "lint": "lerna run lint --parallel"
   },
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
@@ -40,8 +45,8 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
-    "rxjs": "^6.6.6",
+    "rxjs": "~6.6.6",
     "ts-jest": "^26.5.3",
-    "typescript": "^4.2.4"
+    "typescript": "~4.2.4"
   }
 }

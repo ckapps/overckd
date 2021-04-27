@@ -30,6 +30,7 @@ The project uses different tools
 - [`commitlint`](https://commitlint.js.org/): Linting for commit messages (using [`conventional commits`](https://www.conventionalcommits.org/en/v1.0.0/))
 - [`eslint`](https://eslint.org/): For linting the source files
 - [`prettier`](https://prettier.io/): Used for automatic code formatting
+- [`yarn`](https://yarnpkg.com/): Alternative package manager client
 
 As an IDE i use [VSCode](https://code.visualstudio.com/), which means that I try to keep the configuration for it up to date. If you want to use VSCode as well, you can open the project as a workspace using
 `File -> Open workspace... -> ./overckd.code-workspace`
@@ -41,7 +42,7 @@ Be sure to checkout the recommended extensions 🙂
 After cloning make sure to install the dependencies using:
 
 ```sh
-npm i
+yarn install
 ```
 
 This will install most of the tooling needed for the dev environment.
@@ -51,10 +52,10 @@ Since we are using `Lerna`, we need to set it up as well, because otherwise we w
 npm i lerna -g
 ```
 
-Which is why I will refer to lerna commands only by `Lerna`, but of course you can also use the locally installed dev version in `node_modules`, but you will have to call it like this:
+Which is why I will refer to lerna commands only by `Lerna`, but of course you can also use the locally installed version in `node_modules`, but you will have prefix calls with `yarn` like this:
 
 ```sh
-npm run npm:lerna -- <all the arguments you want to pass>
+yarn lerna <all the arguments you want to pass>
 ```
 
 So now that you have met `Lerna`, we want to install and link our dependencies using the [`bootstrap`](https://github.com/lerna/lerna/tree/master/commands/bootstrap#readme) command. You can use the following command to set everything up:
@@ -66,7 +67,7 @@ lerna bootstrap
 And you probably also want to build everything now initially, so you should call
 
 ```sh
-npm run build
+yarn build
 ```
 
 ## Project structure
@@ -100,7 +101,7 @@ In order to provide a better experience, there are several VS code workspaces in
 To run a complete build, call
 
 ```sh
-npm run build
+yarn build
 ```
 
 ### start
@@ -116,13 +117,13 @@ If you want to develop overckd as an desktop application, but still be able to h
 1. Run the following to compile files and watch for changes in `desktop-shell` and start a local web server with the `frontend` (keep running)
 
 ```sh
-npm run start:desktop
+yarn start:desktop
 ```
 
 2. Run the following to actually start the desktop-shell
 
 ```sh
-npm run app:desktop:dev
+yarn app:desktop:dev
 ```
 
 ##### With built frontend
@@ -132,13 +133,13 @@ In some cases you may want to have the same behaviour, as if when the app was mo
 1. Compile and build everything for desktop
 
 ```sh
-npm run build:desktop
+yarn build:desktop
 ```
 
 2. Start the desktop-shell
 
 ```sh
-npm run app:desktop
+yarn app:desktop
 ```
 
 [conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
