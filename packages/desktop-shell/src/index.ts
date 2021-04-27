@@ -1,7 +1,7 @@
-import { appIsStable$ } from '@ckapp/rxjs-electron/dist/app';
+import { appIsStable$, fromAppEvent } from '@ckapp/rxjs-electron/lib/app';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
-import { of, throwError, Observable, combineLatest } from 'rxjs';
+import { of, throwError, Observable, combineLatest, merge } from 'rxjs';
 import { catchError, map, mergeMap, pluck } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
@@ -9,8 +9,9 @@ import { initServer } from './server';
 import { ExitCode } from './exit-code.enum';
 import { AppConfig, loadConfig } from './config';
 
-import { LogScope, scoped } from './logging';
+import { defaultAppBehaviour } from './app/app.behaviour';
 import { configureDeps } from './configure-dependencies';
+import { LogScope, scoped } from './logging';
 import { getPathFromSegments, PathId } from './paths';
 import { parseArgs } from './process-args';
 
@@ -191,31 +192,14 @@ appIsStable$(() => stabilize$(args)).subscribe(
   },
 );
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  appEventLog.debug('window-all-closed');
-
-  if (process.platform !== 'darwin') {
-    appLog.debug('quit due to window-all-closed');
-    app.quit();
-  }
+// Registers default behaviour middleware
+defaultAppBehaviour(createWindow).subscribe(() => {
+  appEventLog.debug('ran event handler');
 });
 
-app.on('activate', () => {
-  appEventLog.debug('activate');
-
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+// We also want to ovserve some events for logging purposes
+merge(
+  fromAppEvent('quit').pipe(map(({ exitCode }) => ['quit > ', exitCode])),
+).subscribe(message => {
+  appEventLog.debug(...message);
 });
-
-app.on('quit', (e, exitCode) => {
-  appEventLog.debug('quit with ', exitCode);
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

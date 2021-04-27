@@ -1,5 +1,6 @@
-import { Logger, LogLevel } from '@overckd/domain';
+import { LogLevel } from '@ckapp/rxjs-snafu/lib/cjs/log';
 
+import { Logger } from './log';
 import { createFileLogger } from './create-file-logger';
 
 describe('logging/create-file-logger', () => {
