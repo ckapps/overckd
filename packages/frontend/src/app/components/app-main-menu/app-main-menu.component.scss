@@ -6,7 +6,7 @@ $app-main-menu--padding: 0.6em;
 
 :host {
   display: block;
-  overflow: scroll;
+  overflow: auto;
 
   padding: $app-main-menu--padding;
   background-color: $app-main-menu--background-color;
