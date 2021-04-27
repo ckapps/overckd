@@ -31,6 +31,8 @@ export function transformFromRequestProperty<
       // Map pagination information
       mapPaginationTyped(),
       // Unwrap
-      map(unflattenQuery),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      map<unknown, DataQuery<TQuery>>(unflattenQuery),
     );
 }
