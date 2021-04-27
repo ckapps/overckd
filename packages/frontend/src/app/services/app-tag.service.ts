@@ -17,6 +17,10 @@ export class AppTagService implements TagService {
     private apiRequestService: ApiRequestService,
   ) {}
 
+  add(tag: Tag): Observable<Tag> {
+    return this.http.post<Tag>(this.urlBuilder.urlFromSegments(['tags']), tag);
+  }
+
   findByQuery(query: TagQuery): Observable<Page<Tag>> {
     const params = this.apiRequestService.createParamsFromQuery(query);
 
