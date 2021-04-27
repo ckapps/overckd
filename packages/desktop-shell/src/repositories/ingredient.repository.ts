@@ -1,11 +1,8 @@
-import { switchExpandItems } from '@ckapp/rxjs-snafu/lib/cjs/array/operators';
 import { Context, createReader, useContext } from '@marblejs/core';
 import { IngredientRepository } from '@overckd/domain/dist/repositories';
-import { filterIngredientsByQuery } from '@overckd/domain/dist/rxjs/ingredient';
-import { asPagedResult } from '@overckd/domain/dist/rxjs/search';
 import { Reader } from 'fp-ts/lib/Reader';
-import { of } from 'rxjs';
-import { first, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
+import { first, map, pluck, switchMap } from 'rxjs/operators';
 
 import { IngredientDbCollectionToken } from '../db/collections/db.collections.tokens';
 import { pluckManyData } from '../db/rxjs';
@@ -34,15 +31,34 @@ export const IngredientFileRepository: Reader<
   // ================================================================================
   // Queries
   const findByQuery: IngredientRepository['findByQuery'] = query => {
-    const query$ = of(query);
+    let filterQuery = ingredientsDB.find();
 
-    return findAllQuery.pipe(
-      pluckManyData(),
+    if (query.query.name) {
+      filterQuery = filterQuery
+        .where('name')
+        .regex(new RegExp(`${query.query.name}`, 'ig'));
+    }
+
+    // Apply paging
+    const { page = 0, size = 30 } = query;
+    const pagedQuery = filterQuery.limit(size).skip(page * size);
+
+    return combineLatest([
+      filterQuery.$.pipe(pluck('length')),
+      pagedQuery.$,
+    ]).pipe(
       first(),
-      switchExpandItems(),
-      withLatestFrom(query$),
-      filterIngredientsByQuery(),
-      asPagedResult(),
+      switchMap(([count, paged]) =>
+        of(paged).pipe(
+          pluckManyData(),
+          map(result => ({
+            count,
+            page,
+            result,
+            size,
+          })),
+        ),
+      ),
     );
   };
 

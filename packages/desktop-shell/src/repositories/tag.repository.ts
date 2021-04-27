@@ -1,19 +1,8 @@
-import { switchExpandItems } from '@ckapp/rxjs-snafu/lib/cjs/array/operators';
 import { Context, createReader, useContext } from '@marblejs/core';
 import { TagRepository } from '@overckd/domain/dist/repositories';
-import { filterTagsByQuery } from '@overckd/domain/dist/rxjs/tag';
-import { asPagedResult } from '@overckd/domain/dist/rxjs/search';
 import { Reader } from 'fp-ts/lib/Reader';
 import { combineLatest, from, of } from 'rxjs';
-import {
-  first,
-  map,
-  mergeMap,
-  pluck,
-  switchMap,
-  tap,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { first, map, mergeMap, pluck, switchMap } from 'rxjs/operators';
 
 import { TagDbCollectionToken } from '../db/collections/db.collections.tokens';
 import { scoped, RepositoryLogScope } from '../logging';
@@ -63,7 +52,6 @@ export const TagFileRepository: Reader<Context, TagRepository> = createReader(
         switchMap(([count, paged]) =>
           of(paged).pipe(
             pluckManyData(),
-            tap(data => logger.silly(`found in db (${data.length} results)`)),
             map(result => {
               return {
                 count,
@@ -74,12 +62,6 @@ export const TagFileRepository: Reader<Context, TagRepository> = createReader(
             }),
           ),
         ),
-
-        // switchExpandItems(),
-        // withLatestFrom(query$),
-        // filterTagsByQuery(),
-        tap(value => logger.silly(`returning`, value)),
-        // asPagedResult(),
       );
     };
 
