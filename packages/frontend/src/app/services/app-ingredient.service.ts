@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 import { Ingredient, IngredientQuery } from '@overckd/domain';
+import { Page } from '@overckd/domain/dist/search';
 
 import { UrlBuilderService } from './url-builder.service';
 import { IngredientService } from '../modules/domain/ingredient/modules/ingredient-common/services/ingredient.service';
-import { Page } from '@overckd/domain/dist/search';
-import { Observable } from 'rxjs';
 import { ApiRequestService } from '../modules/domain/api/services/api-request.service';
 
 @Injectable({ providedIn: 'root' })
@@ -21,7 +21,7 @@ export class AppIngredientService implements IngredientService {
     const params = this.apiRequestService.createParamsFromQuery(query);
 
     return this.http.get<Page<Ingredient>>(
-      this.urlBuilder.url(`ingredients/query`),
+      this.urlBuilder.urlFromSegments(['ingredients', `query`]),
       { params },
     );
   }
