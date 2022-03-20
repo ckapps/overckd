@@ -146,4 +146,4 @@ yarn app:desktop
 [conventional-commits-url]: https://conventionalcommits.org/
 [cov-badge]: https://coveralls.io/repos/github/ckapps/overckd/badge.svg?branch=main
 [cov-url]: (https://coveralls.io/github/ckapps/overckd?branch=main)
-[gh-workflow-main-badge]: (https://github.com/ckapps/overckd/workflows/CI/badge.svg)
+[gh-workflow-main-badge]: https://github.com/ckapps/overckd/workflows/CI/badge.svg
