@@ -8,8 +8,8 @@
 
 <br>
 
-![ci](https://github.com/ckapps/overckd/workflows/CI/badge.svg)
-[![Coverage Status](https://coveralls.io/repos/github/ckapps/overckd/badge.svg?branch=master)](https://coveralls.io/github/ckapps/overckd?branch=master)
+![ci][gh-workflow-main-badge]
+[![Coverage Status][cov-badge]][cov-url]
 [![Conventional Commits][conventional-commits-image]][conventional-commits-url]
 
 ## Description
@@ -144,3 +144,6 @@ yarn app:desktop
 
 [conventional-commits-image]: https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg
 [conventional-commits-url]: https://conventionalcommits.org/
+[cov-badge]: https://coveralls.io/repos/github/ckapps/overckd/badge.svg?branch=main
+[cov-url]: (https://coveralls.io/github/ckapps/overckd?branch=main)
+[gh-workflow-main-badge]: (https://github.com/ckapps/overckd/workflows/CI/badge.svg)
