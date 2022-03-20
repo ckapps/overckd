@@ -1,0 +1,43 @@
+overckd: 1.0.0
+
+tags:
+  - uri: vegan
+    label: vegan
+    color: '#00ff11'
+    icon: seedling
+
+  - uri: fast-food
+    label: fast food
+    color: '#00ff11'
+    icon: pizza-slice
+
+  - uri: vegetables
+    label: Gemüse
+    color: '#123789'
+    icon: carrot
+
+  - uri: baking
+    label: Backen
+
+  - uri: sweet
+    label: süß
+
+  - uri: salty
+    label: salzig
+
+  - uri: sour
+    label: sauer
+    icon: lemon
+    color: '#ecdd00'
+
+  - uri: spicy
+    label: scharf
+
+  - uri: hearty
+    label: deftig
+
+  - uri: lactose-free
+    label: laktosefrei
+
+  - uri: vegeterian
+    label: vegetarisch

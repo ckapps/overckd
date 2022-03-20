@@ -4,6 +4,8 @@ import {
   BoundDependency,
   ContextDependency,
   createReader,
+  ServerIO,
+  HttpServer,
 } from '@marblejs/core';
 import {
   EventBusToken,
@@ -24,9 +26,9 @@ import { ServerConfigToken } from './tokens';
  * @param config Server configuration
  */
 export function server(
-  deps: BoundDependency<any, ContextDependency>[],
+  deps: BoundDependency<unknown, ContextDependency>[],
   config: ServerConfig = defaultServerConfig,
-) {
+): Promise<ServerIO<HttpServer>> {
   const { port } = config;
 
   // Add server config to the dependencies

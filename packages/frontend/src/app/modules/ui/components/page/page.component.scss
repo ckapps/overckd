@@ -1,6 +1,5 @@
+@import '../../../ckapps-design-system/ckad-ui-core/ckad-ui-core.module.scss';
+
 :host {
-  padding: 5rem;
-  background-color: white;
-  width: 100%;
-  overflow: auto;
+  @include ckad-page-default();
 }

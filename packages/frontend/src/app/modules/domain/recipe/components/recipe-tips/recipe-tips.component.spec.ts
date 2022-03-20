@@ -1,4 +1,5 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecipeTipsComponent } from './recipe-tips.component';
 
@@ -6,17 +7,31 @@ describe('RecipeTipsComponent', () => {
   let component: RecipeTipsComponent;
   let fixture: ComponentFixture<RecipeTipsComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [RecipeTipsComponent],
-      }).compileComponents();
-    }),
-  );
+  let mockRecipe;
+
+  beforeEach(() => {
+    mockRecipe = {
+      images: [],
+      name: 'mock-name',
+      ingredients: [],
+      steps: [],
+      tips: ['mock-tip-1', 'mock-tip-2'],
+      styles: {},
+    };
+  });
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [RecipeTipsComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RecipeTipsComponent);
     component = fixture.componentInstance;
+    // Set props
+    component.recipe = mockRecipe;
     fixture.detectChanges();
   });
 

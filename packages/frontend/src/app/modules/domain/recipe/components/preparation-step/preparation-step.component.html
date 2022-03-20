@@ -1,24 +1,24 @@
-<div
-  *ngIf="this.isHtml; else textTemplate"
-  [class]="this.cssClasses"
-  [innerHTML]="this.step.html"
-></div>
+<ng-template [ngIf]="!this.stepsEnumerated">
+  <div
+    *ngIf="this.stepHtml as stepHtml; else textTemplate"
+    [class]="this.cssClasses"
+    [innerHTML]="stepHtml"
+  ></div>
 
-<ng-template #textTemplate>
-  <ng-template [ngIf]="!this.stepsEnumerated">
-    <p *ngIf="!this.isHtml" [class]="this.cssClasses">
+  <ng-template #textTemplate>
+    <p [class]="this.cssClasses">
       {{ this.stepText }}
     </p>
   </ng-template>
+</ng-template>
 
-  <ng-template [ngIf]="this.stepsEnumerated">
-    <li
-      *ngIf="this.isHtml"
-      [class]="[this.cssClasses, 'mb-1'].join(' ')"
-      [innerHTML]="this.step.html"
-    ></li>
-    <li *ngIf="!this.isHtml" [class]="[this.cssClasses, 'mb-1'].join(' ')">
-      {{ this.stepText }}
-    </li>
-  </ng-template>
+<ng-template [ngIf]="this.stepsEnumerated">
+  <li
+    *ngIf="this.stepHtml as stepHtml"
+    [class]="[this.cssClasses, 'mb-1'].join(' ')"
+    [innerHTML]="stepHtml"
+  ></li>
+  <li [class]="[this.cssClasses, 'mb-1'].join(' ')">
+    {{ this.stepText }}
+  </li>
 </ng-template>

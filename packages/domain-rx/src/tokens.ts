@@ -1,23 +1,5 @@
-import { createContextToken } from '@marblejs/core';
-
-import {
-  RecipeCollectionRepository,
-  RecipeRepository,
-} from '@overckd/domain/dist/repositories';
-
 // ----------------------------------------------------------------------------
-// Repositories
+// Tokens
 // ----------------------------------------------------------------------------
-/**
- * DI token for recipe collection repository
- */
-export const RecipeCollectionRepositoryToken = createContextToken<
-  RecipeCollectionRepository
->('RecipeCollectionRepo');
-
-/**
- * DI token for recipe collection repository
- */
-export const RecipeRepositoryToken = createContextToken<RecipeRepository>(
-  'RecipeRepo',
-);
+export * from './core/logging/logger.token';
+export * from './models/models.tokens';

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
 
 // External modules
 import { UiModule } from '../../ui/ui.module';
@@ -11,7 +12,7 @@ import { RecipeCollectionComponent } from './components/recipe-collection/recipe
 
 @NgModule({
   declarations: [CollectionsMainMenuGroupComponent, RecipeCollectionComponent],
-  imports: [CommonModule, UiModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatListModule, UiModule],
   exports: [CollectionsMainMenuGroupComponent, RecipeCollectionComponent],
 })
 export class RecipeCollectionModule {}

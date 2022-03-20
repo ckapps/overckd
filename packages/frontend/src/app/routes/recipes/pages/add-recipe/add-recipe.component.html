@@ -1,0 +1,34 @@
+<h2>Add a new recipe</h2>
+
+<article>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <mat-step [stepControl]="this.recipeBaseForm">
+      <form [formGroup]="this.recipeBaseForm" class="grid">
+        <ng-template matStepLabel>Basics</ng-template>
+
+        <ckad-input-field
+          formControlName="name"
+          label="Title"
+          type="text"
+          class="w-full field"
+        ></ckad-input-field>
+
+        <overckd-portion-quantifier-input
+          formControlName="portionQuantifier"
+          class="w-full field"
+        >
+        </overckd-portion-quantifier-input>
+
+        <overckd-recipe-input-sources-list
+          formControlName="basedOn"
+          label="Based on"
+          class="w-full field"
+        ></overckd-recipe-input-sources-list>
+
+        <div>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-horizontal-stepper>
+</article>

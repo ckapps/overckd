@@ -1,14 +1,15 @@
-import { LogFunctions } from 'electron-log';
-import { prefixLogSuffix } from './prefix-log-suffix';
+import { prefixLogSuffix } from '@ckapp/rxjs-snafu/lib/cjs/log/prefix-log-suffix';
+
+import { Logger } from './log';
 
 /**
- * @param logger
- * @param filename
+ * @param logger The logger used for logging
+ * @param filename Filename
  *
  * @returns
  * A logger that prepends the filename on every message
  */
-export function createFileLogger(logger: LogFunctions, filename: string) {
+export function createFileLogger(logger: Logger, filename: string): Logger {
   const cwd = process.cwd();
 
   // Shorten the filepath, if in cwd

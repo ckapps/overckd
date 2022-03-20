@@ -1,0 +1,18 @@
+@import '../variables/page.variables.scss';
+
+@mixin ckad-page-fullsize {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+  overflow: auto;
+}
+
+@mixin ckad-page-from-variables {
+  background-color: $ckad-page-background-color;
+  padding: $ckad-page-padding;
+}
+
+@mixin ckad-page-default() {
+  @include ckad-page-from-variables();
+  @include ckad-page-fullsize();
+}

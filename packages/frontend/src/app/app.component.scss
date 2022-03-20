@@ -1,5 +1,23 @@
 :host {
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  overflow: hidden;
+
+  grid-template:
+    'title-bar title-bar' auto
+    'main-menu main' 1fr
+    / 20em 1fr;
+}
+
+.title-bar {
+  grid-area: title-bar;
+}
+
+.main-menu {
+  grid-area: main-menu;
+}
+
+main {
+  grid-area: main;
+  overflow: auto;
 }

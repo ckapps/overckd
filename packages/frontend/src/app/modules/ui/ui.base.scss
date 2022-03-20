@@ -1,0 +1,6 @@
+// Import stylings from submodules
+@import '../ckapps-design-system/ckad-ui-core/ckad-ui-core.module.scss';
+
+// Import local stylings
+@import './scss/ui.mixins.scss';
+@import './scss/ui.variables.scss';

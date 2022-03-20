@@ -24,8 +24,12 @@
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "styles": [
+              "./src/styles/vendors/material.vendor.scss",
+              "./src/styles.scss"
+            ],
+            "scripts": [],
+            "allowedCommonJsDependencies": ["qs"]
           },
           "configurations": {
             "production": {
@@ -38,12 +42,10 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-
               "budgets": [
                 {
                   "type": "initial",
@@ -72,7 +74,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "frontend:build"
+            "browserTarget": "frontend:build",
+            "proxyConfig": "./server/local-server.proxy.json"
           },
           "configurations": {
             "production": {
@@ -91,15 +94,10 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "assets": ["src/favicon.ico", "src/assets"],
-            "styles": ["src/styles.scss"],
-            "scripts": []
+            "configPath": "jest.config.js",
+            "tsConfig": "tsconfig.spec.json"
           }
         },
         "lint": {

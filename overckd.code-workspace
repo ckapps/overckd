@@ -5,40 +5,41 @@
       "path": "."
     },
     {
-      "name": "desktop-shell",
+      "name": "🖥 desktop-shell",
       "path": "packages/desktop-shell"
     },
     {
-      "name": "frontend",
+      "name": "🎨 frontend",
       "path": "packages/frontend"
     },
     {
-      "name": "server",
+      "name": "🤵 server",
       "path": "packages/server"
     },
     {
-      "name": "server-cli",
+      "name": "🤵 server-cli",
       "path": "packages/server-cli"
     },
     {
-      "name": "yaml-parser",
+      "name": "📦 yaml-parser",
       "path": "packages/yaml-parser"
     },
     {
-      "name": "domain-rx",
+      "name": "⚙️ domain-rx",
       "path": "packages/domain-rx"
     },
     {
-      "name": "domain",
+      "name": "⚙️ domain",
       "path": "packages/domain"
     }
   ],
   "settings": {
     "files.exclude": {
-      // "**/@overckd/**.d.ts": true,
-      // "**/@overckd/**.js": true,
-      // "dist": true,
-      // "packages/*/dist": true
+      "**/@overckd/**.d.ts": true,
+      "**/@overckd/**.js": true,
+      "dist": true,
+      "packages/*/dist": true,
+      "node_modules": true
     }
   }
 }

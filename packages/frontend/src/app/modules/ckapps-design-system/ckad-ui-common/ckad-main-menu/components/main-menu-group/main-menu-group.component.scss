@@ -1,0 +1,70 @@
+@import './main-menu-group.variables.scss';
+
+:host {
+  display: block;
+  // flex-direction: column;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+
+  //   .mat-expansion-panel {
+  //     background: white;
+  //     color: rgba(0, 0, 0, 0.87);
+  // }
+
+  ::ng-deep .mat-expansion-panel {
+    background: inherit;
+    color: inherit;
+    box-shadow: none;
+  }
+
+  ::ng-deep .mat-expansion-panel-header {
+    padding: 0 16px;
+  }
+
+  ::ng-deep .mat-expansion-panel-header-title {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-list-item {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-expansion-panel-header-description,
+  ::ng-deep .mat-expansion-indicator::after {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // > hr {
+  //   width: auto;
+  //   border-top: 1px solid;
+
+  //   // from variables: spacing
+  //   margin-left: $ckad-main-menu-group--hr--hspacing;
+  //   margin-right: $ckad-main-menu-group--hr--hspacing;
+
+  //   // from variables
+  //   border-top-color: $ckad-main-menu-group--hr--color;
+  // }
+
+  // > div {
+  //   display: flex;
+  //   flex-direction: row;
+  //   margin-bottom: 1rem;
+
+  //   // from variables: spacing
+  //   margin-left: $ckad-main-menu-group--title--hspacing;
+  //   margin-right: $ckad-main-menu-group--title--hspacing;
+
+  //   // from variables: font / text
+  //   font-size: $ckad-main-menu-group--title--font-size;
+  //   font-family: $ckad-main-menu-group--title--font;
+  //   color: $ckad-main-menu-group--title--color;
+  // }
+}

@@ -1,0 +1,10 @@
+overckd: 1.0.0
+
+ingredients:
+  zucker:
+    name: Zucker
+    tags: []
+
+  tofu:
+    name: Tofu
+    tags: []

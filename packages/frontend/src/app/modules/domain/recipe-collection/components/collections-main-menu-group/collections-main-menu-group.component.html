@@ -1,10 +1,15 @@
 <ckad-main-menu-group [groupName]="'Collections'" [icon]="this.faListAlt">
-  <ul *ngIf="this.collections$ | async as collections" class="pl-0">
-    <ckad-main-menu-item
+  <mat-nav-list *ngIf="this.collections$ | async as collections">
+    <a
       *ngFor="let collection of collections"
-      [text]="collection.name"
+      mat-list-item
+      [class]="this.itemClass"
       [routerLink]="['./collections/', 'collection', collection.id]"
-      [routerLinkActive]="'active'"
-    ></ckad-main-menu-item>
-  </ul>
+      [routerLinkActive]="this.itemActiveClass"
+    >
+      <ckad-main-menu-item>
+        {{ collection.name }}
+      </ckad-main-menu-item>
+    </a>
+  </mat-nav-list>
 </ckad-main-menu-group>

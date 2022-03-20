@@ -1,21 +1,22 @@
+import { appIsStable$, fromAppEvent } from '@ckapp/rxjs-electron/lib/app';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
-import log from 'electron-log';
-import { of, from, throwError, Observable, combineLatest } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { of, throwError, Observable, combineLatest, merge } from 'rxjs';
+import { catchError, map, mergeMap, pluck } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
 import { initServer } from './server';
 import { ExitCode } from './exit-code.enum';
 import { AppConfig, loadConfig } from './config';
 
-import { LogScope } from './log-scope.enum';
+import { defaultAppBehaviour } from './app/app.behaviour';
 import { configureDeps } from './configure-dependencies';
+import { LogScope, scoped } from './logging';
 import { getPathFromSegments, PathId } from './paths';
 import { parseArgs } from './process-args';
 
-const appLog = log.scope(LogScope.App);
-const appEventLog = log.scope(LogScope.AppEvent);
+const appLog = scoped(LogScope.App);
+const appEventLog = scoped(LogScope.AppEvent);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -39,8 +40,10 @@ const createWindow = (): void => {
   const windowOptions: BrowserWindowConstructorOptions = {
     height: 600,
     width: 800,
-    titleBarStyle: 'hiddenInset',
+    titleBarStyle: 'hidden',
     // titleBarStyle: 'hidden',
+    vibrancy: 'window', // 'light', 'medium-light' etc
+    backgroundColor: 'transparent',
   };
 
   if (process.platform !== 'win32') {
@@ -147,13 +150,7 @@ function initProtocols$(): Observable<boolean> {
  * was successfully initialized
  */
 function startServer$(config: AppConfig): Observable<boolean> {
-  // Setting up the dependencies for marble.js
-  appLog.debug('marble.js dependencies:: setting up');
-  const deps = configureDeps();
-  appLog.debug('marble.js dependencies: done');
-
-  // Initialize server
-  return initServer(deps, config.server).pipe(
+  return initServer(config.server, configureDeps()).pipe(
     map(initialized => {
       if (!initialized) {
         throw new AppInitError(
@@ -173,61 +170,36 @@ function startServer$(config: AppConfig): Observable<boolean> {
  * An Observable that emits with `true` when initialization was successful.
  * If an error occurs, it will throw an `AppInitError`
  */
-function appStable$(fromArgs: typeof args): Observable<boolean> {
-  appLog.silly('initApp');
-
-  return initConfig$(fromArgs).pipe(
-    mergeMap(config => combineLatest([of(config), initProtocols$()])),
-    mergeMap(([config]) => startServer$(config)),
+function stabilize$(fromArgs: typeof args): Observable<boolean> {
+  return combineLatest([initConfig$(fromArgs), initProtocols$()]).pipe(
+    pluck(0),
+    mergeMap(config => startServer$(config)),
   );
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-from(app.whenReady())
-  .pipe(
-    tap(() => appEventLog.debug('ready')),
-    mergeMap(() => appStable$(args)),
-    tap(() => appEventLog.debug('app stable')),
-  )
-  .subscribe(
-    () => createWindow(),
-    // If some exit code was returned, terminate the app
-    (error: AppInitError) => {
-      appLog.error(error.message);
-      if (error.innerError) {
-        appLog.error(`${error.innerError.name}: ${error.innerError.message}`);
-      }
-      app.exit(error.exitCode);
-    },
-  );
+appIsStable$(() => stabilize$(args)).subscribe(
+  () => createWindow(),
+  // If some exit code was returned, terminate the app
+  (error: AppInitError) => {
+    appLog.error(error.message);
+    if (error.innerError) {
+      appLog.error(`${error.innerError.name}: ${error.innerError.message}`);
+    }
+    app.exit(error.exitCode);
+  },
+);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  appEventLog.debug('window-all-closed');
-
-  if (process.platform !== 'darwin') {
-    appLog.debug('quit due to window-all-closed');
-    app.quit();
-  }
+// Registers default behaviour middleware
+defaultAppBehaviour(createWindow).subscribe(() => {
+  appEventLog.debug('ran event handler');
 });
 
-app.on('activate', () => {
-  appEventLog.debug('activate');
-
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
+// We also want to ovserve some events for logging purposes
+merge(
+  fromAppEvent('quit').pipe(map(({ exitCode }) => ['quit > ', exitCode])),
+).subscribe(message => {
+  appEventLog.debug(...message);
 });
-
-app.on('quit', (e, exitCode) => {
-  appEventLog.debug('quit with ', exitCode);
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.

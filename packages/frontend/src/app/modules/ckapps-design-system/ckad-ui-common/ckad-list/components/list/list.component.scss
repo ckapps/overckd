@@ -1,0 +1,15 @@
+@import './list.variables.scss';
+
+@mixin ckad-list() {
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+
+  // from variables
+  border-radius: $ckad-list--default--border-radius;
+}
+
+:host {
+  @include ckad-list();
+}

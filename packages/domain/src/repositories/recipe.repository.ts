@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-import { Recipe } from '../recipe';
+import { Recipe } from '../models/recipe/recipe.model';
 
 /**
  * Interface for a recipe repository.

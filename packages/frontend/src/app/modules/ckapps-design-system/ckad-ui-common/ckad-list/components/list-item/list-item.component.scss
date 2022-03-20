@@ -1,0 +1,28 @@
+@import './list-item.variables.scss';
+
+@mixin ckad-list-item() {
+  position: relative;
+  display: block;
+  text-decoration: none;
+
+  padding: $ckad-list-item--default--padding;
+
+  background-color: $ckad-list-item--default--bg-color;
+  border: $ckad-list-item--default--border;
+
+  &.active {
+    z-index: $ckad-list-item--active--z-index;
+    color: $ckad-list-item--active--color;
+    background-color: $ckad-list-item--active--bg-color;
+    border-color: $ckad-list-item--active--border-color;
+  }
+
+  &:first-child {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
+  }
+}
+
+:host {
+  @include ckad-list-item();
+}

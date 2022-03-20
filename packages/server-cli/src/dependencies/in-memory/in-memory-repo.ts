@@ -1,7 +1,16 @@
 import { BehaviorSubject, Observable, of, OperatorFunction } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 
-export abstract class InMemoryRepo<T> {
+import {
+  DataQuery,
+  Page,
+  PagingInformation,
+} from '@overckd/domain/dist/search';
+
+/**
+ * Basic implementation for an in memory repository
+ */
+export abstract class InMemoryRepo<T, TQuery = any> {
   protected all: BehaviorSubject<T[]>;
 
   constructor(protected initialValue: T[] = []) {
@@ -46,6 +55,10 @@ export abstract class InMemoryRepo<T> {
 
   findItemOperator(item: Partial<T>): OperatorFunction<T[], T | undefined> {
     return map(items => items.find(i => this.equals(i, item)));
+  }
+
+  findByQuery(query: DataQuery<TQuery>): Observable<Page<T>> {
+    throw new Error('Not implemented');
   }
 
   abstract equals(a: T, b: Partial<T>): boolean;

@@ -1,0 +1,21 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-seed
+    label: seed
+    uri: seed
+  - &tag-sweet
+    label: sweet
+    uri: sweet
+  - &tag-pumpkin-plant
+    label: pumpkin-plant
+    uri: pumpkin-plant
+
+shared:
+  tags:
+    - *tag-seed
+
+ingredients:
+  green-amaranth:
+    name: green-amaranth
+    tags: []

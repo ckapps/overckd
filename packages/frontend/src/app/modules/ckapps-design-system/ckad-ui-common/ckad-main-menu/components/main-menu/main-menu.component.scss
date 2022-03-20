@@ -1,0 +1,13 @@
+@import './main-menu.variables.scss';
+
+:host {
+  background: $ckad-main-menu--background-color;
+  // width: $ckad-main-menu--width;
+  max-height: 100vh;
+  overflow: auto;
+
+  > nav {
+    display: flex;
+    flex-direction: column;
+  }
+}

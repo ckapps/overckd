@@ -24,4 +24,15 @@ module.exports = {
     'plugin:import/typescript',
   ],
   parser: '@typescript-eslint/parser',
+
+  // Add overrides for test files
+  overrides: [
+    {
+      files: ['*jest*.ts', '*.spec.ts'],
+      rules: {
+        'no-unused-expressions': 'off',
+        '@typescript-eslint/ban-ts-comment': 'off',
+      },
+    },
+  ],
 };

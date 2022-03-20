@@ -1,31 +1,21 @@
-import { stat, readFile } from '@ckapp/rxjs-node-fs';
-import * as log from 'electron-log';
+import { stat } from '@ckapp/rxjs-node-fs';
+import {
+  LogLevel,
+  logEnterExit,
+  log,
+} from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
 import * as path from 'path';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
-import { yamlDecode } from '@overckd/yaml-parser';
-import { generalYamlFile } from '@overckd/yaml-parser/dist/file-codec';
-
-import { AppConfig, YamlConfig } from './app-config.types';
+import { LogScope, scoped } from '../logging';
+import { readAppConfigFile } from '../filesystem/read-app-config-file';
+import { AppConfig } from './app-config.types';
 import { config } from './config';
 import { finalizeAppConfig } from './finalize-config';
 import { DEFAULT_CONFIG_FILE_NAME } from './defaults';
 
-const logger = log.scope('config');
-
-function decodeConfig(pathToConfigFile: string) {
-  return readFile(pathToConfigFile, { encoding: 'utf8' }).pipe(
-    yamlDecode(generalYamlFile),
-    tap(() => logger.debug(`parsed config from file ${pathToConfigFile}`)),
-    map((yaml: YamlConfig) => ({
-      ...yaml,
-      // If the root is not set, we provide the enclosing folder of the file
-      pathRoot: yaml.pathRoot || path.dirname(path.resolve(pathToConfigFile)),
-    })),
-    map(yaml => finalizeAppConfig(yaml)),
-  );
-}
+const logger = scoped(LogScope.Config);
 
 /**
  * @param pathToConfigFile Path where to look for the config file
@@ -46,7 +36,7 @@ function resolveConfigFilePath(pathToConfigFile: string): Observable<string> {
         DEFAULT_CONFIG_FILE_NAME,
       );
 
-      logger.debug(
+      logger.silly(
         `passed path ${pathToConfigFile} is a directory, searching for file with default name ${DEFAULT_CONFIG_FILE_NAME}`,
       );
 
@@ -55,17 +45,39 @@ function resolveConfigFilePath(pathToConfigFile: string): Observable<string> {
   );
 }
 
-function chooseConfig(pathToConfigFile: string): Observable<AppConfig> {
+/**
+ * @param pathToConfigFile Optional path to the config file
+ *
+ * @returns
+ * An observable that emits with the app configuration
+ */
+function chooseConfig(pathToConfigFile?: string): Observable<AppConfig> {
   // If no path was provided, we return the default configuration
   if (!pathToConfigFile) {
-    logger.debug('using default configuration');
-    return of(config);
+    return of(config).pipe(
+      log({
+        logger,
+        level: LogLevel.Verbose,
+        prefixes: ['Using default configuration'],
+        withEmittedValues: true,
+      }),
+    );
   }
 
   return resolveConfigFilePath(pathToConfigFile).pipe(
-    tap(filename => logger.info(`loading configuration file from ${filename}`)),
+    log({
+      logger,
+      level: LogLevel.Silly,
+      prefixes: ['Loading app configuration from file'],
+      withEmittedValues: true,
+    }),
     mergeMap(actualFilename =>
-      decodeConfig(actualFilename).pipe(
+      readAppConfigFile(actualFilename).pipe(
+        map(finalizeAppConfig),
+        logEnterExit('Parsing configuration file', {
+          logger,
+          level: LogLevel.Silly,
+        }),
         catchError(e =>
           throwError(new Error(`could not read config file ${actualFilename}`)),
         ),
@@ -75,15 +87,17 @@ function chooseConfig(pathToConfigFile: string): Observable<AppConfig> {
 }
 
 /**
- * @param pathToConfigFile Path to the configuration file
+ * @param pathToConfigFile Optional path to the configuration file
  *
  * @returns
  * An observable that emits with the loaded app configuration
  */
-export function loadConfig(pathToConfigFile: string): Observable<AppConfig> {
-  logger.silly('called: loadConfig');
-
+export function loadConfig(pathToConfigFile?: string): Observable<AppConfig> {
   return chooseConfig(pathToConfigFile).pipe(
-    tap(config => logger.debug('finalized app config', config)),
+    logEnterExit('Loading app configuration', {
+      logger,
+      level: LogLevel.Verbose,
+      withEmittedValues: true,
+    }),
   );
 }

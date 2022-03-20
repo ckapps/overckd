@@ -1,9 +1,9 @@
 import { protocol } from 'electron';
-import * as log from 'electron-log';
-
 import { RecipeCollection } from '@overckd/domain';
 
-const logger = log.scope('protocol');
+import { LogScope, scoped } from './logging';
+
+const logger = scoped(LogScope.Protocols);
 const SCHEMA = 'overckd';
 
 // protocol.registerSchemesAsPrivileged([

@@ -1,4 +1,5 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NotFoundPageComponent } from './not-found.component';
 
@@ -6,13 +7,12 @@ describe('EmptyComponent', () => {
   let component: NotFoundPageComponent;
   let fixture: ComponentFixture<NotFoundPageComponent>;
 
-  beforeEach(
-    waitForAsync(() => {
-      TestBed.configureTestingModule({
-        declarations: [NotFoundPageComponent],
-      }).compileComponents();
-    }),
-  );
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [NotFoundPageComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NotFoundPageComponent);

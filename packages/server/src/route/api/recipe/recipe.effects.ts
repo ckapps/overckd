@@ -1,5 +1,5 @@
 import { r, HttpStatus, useContext, combineRoutes } from '@marblejs/core';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, pluck } from 'rxjs/operators';
 import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/lib/pipeable';
@@ -49,11 +49,10 @@ const getRecipeByName$ = r.pipe(
 
     return req$.pipe(
       validateGetByNameRequest,
-      mergeMap(req => {
-        const { params } = req;
-
-        return pipe(GetRecipeByNameEvent.create(params), eventBusClient.send);
-      }),
+      pluck('params'),
+      mergeMap(params =>
+        pipe(GetRecipeByNameEvent.create(params), eventBusClient.send),
+      ),
       map(value =>
         value.payload === undefined
           ? { status: HttpStatus.NOT_FOUND }

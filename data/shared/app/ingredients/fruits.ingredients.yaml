@@ -1,0 +1,199 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-fruit
+    label: fruit
+    uri: fruit
+  - &tag-citrus
+    label: citrus
+    uri: citrus
+  - &tag-sweet
+    label: sweet
+    uri: sweet
+
+shared:
+  tags:
+    - *tag-fruit
+
+ingredients:
+  apple:
+    name: apple
+    tags: []
+
+  apricot:
+    name: apricot
+    tags: []
+
+  banana:
+    name: banana
+    tags: []
+
+  blood-orange:
+    name: blood-orange
+    tags:
+      - *tag-citrus
+
+  bramley-apple:
+    name: bramley-apple
+    tags: []
+
+  cherry-plum:
+    name: cherry-plum
+    tags: []
+
+  clementine:
+    name: clementine
+    tags:
+      - *tag-citrus
+
+  crab-apple:
+    name: crab-apple
+    tags: []
+
+  custard-apple:
+    name: custard-apple
+    tags: []
+
+  donut-peach:
+    name: donut-peach
+    tags: []
+
+  fig:
+    name: fig
+    tags: []
+
+  grape:
+    name: grape
+    tags: []
+
+  grapefruit:
+    name: grapefruit
+    tags:
+      - *tag-citrus
+
+  greengage:
+    name: greengage
+    tags: []
+
+  guava:
+    name: guava
+    tags: []
+
+  jujube:
+    name: jujube
+    tags: []
+
+  kiwi:
+    name: kiwi
+    tags: []
+
+  lemon:
+    name: lemon
+    tags:
+      - *tag-citrus
+
+  loquat:
+    name: loquat
+    tags: []
+
+  mandarin:
+    name: mandarin
+    tags:
+      - *tag-citrus
+
+  mango:
+    name: mango
+    tags:
+      - *tag-sweet
+
+  medlar:
+    name: medlar
+    tags: []
+
+  melon:
+    name: melon
+    tags:
+      - *tag-sweet
+
+  muskmelon:
+    name: muskmelon
+    tags:
+      - *tag-sweet
+
+  nectarine:
+    name: nectarine
+    tags:
+      - *tag-sweet
+
+  orange:
+    name: orange
+    tags:
+      - *tag-citrus
+
+  papaya:
+    name: papaya
+    tags: []
+
+  peach:
+    name: peach
+    tags:
+      - *tag-sweet
+
+  pear:
+    name: pear
+    tags: []
+
+  persimmon:
+    name: persimmon
+    tags: []
+
+  pineapple:
+    name: pineapple
+    tags:
+      - *tag-sweet
+
+  plum:
+    name: plum
+    tags: []
+
+  pomegranate:
+    name: pomegranate
+    tags: []
+
+  pomelo:
+    name: pomelo
+    tags: []
+
+  prickly-pear:
+    name: prickly-pear
+    tags: []
+
+  prune:
+    name: prune
+    tags: []
+
+  quince:
+    name: quince
+    tags: []
+
+  rhubarb:
+    name: rhubarb
+    tags: []
+
+  sea-buckthorn:
+    name: sea-buckthorn
+    tags: []
+
+  tangerine:
+    name: tangerine
+    tags:
+      - *tag-citrus
+
+  watermelon:
+    name: watermelon
+    tags:
+      - *tag-sweet
+
+  winter-melon:
+    name: winter-melon
+    tags: []

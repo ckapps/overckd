@@ -2,8 +2,8 @@ import { Context, createReader } from '@marblejs/core';
 import { Reader } from 'fp-ts/lib/Reader';
 import { Observable } from 'rxjs';
 
-import { PortionKind } from '@overckd/domain/dist/portion-quantifier';
-import { Recipe } from '@overckd/domain/dist/recipe';
+import { PortionKind } from '@overckd/domain/dist/models/portion-quantifier/portion-quantifier.model';
+import { Recipe } from '@overckd/domain/dist/models/recipe/recipe.model';
 import { RecipeRepository } from '@overckd/domain/dist/repositories';
 
 import { InMemoryRepo } from './in-memory-repo';
@@ -15,7 +15,11 @@ class RecipeRepo extends InMemoryRepo<Recipe> implements RecipeRepository {
         name: 'recipe 1',
         images: [],
         ingredients: [],
-        steps: [],
+        steps: [
+          'step 1',
+          'step 2',
+          { html: 'Loorem Ipsum dolor', styles: ['text-center'] },
+        ],
         styles: {},
         tips: [],
       },
@@ -50,7 +54,7 @@ class RecipeRepo extends InMemoryRepo<Recipe> implements RecipeRepository {
             name: 'Ingredient with textual amount',
           },
         ],
-        steps: [],
+        steps: ['step 1', 'step 2', 'Loorem Ipsum dolor'],
         styles: {},
         tips: [],
       },

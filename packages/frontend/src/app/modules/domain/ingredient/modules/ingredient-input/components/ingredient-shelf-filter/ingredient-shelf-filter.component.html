@@ -1,0 +1,42 @@
+<mat-form-field class="example-chip-list w-100">
+  <mat-label>Search or add ingredients</mat-label>
+  <input
+    matInput
+    placeholder="Add ingredients"
+    #searchInput
+    [formControl]="this.inputCtrl"
+    [matChipInputFor]="chipList"
+    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    (matChipInputTokenEnd)="this.add($event)"
+  />
+  <!-- <mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="this.selected($event)"
+  >
+    <mat-option *ngFor="let tag of filteredTags$ | async" [value]="tag">
+      {{ tag.label }}
+    </mat-option>
+  </mat-autocomplete> -->
+</mat-form-field>
+
+<mat-chip-list #chipList aria-label="Ingredient tags">
+  <mat-chip
+    *ngFor="let selectedTag of this.selectedTags$ | async"
+    selected
+    [selectable]="this.selectable"
+    [removable]="this.removable"
+    (removed)="this.removeTag(selectedTag)"
+  >
+    {{ selectedTag.label }}
+
+    <fa-icon matChipRemove *ngIf="this.removable" [icon]="'times'"></fa-icon>
+  </mat-chip>
+
+  <mat-chip
+    *ngFor="let tag of this.filteredTags$ | async"
+    [selectable]="true"
+    (click)="this.addTag(tag)"
+  >
+    {{ tag.label }}
+  </mat-chip>
+</mat-chip-list>

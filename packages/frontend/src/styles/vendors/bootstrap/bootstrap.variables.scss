@@ -1,0 +1,28 @@
+@import '../../overckd.variables.scss';
+
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
+// $font-family-base: $font-regular;
+
+//
+$primary: $overckd-ci-color-primary;
+// $secondary:
+$info: $overckd-ci-color-accent;
+$accent: $overckd-ci-color-accent;
+$success: $overckd-ci-color-success;
+$warning: $overckd-ci-color-warn;
+$danger: $overckd-ci-color-danger;
+// $light:
+// $dark:
+
+$theme-colors: (
+  'primary': $primary,
+  'secondary': $secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark,
+);

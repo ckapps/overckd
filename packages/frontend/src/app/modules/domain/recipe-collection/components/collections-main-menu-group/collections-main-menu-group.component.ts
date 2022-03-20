@@ -13,23 +13,16 @@ import { RecipeCollectionService } from '../../services/recipe-collection.servic
   styleUrls: ['./collections-main-menu-group.component.scss'],
 })
 export class CollectionsMainMenuGroupComponent implements OnInit, OnDestroy {
+  readonly itemClass = 'ckapps-main-menu-item';
+  readonly itemActiveClass = 'ckapps-main-menu-item--active';
   public faListAlt = faListAlt;
-  public collections$: Observable<RecipeCollection[]>;
+  public collections$ = this.recipeCollectionService.collections$;
 
   private destroyed$ = new ReplaySubject(1);
 
-  constructor(private recipeCollectionService: RecipeCollectionService) {
-    // Keep collections up to date
-    this.collections$ = this.recipeCollectionService.collections$;
-  }
+  constructor(private recipeCollectionService: RecipeCollectionService) {}
 
-  ngOnInit(): void {
-    // Make an initial request to the collections
-    this.recipeCollectionService
-      .getAll()
-      .pipe(takeUntil(this.destroyed$))
-      .subscribe();
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this.destroyed$.next(true);

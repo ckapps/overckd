@@ -1,6 +1,14 @@
+@import '../../../styles/overckd.variables.scss';
+
+$app-main-menu--background-color: transparent;
+$app-main-menu--color: white;
+$app-main-menu--padding: 0.6em;
+
 :host {
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-  flex-grow: 0;
+  display: block;
+  overflow: auto;
+
+  padding: $app-main-menu--padding;
+  background-color: $app-main-menu--background-color;
+  color: $app-main-menu--color;
 }

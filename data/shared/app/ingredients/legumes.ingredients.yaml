@@ -1,0 +1,63 @@
+overckd: 1.0.0
+
+tags:
+  - &tag-legume
+    label: legume
+    uri: legume
+
+shared:
+  tags:
+    - *tag-legume
+
+ingredients:
+  bean:
+    name: bean
+    tags: []
+
+  beetle-bean:
+    name: beetle-bean
+    tags: []
+
+  black-bean:
+    name: black-bean
+    tags: []
+
+  black-eyed-pea:
+    name: banana
+    tags: []
+
+  broad-bean:
+    name: broad-bean
+    tags: []
+
+  carob:
+    name: carob
+    tags: []
+
+  green-bean:
+    name: green-bean
+    tags: []
+
+  green-pea:
+    name: green-pea
+    tags: []
+
+  pea:
+    name: pea
+    tags: []
+
+  runner-bean:
+    name: runner-bean
+    tags: []
+
+  soy-bean:
+    name: soy-bean
+    tags: []
+
+  snow-pea:
+    name: crab-apple
+    tags: []
+
+  white-bean:
+    name: haricot-bean
+    tags: []

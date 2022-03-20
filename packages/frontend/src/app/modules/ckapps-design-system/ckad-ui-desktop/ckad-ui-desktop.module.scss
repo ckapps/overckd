@@ -1,0 +1,10 @@
+@import './scss/ckad-ui-desktop.submodules.scss';
+
+// ====================================================
+// resetting and initial values
+// ====================================================
+html,
+body {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+}

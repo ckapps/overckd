@@ -18,12 +18,12 @@ const routes: Routes = [
   {
     path: 'recipes',
     loadChildren: () =>
-      import('./recipes/recipes.module').then(m => m.RecipesModule),
+      import('./routes/recipes/recipes.module').then(m => m.RecipesModule),
   },
   {
     path: 'collections',
     loadChildren: () =>
-      import('./recipe-collections/recipe-collections.module').then(
+      import('./routes/recipe-collections/recipe-collections.module').then(
         m => m.RecipeCollectionsModule,
       ),
   },
@@ -31,7 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

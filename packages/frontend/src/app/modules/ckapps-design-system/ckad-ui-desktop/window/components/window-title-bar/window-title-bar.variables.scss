@@ -1,0 +1,18 @@
+// ====================================================
+// window-title-bar
+// ====================================================
+$ckad-desktop-window-title-bar--color: rgb(241, 241, 241) !default;
+$ckad-desktop-window-title-bar--background-color: rgb(34, 34, 34) !default;
+$ckad-desktop-window-title-bar--border-bottom-color: rgb(
+  110,
+  110,
+  110
+) !default;
+$ckad-desktop-window-title-bar--border-bottom: 1px solid
+  $ckad-desktop-window-title-bar--border-bottom-color !default;
+
+$ckad-desktop-window-title-bar--height: 2.1em !default; //maybe even smaller, e.g. 22 or 20
+// variant: inset
+$ckad-desktop-window-title-bar--inset--height: 2.6em !default;
+// variant: small
+$ckad-desktop-window-title-bar--big--height: 3rem !default;

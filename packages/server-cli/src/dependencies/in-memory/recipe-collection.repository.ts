@@ -3,7 +3,7 @@ import { Reader } from 'fp-ts/lib/Reader';
 import { Observable } from 'rxjs';
 
 import { RecipeCollectionRepository } from '@overckd/domain/dist/repositories/recipe-collection.repository';
-import { RecipeCollection } from '@overckd/domain/dist/recipe-collection';
+import { RecipeCollection } from '@overckd/domain/dist/models/recipe-collection/recipe-collection.model';
 
 import { InMemoryRepo } from './in-memory-repo';
 
