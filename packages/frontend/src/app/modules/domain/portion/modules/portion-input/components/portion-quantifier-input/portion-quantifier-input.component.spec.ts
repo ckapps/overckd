@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatLegacyFormFieldModule as MatFormFieldModule } from '@angular/material/legacy-form-field';
 import { MatLegacyInputModule as MatInputModule } from '@angular/material/legacy-input';
 import { MatLegacySelectModule as MatSelectModule } from '@angular/material/legacy-select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { PortionKindPipe } from '../../../portion-common/pipes/portion-kind.pipe';
 
 import { PortionQuantifierInputComponent } from './portion-quantifier-input.component';
@@ -13,19 +14,20 @@ describe('PortionQuantifierInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         PortionQuantifierInputComponent,
         // External declarations
         PortionKindPipe,
-    ],
-    imports: [
+      ],
+      imports: [
         ReactiveFormsModule,
         MatFormFieldModule,
         MatSelectModule,
         MatInputModule,
-    ],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+        NoopAnimationsModule,
+      ],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

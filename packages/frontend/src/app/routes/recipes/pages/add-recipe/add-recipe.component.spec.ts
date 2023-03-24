@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatStepperModule } from '@angular/material/stepper';
-
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { AddRecipePageComponent } from './add-recipe.component';
 
 class NoopValueAccessor {
@@ -49,6 +49,19 @@ class MockCkadInputFieldComponent extends NoopValueAccessor {}
 class MockRecipeInputSourcesListComponent extends NoopValueAccessor {}
 
 @Component({
+  selector: 'overckd-portion-quantifier-input',
+  template: '',
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => MockPortionQuantifierInputComponent),
+      multi: true,
+    },
+  ],
+})
+class MockPortionQuantifierInputComponent extends NoopValueAccessor {}
+
+@Component({
   selector: 'overckd-ingredient-list-input',
   template: '',
 })
@@ -60,22 +73,24 @@ describe('AddRecipeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         AddRecipePageComponent,
         // Mocks
         MockCkadInputFieldComponent,
         MockRecipeInputSourcesListComponent,
         MockIngredientListInputComponent,
-    ],
-    imports: [
+        MockPortionQuantifierInputComponent,
+      ],
+      imports: [
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatStepperModule,
-    ],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+        NoopAnimationsModule,
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

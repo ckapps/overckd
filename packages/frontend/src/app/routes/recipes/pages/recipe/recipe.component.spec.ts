@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RecipeService } from 'src/app/modules/domain/recipe/services/recipe.service';
-
 import { RecipePageComponent } from './recipe.component';
 
 @Component({
@@ -25,24 +24,24 @@ describe('RecipesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         RecipePageComponent,
         // Mocked
         MockRecipeComponent,
-    ],
-    providers: [
+      ],
+      providers: [
         {
-            provide: ActivatedRoute,
-            useValue: mockRoute,
+          provide: ActivatedRoute,
+          useValue: mockRoute,
         },
         {
-            provide: RecipeService,
-            useValue: mockRecipeService,
+          provide: RecipeService,
+          useValue: mockRecipeService,
         },
-    ],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {
