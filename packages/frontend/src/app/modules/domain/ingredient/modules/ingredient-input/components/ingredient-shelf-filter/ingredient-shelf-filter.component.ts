@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import {
   MatChipInputEvent,
@@ -61,7 +61,7 @@ export class IngredientShelfFilterComponent implements OnDestroy {
 
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  inputCtrl = new FormControl();
+  inputCtrl = new UntypedFormControl();
 
   @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
 

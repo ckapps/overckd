@@ -1,8 +1,8 @@
 import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import {
   ControlValueAccessor,
-  FormBuilder,
-  FormGroup,
+  UntypedFormBuilder,
+  UntypedFormGroup,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
 import {
@@ -32,7 +32,7 @@ export class PortionQuantifierInputComponent
     return this.form.value.kind;
   }
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private portionQuantifierService: PortionQuantifierService,
   ) {
     this.form = this.fb.group({
@@ -48,7 +48,7 @@ export class PortionQuantifierInputComponent
   public kinds$ = this.kindsSubject.asObservable();
   public PortionKind = PortionKind;
 
-  public form: FormGroup;
+  public form: UntypedFormGroup;
 
   private destroyed$ = new ReplaySubject<boolean>(1);
 

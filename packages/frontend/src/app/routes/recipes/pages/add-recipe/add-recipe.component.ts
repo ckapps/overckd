@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   templateUrl: './add-recipe.component.html',
   styleUrls: ['./add-recipe.component.scss'],
 })
 export class AddRecipePageComponent implements OnInit {
-  public recipeBaseForm: FormGroup;
+  public recipeBaseForm: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: UntypedFormBuilder) {}
 
   ngOnInit(): void {
     this.recipeBaseForm = this.fb.group({
