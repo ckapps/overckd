@@ -1,13 +1,12 @@
-import { mergeMap } from 'rxjs/operators';
-import { pipe } from 'fp-ts/lib/pipeable';
-import { act, useContext, matchEvent } from '@marblejs/core';
-import { reply, MsgEffect } from '@marblejs/messaging';
+import { act, matchEvent, useContext } from '@marblejs/core';
+import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-
-import { createTag } from './tag.model';
+import { pipe } from 'fp-ts/function';
+import { mergeMap } from 'rxjs/operators';
+import { TagRepositoryToken } from '../tokens';
 import { CreateTagCommand } from './tag.command';
 import { TagCreatedEvent } from './tag.event';
-import { TagRepositoryToken } from '../tokens';
+import { createTag } from './tag.model';
 
 /**
  * Event effect for creating tag.

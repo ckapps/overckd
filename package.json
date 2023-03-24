@@ -42,12 +42,12 @@
     "jest-canvas-mock": "^2.3.1",
     "jest-extended": "^0.11.5",
     "jest-preset-angular": "^8.4.0",
-    "lerna": "^3.22.1",
+    "lerna": "^6.6.1",
     "lint-staged": "^10.5.4",
     "prettier": "^2.1.2",
     "rimraf": "^4.1.2",
     "rxjs": "~7.8.0",
     "ts-jest": "^26.5.3",
-    "typescript": "~4.2.4"
+    "typescript": "~4.9.5"
   }
 }

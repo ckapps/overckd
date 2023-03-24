@@ -1,15 +1,13 @@
-import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { pipe } from 'fp-ts/lib/pipeable';
-import { act, useContext, matchEvent } from '@marblejs/core';
-import { reply, MsgEffect } from '@marblejs/messaging';
+import { act, matchEvent, useContext } from '@marblejs/core';
+import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-
+import { pipe } from 'fp-ts/function';
+import { map } from 'rxjs/operators';
+import { IngredientRepositoryToken } from '../tokens';
 import {
   FindIngredientByQueryEvent,
   IngredientQueryType,
 } from './ingredient.query';
-import { IngredientRepositoryToken } from '../tokens';
 
 const eventType = IngredientQueryType.FindByQuery;
 

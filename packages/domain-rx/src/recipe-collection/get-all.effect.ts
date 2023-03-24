@@ -1,12 +1,9 @@
-import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { pipe } from 'fp-ts/lib/pipeable';
-import { act, useContext, matchEvent } from '@marblejs/core';
-import { reply, MsgEffect } from '@marblejs/messaging';
-import { eventValidator$ } from '@marblejs/middleware-io';
-
-import { GetAllRecipeCollectionsEvent } from './recipe-collection.query';
+import { act, matchEvent, useContext } from '@marblejs/core';
+import { MsgEffect, reply } from '@marblejs/messaging';
+import { pipe } from 'fp-ts/function';
+import { map } from 'rxjs/operators';
 import { RecipeCollectionRepositoryToken } from '../tokens';
+import { GetAllRecipeCollectionsEvent } from './recipe-collection.query';
 
 export const getAll: MsgEffect = (event$, ctx) => {
   const repo = useContext(RecipeCollectionRepositoryToken)(ctx.ask);

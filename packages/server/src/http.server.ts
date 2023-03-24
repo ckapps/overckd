@@ -7,8 +7,8 @@ import {
 } from '@marblejs/core';
 import { createServer, HttpServer } from '@marblejs/http';
 import {
-  eventBus,
-  eventBusClient,
+  EventBus,
+  EventBusClient,
   EventBusClientToken,
   EventBusToken,
 } from '@marblejs/messaging';
@@ -36,10 +36,10 @@ export function server(
     listener,
     port,
     dependencies: [
-      bindEagerlyTo(EventBusClientToken)(eventBusClient),
-      bindEagerlyTo(EventBusToken)(eventBus({ listener: eventBusListener })),
-      bindEagerlyTo(ServerConfigToken)(ServerConfigReader),
       ...deps,
+      bindEagerlyTo(EventBusToken)(EventBus({ listener: eventBusListener })),
+      bindEagerlyTo(EventBusClientToken)(EventBusClient),
+      bindEagerlyTo(ServerConfigToken)(ServerConfigReader),
     ],
   });
 }

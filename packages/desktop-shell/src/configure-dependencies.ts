@@ -4,24 +4,22 @@ import {
   BoundDependency,
   ContextDependency,
 } from '@marblejs/core';
-
 import {
   IngredientRepositoryToken,
-  TagRepositoryToken,
+  LogToken,
   RecipeCollectionRepositoryToken,
   RecipeRepositoryToken,
-  LogToken,
+  TagRepositoryToken,
 } from '@overckd/domain-rx';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { AppConfigReader, AppConfigToken } from './config/config.token';
 import { configureDbDependencies } from './db/db';
 import { CustomLoggerReader } from './logging/server-logger.dependency';
 import {
   IngredientFileRepository,
-  RecipeFileRespository,
   RecipeCollectionFileRespository,
+  RecipeFileRespository,
   TagFileRepository,
 } from './repositories';
 

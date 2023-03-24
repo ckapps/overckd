@@ -1,14 +1,13 @@
-import { BoundDependency, ContextDependency, ServerIO } from '@marblejs/core';
 import {
-  LogLevel,
   logEnterExit,
+  LogLevel,
 } from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
+import { BoundDependency, ContextDependency, ServerIO } from '@marblejs/core';
 import { server, ServerConfig } from '@overckd/server';
 import { from, Observable } from 'rxjs';
-import { concatMap, mapTo, switchMap } from 'rxjs/operators';
-
-import { getPath, PathId } from '../paths';
+import { concatMap, map, switchMap } from 'rxjs/operators';
 import { scoped, ServerLogScope } from '../logging';
+import { getPath, PathId } from '../paths';
 
 const serverLog = scoped(ServerLogScope.Server);
 
@@ -69,6 +68,6 @@ export function initServer(
     // Start the server
     switchMap(serverIO => startServer(serverIO)),
     // Map the result
-    mapTo(true),
+    map(() => true),
   );
 }
