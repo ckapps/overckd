@@ -10,10 +10,11 @@ describe('CkadButtonButton', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CkadButtonButtonComponent],
-      imports: [MatButtonModule],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    declarations: [CkadButtonButtonComponent],
+    imports: [MatButtonModule],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

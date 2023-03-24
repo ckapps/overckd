@@ -15,13 +15,14 @@ describe('WindowTitleBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         WindowTitleBarComponent,
         // Mocked
         MockCkadDesktopWindowNavButtonsComponent,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

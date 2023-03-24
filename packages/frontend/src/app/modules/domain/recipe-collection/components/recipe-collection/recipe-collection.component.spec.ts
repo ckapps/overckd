@@ -20,9 +20,10 @@ describe('RecipeCollectionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecipeCollectionComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    declarations: [RecipeCollectionComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

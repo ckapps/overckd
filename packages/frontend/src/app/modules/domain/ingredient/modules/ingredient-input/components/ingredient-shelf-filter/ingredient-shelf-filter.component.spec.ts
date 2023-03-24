@@ -32,12 +32,12 @@ describe('IngredientShelfFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         IngredientShelfFilterComponent,
         // Mocked
         MockFontawesomeIconComponent,
-      ],
-      imports: [
+    ],
+    imports: [
         NoopAnimationsModule,
         // Forms modules
         FormsModule,
@@ -47,19 +47,20 @@ describe('IngredientShelfFilterComponent', () => {
         MatChipsModule,
         MatFormFieldModule,
         MatListModule,
-      ],
-      providers: [
+    ],
+    providers: [
         {
-          provide: IngredientService,
-          useValue: mockIngredientService,
+            provide: IngredientService,
+            useValue: mockIngredientService,
         },
         {
-          provide: TagService,
-          useValue: mockTagService,
+            provide: TagService,
+            useValue: mockTagService,
         },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

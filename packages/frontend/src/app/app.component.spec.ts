@@ -19,15 +19,16 @@ class MockAppMainMenuComponent {}
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AppComponent,
         // Mocked
         MockWindowTitleBarComponent,
         MockAppMainMenuComponent,
-      ],
-      imports: [RouterTestingModule],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    imports: [RouterTestingModule],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   it('should create the app', () => {

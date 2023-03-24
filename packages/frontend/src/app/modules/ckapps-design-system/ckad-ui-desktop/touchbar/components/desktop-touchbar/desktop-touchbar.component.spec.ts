@@ -8,8 +8,9 @@ describe('DesktopTouchbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DesktopTouchbarComponent],
-    }).compileComponents();
+    declarations: [DesktopTouchbarComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

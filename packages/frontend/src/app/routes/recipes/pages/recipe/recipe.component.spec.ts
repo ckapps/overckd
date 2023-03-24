@@ -25,23 +25,24 @@ describe('RecipesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         RecipePageComponent,
         // Mocked
         MockRecipeComponent,
-      ],
-      providers: [
+    ],
+    providers: [
         {
-          provide: ActivatedRoute,
-          useValue: mockRoute,
+            provide: ActivatedRoute,
+            useValue: mockRoute,
         },
         {
-          provide: RecipeService,
-          useValue: mockRecipeService,
+            provide: RecipeService,
+            useValue: mockRecipeService,
         },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

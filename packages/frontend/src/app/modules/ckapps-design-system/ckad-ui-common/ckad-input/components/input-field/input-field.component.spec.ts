@@ -15,8 +15,8 @@ describe('CkadInputFieldComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CkadInputFieldComponent],
-      imports: [
+    declarations: [CkadInputFieldComponent],
+    imports: [
         NoopAnimationsModule,
         // Forms modules
         FormsModule,
@@ -25,9 +25,10 @@ describe('CkadInputFieldComponent', () => {
         MatButtonModule,
         MatInputModule,
         MatIconModule,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

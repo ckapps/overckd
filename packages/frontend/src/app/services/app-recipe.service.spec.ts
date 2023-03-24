@@ -21,12 +21,13 @@ describe('AppRecipeService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
+    imports: [HttpClientTestingModule],
+    providers: [
         AppRecipeService,
         { provide: UrlBuilderService, useValue: mockUrlBuilderSerivce },
-      ],
-    });
+    ],
+    teardown: { destroyAfterEach: false }
+});
     httpTestingController = TestBed.inject(HttpTestingController);
   });
 

@@ -60,21 +60,22 @@ describe('AddRecipeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AddRecipePageComponent,
         // Mocks
         MockCkadInputFieldComponent,
         MockRecipeInputSourcesListComponent,
         MockIngredientListInputComponent,
-      ],
-      imports: [
+    ],
+    imports: [
         FormsModule,
         ReactiveFormsModule,
         MatButtonModule,
         MatStepperModule,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

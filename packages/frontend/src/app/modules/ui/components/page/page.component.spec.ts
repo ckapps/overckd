@@ -9,9 +9,10 @@ describe('PageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PageComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    declarations: [PageComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

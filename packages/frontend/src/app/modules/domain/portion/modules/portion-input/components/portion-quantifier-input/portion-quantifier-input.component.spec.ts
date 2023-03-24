@@ -13,18 +13,19 @@ describe('PortionQuantifierInputComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         PortionQuantifierInputComponent,
         // External declarations
         PortionKindPipe,
-      ],
-      imports: [
+    ],
+    imports: [
         ReactiveFormsModule,
         MatFormFieldModule,
         MatSelectModule,
         MatInputModule,
-      ],
-    }).compileComponents();
+    ],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

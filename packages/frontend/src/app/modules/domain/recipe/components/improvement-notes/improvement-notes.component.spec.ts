@@ -9,9 +9,10 @@ describe('ImprovementNotesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ImprovementNotesComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    declarations: [ImprovementNotesComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

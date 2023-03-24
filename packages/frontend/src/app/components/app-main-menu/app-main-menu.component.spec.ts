@@ -34,17 +34,18 @@ describe('AppMainMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AppMainMenuComponent,
         // Mocks
         MockCkadMainMenuComponent,
         MockCkadMainMenuItemComponent,
         MockCkadMainMenuGroupComponent,
         MockCollectionsMainMenuGroupComponent,
-      ],
-      imports: [RouterTestingModule],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    imports: [RouterTestingModule],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

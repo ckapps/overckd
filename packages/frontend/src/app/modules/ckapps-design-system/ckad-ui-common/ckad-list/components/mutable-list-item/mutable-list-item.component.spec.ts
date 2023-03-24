@@ -9,9 +9,10 @@ describe('MutableListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CkadMutableListItemComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    declarations: [CkadMutableListItemComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

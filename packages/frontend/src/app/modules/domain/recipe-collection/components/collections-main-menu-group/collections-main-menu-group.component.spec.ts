@@ -27,20 +27,21 @@ describe('CollectionsMainMenuGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         CollectionsMainMenuGroupComponent,
         // Mocked
         MockCkadMainMenuItemComponent,
         MockCkadMainMenuGroupComponent,
-      ],
-      providers: [
+    ],
+    providers: [
         {
-          provide: RecipeCollectionService,
-          useValue: mockRecipeCollectionService,
+            provide: RecipeCollectionService,
+            useValue: mockRecipeCollectionService,
         },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    ],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

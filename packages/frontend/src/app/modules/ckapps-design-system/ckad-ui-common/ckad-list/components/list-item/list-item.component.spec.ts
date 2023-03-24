@@ -9,9 +9,10 @@ describe('ListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CkadListItemComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();
+    declarations: [CkadListItemComponent],
+    schemas: [NO_ERRORS_SCHEMA],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {
