@@ -22,7 +22,7 @@
     "@overckd/domain": "^0.0.0",
     "@overckd/domain-rx": "^0.0.0",
     "fp-ts": "^2.8.5",
-    "rxjs": "~6.6.6"
+    "rxjs": "~7.8.0"
   },
   "devDependencies": {
     "typescript": "~4.2.4"
