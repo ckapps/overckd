@@ -1,5 +1,4 @@
-import { combineRoutes } from '@marblejs/core';
-
+import { combineRoutes } from '@marblejs/http';
 import { getImages$ } from './images.effects';
 
 /**

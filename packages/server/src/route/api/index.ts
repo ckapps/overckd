@@ -1,5 +1,4 @@
-import { combineRoutes } from '@marblejs/core';
-
+import { combineRoutes } from '@marblejs/http';
 import { ingredientRoutes$ } from './ingredient';
 import { recipes$ } from './recipe';
 import { recipeCollectionRoutes$ } from './recipe-collection';

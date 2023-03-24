@@ -1,22 +1,20 @@
 import {
-  createServer,
   bindEagerlyTo,
   BoundDependency,
   ContextDependency,
   createReader,
   ServerIO,
-  HttpServer,
 } from '@marblejs/core';
+import { createServer, HttpServer } from '@marblejs/http';
 import {
-  EventBusToken,
-  EventBusClientToken,
-  eventBusClient,
   eventBus,
+  eventBusClient,
+  EventBusClientToken,
+  EventBusToken,
 } from '@marblejs/messaging';
-
 import { defaultServerConfig, ServerConfig } from './config';
-import { listener } from './http.listener';
 import { eventBusListener } from './eventbus.listener';
+import { listener } from './http.listener';
 import { ServerConfigToken } from './tokens';
 
 /**
