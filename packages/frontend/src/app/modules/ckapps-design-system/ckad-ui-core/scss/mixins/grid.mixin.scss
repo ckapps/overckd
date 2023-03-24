@@ -1,3 +1,5 @@
+@use 'sass:math';
+
 @mixin md-up {
   @media (min-width: 768px) {
     @content;
@@ -8,7 +10,7 @@
   @each $fraction in $fractions {
     @for $i from 1 to $fraction {
       .#{$prefix}w-#{$i}\/#{$fraction} {
-        grid-column-end: span ($i * $cols / $fraction);
+        grid-column-end: span ($i * math.div($cols, $fraction));
       }
     }
   }
