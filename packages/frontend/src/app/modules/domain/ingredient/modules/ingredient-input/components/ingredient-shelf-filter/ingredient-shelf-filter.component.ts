@@ -9,11 +9,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatLegacyAutocompleteSelectedEvent as MatAutocompleteSelectedEvent } from '@angular/material/legacy-autocomplete';
 import {
-  MatChipInputEvent,
-  MatChipSelectionChange,
-} from '@angular/material/chips';
+  MatLegacyChipInputEvent as MatChipInputEvent,
+  MatLegacyChipSelectionChange as MatChipSelectionChange,
+} from '@angular/material/legacy-chips';
 import { IngredientQuery, Tag, TagQuery } from '@overckd/domain';
 import { isString } from '@overckd/domain/dist/core/string';
 import {

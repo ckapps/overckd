@@ -5,7 +5,7 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 import { MatStepperModule } from '@angular/material/stepper';
 
 import { AddRecipePageComponent } from './add-recipe.component';
