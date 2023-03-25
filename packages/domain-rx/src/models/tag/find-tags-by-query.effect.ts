@@ -3,13 +3,14 @@ import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/function';
 import { map } from 'rxjs/operators';
-import { IngredientRepositoryToken } from '../tokens';
 import {
-  FindIngredientByQueryEvent,
-  IngredientQueryType,
-} from './ingredient.query';
+  eventCreator,
+  OverckdEventType,
+} from '../../core/events/event-creator';
+import { TagRepositoryToken } from '../../tokens';
+import { FindTagByQueryEvent, TagQueryType } from './tag.query';
 
-const eventType = IngredientQueryType.FindByQuery;
+const createEvent = eventCreator(TagQueryType.FindByQuery);
 
 /**
  * Effect to get recipe by name
@@ -17,17 +18,19 @@ const eventType = IngredientQueryType.FindByQuery;
  * @param event$
  * @param ctx
  */
-export const findIngredientsByQuery: MsgEffect = (event$, ctx) => {
-  const repo = useContext(IngredientRepositoryToken)(ctx.ask);
+export const findTagsByQuery: MsgEffect = (event$, ctx) => {
+  const repo = useContext(TagRepositoryToken)(ctx.ask);
 
   return event$.pipe(
-    matchEvent(FindIngredientByQueryEvent),
-    act(eventValidator$(FindIngredientByQueryEvent)),
+    matchEvent(FindTagByQueryEvent),
+    act(eventValidator$(FindTagByQueryEvent)),
     act(event =>
       pipe(
         event.payload,
         repo.findByQuery,
-        map(payload => reply(event)({ type: `${eventType}_RESULT`, payload })),
+        map(payload =>
+          reply(event)(createEvent(OverckdEventType.Result, { payload })),
+        ),
         // catchError(error =>
         //   of({
         //     type: 'GET_USER_ERROR',

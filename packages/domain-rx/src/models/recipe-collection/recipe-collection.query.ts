@@ -1,13 +1,10 @@
 import { event } from '@marblejs/core';
-
 import { RecipeCollectionIdDto } from './recipe-collection.type';
 
-/**
- *
- */
+/** Queries for `RecipeCollection`s. */
 export enum RecipeCollectionQueryType {
-  GetAll = 'RECIPE_COLLECTION_GET_ALL',
-  GetById = 'RECIPE_COLLECTION_GET_BY_ID',
+  GetAll = '@overckd.recipe_collection.query.get_all',
+  GetById = '@overckd.recipe_collection.query.get_by_id',
 }
 
 // ----------------------------------------------------------------------------

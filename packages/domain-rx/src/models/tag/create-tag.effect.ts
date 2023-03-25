@@ -3,7 +3,7 @@ import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/function';
 import { mergeMap } from 'rxjs/operators';
-import { TagRepositoryToken } from '../tokens';
+import { TagRepositoryToken } from '../../tokens';
 import { CreateTagCommand } from './tag.command';
 import { TagCreatedEvent } from './tag.event';
 import { createTag } from './tag.model';

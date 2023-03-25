@@ -1,13 +1,10 @@
 import { event } from '@marblejs/core';
-
 import { RecipeNameDto } from './recipe.type';
 
-/**
- *
- */
+/** Queries for `Recipe`s. */
 export enum RecipeQueryType {
   // GetAll = 'RECIPE_GET_ALL',
-  GetByName = 'RECIPE_GET_BY_NAME',
+  GetByName = '@overckd.recipe.query.get_by_name',
 }
 
 // ----------------------------------------------------------------------------

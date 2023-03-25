@@ -3,7 +3,7 @@ import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
 import { pipe } from 'fp-ts/function';
 import { mergeMap } from 'rxjs/operators';
-import { RecipeCollectionRepositoryToken } from '../tokens';
+import { RecipeCollectionRepositoryToken } from '../../tokens';
 import { CreateRecipeCollectionCommand } from './recipe-collection.command';
 import { RecipeCollectionCreatedEvent } from './recipe-collection.event';
 import { createRecipeCollection } from './recipe-collection.model';

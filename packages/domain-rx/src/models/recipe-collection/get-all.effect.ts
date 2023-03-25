@@ -2,8 +2,17 @@ import { act, matchEvent, useContext } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { pipe } from 'fp-ts/function';
 import { map } from 'rxjs/operators';
-import { RecipeCollectionRepositoryToken } from '../tokens';
-import { GetAllRecipeCollectionsEvent } from './recipe-collection.query';
+import {
+  eventCreator,
+  OverckdEventType,
+} from '../../core/events/event-creator';
+import { RecipeCollectionRepositoryToken } from '../../tokens';
+import {
+  GetAllRecipeCollectionsEvent,
+  RecipeCollectionQueryType,
+} from './recipe-collection.query';
+
+const createEvent = eventCreator(RecipeCollectionQueryType.GetAll);
 
 export const getAll: MsgEffect = (event$, ctx) => {
   const repo = useContext(RecipeCollectionRepositoryToken)(ctx.ask);
@@ -15,7 +24,7 @@ export const getAll: MsgEffect = (event$, ctx) => {
         undefined,
         repo.getAll,
         map(payload =>
-          reply(event)({ type: 'GET_ALL_COLLECTION_RESULT', payload }),
+          reply(event)(createEvent(OverckdEventType.Result, { payload })),
         ),
         // catchError(error =>
         //   of({
