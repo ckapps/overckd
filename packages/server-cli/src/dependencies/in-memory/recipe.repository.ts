@@ -73,7 +73,7 @@ class RecipeRepo extends InMemoryRepo<Recipe> implements RecipeRepository {
     return this._add(recipe);
   }
 
-  removeByName(name: string): Observable<boolean> {
+  removeByName(name: string): Observable<Recipe> {
     return this._remove({ name });
   }
 

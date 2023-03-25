@@ -1,16 +1,16 @@
 import {
-  bindEagerlyTo,
-  ContextDependency,
-  BoundDependency,
-} from '@marblejs/core';
-import {
   logEnterExit,
   LogLevel,
 } from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
+import {
+  bindEagerlyTo,
+  BoundDependency,
+  ContextDependency,
+} from '@marblejs/core';
 import { RxDatabase } from 'rxdb';
 import { from, Observable } from 'rxjs';
-import { map, mapTo, switchMap } from 'rxjs/operators';
-
+import { map, switchMap } from 'rxjs/operators';
+import { DbCollectionsLogScope, scoped } from '../../logging';
 import { bulkInsertDbData } from '../from-filesystem/db.from-filesystem';
 import {
   IngredientDbCollectionToken,
@@ -18,10 +18,9 @@ import {
   RecipeDbCollectionToken,
   TagDbCollectionToken,
 } from './db.collections.tokens';
+import { createIngredientDbCollection } from './ingredients/ingredient.db.create';
 import { createRecipeCollectionDbCollection } from './recipe-collection/recipe-collection.db.create';
 import { createRecipeDbCollection } from './recipe/recipe.db.create';
-import { scoped, DbCollectionsLogScope } from '../../logging';
-import { createIngredientDbCollection } from './ingredients/ingredient.db.create';
 import { createTagDbCollection } from './tag/tag.db.create';
 
 type DbCollectionDependencies = BoundDependency<unknown, ContextDependency>[];
@@ -61,7 +60,7 @@ export const configureDbCollectionDependencies = (
   const dbSchema$ = createDbSchema(db);
 
   return dbSchema$.pipe(
-    switchMap(schema => bulkInsertDbData(db).pipe(mapTo(schema))),
+    switchMap(schema => bulkInsertDbData(db).pipe(map(() => schema))),
     map(schema => [
       // Collection dependencies
       bindEagerlyTo(IngredientDbCollectionToken)(() => schema.ingredients),

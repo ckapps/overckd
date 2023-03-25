@@ -2,7 +2,7 @@ import { appIsStable$, fromAppEvent } from '@ckapp/rxjs-electron/lib/app';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
 import { of, throwError, Observable, combineLatest, merge } from 'rxjs';
-import { catchError, map, mergeMap, pluck } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
 import { initServer } from './server';
@@ -172,7 +172,7 @@ function startServer$(config: AppConfig): Observable<boolean> {
  */
 function stabilize$(fromArgs: typeof args): Observable<boolean> {
   return combineLatest([initConfig$(fromArgs), initProtocols$()]).pipe(
-    pluck(0),
+    map(([appConfig]) => appConfig),
     mergeMap(config => startServer$(config)),
   );
 }

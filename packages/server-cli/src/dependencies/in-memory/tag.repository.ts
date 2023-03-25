@@ -28,7 +28,7 @@ class TagRepo extends InMemoryRepo<Tag> implements TagRepository {
   add(tag: BaseTag): Observable<Tag> {
     return this._add(tag);
   }
-  removeByUri(uri: string): Observable<boolean> {
+  removeByUri(uri: string): Observable<Tag> {
     return this._remove({ uri });
   }
   getByUri(uri: string): Observable<Tag | undefined> {

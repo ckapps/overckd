@@ -2,11 +2,10 @@ import { Context, createReader, useContext } from '@marblejs/core';
 import { IngredientRepository } from '@overckd/domain/dist/repositories';
 import { Reader } from 'fp-ts/lib/Reader';
 import { combineLatest, of } from 'rxjs';
-import { first, map, pluck, switchMap } from 'rxjs/operators';
-
+import { first, map, switchMap } from 'rxjs/operators';
 import { IngredientDbCollectionToken } from '../db/collections/db.collections.tokens';
 import { pluckManyData } from '../db/rxjs';
-import { scoped, RepositoryLogScope } from '../logging';
+import { RepositoryLogScope, scoped } from '../logging';
 
 const logger = scoped(RepositoryLogScope.Ingredient);
 
@@ -44,7 +43,7 @@ export const IngredientFileRepository: Reader<
     const pagedQuery = filterQuery.limit(size).skip(page * size);
 
     return combineLatest([
-      filterQuery.$.pipe(pluck('length')),
+      filterQuery.$.pipe(map(x => x.length)),
       pagedQuery.$,
     ]).pipe(
       first(),

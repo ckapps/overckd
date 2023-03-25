@@ -17,7 +17,7 @@ export abstract class RecipeCollectionService
 
   abstract add(collection: RecipeCollection): Observable<RecipeCollection>;
 
-  abstract removeById(id: string): Observable<boolean>;
+  abstract removeById(id: string): Observable<RecipeCollection>;
 
   abstract update(
     collection: RecipeCollection,

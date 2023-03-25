@@ -21,7 +21,7 @@ export interface RecipeCollectionRepository {
    *
    * @param id ID of the collection to remove
    */
-  removeById(id: RecipeCollection['id']): Observable<boolean>;
+  removeById(id: RecipeCollection['id']): Observable<RecipeCollection>;
 
   /**
    * Gets a recipe by its `id`

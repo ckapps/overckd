@@ -1,16 +1,15 @@
 import {
-  LogLevel,
   logEnterExit,
+  LogLevel,
 } from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
 import { RxDatabase } from 'rxdb';
 import { combineLatest, defer, forkJoin, from, Observable } from 'rxjs';
-import { map, mapTo, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { readAllIngredientFiles } from '../../filesystem/read-all-ingredient-files';
-
 import { readAllRecipeFiles } from '../../filesystem/read-all-recipe-files';
 import { readAllTagFiles } from '../../filesystem/read-all-tag-files';
 import { readRecipeCollectionFile } from '../../filesystem/read-recipe-collection-file';
-import { scoped, DbLogScope } from '../../logging';
+import { DbLogScope, scoped } from '../../logging';
 import { getPath, PathId } from '../../paths';
 
 const logger = scoped(DbLogScope.Data);
@@ -77,7 +76,7 @@ export function bulkInsertDbData(
             level,
           }),
         ),
-      ]).pipe(mapTo(m)),
+      ]).pipe(map(() => m)),
     ),
   );
 }

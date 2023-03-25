@@ -2,8 +2,7 @@ import { Context, createReader, useContext } from '@marblejs/core';
 import { RecipeCollectionRepository } from '@overckd/domain/dist/repositories/recipe-collection.repository';
 import { Reader } from 'fp-ts/lib/Reader';
 import { defer, from } from 'rxjs';
-import { first, filter, mergeMap } from 'rxjs/operators';
-
+import { first, filter, mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { RecipeCollectionDbCollectionToken } from '../db/collections/db.collections.tokens';
 import { RepositoryLogScope, scoped } from '../logging';
 import { pluckManyData, pluckData, pluckDataStrict } from '../db/rxjs';
@@ -61,7 +60,17 @@ export const RecipeCollectionFileRespository: Reader<
     findOneByIdQuery.eq(id).$.pipe(
       filter(isNotNull),
       first(),
-      mergeMap(value => value.remove()),
+      mergeMap(value =>
+        from(value.remove()).pipe(
+          map(doc => {
+            if (!doc) {
+              // TODO(db): Make an error class
+              throw new Error('not found');
+            }
+            return doc.toMutableJSON();
+          }),
+        ),
+      ),
     );
 
   return {

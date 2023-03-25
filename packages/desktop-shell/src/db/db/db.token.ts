@@ -1,5 +1,4 @@
 import { createContextToken } from '@marblejs/core';
-
 import { RxDatabase } from 'rxdb';
 
 // ----------------------------------------------------------------------------

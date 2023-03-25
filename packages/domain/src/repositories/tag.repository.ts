@@ -34,7 +34,7 @@ export interface TagRepository {
    *
    * @param uri URI identifier
    */
-  removeByUri(uri: Tag['uri']): Observable<boolean>;
+  removeByUri(uri: Tag['uri']): Observable<Tag>;
 
   /**
    * Updates the tag identified by `uri` with the given `tag`

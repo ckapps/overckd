@@ -1,7 +1,5 @@
 import { RxDatabase } from 'rxdb';
-
 import { schema } from './recipe-collection.db.schema';
-import { RxCollectionCreatorBase } from 'rxdb/dist/types/types';
 
 /**
  * Creates definition for a new DB collection
@@ -10,9 +8,7 @@ import { RxCollectionCreatorBase } from 'rxdb/dist/types/types';
  *
  * @returns
  */
-export function createRecipeCollectionDbCollection(
-  db: RxDatabase,
-): RxCollectionCreatorBase {
+export function createRecipeCollectionDbCollection(db: RxDatabase) {
   return {
     schema,
   };
