@@ -4,23 +4,13 @@
 const path = require('path');
 
 const fse = require('fs-extra');
-const _rimraf = require('rimraf');
+const rimraf = require('rimraf');
 const png2ico = require('png-to-ico');
 const _png2icns = require('png2icns');
 
 // ========================================================
 // Promisified functions
 // ========================================================
-const rimraf = (path, options = {}) =>
-  new Promise((resolve, reject) => {
-    _rimraf(path, options, error => {
-      if (error) {
-        return reject(error);
-      }
-      resolve();
-    });
-  });
-
 const png2icns = opts =>
   new Promise((resolve, reject) => {
     try {

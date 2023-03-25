@@ -44,6 +44,8 @@ const createWindow = (): void => {
     // titleBarStyle: 'hidden',
     vibrancy: 'window', // 'light', 'medium-light' etc
     backgroundColor: 'transparent',
+    // Best guess to make them vertically centered with the title bar
+    trafficLightPosition: { x: 12, y: 12 },
   };
 
   if (process.platform !== 'win32') {
