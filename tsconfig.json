@@ -11,5 +11,9 @@
       "@overckd/yaml-parser": ["./packages/yaml-parser/src"],
       "@overckd/yaml-parser/dist/*": ["./packages/yaml-parser/src/*"]
     }
-  }
+  },
+  "exclude": [
+    // Prevent VSCode from suggesting imports from output folders
+    "dist"
+  ]
 }
