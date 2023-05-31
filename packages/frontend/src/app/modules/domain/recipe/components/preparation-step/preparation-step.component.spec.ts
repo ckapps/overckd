@@ -15,10 +15,10 @@ describe('PreparationStepComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [PreparationStepComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      declarations: [PreparationStepComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

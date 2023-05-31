@@ -51,7 +51,7 @@ describe('RecipeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         RecipeComponent,
         // Mocked
         MockPortionConverterComponent,
@@ -59,10 +59,10 @@ describe('RecipeComponent', () => {
         MockRecipeTipsComponent,
         MockImprovementNotesComponent,
         MockPreparatinoComponent,
-    ],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

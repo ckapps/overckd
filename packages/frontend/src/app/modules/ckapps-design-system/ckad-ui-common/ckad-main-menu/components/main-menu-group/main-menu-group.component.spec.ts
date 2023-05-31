@@ -9,10 +9,10 @@ describe('MainMenuGroupComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [CkadMainMenuGroupComponent],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      declarations: [CkadMainMenuGroupComponent],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

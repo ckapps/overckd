@@ -43,7 +43,7 @@ const dtoParser = new t.Type<
       return t.failure(i, c);
     }
   },
-  a => (a as unknown) as IngredientsFileContent,
+  a => a as unknown as IngredientsFileContent,
 );
 
 /**

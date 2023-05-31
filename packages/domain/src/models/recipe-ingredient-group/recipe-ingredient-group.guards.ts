@@ -9,7 +9,7 @@ import { RecipeIngredientGroup } from './recipe-ingredient-group.types';
 export function isRecipeIngredientGroup(
   o: RecipeIngredient | RecipeIngredientGroup,
 ): o is RecipeIngredientGroup {
-  const asAny = (o as unknown) as { ingredients?: [] };
+  const asAny = o as unknown as { ingredients?: [] };
   return Array.isArray(asAny['ingredients']);
 }
 

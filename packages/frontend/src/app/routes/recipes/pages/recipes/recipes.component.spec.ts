@@ -16,17 +16,17 @@ describe('RecipesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [RecipesPageComponent],
-    imports: [RouterTestingModule],
-    providers: [
+      declarations: [RecipesPageComponent],
+      imports: [RouterTestingModule],
+      providers: [
         {
-            provide: RecipeCollectionService,
-            useValue: mockRecipeCollectionService,
+          provide: RecipeCollectionService,
+          useValue: mockRecipeCollectionService,
         },
-    ],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

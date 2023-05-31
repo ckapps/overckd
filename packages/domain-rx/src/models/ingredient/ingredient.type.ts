@@ -17,9 +17,8 @@ export const IngredientSearchDto = t.partial({
 });
 
 export const IngredientByQueryDto = dataQueryDto(IngredientSearchDto);
-export const FlattenIngredientByQueryDto = flattenDataQueryDto(
-  IngredientSearchDto,
-);
+export const FlattenIngredientByQueryDto =
+  flattenDataQueryDto(IngredientSearchDto);
 
 // ----------------------------------------------------------------------------
 // Types

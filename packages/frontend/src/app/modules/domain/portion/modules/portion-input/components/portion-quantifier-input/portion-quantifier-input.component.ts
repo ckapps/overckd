@@ -29,7 +29,8 @@ export interface PortionQuantifier {
   ],
 })
 export class PortionQuantifierInputComponent
-  implements OnInit, OnDestroy, ControlValueAccessor {
+  implements OnInit, OnDestroy, ControlValueAccessor
+{
   public form = new FormGroup({
     kind: new FormControl(PortionKind.Label),
     quantity: new FormControl<number | null>(null),

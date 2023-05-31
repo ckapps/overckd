@@ -15,7 +15,7 @@ import { FromQueryString, mapPaginationTyped } from '../pagination';
 export function transformFromRequestProperty<
   TBody = unknown,
   TParams = unknown,
-  TQuery extends Record<string, unknown> = Record<string, unknown>
+  TQuery extends Record<string, unknown> = Record<string, unknown>,
 >(
   property: 'query',
 ): OperatorFunction<

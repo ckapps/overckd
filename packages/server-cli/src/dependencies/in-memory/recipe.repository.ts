@@ -86,17 +86,15 @@ class RecipeRepo extends InMemoryRepo<Recipe> implements RecipeRepository {
   }
 }
 
-export const MockRecipeRespository: Reader<
-  Context,
-  RecipeRepository
-> = createReader<RecipeRepository>(() => {
-  const repo = new RecipeRepo();
+export const MockRecipeRespository: Reader<Context, RecipeRepository> =
+  createReader<RecipeRepository>(() => {
+    const repo = new RecipeRepo();
 
-  return {
-    add: (...args) => repo.add(...args),
-    getAll: (...args) => repo.getAll(...args),
-    getByName: (...args) => repo.getByName(...args),
-    removeByName: (...args) => repo.removeByName(...args),
-    update: (...args) => repo.update(...args),
-  };
-});
+    return {
+      add: (...args) => repo.add(...args),
+      getAll: (...args) => repo.getAll(...args),
+      getByName: (...args) => repo.getByName(...args),
+      removeByName: (...args) => repo.removeByName(...args),
+      update: (...args) => repo.update(...args),
+    };
+  });

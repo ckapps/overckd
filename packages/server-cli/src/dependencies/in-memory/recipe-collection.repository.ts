@@ -9,7 +9,8 @@ import { InMemoryRepo } from './in-memory-repo';
 
 class RecipeCollectionRepo
   extends InMemoryRepo<RecipeCollection>
-  implements RecipeCollectionRepository {
+  implements RecipeCollectionRepository
+{
   constructor() {
     super([
       {

@@ -15,9 +15,10 @@ const TOKEN_PREFIX = 'overckd-';
 /**
  * DI token for recipe collection repository
  */
-export const RecipeCollectionRepositoryToken = createContextToken<RecipeCollectionRepository>(
-  `${TOKEN_PREFIX}RecipeCollectionRepo`,
-);
+export const RecipeCollectionRepositoryToken =
+  createContextToken<RecipeCollectionRepository>(
+    `${TOKEN_PREFIX}RecipeCollectionRepo`,
+  );
 
 /**
  * DI token for recipe collection repository
@@ -32,9 +33,10 @@ export const RecipeRepositoryToken = createContextToken<RecipeRepository>(
 /**
  * DI token for ingredient repository
  */
-export const IngredientRepositoryToken = createContextToken<IngredientRepository>(
-  `${TOKEN_PREFIX}IngredientRepository`,
-);
+export const IngredientRepositoryToken =
+  createContextToken<IngredientRepository>(
+    `${TOKEN_PREFIX}IngredientRepository`,
+  );
 
 // ----------------------------------------------------------------------------
 // Repositories - Tags

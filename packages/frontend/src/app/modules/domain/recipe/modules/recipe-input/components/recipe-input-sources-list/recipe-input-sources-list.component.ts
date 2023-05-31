@@ -23,7 +23,8 @@ type RecipeBasedOn = Recipe['basedOn'][0];
   ],
 })
 export class RecipeInputSourcesListComponent
-  implements OnInit, ControlValueAccessor {
+  implements OnInit, ControlValueAccessor
+{
   @Input() label: string;
 
   private _value: RecipeBasedOn[];

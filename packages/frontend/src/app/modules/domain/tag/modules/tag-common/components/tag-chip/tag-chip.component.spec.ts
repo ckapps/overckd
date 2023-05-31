@@ -9,10 +9,10 @@ describe('TagChipComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [TagChipComponent],
-    imports: [MatChipsModule, IconsModule],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      declarations: [TagChipComponent],
+      imports: [MatChipsModule, IconsModule],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

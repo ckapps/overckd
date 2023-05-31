@@ -16,15 +16,15 @@ describe('RecipeCollectionPageWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         RecipeCollectionPageWrapperComponent,
         // Mocks
         MockPageComponent,
-    ],
-    imports: [RouterTestingModule],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      imports: [RouterTestingModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

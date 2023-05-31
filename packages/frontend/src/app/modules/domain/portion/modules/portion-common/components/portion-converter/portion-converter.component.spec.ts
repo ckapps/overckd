@@ -26,17 +26,17 @@ describe('PortionQuantifierComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [PortionConverterComponent],
-    imports: [FormsModule, ReactiveFormsModule],
-    providers: [
+      declarations: [PortionConverterComponent],
+      imports: [FormsModule, ReactiveFormsModule],
+      providers: [
         {
-            provide: PortionConverterService,
-            useValue: mockPortionConverterService,
+          provide: PortionConverterService,
+          useValue: mockPortionConverterService,
         },
-    ],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

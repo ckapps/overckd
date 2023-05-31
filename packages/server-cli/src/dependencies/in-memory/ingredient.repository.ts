@@ -25,7 +25,8 @@ function makeIngredient(name: string, tags: Tag[]): Ingredient {
 
 class IngredientRepo
   extends InMemoryRepo<Ingredient>
-  implements IngredientRepository {
+  implements IngredientRepository
+{
   findByQuery(query: IngredientQuery): Observable<Page<Ingredient>> {
     const query$ = of(query);
     const items$ = this.all.pipe(take(1), switchExpandItems());
@@ -42,20 +43,18 @@ class IngredientRepo
   }
 }
 
-export const MockIngredientRespository: Reader<
-  Context,
-  IngredientRepository
-> = createReader<IngredientRepository>(() => {
-  const initialValues = [
-    makeIngredient('Flour', []),
-    makeIngredient('Sugar', []),
-    makeIngredient('Yeast', []),
-    makeIngredient('Soy milk', []),
-    makeIngredient('Almond milk', []),
-  ];
-  const repo = new IngredientRepo(initialValues);
+export const MockIngredientRespository: Reader<Context, IngredientRepository> =
+  createReader<IngredientRepository>(() => {
+    const initialValues = [
+      makeIngredient('Flour', []),
+      makeIngredient('Sugar', []),
+      makeIngredient('Yeast', []),
+      makeIngredient('Soy milk', []),
+      makeIngredient('Almond milk', []),
+    ];
+    const repo = new IngredientRepo(initialValues);
 
-  return {
-    findByQuery: (...args) => repo.findByQuery(...args),
-  };
-});
+    return {
+      findByQuery: (...args) => repo.findByQuery(...args),
+    };
+  });

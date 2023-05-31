@@ -45,7 +45,7 @@ describe('RecipeInputSourcesListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         RecipeInputSourcesListComponent,
         // Mocked
         MockFontawesomeIconComponent,
@@ -54,10 +54,10 @@ describe('RecipeInputSourcesListComponent', () => {
         MockCkadMutableListComponent,
         MockCkadMutableListItemComponent,
         MockRecipeInputSourceComponent,
-    ],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

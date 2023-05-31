@@ -38,15 +38,15 @@ describe('RecipeInputSourceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [
+      declarations: [
         RecipeInputSourceComponent,
         // Mocked
         MockCkadInputFieldComponent,
-    ],
-    imports: [FormsModule, ReactiveFormsModule],
-    schemas: [NO_ERRORS_SCHEMA],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      ],
+      imports: [FormsModule, ReactiveFormsModule],
+      schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
+    }).compileComponents();
   });
 
   beforeEach(() => {

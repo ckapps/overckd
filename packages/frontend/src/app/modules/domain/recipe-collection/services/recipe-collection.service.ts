@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 
 @Injectable()
 export abstract class RecipeCollectionService
-  implements RecipeCollectionRepository {
+  implements RecipeCollectionRepository
+{
   constructor() {}
 
   collections$: Observable<RecipeCollection[]>;
