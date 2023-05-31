@@ -1,18 +1,20 @@
 import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import {
   ControlValueAccessor,
-  UntypedFormBuilder,
-  UntypedFormGroup,
+  FormControl,
+  FormGroup,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {
-  PortionKind,
-  PortionQuantifier,
-} from '@overckd/domain/dist/models/portion-quantifier/portion-quantifier.model';
+import { PortionKind } from '@overckd/domain/dist/models/portion-quantifier/portion-quantifier.model';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-
+import { takeUntil } from 'rxjs/operators';
 import { PortionQuantifierService } from '../../../portion-common/services/portion-quantifier.service';
+
+export interface PortionQuantifier {
+  kind: PortionKind.Label;
+  quantity: number | null;
+  label: string;
+}
 
 @Component({
   selector: 'overckd-portion-quantifier-input',
@@ -28,27 +30,22 @@ import { PortionQuantifierService } from '../../../portion-common/services/porti
 })
 export class PortionQuantifierInputComponent
   implements OnInit, OnDestroy, ControlValueAccessor {
+  public form = new FormGroup({
+    kind: new FormControl(PortionKind.Label),
+    quantity: new FormControl<number | null>(null),
+    label: new FormControl(''),
+  });
+
   public get kind() {
     return this.form.value.kind;
   }
-  constructor(
-    private fb: UntypedFormBuilder,
-    private portionQuantifierService: PortionQuantifierService,
-  ) {
-    this.form = this.fb.group({
-      kind: this.fb.control(PortionKind.Label),
-      quantity: this.fb.control(null),
-      label: this.fb.control(''),
-    });
-  }
+  constructor(private portionQuantifierService: PortionQuantifierService) {}
   private kindsSubject = new BehaviorSubject<PortionKind[]>(
     this.portionQuantifierService.getAllKinds(),
   );
 
   public kinds$ = this.kindsSubject.asObservable();
   public PortionKind = PortionKind;
-
-  public form: UntypedFormGroup;
 
   private destroyed$ = new ReplaySubject<boolean>(1);
 

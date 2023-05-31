@@ -1,4 +1,4 @@
-/* tslint:disable no-bitwise */
+// eslint:disable
 import { Injectable } from '@angular/core';
 
 @Injectable({

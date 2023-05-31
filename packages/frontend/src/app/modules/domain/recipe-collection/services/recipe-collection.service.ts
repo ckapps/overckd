@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
 import { RecipeCollection } from '@overckd/domain';
 import { RecipeCollectionRepository } from '@overckd/domain/dist/repositories';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export abstract class RecipeCollectionService

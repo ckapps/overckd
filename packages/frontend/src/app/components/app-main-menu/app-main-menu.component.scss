@@ -11,4 +11,11 @@ $app-main-menu--padding: 0.6em;
   padding: $app-main-menu--padding;
   background-color: $app-main-menu--background-color;
   color: $app-main-menu--color;
+
+  .mat-mdc-list-base {
+    --mdc-list-list-item-container-shape: 0.5rem;
+    --mdc-list-list-item-label-text-color: #{$app-main-menu--color};
+    --mdc-list-list-item-hover-label-text-color: #{$app-main-menu--color};
+    --mdc-list-list-item-focus-label-text-color: #{$app-main-menu--color};
+  }
 }
