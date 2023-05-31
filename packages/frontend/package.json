@@ -18,7 +18,7 @@
     "build:web": "yarn cmd:build",
     "build": "yarn build:web && yarn build:desktop",
     "test": "jest .",
-    "lint": "ng lint",
+    "lint": "eslint",
     "e2e": "ng e2e",
     "precommit": "lint-staged"
   },
@@ -48,6 +48,11 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.4",
+    "@angular-eslint/builder": "15.2.1",
+    "@angular-eslint/eslint-plugin": "15.2.1",
+    "@angular-eslint/eslint-plugin-template": "15.2.1",
+    "@angular-eslint/schematics": "15.2.1",
+    "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "^15.2.4",
     "@angular/compiler-cli": "^15.2.4",
     "@types/node": "^12.11.1",
@@ -57,10 +62,8 @@
     "jest-extended": "^3.2.4",
     "jest-preset-angular": "^13.0.1",
     "lint-staged": "^13.2.0",
-    "ng-lint-staged": "^12.0.4",
     "ts-jest": "^29.0.5",
     "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
     "typescript": "~4.9.5"
   }
 }
