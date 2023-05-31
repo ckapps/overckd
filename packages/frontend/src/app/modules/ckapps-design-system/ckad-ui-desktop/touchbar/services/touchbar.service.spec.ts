@@ -6,7 +6,7 @@ describe('TouchbarService', () => {
   let service: TouchbarService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } });
     service = TestBed.inject(TouchbarService);
   });
 

@@ -45,6 +45,7 @@ describe('RecipeInputSourceComponent', () => {
       ],
       imports: [FormsModule, ReactiveFormsModule],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

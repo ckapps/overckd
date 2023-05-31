@@ -1,11 +1,9 @@
-import { DataQuery } from '@overckd/domain/dist/search';
+import { HttpRequest } from '@marblejs/http';
 import { unflattenQuery } from '@overckd/domain-rx/dist/search';
+import { DataQuery } from '@overckd/domain/dist/search';
 import { OperatorFunction } from 'rxjs';
-import { pluck, map } from 'rxjs/operators';
-
-import { mapPaginationTyped, FromQueryString } from '../pagination';
-
-import { HttpRequest } from '@marblejs/core';
+import { map } from 'rxjs/operators';
+import { FromQueryString, mapPaginationTyped } from '../pagination';
 
 /**
  * Utility function for transform from request properties
@@ -17,7 +15,7 @@ import { HttpRequest } from '@marblejs/core';
 export function transformFromRequestProperty<
   TBody = unknown,
   TParams = unknown,
-  TQuery extends Record<string, unknown> = Record<string, unknown>
+  TQuery extends Record<string, unknown> = Record<string, unknown>,
 >(
   property: 'query',
 ): OperatorFunction<
@@ -27,7 +25,7 @@ export function transformFromRequestProperty<
   return obs$ =>
     obs$.pipe(
       // Extract the requested property
-      pluck(property),
+      map(value => value?.[property]),
       // Map pagination information
       mapPaginationTyped(),
       // Unwrap

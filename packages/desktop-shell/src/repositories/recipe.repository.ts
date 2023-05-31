@@ -51,7 +51,7 @@ export const RecipeFileRespository = createReader<RecipeRepository>(ask => {
     add: recipe => {
       return from(recipeCollection.upsert(recipe)).pipe(
         map(doc => {
-          const item = doc.toJSON();
+          const item = doc.toMutableJSON();
           const { name: id } = item;
           const filename = path.resolve(recipesFolder, `${id}.recipe.yaml`);
           return { item, filename };
@@ -71,9 +71,15 @@ export const RecipeFileRespository = createReader<RecipeRepository>(ask => {
       );
     },
     removeByName: id =>
-      findOneByNameQuery
-        .eq(id)
-        .$.pipe(switchMap(doc => (!doc ? of(false) : doc.remove()))),
+      findOneByNameQuery.eq(id).$.pipe(
+        mergeMap(doc => {
+          if (!doc) {
+            // TODO(db): Make an error class
+            throw new Error('not found');
+          }
+          return from(doc.remove()).pipe(map(value => value.toMutableJSON()));
+        }),
+      ),
     update: (r, name) => {
       throw new Error('Method not implemented.');
     },

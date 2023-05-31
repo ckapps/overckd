@@ -1,9 +1,9 @@
 import { event } from '@marblejs/core';
-
 import { RecipeCollectionDto } from './recipe-collection.type';
 
+/** Events for `RecipeCollection`s. */
 export enum RecipeCollectionEventType {
-  Created = 'RECIPE_COLLECTION_CREATED',
+  Created = '@overckd.recipe_collection.event.created',
 }
 
 export const RecipeCollectionCreatedEvent = event(

@@ -11,6 +11,7 @@ describe('CkadMainMenuComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CkadMainMenuComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

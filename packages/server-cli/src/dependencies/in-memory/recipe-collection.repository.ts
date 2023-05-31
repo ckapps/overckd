@@ -9,7 +9,8 @@ import { InMemoryRepo } from './in-memory-repo';
 
 class RecipeCollectionRepo
   extends InMemoryRepo<RecipeCollection>
-  implements RecipeCollectionRepository {
+  implements RecipeCollectionRepository
+{
   constructor() {
     super([
       {
@@ -53,7 +54,7 @@ class RecipeCollectionRepo
     return this._add(collection);
   }
 
-  removeById(id: string): Observable<boolean> {
+  removeById(id: string): Observable<RecipeCollection> {
     return this._remove({ id });
   }
 

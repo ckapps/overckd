@@ -28,7 +28,7 @@ class TagRepo extends InMemoryRepo<Tag> implements TagRepository {
   add(tag: BaseTag): Observable<Tag> {
     return this._add(tag);
   }
-  removeByUri(uri: string): Observable<boolean> {
+  removeByUri(uri: string): Observable<Tag> {
     return this._remove({ uri });
   }
   getByUri(uri: string): Observable<Tag | undefined> {
@@ -53,23 +53,21 @@ class TagRepo extends InMemoryRepo<Tag> implements TagRepository {
   }
 }
 
-export const MockTagRespository: Reader<
-  Context,
-  TagRepository
-> = createReader<TagRepository>(() => {
-  const initialValue = [
-    makeTag('vegan', '#117935', 'leaf'),
-    makeTag('vegetables', '#117935', 'leaf'),
-    makeTag('fruit', '#117935', 'apple-alt'),
-    makeTag('root vegetable', '#794c11', 'carrot'),
-  ];
-  const repo = new TagRepo(initialValue);
+export const MockTagRespository: Reader<Context, TagRepository> =
+  createReader<TagRepository>(() => {
+    const initialValue = [
+      makeTag('vegan', '#117935', 'leaf'),
+      makeTag('vegetables', '#117935', 'leaf'),
+      makeTag('fruit', '#117935', 'apple-alt'),
+      makeTag('root vegetable', '#794c11', 'carrot'),
+    ];
+    const repo = new TagRepo(initialValue);
 
-  return {
-    add: (...args) => repo.add(...args),
-    getByUri: (...args) => repo.getByUri(...args),
-    findByQuery: (...args) => repo.findByQuery(...args),
-    removeByUri: (...args) => repo.removeByUri(...args),
-    update: (...args) => repo.update(...args),
-  };
-});
+    return {
+      add: (...args) => repo.add(...args),
+      getByUri: (...args) => repo.getByUri(...args),
+      findByQuery: (...args) => repo.findByQuery(...args),
+      removeByUri: (...args) => repo.removeByUri(...args),
+      update: (...args) => repo.update(...args),
+    };
+  });

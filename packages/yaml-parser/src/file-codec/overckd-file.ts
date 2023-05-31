@@ -9,7 +9,7 @@ import * as t from 'io-ts';
 export function overckdFileCodec<
   T extends t.Mixed,
   O = t.TypeOf<T>,
-  I = unknown
+  I = unknown,
 >(filetype: string, version: string, codec: T): t.Type<t.TypeOf<T>, O, I> {
   const versionedFileCodec = t.intersection([
     t.type({

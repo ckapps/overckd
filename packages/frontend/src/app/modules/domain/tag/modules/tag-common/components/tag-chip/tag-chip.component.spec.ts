@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatChipsModule } from '@angular/material/chips';
+import { MatLegacyChipsModule as MatChipsModule } from '@angular/material/legacy-chips';
 import { IconsModule } from 'src/app/modules/ui/icons/icons.module';
 import { TagChipComponent } from './tag-chip.component';
 
@@ -11,6 +11,7 @@ describe('TagChipComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [TagChipComponent],
       imports: [MatChipsModule, IconsModule],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

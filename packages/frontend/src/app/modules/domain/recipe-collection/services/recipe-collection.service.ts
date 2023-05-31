@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-
 import { RecipeCollection } from '@overckd/domain';
 import { RecipeCollectionRepository } from '@overckd/domain/dist/repositories';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export abstract class RecipeCollectionService
-  implements RecipeCollectionRepository {
+  implements RecipeCollectionRepository
+{
   constructor() {}
 
   collections$: Observable<RecipeCollection[]>;
@@ -17,7 +17,7 @@ export abstract class RecipeCollectionService
 
   abstract add(collection: RecipeCollection): Observable<RecipeCollection>;
 
-  abstract removeById(id: string): Observable<boolean>;
+  abstract removeById(id: string): Observable<RecipeCollection>;
 
   abstract update(
     collection: RecipeCollection,

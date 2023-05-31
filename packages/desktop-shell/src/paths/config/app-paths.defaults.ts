@@ -9,7 +9,7 @@ import { AppPaths } from './app-paths.types';
 export const defaultAppPathsConfig: AppPaths = {
   app: app.getPath('userData'),
   appRoot: path.resolve(__dirname, '../../..'),
-  cache: app.getPath('cache'),
+  cache: app.getPath('sessionData'),
   logs: app.getPath('logs'),
   temp: app.getPath('temp'),
 };

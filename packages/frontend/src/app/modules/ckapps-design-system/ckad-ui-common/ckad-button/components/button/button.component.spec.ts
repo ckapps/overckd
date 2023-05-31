@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
 
 import { CkadButtonButtonComponent } from './button.component';
 
@@ -13,6 +13,7 @@ describe('CkadButtonButton', () => {
       declarations: [CkadButtonButtonComponent],
       imports: [MatButtonModule],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

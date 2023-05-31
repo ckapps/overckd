@@ -1,11 +1,12 @@
 import {
-  LogLevel,
   logEnterExit,
+  LogLevel,
 } from '@ckapp/rxjs-snafu/lib/cjs/log/operators';
-import { createRxDatabase, addRxPlugin, RxDatabase } from 'rxdb';
-import { from, Observable } from 'rxjs';
-
-import { scoped, DbLogScope } from '../../logging';
+import { addRxPlugin, createRxDatabase, RxDatabase } from 'rxdb';
+import { RxDBQueryBuilderPlugin } from 'rxdb/plugins/query-builder';
+import { getRxStorageMemory } from 'rxdb/plugins/storage-memory';
+import { concatMap, defer, from, Observable } from 'rxjs';
+import { DbLogScope, scoped } from '../../logging';
 
 const logger = scoped(DbLogScope.Db);
 
@@ -16,13 +17,29 @@ const logger = scoped(DbLogScope.Db);
  */
 export function createDb(): Observable<RxDatabase> {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
-  addRxPlugin(require('pouchdb-adapter-memory'));
+  addRxPlugin(RxDBQueryBuilderPlugin);
+
+  const createDb$ = defer(() => {
+    return from(
+      createRxDatabase({
+        name: 'overckd_local',
+        storage: getRxStorageMemory(),
+      }),
+    );
+  }).pipe(logEnterExit('Creating DB', { logger, level: LogLevel.Silly }));
+
+  const preCreate$ = defer(() => {
+    return from(preCreate());
+  });
 
   // Return created database
-  return from(
-    createRxDatabase({
-      name: 'overckd_local',
-      adapter: 'memory',
-    }),
-  ).pipe(logEnterExit('Creating DB', { logger, level: LogLevel.Silly }));
+  return preCreate$.pipe(concatMap(() => createDb$));
+}
+
+async function preCreate() {
+  // TODO(dev): Use args.dev??
+  if (process.env.NODE_ENV !== 'production') {
+    const { RxDBDevModePlugin } = await import('rxdb/plugins/dev-mode');
+    addRxPlugin(RxDBDevModePlugin);
+  }
 }

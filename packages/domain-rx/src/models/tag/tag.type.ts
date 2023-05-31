@@ -1,6 +1,6 @@
 import { t } from '@marblejs/middleware-io';
 
-import { dataQueryDto, flattenDataQueryDto } from '../codecs';
+import { dataQueryDto, flattenDataQueryDto } from '../../codecs';
 
 // ----------------------------------------------------------------------------
 // Consts

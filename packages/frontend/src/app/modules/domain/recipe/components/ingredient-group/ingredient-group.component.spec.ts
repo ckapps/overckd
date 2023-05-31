@@ -31,6 +31,7 @@ describe('IngredientGroupComponent', () => {
         MockIngredientListInputComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

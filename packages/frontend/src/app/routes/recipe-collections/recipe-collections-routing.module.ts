@@ -15,13 +15,6 @@ const routes: Routes = [
   {
     path: '',
     component: RecipeCollectionPageWrapperComponent,
-
-    children: [
-      {
-        path: '',
-      },
-    ],
-
     // children: [
     //   {
     //     path: 'list',

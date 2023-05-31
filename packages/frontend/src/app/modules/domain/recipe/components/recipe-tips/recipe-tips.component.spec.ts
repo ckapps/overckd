@@ -24,6 +24,7 @@ describe('RecipeTipsComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [RecipeTipsComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

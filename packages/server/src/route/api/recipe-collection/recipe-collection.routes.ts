@@ -1,5 +1,4 @@
-import { combineRoutes } from '@marblejs/core';
-
+import { combineRoutes } from '@marblejs/http';
 import {
   getCollections$,
   postRecipeCollection$,

@@ -11,6 +11,7 @@ describe('PageComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [PageComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

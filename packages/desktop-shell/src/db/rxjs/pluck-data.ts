@@ -6,9 +6,11 @@ export function pluckData<T>(): OperatorFunction<
   RxDocument<T> | null,
   T | undefined
 > {
-  return map((x: RxDocument<T> | null) => (x ? x.toJSON() : undefined));
+  return map((doc: RxDocument<T> | null) =>
+    doc ? doc.toMutableJSON() : undefined,
+  );
 }
 
 export function pluckDataStrict<T>(): OperatorFunction<RxDocument<T>, T> {
-  return map((x: RxDocument<T>) => x.toJSON());
+  return map((doc: RxDocument<T>) => doc.toMutableJSON());
 }

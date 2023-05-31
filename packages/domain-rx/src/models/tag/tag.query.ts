@@ -1,15 +1,11 @@
 import { event } from '@marblejs/core';
-
-import { UriIdQueryDto } from '../shared/uri.codec';
+import { UriIdQueryDto } from '../../shared/uri.codec';
 import { TagByQueryDto } from './tag.type';
 
-/**
- * Enum for query types on `tags`
- */
+/** Queries for `Tag`s. */
 export enum TagQueryType {
-  FindByQuery = 'TAGS.FIND_BY_QUERY',
-  GetById = 'TAGS.GET_BY_ID',
-  Create = 'TAGS.CREATE',
+  FindByQuery = '@overckd.tag.query.find_by_query',
+  GetById = '@overckd.tag.query.get_by_id',
 }
 
 // ----------------------------------------------------------------------------
@@ -26,8 +22,3 @@ export const FindTagByQueryEvent = event(TagQueryType.FindByQuery)(
  * Event for `getById`
  */
 export const GetTagByIdEvent = event(TagQueryType.GetById)(UriIdQueryDto);
-
-/**
- * Event for `createTag`
- */
-export const CreateTagEvent = event(TagQueryType.Create)(UriIdQueryDto);

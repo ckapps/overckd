@@ -21,10 +21,10 @@ const dtoParser = new t.Type<Recipe, RecipeFileContent, RecipeFileContent>(
   (a): a is Recipe => typeof a === 'object',
   (i, c) => {
     return 'recipe' in i
-      ? t.success((i.recipe as unknown) as Recipe)
+      ? t.success(i.recipe as unknown as Recipe)
       : t.failure(i, c);
   },
-  a => (a as unknown) as RecipeFileContent,
+  a => a as unknown as RecipeFileContent,
 );
 
 /**

@@ -82,9 +82,15 @@ export const TagFileRepository: Reader<Context, TagRepository> = createReader(
       );
 
     const removeByUri: TagRepository['removeByUri'] = uri =>
-      findOneByUriQuery
-        .eq(uri)
-        .$.pipe(switchMap(doc => (!doc ? of(false) : from(doc.remove()))));
+      findOneByUriQuery.eq(uri).$.pipe(
+        switchMap(doc => {
+          if (!doc) {
+            // TODO(db): Make an error class
+            throw new Error('not found');
+          }
+          return from(doc.remove());
+        }),
+      );
 
     return {
       findByQuery,

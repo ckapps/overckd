@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IconName, IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Tag } from '@overckd/domain';
 import { ColorService } from 'src/app/modules/ckapps-design-system/ckad-core/services/color.service';
@@ -8,15 +8,13 @@ import { ColorService } from 'src/app/modules/ckapps-design-system/ckad-core/ser
   templateUrl: './tag-chip.component.html',
   styleUrls: ['./tag-chip.component.scss'],
 })
-export class TagChipComponent implements OnInit {
+export class TagChipComponent {
   @Input() tag: Tag;
 
   constructor(private colorService: ColorService) {}
 
-  ngOnInit(): void {}
-
   public getChipClasses(tag: Tag) {
-    const { color } = tag;
+    const { color } = tag ?? {};
     const classes = [];
 
     if (color) {

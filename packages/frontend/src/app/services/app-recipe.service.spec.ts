@@ -26,6 +26,7 @@ describe('AppRecipeService', () => {
         AppRecipeService,
         { provide: UrlBuilderService, useValue: mockUrlBuilderSerivce },
       ],
+      teardown: { destroyAfterEach: false },
     });
     httpTestingController = TestBed.inject(HttpTestingController);
   });

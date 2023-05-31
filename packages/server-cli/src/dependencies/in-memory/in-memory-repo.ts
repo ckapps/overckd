@@ -21,16 +21,16 @@ export abstract class InMemoryRepo<T, TQuery = any> {
     return of(item).pipe(tap(i => this.all.next([...this.all.value, i])));
   }
 
-  _remove(item: Partial<T>): Observable<boolean> {
+  _remove(item: Partial<T>): Observable<T> {
     return this.findItem(item).pipe(
       map(x => {
         if (x === undefined) {
-          return false;
+          throw new Error('not found');
         }
 
         const indexOfItem = this.all.value.indexOf(x);
         this.all.next(this.all.value.filter((_, i) => i !== indexOfItem));
-        return true;
+        return x;
       }),
     );
   }

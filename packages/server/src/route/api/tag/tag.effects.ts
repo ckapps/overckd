@@ -1,9 +1,7 @@
-import { r, HttpStatus, useContext } from '@marblejs/core';
+import { useContext } from '@marblejs/core';
+import { HttpStatus, r } from '@marblejs/http';
 import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$, t } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/lib/pipeable';
-import { map, mergeMap } from 'rxjs/operators';
-
 import {
   CreateTagCommand,
   FindTagByQueryEvent,
@@ -11,7 +9,8 @@ import {
   TagDto,
 } from '@overckd/domain-rx';
 import { UriIdQueryDto } from '@overckd/domain-rx/dist/shared/uri.codec';
-
+import { pipe } from 'fp-ts/function';
+import { map, mergeMap } from 'rxjs/operators';
 import { transformFromRequestProperty } from '../../../core/search/transform-from-request-property.operator';
 
 // ----------------------------------------------------------------------------

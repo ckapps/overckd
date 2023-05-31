@@ -11,6 +11,7 @@ describe('ListItemComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CkadListItemComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

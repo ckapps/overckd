@@ -1,9 +1,9 @@
-import { Component, OnInit, forwardRef, Input } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Recipe } from '@overckd/domain';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { mapTo, switchMap, switchMapTo, takeUntil, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 type RecipeBasedOn = Recipe['basedOn'][0];
 
@@ -23,7 +23,8 @@ type RecipeBasedOn = Recipe['basedOn'][0];
   ],
 })
 export class RecipeInputSourcesListComponent
-  implements OnInit, ControlValueAccessor {
+  implements OnInit, ControlValueAccessor
+{
   @Input() label: string;
 
   private _value: RecipeBasedOn[];
@@ -34,7 +35,7 @@ export class RecipeInputSourcesListComponent
     return this.itemsSubject.value;
   }
 
-  private addItem$ = new Subject<boolean>();
+  private addItem$ = new Subject<void>();
 
   private isAddingSubject = new BehaviorSubject<boolean>(false);
   public isAdding$ = this.isAddingSubject.asObservable();
@@ -46,7 +47,7 @@ export class RecipeInputSourcesListComponent
   public items$ = this.itemsSubject.asObservable();
 
   public newItems$ = this.newItem$.pipe(
-    switchMap(newItem => this.addItem$.pipe(mapTo(newItem))),
+    switchMap(newItem => this.addItem$.pipe(map(() => newItem))),
     tap(newItem => this.addItem(newItem)),
     tap(() => this.newItemSubject.next('')),
   );

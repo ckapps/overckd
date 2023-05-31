@@ -1,10 +1,10 @@
-import { r, HttpStatus, useContext, combineRoutes } from '@marblejs/core';
-import { map, mergeMap, pluck } from 'rxjs/operators';
+import { useContext } from '@marblejs/core';
+import { combineRoutes, HttpStatus, r } from '@marblejs/http';
 import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/lib/pipeable';
-
 import { GetRecipeByNameEvent, RecipeNameDto } from '@overckd/domain-rx';
+import { pipe } from 'fp-ts/function';
+import { map, mergeMap } from 'rxjs/operators';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -49,7 +49,7 @@ const getRecipeByName$ = r.pipe(
 
     return req$.pipe(
       validateGetByNameRequest,
-      pluck('params'),
+      map(x => x.params),
       mergeMap(params =>
         pipe(GetRecipeByNameEvent.create(params), eventBusClient.send),
       ),

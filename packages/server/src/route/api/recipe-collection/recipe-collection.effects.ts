@@ -1,16 +1,16 @@
-import { r, HttpStatus, useContext } from '@marblejs/core';
-import { map, mapTo, mergeMap } from 'rxjs/operators';
+import { useContext } from '@marblejs/core';
+import { HttpStatus, r } from '@marblejs/http';
 import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/lib/pipeable';
-
 import {
-  RecipeCollectionDto,
-  RecipeCollectionIdDto,
+  CreateRecipeCollectionCommand,
   GetAllRecipeCollectionsEvent,
   GetRecipeCollectionByIdEvent,
-  CreateRecipeCollectionCommand,
+  RecipeCollectionDto,
+  RecipeCollectionIdDto,
 } from '@overckd/domain-rx';
+import { pipe } from 'fp-ts/function';
+import { map, mergeMap } from 'rxjs/operators';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -70,7 +70,7 @@ export const postRecipeCollection$ = r.pipe(
           eventBusClient.send,
         );
       }),
-      mapTo({ status: HttpStatus.CREATED }),
+      map(() => ({ status: HttpStatus.CREATED })),
     );
   }),
 );

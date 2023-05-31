@@ -1,8 +1,8 @@
 import { Event } from '@marblejs/core';
 
 export enum OverckdEventType {
-  Result = `RESULT`,
-  Error = `ERROR`,
+  Result = `result`,
+  Error = `error`,
 }
 
 export function createEvent<P = unknown, E = any, T extends string = string>(
@@ -13,6 +13,6 @@ export function createEvent<P = unknown, E = any, T extends string = string>(
 
   return {
     ...others,
-    type: [ev.type, eventType].join('_'),
+    type: [ev.type, eventType].join('.'),
   };
 }

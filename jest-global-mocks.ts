@@ -19,7 +19,7 @@ function logMockFunction(name: string, args?: any[]) {
 // browser or node.js executions
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-const whateverThisIs = window || global;
+// const whateverThisIs = window || global;
 
 // --------------------------------------------------------
 // window mocks

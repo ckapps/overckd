@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 
 import { IpcRenderer } from 'electron';
 
@@ -15,10 +16,14 @@ export class IpcRendererService {
     return this._ipcRenderer;
   }
 
-  constructor() {
-    if ((window as any).require) {
+  constructor(@Inject(DOCUMENT) private _doc: Document) {
+    const { defaultView } = this._doc;
+
+    if ((defaultView as any).require) {
       try {
-        this._ipcRenderer = (window as any).require('electron').ipcRenderer;
+        this._ipcRenderer = (defaultView as any).require(
+          'electron',
+        ).ipcRenderer;
       } catch (error) {
         throw error;
       }

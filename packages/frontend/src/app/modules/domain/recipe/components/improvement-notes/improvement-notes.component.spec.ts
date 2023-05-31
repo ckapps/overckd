@@ -11,6 +11,7 @@ describe('ImprovementNotesComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [ImprovementNotesComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

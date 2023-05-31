@@ -1,12 +1,11 @@
 import { event } from '@marblejs/core';
-
 import { IngredientByQueryDto } from './ingredient.type';
 
 /**
- *
+ * Queries on `Ingredient`s.
  */
 export enum IngredientQueryType {
-  FindByQuery = 'INGREDIENTS_FIND_BY_QUERY',
+  FindByQuery = '@overckd.ingredient.query.find_by_query',
 }
 
 // ----------------------------------------------------------------------------

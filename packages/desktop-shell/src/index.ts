@@ -2,7 +2,7 @@ import { appIsStable$, fromAppEvent } from '@ckapp/rxjs-electron/lib/app';
 import { app, BrowserWindow, BrowserWindowConstructorOptions } from 'electron';
 import * as url from 'url';
 import { of, throwError, Observable, combineLatest, merge } from 'rxjs';
-import { catchError, map, mergeMap, pluck } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 
 import { initProtocols } from './protocol';
 import { initServer } from './server';
@@ -44,6 +44,8 @@ const createWindow = (): void => {
     // titleBarStyle: 'hidden',
     vibrancy: 'window', // 'light', 'medium-light' etc
     backgroundColor: 'transparent',
+    // Best guess to make them vertically centered with the title bar
+    trafficLightPosition: { x: 12, y: 12 },
   };
 
   if (process.platform !== 'win32') {
@@ -172,7 +174,7 @@ function startServer$(config: AppConfig): Observable<boolean> {
  */
 function stabilize$(fromArgs: typeof args): Observable<boolean> {
   return combineLatest([initConfig$(fromArgs), initProtocols$()]).pipe(
-    pluck(0),
+    map(([appConfig]) => appConfig),
     mergeMap(config => startServer$(config)),
   );
 }

@@ -16,7 +16,7 @@ export function loadPaths(
 
   const fileRoot = path.resolve(yaml.pathRoot);
 
-  const entries = (Object.entries(defaults) as unknown) as [
+  const entries = Object.entries(defaults) as unknown as [
     keyof AppPaths,
     string,
   ][];

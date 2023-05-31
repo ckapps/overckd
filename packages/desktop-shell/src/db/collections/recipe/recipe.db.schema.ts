@@ -1,11 +1,14 @@
+import { Recipe } from '@overckd/domain';
 import { RxJsonSchema } from 'rxdb';
 
-export const schema: RxJsonSchema = {
+export const schema: RxJsonSchema<Recipe> = {
   version: 0,
   type: 'object',
+  primaryKey: 'name',
   properties: {
     name: {
       type: 'string',
+      maxLength: 265,
     },
     stepsEnumerated: {
       type: 'boolean',

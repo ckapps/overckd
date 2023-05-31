@@ -11,6 +11,7 @@ describe('EmptyComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [NotFoundPageComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

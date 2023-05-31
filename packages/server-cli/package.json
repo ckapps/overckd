@@ -15,19 +15,20 @@
     "test": "jest ."
   },
   "dependencies": {
-    "@ckapp/rxjs-snafu": "~0.0.24",
-    "@marblejs/core": "^3.4.3",
-    "@marblejs/messaging": "^3.4.3",
-    "@marblejs/middleware-body": "^3.4.3",
-    "@marblejs/middleware-io": "^3.4.3",
-    "@marblejs/middleware-logger": "^3.4.3",
+    "@ckapp/rxjs-snafu": "~0.1.9",
+    "@marblejs/core": "^4.1.0",
+    "@marblejs/http": "^4.1.0",
+    "@marblejs/messaging": "^4.1.0",
+    "@marblejs/middleware-body": "^4.1.0",
+    "@marblejs/middleware-io": "^4.1.0",
+    "@marblejs/middleware-logger": "^4.1.0",
     "@overckd/domain": "^0.0.0",
     "@overckd/domain-rx": "^0.0.0",
     "@overckd/server": "^0.0.0",
-    "fp-ts": "^2.8.5",
-    "rxjs": "~6.6.6"
+    "fp-ts": "^2.13.1",
+    "rxjs": "~7.8.1"
   },
   "devDependencies": {
-    "typescript": "~4.2.4"
+    "typescript": "~4.9.5"
   }
 }

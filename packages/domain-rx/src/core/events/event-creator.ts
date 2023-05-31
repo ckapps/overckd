@@ -18,7 +18,7 @@ type EventData<P = unknown, E = any> = EventWithPayload<P> | EventWithError<E>;
 export function eventCreator<
   P = unknown,
   E = any,
-  T extends EventType = EventType
+  T extends EventType = EventType,
 >(
   eventType: T,
 ): (

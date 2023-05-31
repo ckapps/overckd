@@ -43,7 +43,7 @@ export class AppRecipeCollectionService implements RecipeCollectionService {
     throw new Error('Method not implemented.');
   }
 
-  removeById(id: string): Observable<boolean> {
+  removeById(id: string): Observable<RecipeCollection> {
     // TODO: request and update collections
     throw new Error('Method not implemented.');
   }

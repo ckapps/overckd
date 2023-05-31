@@ -1,6 +1,6 @@
 import { t } from '@marblejs/middleware-io';
 
-import { dataQueryDto, flattenDataQueryDto } from '../codecs';
+import { dataQueryDto, flattenDataQueryDto } from '../../codecs';
 import { TagUriDto } from '../tag';
 
 // ----------------------------------------------------------------------------
@@ -17,9 +17,8 @@ export const IngredientSearchDto = t.partial({
 });
 
 export const IngredientByQueryDto = dataQueryDto(IngredientSearchDto);
-export const FlattenIngredientByQueryDto = flattenDataQueryDto(
-  IngredientSearchDto,
-);
+export const FlattenIngredientByQueryDto =
+  flattenDataQueryDto(IngredientSearchDto);
 
 // ----------------------------------------------------------------------------
 // Types

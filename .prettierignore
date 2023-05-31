@@ -1,0 +1,10 @@
+# Artifacts
+dist
+coverage
+.angular
+packages/server/api
+
+
+# Other files
+CHANGELOG.md
+tsconfig*.json

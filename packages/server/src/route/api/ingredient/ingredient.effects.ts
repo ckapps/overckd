@@ -1,14 +1,14 @@
-import { r, HttpStatus, useContext } from '@marblejs/core';
-import { map, mergeMap } from 'rxjs/operators';
+import { useContext } from '@marblejs/core';
+import { HttpStatus, r } from '@marblejs/http';
 import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/lib/pipeable';
-
 import {
   FindIngredientByQueryEvent,
   FlattenIngredientByQueryDto,
 } from '@overckd/domain-rx';
 import { unflattenQuery } from '@overckd/domain-rx/dist/search';
+import { pipe } from 'fp-ts/function';
+import { map, mergeMap } from 'rxjs/operators';
 
 // ----------------------------------------------------------------------------
 // Validators

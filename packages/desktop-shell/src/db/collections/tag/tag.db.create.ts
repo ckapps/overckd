@@ -1,7 +1,6 @@
 import { RxDatabase } from 'rxdb';
 
 import { schema } from './tag.db.schema';
-import { RxCollectionCreatorBase } from 'rxdb/dist/types/types';
 
 /**
  * Creates definition for a new DB collection
@@ -10,7 +9,7 @@ import { RxCollectionCreatorBase } from 'rxdb/dist/types/types';
  *
  * @returns
  */
-export function createTagDbCollection(db: RxDatabase): RxCollectionCreatorBase {
+export function createTagDbCollection(db: RxDatabase) {
   return {
     schema,
   };

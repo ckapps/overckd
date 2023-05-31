@@ -20,7 +20,7 @@ export interface RecipeRepository {
    * Deletes a recipe
    * @param name
    */
-  removeByName(name: Recipe['name']): Observable<boolean>;
+  removeByName(name: Recipe['name']): Observable<Recipe>;
 
   /**
    * Gets a recipe by its name

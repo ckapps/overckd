@@ -23,6 +23,7 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:import/typescript',
   ],
+  plugins: ['deprecation'],
   parser: '@typescript-eslint/parser',
 
   // Add overrides for test files

@@ -1,6 +1,6 @@
-import { RxCollection } from 'rxdb';
 import { createContextToken } from '@marblejs/core';
 import { Ingredient, Recipe, RecipeCollection, Tag } from '@overckd/domain';
+import { RxCollection } from 'rxdb';
 
 const prefix = 'DB.collections';
 // ----------------------------------------------------------------------------

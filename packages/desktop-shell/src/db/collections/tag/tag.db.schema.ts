@@ -4,10 +4,11 @@ import { RxJsonSchema } from 'rxdb';
 export const schema: RxJsonSchema<Tag> = {
   version: 0,
   type: 'object',
+  primaryKey: 'uri',
   properties: {
     uri: {
       type: 'string',
-      primary: true,
+      maxLength: 265,
     },
     label: {
       type: 'string',

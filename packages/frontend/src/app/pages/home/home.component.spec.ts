@@ -11,6 +11,7 @@ describe('HomeComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [HomePageComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

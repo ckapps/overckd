@@ -42,5 +42,5 @@ export function parseArgs(processArgs: string[]): OverckdArgs {
       type: 'string',
       describe: `Path to the overckd configuration file or folder containing ${DEFAULT_CONFIG_FILE_NAME}`,
     },
-  }).argv;
+  }).argv as OverckdArgs;
 }
