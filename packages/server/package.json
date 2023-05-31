@@ -28,6 +28,6 @@
     "@marblejs/middleware-io": "^4.1.0",
     "@marblejs/middleware-logger": "^4.1.0",
     "fp-ts": "^2.13.1",
-    "rxjs": "~7.8.0"
+    "rxjs": "~7.8.1"
   }
 }
