@@ -2,33 +2,10 @@
   "name": "@overckd/server-cli",
   "private": true,
   "version": "0.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "build:watch": "yarn build -- --watch",
-    "clean": "rimraf dist",
-    "start:web": "yarn start",
-    "start": "node ./dist/index.js",
-    "lint": "eslint --ext .ts .",
-    "precommit": "lint-staged",
-    "test": "jest ."
-  },
+  "scripts": {},
   "dependencies": {
-    "@ckapp/rxjs-snafu": "~0.1.9",
-    "@marblejs/core": "^4.1.0",
-    "@marblejs/http": "^4.1.0",
-    "@marblejs/messaging": "^4.1.0",
-    "@marblejs/middleware-body": "^4.1.0",
-    "@marblejs/middleware-io": "^4.1.0",
-    "@marblejs/middleware-logger": "^4.1.0",
     "@overckd/domain": "^0.0.0",
     "@overckd/domain-rx": "^0.0.0",
-    "@overckd/server": "^0.0.0",
-    "fp-ts": "^2.13.1",
-    "rxjs": "~7.8.1"
-  },
-  "devDependencies": {
-    "typescript": "~4.9.5"
+    "@overckd/server": "^0.0.0"
   }
 }

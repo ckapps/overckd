@@ -25,6 +25,7 @@ First of all, you should have [`node.js`](https://nodejs.org/en/) installed. I r
 The project uses different tools
 
 - [`typescript`](https://www.typescriptlang.org/): All sources are written in and transpiled using typescript
+- [`nx`](https://nx.dev/): Build system with monorepo support
 - [`Lerna`](https://lerna.js.org/): manages multi-package projects in a monorepo
 - [`husky`](https://typicode.github.io/husky/#/): for easy git hooks
 - [`commitlint`](https://commitlint.js.org/): Linting for commit messages (using [`conventional commits`](https://www.conventionalcommits.org/en/v1.0.0/))
@@ -80,7 +81,7 @@ The following section tries to give you an overview how overckd is structured on
   - [`domain`](./packages/domain/README.md): Bundle of domain specific types and repositories for data
   - [`yaml-parse`](./packages/yaml-parser/README.md): Bundle of domain specific types and repositories for data
 - `frontend`: Everything that is related to the UI
-  - [`frontend`](./packages/frontend/README.md): Frontend for overckd based on Angular
+  - [`frontend`](./apps/frontend/README.md): Frontend for overckd based on Angular
 - `desktop-app`: Everything that is related to the desktop app
   - [`desktop-shell`](./packages/desktop-shell/README.md): Shell for the desktop application based on `electron`
 - `server`: Serving recipes from the command line

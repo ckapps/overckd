@@ -1,0 +1,8 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "editor.formatOnSave": true,
+  // Use prettier as default formatter
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

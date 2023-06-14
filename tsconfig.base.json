@@ -1,4 +1,26 @@
 {
-  "extends": "@tsconfig/recommended/tsconfig.json",
-  "compileOnSave": false
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@overckd/core": ["libs/core/src/index.ts"],
+      "@overckd/domain": ["libs/data-access-domain/src/index.ts"],
+      "@overckd/domain-rx": ["libs/domain-rx/src/index.ts"],
+      "@overckd/server": ["libs/server/src/index.ts"],
+      "@overckd/yaml": ["libs/yaml/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

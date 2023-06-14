@@ -1,0 +1,34 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatLegacyButtonModule as MatButtonModule } from '@angular/material/legacy-button';
+import { MatStepperModule } from '@angular/material/stepper';
+import { DomainModule } from '../../modules/domain/domain.module';
+import { UiModule } from '../../modules/ui/ui.module';
+import { AddRecipePageComponent } from './pages/add-recipe/add-recipe.component';
+import { EmptyRecipePageComponent } from './pages/empty-recipe/empty-recipe.component';
+import { RecipePageComponent } from './pages/recipe/recipe.component';
+import { RecipesPagesWrapperComponent } from './pages/recipes-pages-wrapper.component';
+import { RecipesPageComponent } from './pages/recipes/recipes.component';
+import { RecipesRoutingModule } from './recipes-routing.module';
+
+@NgModule({
+  declarations: [
+    AddRecipePageComponent,
+    EmptyRecipePageComponent,
+    RecipePageComponent,
+    RecipesPageComponent,
+    RecipesPagesWrapperComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatStepperModule,
+    RecipesRoutingModule,
+    DomainModule,
+    UiModule,
+  ],
+})
+export class RecipesModule {}
