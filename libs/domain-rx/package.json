@@ -1,0 +1,16 @@
+{
+  "name": "@overckd/domain-rx",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "dependencies": {
+    "@overckd/domain": "*"
+  },
+  "peerDependencies": {
+    "@ckapp/rxjs-snafu": "~0.1.9",
+    "@marblejs/core": "^4.1.0",
+    "@marblejs/messaging": "^4.1.0",
+    "@marblejs/middleware-io": "^4.1.0",
+    "fp-ts": "^2.13.1",
+    "rxjs": "~7.8.1"
+  }
+}

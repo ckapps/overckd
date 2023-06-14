@@ -1,10 +1,11 @@
-# Artifacts
-dist
-coverage
+# Add files here to ignore them from prettier formatting
+/dist
+/coverage
 .angular
 packages/server/api
-
 
 # Other files
 CHANGELOG.md
 tsconfig*.json
+
+/.nx/cache

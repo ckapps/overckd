@@ -1,6 +1,5 @@
+import * as P from 'effect/Predicate';
 import * as path from 'path';
-import { isString } from '@overckd/domain/dist/core/string/';
-
 import { AppPaths } from '../paths/config/app-paths.types';
 import { DecodedAppConfigFile } from './app-config.types';
 
@@ -25,7 +24,7 @@ export function loadPaths(
     .map(([key, defaultPath]) => {
       const providedPath = pathsFromConfig[key];
 
-      const resolvedPath = isString(providedPath)
+      const resolvedPath = P.isString(providedPath)
         ? path.resolve(fileRoot, providedPath)
         : defaultPath;
 

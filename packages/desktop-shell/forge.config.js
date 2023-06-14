@@ -79,7 +79,7 @@ const workspaceRoot = path.join(__dirname, '../..');
 /** Path to the build folder for the angular project */
 const frontendDistPath = path.resolve(
   workspaceRoot,
-  'packages/frontend/dist/frontend-electron',
+  'dist/apps/frontend-electron',
 );
 
 /** Assets directory */
