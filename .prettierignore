@@ -9,3 +9,4 @@ CHANGELOG.md
 tsconfig*.json
 
 /.nx/cache
+/.nx/workspace-data
