@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['16']
+        node: ['22']
 
     name: Node ${{ matrix.node }} build
 
@@ -19,6 +19,5 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: yarn install
-      - run: yarn lerna bootstrap --ci
-      - run: yarn build
-      - run: yarn lint
+      - run: yarn nx run-many -t build
+      - run: yarn nx run-many -t lint
