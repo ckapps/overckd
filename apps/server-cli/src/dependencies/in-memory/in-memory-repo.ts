@@ -1,6 +1,12 @@
 import { DataQuery, Page } from '@overckd/domain';
-import { BehaviorSubject, Observable, of, OperatorFunction } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import {
+  BehaviorSubject,
+  map,
+  Observable,
+  of,
+  OperatorFunction,
+  tap,
+} from 'rxjs';
 
 /**
  * Basic implementation for an in memory repository

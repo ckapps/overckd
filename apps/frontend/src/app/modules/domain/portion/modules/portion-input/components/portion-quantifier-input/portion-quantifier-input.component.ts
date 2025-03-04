@@ -1,13 +1,27 @@
-import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import {
+  Component,
+  forwardRef,
+  inject,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
   FormGroup,
+  FormsModule,
   NG_VALUE_ACCESSOR,
+  ReactiveFormsModule,
 } from '@angular/forms';
+import { MatOption } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 import { PortionKind } from '@overckd/domain';
 import * as Fn from 'effect/Function';
 import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
+import { PortionKindPipe } from '../../../portion-common/pipes/portion-kind.pipe';
 import { PortionQuantifierService } from '../../../portion-common/services/portion-quantifier.service';
 
 export interface PortionQuantifier {
@@ -27,10 +41,23 @@ export interface PortionQuantifier {
       multi: true,
     },
   ],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    MatOption,
+    MatInput,
+    AsyncPipe,
+    PortionKindPipe,
+  ],
 })
 export class PortionQuantifierInputComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
+  readonly #portionQuantifierService = inject(PortionQuantifierService);
+
   public form = new FormGroup({
     kind: new FormControl(PortionKind.Label),
     quantity: new FormControl<number | null>(null),
@@ -40,9 +67,8 @@ export class PortionQuantifierInputComponent
   public get kind() {
     return this.form.value.kind;
   }
-  constructor(private portionQuantifierService: PortionQuantifierService) {}
   private kindsSubject = new BehaviorSubject<PortionKind[]>(
-    this.portionQuantifierService.getAllKinds(),
+    this.#portionQuantifierService.getAllKinds(),
   );
 
   public kinds$ = this.kindsSubject.asObservable();

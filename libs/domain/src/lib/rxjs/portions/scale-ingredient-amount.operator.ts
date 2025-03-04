@@ -1,6 +1,4 @@
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { map, OperatorFunction } from 'rxjs';
 import {
   RecipeIngredient,
   scaleIngredientAmount,

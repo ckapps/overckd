@@ -16,7 +16,6 @@ import { UiModule } from '../../modules/ui/ui.module';
  * main menu
  */
 @Component({
-  standalone: true,
   selector: 'app-main-menu',
   templateUrl: './app-main-menu.component.html',
   styleUrls: ['./app-main-menu.component.scss'],

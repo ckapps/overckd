@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { NgModule, inject } from '@angular/core';
 import {
   FaIconLibrary,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
   declarations: [],
@@ -15,7 +14,9 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
   exports: [FontAwesomeModule],
 })
 export class IconsModule {
-  constructor(library: FaIconLibrary) {
+  constructor() {
+    const library = inject(FaIconLibrary);
+
     library.addIconPacks(fas, far, fab);
   }
 }

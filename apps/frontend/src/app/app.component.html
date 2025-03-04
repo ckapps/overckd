@@ -1,11 +1,9 @@
-<ckad-desktop-window-title-bar
-  *ngIf="shell === 'desktop'"
-  title="overckd"
-  class="inset title-bar"
-></ckad-desktop-window-title-bar>
+@if (shell === 'desktop') {
+<ckad-desktop-window-title-bar title="overckd" class="inset title-bar" />
+}
 
-<app-main-menu class="main-menu"></app-main-menu>
+<app-main-menu class="main-menu" />
 
 <main>
-  <router-outlet></router-outlet>
+  <router-outlet />
 </main>

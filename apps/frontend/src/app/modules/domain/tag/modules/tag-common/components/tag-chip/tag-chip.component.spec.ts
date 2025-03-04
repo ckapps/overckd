@@ -1,27 +1,24 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatChipsModule } from '@angular/material/chips';
-import { IconsModule } from '../../../../../../../modules/ui/icons/icons.module';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { TagChipComponent } from './tag-chip.component';
 
 describe('TagChipComponent', () => {
-  let component: TagChipComponent;
-  let fixture: ComponentFixture<TagChipComponent>;
+  let spectator: Spectator<TagChipComponent>;
+  const createComponent = createComponentFactory(TagChipComponent);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [TagChipComponent],
-      imports: [MatChipsModule, IconsModule],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
+  const tag = {
+    uri: 'mock-id',
+    label: 'mock-name',
+  };
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TagChipComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        tag,
+      },
+    });
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

@@ -5,8 +5,10 @@
 >
   <mat-expansion-panel-header>
     <mat-panel-title>
-      <fa-icon *ngIf="this.icon" [icon]="this.icon" class="mr-2"></fa-icon>
-      {{ this.groupName }}
+      @if (icon()) {
+      <fa-icon [icon]="icon()" class="mr-2" />
+      }
+      {{ groupName() }}
     </mat-panel-title>
   </mat-expansion-panel-header>
 

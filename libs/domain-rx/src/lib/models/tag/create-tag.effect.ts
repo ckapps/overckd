@@ -1,8 +1,8 @@
 import { act, matchEvent, useContext } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/function';
-import { mergeMap } from 'rxjs/operators';
+import { pipe } from 'effect/Function';
+import { mergeMap } from 'rxjs';
 import { TagRepositoryToken } from '../../tokens';
 import { CreateTagCommand } from './tag.command';
 import { TagCreatedEvent } from './tag.event';

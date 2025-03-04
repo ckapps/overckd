@@ -1,24 +1,15 @@
-<ng-template [ngIf]="!this.stepsEnumerated">
-  <div
-    *ngIf="this.stepHtml as stepHtml; else textTemplate"
-    [class]="this.cssClasses"
-    [innerHTML]="stepHtml"
-  ></div>
+@if (!stepsEnumerated()) { @if (stepHtml; as stepHtml) {
+<div [class]="cssClasses" [innerHTML]="stepHtml"></div>
+} @else {
 
-  <ng-template #textTemplate>
-    <p [class]="this.cssClasses">
-      {{ this.stepText }}
-    </p>
-  </ng-template>
-</ng-template>
+<p [class]="cssClasses">
+  {{ stepText }}
+</p>
 
-<ng-template [ngIf]="this.stepsEnumerated">
-  <li
-    *ngIf="this.stepHtml as stepHtml"
-    [class]="[this.cssClasses, 'mb-1'].join(' ')"
-    [innerHTML]="stepHtml"
-  ></li>
-  <li [class]="[this.cssClasses, 'mb-1'].join(' ')">
-    {{ this.stepText }}
-  </li>
-</ng-template>
+} } @if (stepsEnumerated()) { @if (stepHtml; as stepHtml) {
+<li [class]="[cssClasses, 'mb-1'].join(' ')" [innerHTML]="stepHtml"></li>
+}
+<li [class]="[cssClasses, 'mb-1'].join(' ')">
+  {{ stepText }}
+</li>
+}

@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
-
 import { PortionConverterService } from './portion-converter.service';
 
 describe('PortionConverterService', () => {
   let service: PortionConverterService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } });
+    TestBed.configureTestingModule({});
     service = TestBed.inject(PortionConverterService);
   });
 

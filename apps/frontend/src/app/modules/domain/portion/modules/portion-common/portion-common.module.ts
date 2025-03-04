@@ -1,14 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-//
-import { PortionConverterComponent } from './components/portion-converter/portion-converter.component';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PortionConverterComponent } from './components/portion-converter/portion-converter.component';
 import { PortionKindPipe } from './pipes/portion-kind.pipe';
 
 @NgModule({
-  declarations: [PortionConverterComponent, PortionKindPipe],
   exports: [PortionConverterComponent, PortionKindPipe],
-  imports: [CommonModule, FormsModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    PortionConverterComponent,
+    PortionKindPipe,
+  ],
 })
 export class PortionCommonModule {}

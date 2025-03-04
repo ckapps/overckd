@@ -1,12 +1,6 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatListModule } from '@angular/material/list';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { EMPTY } from 'rxjs';
 import { TagService } from '../../../../../tag/modules/tag-common/services/tag.service';
 import { IngredientService } from '../../../ingredient-common/services/ingredient.service';
@@ -31,24 +25,8 @@ describe('IngredientShelfFilterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        IngredientShelfFilterComponent,
-        // Mocked
-        MockFontawesomeIconComponent,
-      ],
-      imports: [
-        NoopAnimationsModule,
-        // Forms modules
-        FormsModule,
-        ReactiveFormsModule,
-        // Material modules
-        MatAutocompleteModule,
-        MatChipsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatListModule,
-      ],
       providers: [
+        provideNoopAnimations(),
         {
           provide: IngredientService,
           useValue: mockIngredientService,
@@ -58,8 +36,6 @@ describe('IngredientShelfFilterComponent', () => {
           useValue: mockTagService,
         },
       ],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
     }).compileComponents();
   });
 

@@ -1,13 +1,11 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { RecipeTipsComponent } from './recipe-tips.component';
 
 describe('RecipeTipsComponent', () => {
-  let component: RecipeTipsComponent;
-  let fixture: ComponentFixture<RecipeTipsComponent>;
+  let spectator: Spectator<RecipeTipsComponent>;
+  const createComponent = createComponentFactory(RecipeTipsComponent);
 
-  const mockRecipe = {
+  const recipe = {
     images: [],
     name: 'mock-name',
     ingredients: [],
@@ -16,23 +14,15 @@ describe('RecipeTipsComponent', () => {
     styles: {},
   };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [RecipeTipsComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecipeTipsComponent);
-    component = fixture.componentInstance;
-    // Set props
-    component.recipe = mockRecipe;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        recipe,
+      },
+    });
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

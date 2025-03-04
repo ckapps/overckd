@@ -1,8 +1,6 @@
 import * as t from 'io-ts';
 import * as yaml from 'js-yaml';
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { map, OperatorFunction } from 'rxjs';
 import { codecEncode } from './codec-encode';
 
 /**

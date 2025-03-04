@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, OnInit, input } from '@angular/core';
 import {
   Recipe,
   RecipeIngredient,
@@ -7,6 +8,8 @@ import {
   isRecipeIngredientGroup,
 } from '@overckd/domain';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { IngredientGroupComponent } from '../ingredient-group/ingredient-group.component';
+import { IngredientComponent } from '../ingredient/ingredient.component';
 
 type Ingredients = Recipe['ingredients'];
 
@@ -14,17 +17,18 @@ type Ingredients = Recipe['ingredients'];
   selector: 'overckd-ingredient-list',
   templateUrl: './ingredient-list.component.html',
   styleUrls: ['./ingredient-list.component.scss'],
+  imports: [IngredientGroupComponent, IngredientComponent, AsyncPipe],
 })
 export class IngredientListComponent implements OnInit {
   /**
    * The ingredients to show
    */
-  @Input() ingredients!: Ingredients;
+  readonly ingredients = input.required<Ingredients>();
 
   /**
    * Scaling factor for the ingredient amount
    */
-  @Input() amountScale = 1;
+  readonly amountScale = input(1);
 
   /**
    * Ingredient groups from the passed ingredients
@@ -38,7 +42,7 @@ export class IngredientListComponent implements OnInit {
   private passedIngredients$!: BehaviorSubject<Ingredients>;
 
   ngOnInit() {
-    this.passedIngredients$ = new BehaviorSubject(this.ingredients);
+    this.passedIngredients$ = new BehaviorSubject(this.ingredients());
 
     this.ingredientGroups$ = this.passedIngredients$.pipe(
       map(

@@ -1,49 +1,29 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { PortionKind, PortionQuantifier } from '@overckd/domain';
 import { PortionConverterService } from '../../services/portion-converter.service';
-
 import { PortionConverterComponent } from './portion-converter.component';
 
-describe('PortionQuantifierComponent', () => {
-  let component: PortionConverterComponent;
-  let fixture: ComponentFixture<PortionConverterComponent>;
+describe('PortionConverterComponent', () => {
+  let spectator: Spectator<PortionConverterComponent>;
+  const createComponent = createComponentFactory({
+    component: PortionConverterComponent,
+    mocks: [PortionConverterService],
+  });
 
-  const mockPortionConverterService = {
-    getPortionQuantity: jest.fn(),
-    calculateScalingFactorFromSource: jest.fn(),
-  };
-
-  const sourcePortion: PortionQuantifier = {
+  const source: PortionQuantifier = {
     kind: PortionKind.Label,
     label: 'mock-label',
   };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [PortionConverterComponent],
-      imports: [FormsModule, ReactiveFormsModule],
-      providers: [
-        {
-          provide: PortionConverterService,
-          useValue: mockPortionConverterService,
-        },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(PortionConverterComponent);
-    component = fixture.componentInstance;
-    // Set props
-    component.source = sourcePortion;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        source,
+      },
+    });
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

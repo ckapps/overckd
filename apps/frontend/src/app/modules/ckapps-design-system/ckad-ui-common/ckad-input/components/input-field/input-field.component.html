@@ -1,15 +1,15 @@
 <mat-form-field>
-  <mat-label>{{ this.label }}</mat-label>
+  <mat-label>{{ label() }}</mat-label>
   <input
     matInput
-    [type]="this.type"
+    [type]="type()"
     [(ngModel)]="value"
-    [placeholder]="this.placeholder"
+    [placeholder]="placeholder() ?? ''"
   />
 
+  @if (clearable() && value) {
   <button
     mat-button
-    *ngIf="this.clearable && this.value"
     matSuffix
     mat-icon-button
     aria-label="Clear"
@@ -17,6 +17,7 @@
   >
     <!-- <mat-icon>clear</mat-icon> -->
   </button>
+  }
 </mat-form-field>
 
-<!-- <div class="error">{{ this.error }}</div> -->
+<!-- <div class="error">{{ error }}</div> -->

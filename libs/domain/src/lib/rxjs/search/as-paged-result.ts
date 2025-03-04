@@ -1,6 +1,4 @@
-import { OperatorFunction } from 'rxjs';
-import { reduce } from 'rxjs/operators';
-
+import { OperatorFunction, reduce } from 'rxjs';
 import { DataQuery, Page } from '../../search';
 
 /**

@@ -3,8 +3,7 @@ import { HttpError, HttpStatus, r } from '@marblejs/http';
 import { requestValidator$, t } from '@marblejs/middleware-io';
 import * as fs from 'fs';
 import * as path from 'path';
-import { from, of, throwError } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, from, map, mergeMap, of, throwError } from 'rxjs';
 import { promisify } from 'util';
 import { ServerConfigToken } from '../../tokens';
 

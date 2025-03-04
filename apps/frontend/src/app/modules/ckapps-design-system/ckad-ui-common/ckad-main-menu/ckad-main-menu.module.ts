@@ -12,12 +12,15 @@ import { CkadMainMenuItemComponent } from './components/main-menu-item/main-menu
 import { CkadMainMenuComponent } from './components/main-menu/main-menu.component';
 
 @NgModule({
-  declarations: [
+  imports: [
+    CommonModule,
+    FontAwesomeModule,
+    MatExpansionModule,
+    MatListModule,
     CkadMainMenuComponent,
     CkadMainMenuItemComponent,
     CkadMainMenuGroupComponent,
   ],
-  imports: [CommonModule, FontAwesomeModule, MatExpansionModule, MatListModule],
   exports: [
     CkadMainMenuComponent,
     CkadMainMenuItemComponent,

@@ -1,4 +1,5 @@
 @use 'sass:math';
+@use 'sass:map';
 
 @mixin md-up {
   @media (min-width: 768px) {
@@ -18,7 +19,7 @@
 @mixin ckad-grid-cols($cols, $fractions, $breakpoints) {
   @include ckad-grid-cols-from-fractions($cols, $fractions);
 
-  @each $breakpoint in map-keys($breakpoints) {
+  @each $breakpoint in map.keys($breakpoints) {
     $infix: breakpoint-infix($breakpoint, $breakpoints);
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       @include ckad-grid-cols-from-fractions($cols, $fractions, $infix);

@@ -1,4 +1,6 @@
-<fa-icon *ngIf="this.icon" [icon]="this.icon" class="mr-2"></fa-icon>
+@if (icon(); as _icon) {
+<fa-icon [icon]="_icon" class="mr-2" />
+}
 <div>
-  <ng-content></ng-content>
+  <ng-content />
 </div>

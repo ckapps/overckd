@@ -1,9 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { PortionKind } from '@overckd/domain';
 
-@Pipe({
-  name: 'portionKind',
-})
+@Pipe({ name: 'portionKind' })
 export class PortionKindPipe implements PipeTransform {
   private readonly mapping: { [P in PortionKind]: string } = {
     [PortionKind.Label]: 'by label',

@@ -3,44 +3,42 @@
     <a
       mat-list-item
       [routerLink]="'./home'"
-      [class]="this.itemClass"
-      [routerLinkActive]="this.itemActiveClass"
+      [class]="itemClass"
+      [routerLinkActive]="itemActiveClass"
     >
-      <ckad-main-menu-item [icon]="this.faHome"> overckd </ckad-main-menu-item>
+      <ckad-main-menu-item [icon]="faHome"> overckd </ckad-main-menu-item>
     </a>
   </mat-nav-list>
 
-  <ckad-main-menu-group [groupName]="'Recipes'" [icon]="this.faUtensils">
+  <ckad-main-menu-group [groupName]="'Recipes'" [icon]="faUtensils">
     <mat-nav-list>
       <a
         mat-list-item
-        [class]="this.itemClass"
+        [class]="itemClass"
         [routerLink]="['./recipes', 'list']"
-        [routerLinkActive]="this.itemActiveClass"
+        [routerLinkActive]="itemActiveClass"
       >
-        <ckad-main-menu-item [icon]="this.faWallet"> All </ckad-main-menu-item>
+        <ckad-main-menu-item [icon]="faWallet"> All </ckad-main-menu-item>
       </a>
 
       <a
         mat-list-item
-        [class]="this.itemClass"
+        [class]="itemClass"
         [routerLink]="['./recipes', 'empty']"
-        [routerLinkActive]="this.itemActiveClass"
+        [routerLinkActive]="itemActiveClass"
       >
-        <ckad-main-menu-item [icon]="this.faFileContract">
+        <ckad-main-menu-item [icon]="faFileContract">
           Print template
         </ckad-main-menu-item>
       </a>
 
       <a
         mat-list-item
-        [class]="this.itemClass"
+        [class]="itemClass"
         [routerLink]="['./recipes', 'add']"
-        [routerLinkActive]="this.itemActiveClass"
+        [routerLinkActive]="itemActiveClass"
       >
-        <ckad-main-menu-item [icon]="this.iconAdd">
-          Add recipe
-        </ckad-main-menu-item>
+        <ckad-main-menu-item [icon]="iconAdd"> Add recipe </ckad-main-menu-item>
       </a>
     </mat-nav-list>
   </ckad-main-menu-group>

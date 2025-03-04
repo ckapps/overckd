@@ -1,21 +1,18 @@
 import { formatNumber } from '@angular/common';
-import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
-
+import { LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
 import { RecipeIngredient } from '@overckd/domain';
 
 /**
  * Formats the amount for an ingredient
  */
-@Pipe({
-  name: 'ingredientAmount',
-})
+@Pipe({ name: 'ingredientAmount' })
 export class IngredientAmountPipe implements PipeTransform {
+  readonly #locale = inject(LOCALE_ID);
+
   /**
    * The format to use for rendering numbers
    */
   private readonly digitFormat = '0.0-2';
-
-  constructor(@Inject(LOCALE_ID) private locale: string) {}
 
   transform(value: RecipeIngredient, ...args: unknown[]): string | undefined {
     const { amount } = value;
@@ -30,11 +27,11 @@ export class IngredientAmountPipe implements PipeTransform {
 
     return fraction
       ? this.formatWithFractionSymbol(amount, fraction)
-      : formatNumber(amount, this.locale, this.digitFormat);
+      : formatNumber(amount, this.#locale, this.digitFormat);
   }
 
   private formatWithFractionSymbol(amount: number, fraction: string) {
-    const formattedValue = formatNumber(amount, this.locale, '0.2-2');
+    const formattedValue = formatNumber(amount, this.#locale, '0.2-2');
 
     const integer = formattedValue.substring(0, formattedValue.length - 3);
 

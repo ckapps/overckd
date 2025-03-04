@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-
-import { IpcRendererService } from '../../core/services/ipc-renderer.service';
+import { Injectable, inject } from '@angular/core';
+import { ELECTRON_IPC_RENDERER } from '../../core/electron-interop.tokens';
 import { ChannelObserver } from '../rxjs/channel-observer';
 import { fromIpcRendererEvent } from '../rxjs/from-ipc-renderer-event';
 
@@ -11,7 +10,7 @@ import { fromIpcRendererEvent } from '../rxjs/from-ipc-renderer-event';
   providedIn: 'root',
 })
 export class ChannelService {
-  constructor(private ipcRenderer: IpcRendererService) {}
+  readonly #ipcRenderer = inject(ELECTRON_IPC_RENDERER);
 
   /**
    * @param channel Name of the channel
@@ -20,7 +19,7 @@ export class ChannelService {
    * Channel observable
    */
   public createChannel(channel: string) {
-    return new ChannelObserver(this.ipcRenderer.ipcRenderer, channel);
+    return new ChannelObserver(this.#ipcRenderer, channel);
   }
 
   /**
@@ -31,6 +30,6 @@ export class ChannelService {
    * Observable stream of message events on the given channel
    */
   fromChannel(channel: string) {
-    return fromIpcRendererEvent(this.ipcRenderer.ipcRenderer, channel);
+    return fromIpcRendererEvent(this.#ipcRenderer, channel);
   }
 }

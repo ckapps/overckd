@@ -1,44 +1,27 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { RecipeIngredient } from '@overckd/domain';
 import { IngredientListComponent } from './ingredient-list.component';
 
-@Component({
-  selector: 'overckd-ingredient-group',
-  template: '',
-})
-class MockIngredientGroupComponent {}
-
-@Component({
-  selector: 'overckd-ingredient',
-  template: '',
-})
-class MockIngredientComponent {}
-
 describe('IngredientListComponent', () => {
-  let component: IngredientListComponent;
-  let fixture: ComponentFixture<IngredientListComponent>;
+  let spectator: Spectator<IngredientListComponent>;
+  const createComponent = createComponentFactory(IngredientListComponent);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        IngredientListComponent,
-        // Mocked
-        MockIngredientGroupComponent,
-        MockIngredientComponent,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
+  const ingredient: RecipeIngredient = {
+    name: 'Test Ingredient',
+    amount: 1,
+    unit: 'g',
+  };
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IngredientListComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(
+    () =>
+      (spectator = createComponent({
+        props: {
+          ingredients: [ingredient],
+        },
+      })),
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

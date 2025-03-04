@@ -10,8 +10,7 @@ import {
   filterTagsByQuery,
 } from '@overckd/domain';
 import { Reader } from 'fp-ts/lib/Reader';
-import { Observable, of } from 'rxjs';
-import { take, withLatestFrom } from 'rxjs/operators';
+import { Observable, of, take, withLatestFrom } from 'rxjs';
 import { InMemoryRepo } from './in-memory-repo';
 import { UriFactory } from './utils';
 

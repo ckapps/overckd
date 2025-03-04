@@ -1,20 +1,9 @@
-import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { IngredientComponent } from './ingredient.component';
 
-@Pipe({
-  name: 'ingredientAmount',
-})
-class MockIngredientAmountPipe implements PipeTransform {
-  transform(value: any, ...args: any[]) {
-    return value;
-  }
-}
-
 describe('IngredientComponent', () => {
-  let component: IngredientComponent;
-  let fixture: ComponentFixture<IngredientComponent>;
+  let spectator: Spectator<IngredientComponent>;
+  const createComponent = createComponentFactory(IngredientComponent);
 
   const mockIngredient = {
     name: 'mock-ingredient',
@@ -26,28 +15,16 @@ describe('IngredientComponent', () => {
     optional: false,
     alternatives: [],
   };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [
-        IngredientComponent,
-        // Mocked
-        MockIngredientAmountPipe,
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(IngredientComponent);
-    component = fixture.componentInstance;
-    // Set props
-    component.ingredient = mockIngredient;
-    fixture.detectChanges();
-  });
+  beforeEach(
+    () =>
+      (spectator = createComponent({
+        props: {
+          ingredient: mockIngredient,
+        },
+      })),
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

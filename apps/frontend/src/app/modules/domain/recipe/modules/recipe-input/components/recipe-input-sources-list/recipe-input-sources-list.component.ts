@@ -1,9 +1,17 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, forwardRef, input, OnInit, signal } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { RecipeBaseLink } from '@overckd/domain';
 import * as Fn from 'effect/Function';
 import { BehaviorSubject, map, Subject, switchMap, tap } from 'rxjs';
+import { CkadButtonRaisedComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-button/components/button-raised/button-raised.component';
+import { CkadButtonButtonComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-button/components/button/button.component';
+import { CkadMutableListItemComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-list/components/mutable-list-item/mutable-list-item.component';
+import { CkadMutableListComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-list/components/mutable-list/mutable-list.component';
+import { RecipeInputSourceComponent } from '../recipe-input-source/recipe-input-source.component';
 
 /**
  * Input component for recipes based-on list
@@ -19,11 +27,20 @@ import { BehaviorSubject, map, Subject, switchMap, tap } from 'rxjs';
       multi: true,
     },
   ],
+  imports: [
+    CkadButtonRaisedComponent,
+    CkadMutableListComponent,
+    CkadMutableListItemComponent,
+    FontAwesomeModule,
+    RecipeInputSourceComponent,
+    CkadButtonButtonComponent,
+    AsyncPipe,
+  ],
 })
 export class RecipeInputSourcesListComponent
   implements OnInit, ControlValueAccessor
 {
-  @Input() label!: string;
+  readonly label = input.required<string>();
 
   private _value!: RecipeBaseLink[];
 
@@ -38,8 +55,8 @@ export class RecipeInputSourcesListComponent
   private isAddingSubject = new BehaviorSubject<boolean>(false);
   public isAdding$ = this.isAddingSubject.asObservable();
 
-  private newItemSubject = new Subject<RecipeBaseLink>();
-  public newItem$ = this.newItemSubject.asObservable();
+  protected readonly newItem = signal<RecipeBaseLink>('');
+  public newItem$ = toObservable(this.newItem);
 
   private itemsSubject = new BehaviorSubject<RecipeBaseLink[]>([]);
   public items$ = this.itemsSubject.asObservable();
@@ -47,7 +64,7 @@ export class RecipeInputSourcesListComponent
   public newItems$ = this.newItem$.pipe(
     switchMap(newItem => this.addItem$.pipe(map(() => newItem))),
     tap(newItem => this.addItem(newItem)),
-    tap(() => this.newItemSubject.next('')),
+    tap(() => this.newItem.set('')),
   );
 
   private _onChange: (v: unknown) => void = Fn.constVoid;
@@ -90,10 +107,6 @@ export class RecipeInputSourcesListComponent
 
   onCancelAddClicked() {
     this.isAddingSubject.next(false);
-  }
-
-  onNewItemChanged(item: RecipeBaseLink) {
-    this.newItemSubject.next(item);
   }
 
   onAddClicked() {

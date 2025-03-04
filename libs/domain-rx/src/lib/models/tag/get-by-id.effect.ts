@@ -1,8 +1,8 @@
 import { act, matchEvent, useContext } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/function';
-import { map } from 'rxjs/operators';
+import * as Fn from 'effect/Function';
+import { map } from 'rxjs';
 import {
   eventCreator,
   OverckdEventType,
@@ -19,7 +19,7 @@ export const getByIdEffect: MsgEffect = (event$, ctx) => {
     matchEvent(GetTagByIdEvent),
     act(eventValidator$(GetTagByIdEvent)),
     act(event =>
-      pipe(
+      Fn.pipe(
         event.payload.uri,
         repo.getByUri,
         map(payload =>

@@ -18,9 +18,13 @@ import { AppIngredientService } from './services/app-ingredient.service';
 import { AppRecipeCollectionService } from './services/app-recipe-collection.service';
 import { AppRecipeService } from './services/app-recipe.service';
 import { AppTagService } from './services/app-tag.service';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideStore(),
+    provideEffects(),
     provideHttpClient(),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     provideAnimations(),

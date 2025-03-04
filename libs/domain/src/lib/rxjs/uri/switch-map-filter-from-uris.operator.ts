@@ -1,7 +1,12 @@
 import * as Arr from 'effect/Array';
 import * as O from 'effect/Option';
-import { combineLatest, MonoTypeOperatorFunction, Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import {
+  combineLatest,
+  MonoTypeOperatorFunction,
+  Observable,
+  of,
+  switchMap,
+} from 'rxjs';
 
 interface WithUri {
   uri?: string;

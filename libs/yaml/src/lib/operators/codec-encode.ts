@@ -1,6 +1,5 @@
 import * as t from 'io-ts';
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, OperatorFunction } from 'rxjs';
 
 /**
  * Encodes an emitted value using the `codec`.

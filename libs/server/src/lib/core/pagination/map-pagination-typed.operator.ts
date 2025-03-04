@@ -1,5 +1,4 @@
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, OperatorFunction } from 'rxjs';
 
 export type FromQueryString<T> = T & {
   page?: string;

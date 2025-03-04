@@ -9,8 +9,8 @@ import {
   TagDto,
   UriIdQueryDto,
 } from '@overckd/domain-rx';
-import { pipe } from 'fp-ts/function';
-import { map, mergeMap } from 'rxjs/operators';
+import * as Fn from 'effect/Function';
+import { map, mergeMap } from 'rxjs';
 import { transformFromRequestProperty } from '../../../core/search/transform-from-request-property.operator';
 
 // ----------------------------------------------------------------------------
@@ -77,7 +77,7 @@ export const findTagsByQuery$ = r.pipe(
       validateFindByQueryRequest,
       transformFromRequestProperty('query'),
       mergeMap(query =>
-        pipe(FindTagByQueryEvent.create(query), eventBusClient.send),
+        Fn.pipe(query, FindTagByQueryEvent.create, eventBusClient.send),
       ),
       map(value =>
         value.payload === undefined
@@ -100,9 +100,7 @@ export const getTagByUri$ = r.pipe(
     return req$.pipe(
       validateGetByIdRequest,
       mergeMap(req => {
-        const { params } = req;
-
-        return pipe(GetTagByIdEvent.create(params), eventBusClient.send);
+        return Fn.pipe(req.params, GetTagByIdEvent.create, eventBusClient.send);
       }),
       map(value => ({ body: value.payload })),
       // mapTo({ status: HttpStatus.OK, b }),
@@ -119,9 +117,7 @@ export const createTag$ = r.pipe(
     return req$.pipe(
       validateCreateRequest,
       mergeMap(req => {
-        const { body } = req;
-
-        return pipe(CreateTagCommand.create(body), eventBusClient.send);
+        return Fn.pipe(req.body, CreateTagCommand.create, eventBusClient.send);
       }),
       map(value => ({ body: value.payload })),
       // mapTo({ status: HttpStatus.OK, b }),

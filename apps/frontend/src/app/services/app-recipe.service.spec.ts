@@ -1,34 +1,22 @@
-import {
-  HttpClientTestingModule,
-  HttpTestingController,
-} from '@angular/common/http/testing';
-import { TestBed } from '@angular/core/testing';
-
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
 import { AppRecipeService } from './app-recipe.service';
 import { UrlBuilderService } from './url-builder.service';
 
 describe('AppRecipeService', () => {
-  let service: AppRecipeService;
-  let httpTestingController: HttpTestingController;
-
-  const mockUrlBuilderSerivce = {
-    url: jest.fn().mockReturnValue('mock-url'),
-  };
+  let spectator: SpectatorService<AppRecipeService>;
+  const createService = createServiceFactory({
+    service: AppRecipeService,
+    mocks: [UrlBuilderService],
+    providers: [provideHttpClient(), provideHttpClientTesting()],
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [
-        AppRecipeService,
-        { provide: UrlBuilderService, useValue: mockUrlBuilderSerivce },
-      ],
-      teardown: { destroyAfterEach: false },
-    });
-    httpTestingController = TestBed.inject(HttpTestingController);
+    spectator = createService();
   });
 
   it('should be created', () => {
-    service = TestBed.inject(AppRecipeService);
-    expect(service).toBeTruthy();
+    expect(spectator.service).toBeTruthy();
   });
 });

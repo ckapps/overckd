@@ -1,21 +1,21 @@
 import {
   Component,
-  EventEmitter,
   HostBinding,
-  Input,
+  inject,
+  input,
   OnDestroy,
   OnInit,
-  Output,
+  output,
 } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { PortionKind, PortionQuantifier } from '@overckd/domain';
 import {
-  LabelPortionQuantifier,
-  PortionKind,
-  PortionQuantifier,
-  QuantityPortionQuantifier,
-  SpringformPortionQuantifier,
-} from '@overckd/domain';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
+  BehaviorSubject,
+  distinctUntilChanged,
+  map,
+  ReplaySubject,
+  takeUntil,
+} from 'rxjs';
 import { PortionConverterService } from '../../services/portion-converter.service';
 
 /**
@@ -26,8 +26,11 @@ import { PortionConverterService } from '../../services/portion-converter.servic
   selector: 'overckd-portion-converter',
   templateUrl: './portion-converter.component.html',
   styleUrls: ['./portion-converter.component.scss'],
+  imports: [FormsModule],
 })
 export class PortionConverterComponent implements OnInit, OnDestroy {
+  readonly #portionConverterService = inject(PortionConverterService);
+
   @HostBinding('class') componentClasses = [
     'ml-auto',
     'subtitle--v2',
@@ -35,12 +38,12 @@ export class PortionConverterComponent implements OnInit, OnDestroy {
     'badge-pill',
   ].join(' ');
 
-  @Input() source!: PortionQuantifier;
+  readonly source = input.required<PortionQuantifier>();
 
   /**
    * Emits a value when the scaling factor changes
    */
-  @Output() scaleFactorChanged = new EventEmitter<number>();
+  readonly scaleFactorChanged = output<number>();
 
   public PortionKind = PortionKind;
 
@@ -55,39 +58,25 @@ export class PortionConverterComponent implements OnInit, OnDestroy {
     this.amount$.next(newValue);
   }
 
-  public get labelPortionQuantifier() {
-    return this.source as LabelPortionQuantifier;
-  }
-
-  public get quantityPortionQuantifier() {
-    return this.source as QuantityPortionQuantifier;
-  }
-
-  public get springformPortionQuantifier() {
-    return this.source as SpringformPortionQuantifier;
-  }
-
-  constructor(private portionConverterService: PortionConverterService) {}
-
   ngOnInit(): void {
     // If the recipe has a specified portion quantity, we want to initialze
     // the target amount with the provided portion quantity
-    const initialAmount = this.portionConverterService.getPortionQuantity(
-      this.source,
+    const initialAmount = this.#portionConverterService.getPortionQuantity(
+      this.source(),
     );
     this.amount$.next(initialAmount);
 
     this.amount$
       .asObservable()
       .pipe(
-        takeUntil(this.destroyed$),
         map(amount =>
-          this.portionConverterService.calculateScalingFactorFromSource(
-            this.source,
+          this.#portionConverterService.calculateScalingFactorFromSource(
+            this.source(),
             amount,
           ),
         ),
         distinctUntilChanged(),
+        takeUntil(this.destroyed$),
       )
       .subscribe(scaleFactor => {
         this.scaleFactorChanged.emit(scaleFactor);

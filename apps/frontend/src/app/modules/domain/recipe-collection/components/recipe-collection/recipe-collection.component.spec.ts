@@ -1,36 +1,26 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { RecipeCollectionComponent } from './recipe-collection.component';
 
 describe('RecipeCollectionComponent', () => {
-  let component: RecipeCollectionComponent;
-  let fixture: ComponentFixture<RecipeCollectionComponent>;
+  let spectator: Spectator<RecipeCollectionComponent>;
+  const createComponent = createComponentFactory(RecipeCollectionComponent);
 
-  const mockRecipeCollection = {
+  const recipeCollection = {
     id: 'mock-id',
     name: 'mock-name',
     description: 'mock-description',
     recipes: [],
   };
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [RecipeCollectionComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecipeCollectionComponent);
-    component = fixture.componentInstance;
-    // Set props
-    component.recipeCollection = mockRecipeCollection;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        recipeCollection,
+      },
+    });
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

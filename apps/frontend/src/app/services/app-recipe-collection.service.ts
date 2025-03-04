@@ -1,40 +1,35 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { share } from 'rxjs/operators';
-
+import { Injectable, inject } from '@angular/core';
 import { RecipeCollection } from '@overckd/domain';
-
-import { UrlBuilderService } from './url-builder.service';
+import { Observable, share } from 'rxjs';
 import { RecipeCollectionService } from '../modules/domain/recipe-collection/services/recipe-collection.service';
+import { UrlBuilderService } from './url-builder.service';
 
 /**
  * Service to retrieve collections from the API
  */
 @Injectable()
 export class AppRecipeCollectionService implements RecipeCollectionService {
-  private readonly apiResource = 'collections';
+  readonly #urlBuilder = inject(UrlBuilderService);
+  readonly #http = inject(HttpClient);
 
-  private apiEndpoint = this.urlBuilder.url(this.apiResource);
+  readonly #apiResource = 'collections';
 
-  private fetchCollections$ = this.http.get<RecipeCollection[]>(
-    this.apiEndpoint,
+  readonly #apiEndpoint = this.#urlBuilder.url(this.#apiResource);
+
+  readonly #fetchCollections$ = this.#http.get<RecipeCollection[]>(
+    this.#apiEndpoint,
   );
 
-  public readonly collections$ = this.fetchCollections$.pipe(share());
-
-  constructor(
-    private urlBuilder: UrlBuilderService,
-    private http: HttpClient,
-  ) {}
+  public readonly collections$ = this.#fetchCollections$.pipe(share());
 
   getAll(): Observable<RecipeCollection[]> {
     return this.collections$;
   }
 
   getById(id: string): Observable<RecipeCollection> {
-    return this.http.get<RecipeCollection>(
-      this.urlBuilder.urlFromSegments([this.apiResource, id]),
+    return this.#http.get<RecipeCollection>(
+      this.#urlBuilder.urlFromSegments([this.#apiResource, id]),
     );
   }
 

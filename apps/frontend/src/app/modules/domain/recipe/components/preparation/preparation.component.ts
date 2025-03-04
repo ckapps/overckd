@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, input } from '@angular/core';
 import { Recipe } from '@overckd/domain';
 import { BehaviorSubject, map, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { PreparationStepComponent } from '../preparation-step/preparation-step.component';
 
 interface PreparationGroup {
   label?: string;
@@ -16,15 +18,16 @@ interface PreparationGroup {
   selector: 'overckd-preparation',
   templateUrl: './preparation.component.html',
   styleUrls: ['./preparation.component.scss'],
+  imports: [PreparationStepComponent, AsyncPipe],
 })
 export class PreparationComponent implements OnInit {
-  @Input() recipe!: Recipe;
+  readonly recipe = input.required<Recipe>();
 
   private recipe$!: BehaviorSubject<Recipe>;
   public preparationGroups$!: Observable<PreparationGroup[]>;
 
   ngOnInit() {
-    this.recipe$ = new BehaviorSubject<Recipe>(this.recipe);
+    this.recipe$ = new BehaviorSubject<Recipe>(this.recipe());
 
     this.preparationGroups$ = this.recipe$
       .asObservable()

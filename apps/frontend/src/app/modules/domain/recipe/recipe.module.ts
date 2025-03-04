@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UiModule } from '../../ui/ui.module';
@@ -20,7 +19,14 @@ import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
  * Module that provides everything for working with `Recipe`s.
  */
 @NgModule({
-  declarations: [
+  imports: [
+    FormsModule,
+    // External modules
+    UiModule,
+    IngredientModule,
+    PortionCommonModule,
+    // Module submodules
+    RecipeInputModule,
     IngredientComponent,
     IngredientListComponent,
     PreparationComponent,
@@ -29,16 +35,6 @@ import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
     ImprovementNotesComponent,
     IngredientGroupComponent,
     RecipeTipsComponent,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    // External modules
-    UiModule,
-    IngredientModule,
-    PortionCommonModule,
-    // Module submodules
-    RecipeInputModule,
   ],
   exports: [
     // Module submodules

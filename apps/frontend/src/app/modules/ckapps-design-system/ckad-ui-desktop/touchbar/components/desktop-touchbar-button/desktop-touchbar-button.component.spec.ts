@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { DesktopTouchbarButtonComponent } from './desktop-touchbar-button.component';
 
 describe('DesktopTouchbarButtonComponent', () => {
@@ -7,10 +6,7 @@ describe('DesktopTouchbarButtonComponent', () => {
   let fixture: ComponentFixture<DesktopTouchbarButtonComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [DesktopTouchbarButtonComponent],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
+    await TestBed.configureTestingModule({}).compileComponents();
   });
 
   beforeEach(() => {

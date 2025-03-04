@@ -3,12 +3,12 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  Output,
-  ViewChild,
+  inject,
+  output,
+  viewChild,
+  input
 } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -38,14 +38,12 @@ import * as P from 'effect/Predicate';
 import {
   BehaviorSubject,
   Observable,
-  ReplaySubject,
   combineLatest,
   debounceTime,
   filter,
   map,
   pluck,
   switchMap,
-  takeUntil,
 } from 'rxjs';
 import { UiModule } from '../../../../../../../modules/ui/ui.module';
 import { TagService } from '../../../../../tag/modules/tag-common/services/tag.service';
@@ -54,7 +52,6 @@ import { TagService } from '../../../../../tag/modules/tag-common/services/tag.s
   selector: 'overckd-ingredient-shelf-filter',
   templateUrl: './ingredient-shelf-filter.component.html',
   styleUrls: ['./ingredient-shelf-filter.component.scss'],
-  standalone: true,
   imports: [
     CommonModule,
     FormsModule,
@@ -68,33 +65,34 @@ import { TagService } from '../../../../../tag/modules/tag-common/services/tag.s
     UiModule,
   ],
 })
-export class IngredientShelfFilterComponent implements OnDestroy {
-  private destroyed$ = new ReplaySubject<boolean>(1);
-  private tagSubject = new BehaviorSubject<Tag[]>([]);
+export class IngredientShelfFilterComponent {
+  readonly #tagService = inject(TagService);
 
-  @Input() selectable = true;
-  @Input() removable = true;
+  readonly #tagSubject = new BehaviorSubject<Tag[]>([]);
+
+  readonly selectable = input(true);
+  readonly removable = input(true);
 
   /**
    * Emits when the user adds an ingredient
    */
-  @Output() added = new EventEmitter<string>();
+  readonly added = output<string>();
 
   /**
    * Emits when the query information did change
    */
-  @Output() queryChanged = new EventEmitter<IngredientQuery>();
+  readonly queryChanged = output<IngredientQuery>();
 
   visible = true;
   separatorKeysCodes: number[] = [ENTER, COMMA];
   inputCtrl = new UntypedFormControl();
 
-  @ViewChild('searchInput') searchInput!: ElementRef<HTMLInputElement>;
+  readonly searchInput = viewChild.required<ElementRef<HTMLInputElement>>('searchInput');
 
   /**
    * Observable that emits with the selected tags
    */
-  public selectedTags$ = this.tagSubject.asObservable();
+  public selectedTags$ = this.#tagSubject.asObservable();
 
   /**
    * Observable that emits with the URIs of the selected tags
@@ -120,7 +118,7 @@ export class IngredientShelfFilterComponent implements OnDestroy {
    * Filtered ingredients
    */
   public filteredTags$ = this.tagQuery$.pipe(
-    switchMap(query => this.tagService.findByQuery(query)),
+    switchMap(query => this.#tagService.findByQuery(query)),
     pluck('result'),
     switchMapFilterFromUris(this.selectedTagUris$),
   );
@@ -134,15 +132,10 @@ export class IngredientShelfFilterComponent implements OnDestroy {
     this.selectedTagUris$,
   ]).pipe(map(([name, tags]) => ({ query: { name, tags } })));
 
-  constructor(private tagService: TagService) {
+  constructor() {
     this.ingredientQuery$
-      .pipe(takeUntil(this.destroyed$))
+      .pipe(takeUntilDestroyed())
       .subscribe(query => this.queryChanged.emit(query));
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
   }
 
   add(event: MatChipInputEvent): void {
@@ -172,7 +165,7 @@ export class IngredientShelfFilterComponent implements OnDestroy {
    * @param tag Tag to add
    */
   public addTag(tag: Tag) {
-    this.tagSubject.next([...this.tagSubject.value, tag]);
+    this.#tagSubject.next([...this.#tagSubject.value, tag]);
     this.resetInput();
   }
 
@@ -181,15 +174,17 @@ export class IngredientShelfFilterComponent implements OnDestroy {
    * @param tag Tag to remove
    */
   public removeTag(tag: Tag) {
-    const index = this.tagSubject.value.indexOf(tag);
+    const index = this.#tagSubject.value.indexOf(tag);
 
     if (index >= 0) {
-      this.tagSubject.next(this.tagSubject.value.filter((_, i) => i !== index));
+      this.#tagSubject.next(
+        this.#tagSubject.value.filter((_, i) => i !== index),
+      );
     }
   }
 
   private resetInput() {
     this.inputCtrl.setValue(null);
-    this.searchInput.nativeElement.value = '';
+    this.searchInput().nativeElement.value = '';
   }
 }

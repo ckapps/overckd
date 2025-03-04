@@ -20,11 +20,6 @@ import { RecipeInputSourcesListComponent } from './components/recipe-input-sourc
  * `Recipe` and forms
  */
 @NgModule({
-  declarations: [
-    // Module components
-    RecipeInputSourcesListComponent,
-    RecipeInputSourceComponent,
-  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -40,6 +35,9 @@ import { RecipeInputSourcesListComponent } from './components/recipe-input-sourc
     CkadListModule,
     // Other domain modules
     IngredientModule,
+    // Module components
+    RecipeInputSourcesListComponent,
+    RecipeInputSourceComponent,
   ],
   exports: [
     // Module components

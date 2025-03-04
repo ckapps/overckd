@@ -1,5 +1,1 @@
-// Module
-export * from './core.module';
-
-// Services
-export * from './services/ipc-renderer.service';
+export * from './electron-interop.tokens';

@@ -1,6 +1,8 @@
-<section *ngFor="let recipeCollection of this.recipeGroups$ | async">
+@for (recipeCollection of recipeGroups$ | async; track recipeCollection) {
+<section>
   <overckd-recipe-collection
     [recipeCollection]="recipeCollection"
-    (recipeSelected)="this.onRecipeSelected($event)"
-  ></overckd-recipe-collection>
+    (recipeSelected)="onRecipeSelected($event)"
+  />
 </section>
+}

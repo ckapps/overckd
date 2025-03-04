@@ -13,13 +13,6 @@ import { RecipesPageComponent } from './pages/recipes/recipes.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 
 @NgModule({
-  declarations: [
-    AddRecipePageComponent,
-    EmptyRecipePageComponent,
-    RecipePageComponent,
-    RecipesPageComponent,
-    RecipesPagesWrapperComponent,
-  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,6 +22,11 @@ import { RecipesRoutingModule } from './recipes-routing.module';
     RecipesRoutingModule,
     DomainModule,
     UiModule,
+    AddRecipePageComponent,
+    EmptyRecipePageComponent,
+    RecipePageComponent,
+    RecipesPageComponent,
+    RecipesPagesWrapperComponent,
   ],
 })
 export class RecipesModule {}

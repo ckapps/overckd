@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 /**
@@ -8,7 +9,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
   selector: 'ckad-main-menu-item',
   templateUrl: './main-menu-item.component.html',
   styleUrls: ['./main-menu-item.component.scss'],
+  imports: [FontAwesomeModule],
 })
 export class CkadMainMenuItemComponent {
-  @Input() icon!: IconProp;
+  readonly icon = input<IconProp>();
 }

@@ -1,26 +1,15 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { HomePageComponent } from './home.component';
 
 describe('HomeComponent', () => {
-  let component: HomePageComponent;
-  let fixture: ComponentFixture<HomePageComponent>;
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
+  let spectator: Spectator<HomePageComponent>;
+  const createComponent = createComponentFactory(HomePageComponent);
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HomePageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

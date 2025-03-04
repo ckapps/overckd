@@ -1,8 +1,8 @@
 import { act, matchEvent, useContext } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'fp-ts/function';
-import { map } from 'rxjs/operators';
+import * as Fn from 'effect/Function';
+import { map } from 'rxjs';
 import {
   eventCreator,
   OverckdEventType,
@@ -28,7 +28,7 @@ export const findIngredientsByQuery: MsgEffect = (event$, ctx) => {
     matchEvent(FindIngredientByQueryEvent),
     act(eventValidator$(FindIngredientByQueryEvent)),
     act(event =>
-      pipe(
+      Fn.pipe(
         event.payload,
         repo.findByQuery,
         map(payload =>

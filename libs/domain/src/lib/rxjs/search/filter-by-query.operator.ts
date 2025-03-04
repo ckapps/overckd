@@ -1,5 +1,4 @@
-import { MonoTypeOperatorFunction } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, MonoTypeOperatorFunction } from 'rxjs';
 import { DataQuery } from '../../search';
 
 type QueryPredicateFn<T, TQ extends DataQuery<unknown>> = (

@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ChannelService } from '../../messaging';
-import { ChannelObserver } from '../../messaging/rxjs/channel-observer';
 
 const CHANNEL = 'os.touchbar';
 
@@ -10,13 +9,11 @@ const CHANNEL = 'os.touchbar';
   providedIn: 'root',
 })
 export class TouchbarService {
-  private channelObserver: ChannelObserver;
+  private readonly channelService = inject(ChannelService);
+
+  private channelObserver = this.channelService.createChannel(CHANNEL);
 
   // private touchbarSubject = new BehaviorSubject<TouchBar>(undefined);
-
-  constructor(private channelService: ChannelService) {
-    this.channelObserver = this.channelService.createChannel(CHANNEL);
-  }
 
   // public setTouchBar(touchbar: TouchBar) {
   //   this.touchbarSubject.next(touchbar);

@@ -1,16 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
+import { ELECTRON_IPC_RENDERER } from '../../core/electron-interop.tokens';
 import { ChannelService } from './channel.service';
 
 describe('ChannelService', () => {
-  let service: ChannelService;
+  let spectator: SpectatorService<ChannelService>;
+  const createService = createServiceFactory({
+    service: ChannelService,
+    providers: [{ provide: ELECTRON_IPC_RENDERER, useValue: {} }],
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } });
-    service = TestBed.inject(ChannelService);
+    spectator = createService();
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(spectator.service).toBeTruthy();
   });
 });

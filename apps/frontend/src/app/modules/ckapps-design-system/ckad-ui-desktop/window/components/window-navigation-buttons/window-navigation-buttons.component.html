@@ -1,10 +1,10 @@
-<button class="btn" (click)="this.onNavigateBack()">
-  <fa-icon [icon]="this.faChevronLeft"></fa-icon>
+<button class="btn" (click)="onNavigateBack()">
+  <fa-icon [icon]="faChevronLeft" />
 </button>
 <button
   class="btn"
-  [disabled]="(this.forwardCount | async) === 0"
-  (click)="this.onNavigateForward()"
+  [disabled]="(forwardCount | async) === 0"
+  (click)="onNavigateForward()"
 >
-  <fa-icon [icon]="this.faChevronRight"></fa-icon>
+  <fa-icon [icon]="faChevronRight" />
 </button>

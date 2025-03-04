@@ -1,40 +1,27 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { EMPTY } from 'rxjs';
 import { RecipeCollectionService } from '../../../../modules/domain/recipe-collection/services/recipe-collection.service';
 import { RecipesPageComponent } from './recipes.component';
 
 describe('RecipesComponent', () => {
-  let component: RecipesPageComponent;
-  let fixture: ComponentFixture<RecipesPageComponent>;
-
-  const mockRecipeCollectionService = {
-    collections$: EMPTY,
-  };
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [RecipesPageComponent],
-      imports: [RouterTestingModule],
-      providers: [
-        {
-          provide: RecipeCollectionService,
-          useValue: mockRecipeCollectionService,
-        },
-      ],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
+  let spectator: Spectator<RecipesPageComponent>;
+  const createComponent = createComponentFactory({
+    component: RecipesPageComponent,
+    providers: [
+      provideRouter([]),
+      {
+        provide: RecipeCollectionService,
+        useValue: { collections$: EMPTY },
+      },
+    ],
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RecipesPageComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    spectator = createComponent();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

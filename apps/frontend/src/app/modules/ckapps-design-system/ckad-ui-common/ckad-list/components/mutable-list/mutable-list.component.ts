@@ -1,5 +1,6 @@
-import { AfterContentInit, Component, ContentChildren } from '@angular/core';
+import { AfterContentInit, Component, contentChildren } from '@angular/core';
 import { CkadMutableListItemComponent } from '../mutable-list-item/mutable-list-item.component';
+import { CkadListComponent } from '../list/list.component';
 
 /**
  * **ckapps design/component**
@@ -10,12 +11,12 @@ import { CkadMutableListItemComponent } from '../mutable-list-item/mutable-list-
   selector: 'ckad-mutable-list',
   templateUrl: './mutable-list.component.html',
   styleUrls: ['./mutable-list.component.scss'],
+  imports: [CkadListComponent],
 })
 export class CkadMutableListComponent implements AfterContentInit {
-  @ContentChildren(CkadMutableListItemComponent)
-  private itemContentChildren!: CkadMutableListItemComponent[];
+  readonly itemContentChildren = contentChildren(CkadMutableListItemComponent);
 
   ngAfterContentInit() {
-    console.log('itemContentChildren', this.itemContentChildren);
+    console.log('itemContentChildren', this.itemContentChildren());
   }
 }

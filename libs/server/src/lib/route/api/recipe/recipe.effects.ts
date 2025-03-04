@@ -3,8 +3,8 @@ import { combineRoutes, HttpStatus, r } from '@marblejs/http';
 import { EventBusClientToken } from '@marblejs/messaging';
 import { requestValidator$ } from '@marblejs/middleware-io';
 import { GetRecipeByNameEvent, RecipeNameDto } from '@overckd/domain-rx';
-import { pipe } from 'fp-ts/function';
-import { map, mergeMap } from 'rxjs/operators';
+import * as Fn from 'effect/Function';
+import { map, mergeMap } from 'rxjs';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -49,9 +49,8 @@ const getRecipeByName$ = r.pipe(
 
     return req$.pipe(
       validateGetByNameRequest,
-      map(x => x.params),
-      mergeMap(params =>
-        pipe(GetRecipeByNameEvent.create(params), eventBusClient.send),
+      mergeMap(req =>
+        Fn.pipe(req.params, GetRecipeByNameEvent.create, eventBusClient.send),
       ),
       map(value =>
         value.payload === undefined

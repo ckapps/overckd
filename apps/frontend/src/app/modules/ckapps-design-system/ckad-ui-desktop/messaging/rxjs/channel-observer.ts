@@ -1,5 +1,4 @@
-import { Observable } from 'rxjs';
-import { share } from 'rxjs/operators';
+import { Observable, share } from 'rxjs';
 import { fromIpcRendererEvent, IpcMessage } from './from-ipc-renderer-event';
 import { invoke$ } from './invoke';
 import { send$ } from './send';

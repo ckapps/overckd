@@ -1,32 +1,22 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { RecipePreparationStep } from '@overckd/domain';
 import { PreparationStepComponent } from './preparation-step.component';
 
 describe('PreparationStepComponent', () => {
-  let component: PreparationStepComponent;
-  let fixture: ComponentFixture<PreparationStepComponent>;
+  let spectator: Spectator<PreparationStepComponent>;
+  const createComponent = createComponentFactory(PreparationStepComponent);
 
-  const mockStep: RecipePreparationStep = 'mock-steo';
-
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [PreparationStepComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
+  const step: RecipePreparationStep = 'mock-step';
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PreparationStepComponent);
-    component = fixture.componentInstance;
-    // Set props
-    component.step = mockStep;
-    fixture.detectChanges();
+    spectator = createComponent({
+      props: {
+        step,
+      },
+    });
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

@@ -1,6 +1,4 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CkadListComponent } from './list.component';
 
 describe('ListComponent', () => {
@@ -8,11 +6,7 @@ describe('ListComponent', () => {
   let fixture: ComponentFixture<CkadListComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [CkadListComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
+    await TestBed.configureTestingModule({}).compileComponents();
   });
 
   beforeEach(() => {

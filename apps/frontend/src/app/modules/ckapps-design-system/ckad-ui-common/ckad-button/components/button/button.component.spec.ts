@@ -1,7 +1,4 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MatButtonModule } from '@angular/material/button';
-
 import { CkadButtonButtonComponent } from './button.component';
 
 describe('CkadButtonButton', () => {
@@ -9,12 +6,7 @@ describe('CkadButtonButton', () => {
   let fixture: ComponentFixture<CkadButtonButtonComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [CkadButtonButtonComponent],
-      imports: [MatButtonModule],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
+    await TestBed.configureTestingModule({}).compileComponents();
   });
 
   beforeEach(() => {

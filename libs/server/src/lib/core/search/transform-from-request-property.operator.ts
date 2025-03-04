@@ -1,8 +1,7 @@
 import { HttpRequest } from '@marblejs/http';
 import { DataQuery } from '@overckd/domain';
 import { unflattenQuery } from '@overckd/domain-rx';
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, OperatorFunction } from 'rxjs';
 import { FromQueryString, mapPaginationTyped } from '../pagination';
 
 /**

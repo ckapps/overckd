@@ -14,20 +14,20 @@ externalDocs:
   description: Find out more about overcookd
   url: http://ckapp.net
 servers:
-- url: https://overcookd.io/api/v1
-- url: http://overcookd.io/api/v1
+  - url: https://overcookd.io/api/v1
+  - url: http://overcookd.io/api/v1
 
 tags:
-- name: collection
-  description: Everything about collections
-- name: recipe
-  description: Everything about recipes
-  
+  - name: collection
+    description: Everything about collections
+  - name: recipe
+    description: Everything about recipes
+
 paths:
   /collections:
     get:
       tags:
-      - collection
+        - collection
       summary: Get all collections
       description: This will return all available collections
       operationId: getCollections
@@ -43,7 +43,7 @@ paths:
   /collection:
     post:
       tags:
-      - collection
+        - collection
       summary: Add a new collection
       operationId: addCollection
       requestBody:
@@ -60,12 +60,12 @@ paths:
   /collection/{collectionId}:
     get:
       tags:
-      - collection
+        - collection
       summary: Find collection by ID
       description: Returns a single collection
       operationId: getCollectionById
       parameters:
-      - $ref: '#/components/parameters/collectionId'
+        - $ref: '#/components/parameters/collectionId'
       responses:
         200:
           description: success
@@ -81,11 +81,11 @@ paths:
           content: {}
     delete:
       tags:
-      - collection
+        - collection
       summary: Deletes a collection
       operationId: deleteCollection
       parameters:
-      - $ref: '#/components/parameters/collectionId'
+        - $ref: '#/components/parameters/collectionId'
       responses:
         400:
           description: Invalid ID supplied
@@ -93,11 +93,11 @@ paths:
         404:
           description: Collection not found
           content: {}
-  
+
   /recipe:
     post:
       tags:
-      - recipe
+        - recipe
       summary: Adds a new recipe
       operationId: createRecipe
       requestBody:
@@ -114,11 +114,11 @@ paths:
   /recipe/{recipeId}:
     get:
       tags:
-      - recipe
+        - recipe
       summary: Get recipe with ID
       operationId: getRecipeById
       parameters:
-      - $ref: '#/components/parameters/recipeId'
+        - $ref: '#/components/parameters/recipeId'
       responses:
         200:
           description: success
@@ -134,11 +134,11 @@ paths:
           content: {}
     put:
       tags:
-      - recipe
+        - recipe
       summary: Update recipe
       operationId: updateRecipe
       parameters:
-      - $ref: '#/components/parameters/recipeId'
+        - $ref: '#/components/parameters/recipeId'
       requestBody:
         $ref: '#/components/requestBodies/Recipe'
       responses:
@@ -150,11 +150,11 @@ paths:
           content: {}
     delete:
       tags:
-      - recipe
+        - recipe
       summary: Delete recipe
       operationId: deleteRecipe
       parameters:
-      - $ref: '#/components/parameters/recipeId'
+        - $ref: '#/components/parameters/recipeId'
       responses:
         404:
           description: Recipe not found
@@ -176,11 +176,11 @@ components:
       required: true
       schema:
         type: string
-      
+
   responses:
     Recipe:
       description: something
-      
+
   requestBodies:
     Recipe:
       description: Recipe
@@ -189,7 +189,7 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Recipe'
-    
+
   schemas:
     Collection:
       type: object

@@ -1,28 +1,9 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 import { RecipeCollectionModule } from '../../modules/domain/recipe-collection/recipe-collection.module';
 import { AppMainMenuComponent } from './app-main-menu.component';
-
-@Component({
-  selector: 'ckad-main-menu',
-  template: '',
-})
-class MockCkadMainMenuComponent {}
-
-@Component({
-  selector: 'ckad-main-menu-item',
-  template: '',
-})
-class MockCkadMainMenuItemComponent {}
-
-@Component({
-  selector: 'ckad-main-menu-group',
-  template: '',
-})
-class MockCkadMainMenuGroupComponent {}
 
 @Component({
   selector: 'overckd-collections-main-menu-group',
@@ -37,15 +18,7 @@ describe('AppMainMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [
-        // Mocks
-        // MockCkadMainMenuComponent,
-        // MockCkadMainMenuItemComponent,
-        // MockCkadMainMenuGroupComponent,
-      ],
-      imports: [RouterTestingModule, NoopAnimationsModule],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
+      providers: [provideRouter([]), provideNoopAnimations()],
     }).compileComponents();
 
     TestBed.overrideComponent(AppMainMenuComponent, {

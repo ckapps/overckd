@@ -1,16 +1,19 @@
-import { TestBed } from '@angular/core/testing';
-
+import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
+import { ChannelService } from '../../messaging';
 import { TouchbarService } from './touchbar.service';
 
 describe('TouchbarService', () => {
-  let service: TouchbarService;
+  let spectator: SpectatorService<TouchbarService>;
+  const createService = createServiceFactory({
+    service: TouchbarService,
+    mocks: [ChannelService],
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ teardown: { destroyAfterEach: false } });
-    service = TestBed.inject(TouchbarService);
+    spectator = createService();
   });
 
   it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(spectator.service).toBeTruthy();
   });
 });

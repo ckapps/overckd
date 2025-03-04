@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-
 import { Recipe } from '@overckd/domain';
+import { RecipeComponent } from '../../../../modules/domain/recipe/components/recipe/recipe.component';
 
 function generateEmpty<T>(count: number, object: T): T[] {
   const result = [];
@@ -15,6 +15,7 @@ function generateEmpty<T>(count: number, object: T): T[] {
 @Component({
   templateUrl: './empty-recipe.component.html',
   styleUrls: ['./empty-recipe.component.scss'],
+  imports: [RecipeComponent],
 })
 export class EmptyRecipePageComponent {
   recipe: Recipe = {

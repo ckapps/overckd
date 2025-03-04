@@ -2,8 +2,8 @@
 
 <article>
   <mat-horizontal-stepper [linear]="true" #stepper>
-    <mat-step [stepControl]="this.recipeBaseForm">
-      <form [formGroup]="this.recipeBaseForm" class="grid">
+    <mat-step [stepControl]="recipeBaseForm">
+      <form [formGroup]="recipeBaseForm" class="grid">
         <ng-template matStepLabel>Basics</ng-template>
 
         <ckad-input-field

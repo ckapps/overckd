@@ -1,5 +1,2 @@
-<h6 class="label--v1">{{ this.ingredientGroup.label }}</h6>
-<overckd-ingredient-list
-  [ingredients]="this.ingredientGroup.ingredients"
-  [amountScale]="this.amountScale"
-></overckd-ingredient-list>
+<h6 class="label--v1">{{ ingredientGroup().label }}</h6>
+<ng-content select="overckd-ingredient-list" />

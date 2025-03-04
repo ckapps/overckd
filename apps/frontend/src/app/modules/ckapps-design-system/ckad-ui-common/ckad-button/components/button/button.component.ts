@@ -1,19 +1,20 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding, input } from '@angular/core';
+import { MatButton } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
-
 import { CkadButtonBase } from '../../button-base.type';
 
 @Component({
   selector: 'ckad-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+  imports: [MatButton],
 })
 export class CkadButtonButtonComponent implements CkadButtonBase {
   @HostBinding('class.ckad-button') cssBaseClass = 'ckad-button';
 
-  @Input() color: ThemePalette;
+  readonly color = input<ThemePalette>();
 
-  @Input() disabled = false;
+  readonly disabled = input(false);
 
   // @HostBinding('ngClass')
   // get classes() {

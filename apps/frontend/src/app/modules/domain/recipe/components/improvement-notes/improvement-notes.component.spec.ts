@@ -1,27 +1,20 @@
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
 import { ImprovementNotesComponent } from './improvement-notes.component';
 
 describe('ImprovementNotesComponent', () => {
-  let component: ImprovementNotesComponent;
-  let fixture: ComponentFixture<ImprovementNotesComponent>;
+  let spectator: Spectator<ImprovementNotesComponent>;
+  const createComponent = createComponentFactory(ImprovementNotesComponent);
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ImprovementNotesComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      teardown: { destroyAfterEach: false },
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(ImprovementNotesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  beforeEach(
+    () =>
+      (spectator = createComponent({
+        props: {
+          numberOfLines: 5,
+        },
+      })),
+  );
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 });

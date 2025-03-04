@@ -1,6 +1,4 @@
-import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
-import { Component, Input } from '@angular/core';
-
+import { booleanAttribute, Component, input } from '@angular/core';
 import { RecipePreparationStep } from '@overckd/domain';
 
 /**
@@ -10,23 +8,19 @@ import { RecipePreparationStep } from '@overckd/domain';
   selector: 'overckd-preparation-step',
   templateUrl: './preparation-step.component.html',
   styleUrls: ['./preparation-step.component.scss'],
+  imports: [],
 })
 export class PreparationStepComponent {
-  @Input() step!: RecipePreparationStep;
-  @Input() get stepsEnumerated() {
-    return this._stepsEnumerated;
-  }
-  set stepsEnumerated(value: BooleanInput) {
-    this._stepsEnumerated = coerceBooleanProperty(value);
-  }
-  private _stepsEnumerated = false;
+  readonly step = input.required<RecipePreparationStep>();
+  readonly stepsEnumerated = input(false, { transform: booleanAttribute });
 
   public get isHtml() {
     return !!this.stepHtml;
   }
 
   public get stepHtml() {
-    const { step } = this;
+    const { step: stepInput } = this;
+    const step = stepInput();
     if (typeof step === 'string') {
       return undefined;
     }
@@ -35,12 +29,12 @@ export class PreparationStepComponent {
   }
 
   public get stepText() {
-    return typeof this.step === 'string' ? this.step : this.step.text;
+    const step = this.step();
+    return typeof step === 'string' ? step : step.text;
   }
 
   public get cssClasses() {
-    return (typeof this.step === 'string' ? [] : this.step.styles || []).join(
-      ' ',
-    );
+    const step = this.step();
+    return (typeof step === 'string' ? [] : step.styles || []).join(' ');
   }
 }

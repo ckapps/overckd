@@ -7,15 +7,13 @@ import { RecipeCollectionPageComponent } from './pages/recipe-collection-page/re
 import { RecipeCollectionsRoutingModule } from './recipe-collections-routing.module';
 
 @NgModule({
-  declarations: [
-    RecipeCollectionPageWrapperComponent,
-    RecipeCollectionPageComponent,
-  ],
   imports: [
     CommonModule,
     RecipeCollectionsRoutingModule,
     DomainModule,
     UiModule,
+    RecipeCollectionPageWrapperComponent,
+    RecipeCollectionPageComponent,
   ],
   providers: [],
 })

@@ -7,8 +7,8 @@ import {
   FlattenIngredientByQueryDto,
   unflattenQuery,
 } from '@overckd/domain-rx';
-import { pipe } from 'fp-ts/function';
-import { map, mergeMap } from 'rxjs/operators';
+import * as Fn from 'effect/Function';
+import { map, mergeMap } from 'rxjs';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -56,10 +56,10 @@ export const findIngredientByQuery$ = r.pipe(
     return req$.pipe(
       validateFindByQueryRequest,
       mergeMap(req => {
-        const params = unflattenQuery(req.query);
-
-        return pipe(
-          FindIngredientByQueryEvent.create(params),
+        return Fn.pipe(
+          req.query,
+          unflattenQuery,
+          FindIngredientByQueryEvent.create,
           eventBusClient.send,
         );
       }),

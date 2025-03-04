@@ -1,22 +1,23 @@
-import { Component } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import * as P from 'effect/Predicate';
 import { filter, map, switchMap } from 'rxjs';
+import { RecipeComponent } from '../../../../modules/domain/recipe/components/recipe/recipe.component';
 import { RecipeService } from '../../../../modules/domain/recipe/services/recipe.service';
 
 @Component({
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.scss'],
+  imports: [RecipeComponent, AsyncPipe],
 })
 export class RecipePageComponent {
-  recipe$ = this.route.paramMap.pipe(
+  readonly #route = inject(ActivatedRoute);
+  readonly #recipeService = inject(RecipeService);
+
+  recipe$ = this.#route.paramMap.pipe(
     map(paramMap => paramMap.get('name')),
     filter(P.isString),
-    switchMap(name => this.recipeService.get(name)),
+    switchMap(name => this.#recipeService.get(name)),
   );
-
-  constructor(
-    private route: ActivatedRoute,
-    private recipeService: RecipeService,
-  ) {}
 }

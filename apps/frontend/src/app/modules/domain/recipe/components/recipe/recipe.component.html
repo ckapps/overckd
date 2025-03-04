@@ -1,3 +1,4 @@
+@let _recipe = recipe();
 <div class="row">
   <h3
     [class]="
@@ -7,69 +8,69 @@
         'd-flex',
         'flex-row',
         'align-items-center',
-        this.recipe.styles.title || ''
+        _recipe.styles.title || ''
       ].join(' ')
     "
   >
-    {{ this.recipe.name }}
+    {{ _recipe.name }}
   </h3>
 </div>
 
 <div class="row flex-grow-1">
-  <div [class]="this.leftColCssClass">
+  <div [class]="leftColCssClass">
+    @if (_recipe.portion) {
     <overckd-portion-converter
-      *ngIf="this.recipe.portion"
-      [source]="this.recipe.portion"
-      (scaleFactorChanged)="this.onScaleFactorChanged($event)"
+      [source]="_recipe.portion"
+      (scaleFactorChanged)="onScaleFactorChanged($event)"
     >
     </overckd-portion-converter>
-
-    <div *ngIf="this.ingredients$ | async as ingredients">
+    } @if (ingredients(); as _ingredients) {
+    <div>
       <h4 class="d-none subtitle--v2">Zutaten</h4>
       <overckd-ingredient-list
-        [ingredients]="ingredients"
-        [amountScale]="this.portionScaling"
-      ></overckd-ingredient-list>
+        [ingredients]="_ingredients"
+        [amountScale]="portionScaling"
+      />
+    </div>
+    } @if (_recipe.tips.length > 0) {
+
+    <img src="./assets/divider.png" [class]="dividerCssClass" />
+    <div>
+      <h4 class="subtitle--v2">Tipps</h4>
+      <overckd-recipe-tips [recipe]="_recipe" />
     </div>
 
-    <ng-template [ngIf]="this.recipe.tips.length > 0">
-      <img src="./assets/divider.png" [class]="this.dividerCssClass" />
-      <div>
-        <h4 class="subtitle--v2">Tipps</h4>
-        <overckd-recipe-tips [recipe]="this.recipe"></overckd-recipe-tips>
-      </div>
-    </ng-template>
+    }
 
-    <img src="./assets/divider.png" [class]="this.dividerCssClass" />
+    <img src="./assets/divider.png" [class]="dividerCssClass" />
     <div>
       <h4 class="subtitle--v2">Verbesserungen</h4>
-      <overckd-improvement-notes
-        [numberOfLines]="this.numberOfLines"
-      ></overckd-improvement-notes>
+      <overckd-improvement-notes [numberOfLines]="numberOfLines()" />
     </div>
   </div>
 
   <div class="col d-flex flex-column px-0">
     <div>
       <h4 class="d-none subtitle--v2">Zubereitung</h4>
-      <overckd-preparation [recipe]="this.recipe"></overckd-preparation>
+      <overckd-preparation [recipe]="_recipe" />
     </div>
 
-    <div class="container-fluid mt-5" *ngIf="this.primaryImage">
+    @if (primaryImage) {
+    <div class="container-fluid mt-5">
       <div class="row">
-        <div [class]="this.secondaryImageContainerCssClass">
-          <div
-            *ngFor="let image of this.secondaryImages; let i = index"
-            [class]="'d-flex ' + this.getImageCssClass(i + 1)"
-          >
+        <div [class]="secondaryImageContainerCssClass">
+          @for (image of secondaryImages; track image; let i = $index) {
+          <div [class]="'d-flex ' + getImageCssClass(i + 1)">
             <img [src]="image" class="w-100" />
           </div>
+          }
         </div>
 
-        <div [class]="this.primaryImageContainerCssClass">
-          <img [src]="this.primaryImage" [class]="this.getImageCssClass(0)" />
+        <div [class]="primaryImageContainerCssClass">
+          <img [src]="primaryImage" [class]="getImageCssClass(0)" />
         </div>
       </div>
     </div>
+    }
   </div>
 </div>

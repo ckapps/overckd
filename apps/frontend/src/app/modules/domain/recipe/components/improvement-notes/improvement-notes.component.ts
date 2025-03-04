@@ -1,17 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'overckd-improvement-notes',
   templateUrl: './improvement-notes.component.html',
   styleUrls: ['./improvement-notes.component.scss'],
+  imports: [],
 })
 export class ImprovementNotesComponent {
-  @Input() numberOfLines!: number;
+  readonly numberOfLines = input.required<number>();
 
   public get items() {
     const result = [];
 
-    for (let i = this.numberOfLines; i > 0; --i) {
+    for (let i = this.numberOfLines(); i > 0; --i) {
       result.push(i);
     }
 

@@ -1,8 +1,7 @@
 import { isLeft, isRight } from 'fp-ts/lib/These';
 import * as t from 'io-ts';
 import { PathReporter } from 'io-ts/lib/PathReporter';
-import { OperatorFunction } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, OperatorFunction } from 'rxjs';
 
 class DecodeError extends Error {
   override name = 'DecodeError';

@@ -1,5 +1,15 @@
-import { Component, forwardRef, HostBinding, Input } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, forwardRef, HostBinding, input } from '@angular/core';
+import {
+  ControlValueAccessor,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
+} from '@angular/forms';
+import {
+  MatFormField,
+  MatLabel,
+  MatSuffix,
+} from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
 import * as Fn from 'effect/Function';
 
 /**
@@ -16,24 +26,25 @@ import * as Fn from 'effect/Function';
       multi: true,
     },
   ],
+  imports: [MatFormField, MatLabel, MatInput, FormsModule, MatSuffix],
 })
 export class CkadInputFieldComponent implements ControlValueAccessor {
   @HostBinding('class.ckad-input-field') readonly componentClass =
     'ckad-input-field';
 
-  @Input() type!: string;
+  readonly type = input.required<string>();
   /**
    * The placeholder
    */
-  @Input() placeholder!: string;
+  readonly placeholder = input<string>();
   /**
    * Label for the input
    */
-  @Input() label!: string;
+  readonly label = input.required<string>();
   /**
    * Whether there is a clear button
    */
-  @Input() clearable = true;
+  readonly clearable = input(true);
 
   private _value: any;
 

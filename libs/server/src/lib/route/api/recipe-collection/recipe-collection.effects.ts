@@ -9,8 +9,8 @@ import {
   RecipeCollectionDto,
   RecipeCollectionIdDto,
 } from '@overckd/domain-rx';
-import { pipe } from 'fp-ts/function';
-import { map, mergeMap } from 'rxjs/operators';
+import * as Fn from 'effect/Function';
+import { map, mergeMap } from 'rxjs';
 
 // ----------------------------------------------------------------------------
 // Validators
@@ -43,7 +43,10 @@ export const getCollections$ = r.pipe(
 
     return req$.pipe(
       mergeMap(req => {
-        return pipe(GetAllRecipeCollectionsEvent.create(), eventBusClient.send);
+        return Fn.pipe(
+          GetAllRecipeCollectionsEvent.create(),
+          eventBusClient.send,
+        );
       }),
       map(value => ({ body: value.payload })),
       // mapTo({ status: HttpStatus.OK, b }),
@@ -63,10 +66,9 @@ export const postRecipeCollection$ = r.pipe(
     return req$.pipe(
       validatePostRequest,
       mergeMap(req => {
-        const { body } = req;
-
-        return pipe(
-          CreateRecipeCollectionCommand.create(body),
+        return Fn.pipe(
+          req.body,
+          CreateRecipeCollectionCommand.create,
           eventBusClient.send,
         );
       }),
@@ -87,10 +89,9 @@ export const getCollectionsById$ = r.pipe(
     return req$.pipe(
       validateGetByIdRequest,
       mergeMap(req => {
-        const { params } = req;
-
-        return pipe(
-          GetRecipeCollectionByIdEvent.create(params),
+        return Fn.pipe(
+          req.params,
+          GetRecipeCollectionByIdEvent.create,
           eventBusClient.send,
         );
       }),

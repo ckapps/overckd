@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RecipeIngredientGroup } from '@overckd/domain';
 
 @Component({
@@ -10,10 +10,5 @@ export class IngredientGroupComponent {
   /**
    * The ingredient group to display
    */
-  @Input() ingredientGroup!: RecipeIngredientGroup;
-
-  /**
-   * Scaling factor for the ingredient amount
-   */
-  @Input() amountScale = 1;
+  readonly ingredientGroup = input.required<RecipeIngredientGroup>();
 }

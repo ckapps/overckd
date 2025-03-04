@@ -1,4 +1,4 @@
-@import '../variables/page.variables.scss';
+@use '../variables/page.variables.scss' as vars;
 
 @mixin ckad-page-fullsize {
   display: block;
@@ -8,8 +8,8 @@
 }
 
 @mixin ckad-page-from-variables {
-  background-color: $ckad-page-background-color;
-  padding: $ckad-page-padding;
+  background-color: vars.$ckad-page-background-color;
+  padding: vars.$ckad-page-padding;
 }
 
 @mixin ckad-page-default() {

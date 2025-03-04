@@ -1,8 +1,11 @@
-import { Component, HostBinding, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { AsyncPipe } from '@angular/common';
+import { Component, computed, HostBinding, input } from '@angular/core';
 import { Recipe, RecipeIngredientGroup } from '@overckd/domain';
+import { PortionConverterComponent } from '../../../portion/modules/portion-common/components/portion-converter/portion-converter.component';
+import { ImprovementNotesComponent } from '../improvement-notes/improvement-notes.component';
+import { IngredientListComponent } from '../ingredient-list/ingredient-list.component';
+import { PreparationComponent } from '../preparation/preparation.component';
+import { RecipeTipsComponent } from '../recipe-tips/recipe-tips.component';
 
 /**
  * Component to display a recipe
@@ -11,14 +14,33 @@ import { Recipe, RecipeIngredientGroup } from '@overckd/domain';
   selector: 'overckd-recipe',
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.scss'],
+  imports: [
+    PortionConverterComponent,
+    IngredientListComponent,
+    RecipeTipsComponent,
+    ImprovementNotesComponent,
+    PreparationComponent,
+    AsyncPipe,
+  ],
 })
-export class RecipeComponent implements OnInit {
+export class RecipeComponent {
   @HostBinding('class') componentClass = 'container-fluid';
-  @Input() recipe!: Recipe;
-  @Input() numberOfLines = 5;
+  readonly recipe = input.required<Recipe>();
+  readonly numberOfLines = input(5);
 
-  public recipe$!: BehaviorSubject<Recipe>;
-  public ingredients$!: Observable<Recipe['ingredients']>;
+  readonly ingredients = computed<Recipe['ingredients']>(() => {
+    const recipe = this.recipe();
+    const { groups } = recipe;
+    const ingredientGroups = groups
+      ? groups.map<RecipeIngredientGroup>(g => ({
+          label: g.label,
+          group: g.name,
+          ingredients: g.ingredients,
+        }))
+      : [];
+
+    return [...ingredientGroups, ...recipe.ingredients];
+  });
 
   /**
    * This is the target amount for the portion size
@@ -38,35 +60,16 @@ export class RecipeComponent implements OnInit {
     ].join(' ');
   }
 
-  ngOnInit() {
-    this.recipe$ = new BehaviorSubject(this.recipe);
-
-    this.ingredients$ = this.recipe$.pipe(
-      map(recipe => {
-        const { groups } = recipe;
-        const ingredientGroups = groups
-          ? groups.map<RecipeIngredientGroup>(g => ({
-              label: g.label,
-              group: g.name,
-              ingredients: g.ingredients,
-            }))
-          : [];
-
-        return [...ingredientGroups, ...recipe.ingredients];
-      }),
-    );
-  }
-
   get primaryImage() {
-    return this.recipe.images[0];
+    return this.recipe().images[0];
   }
 
   get secondaryImages() {
-    return this.recipe.images.filter((_, i) => i !== 0);
+    return this.recipe().images.filter((_, i) => i !== 0);
   }
 
   getImageCssClass(index: number) {
-    const { images } = this.recipe.styles;
+    const { images } = this.recipe().styles;
 
     return (images && images[index]) || 'w-100';
   }
@@ -76,7 +79,7 @@ export class RecipeComponent implements OnInit {
   }
 
   get primaryImageContainerCssClass() {
-    return ['d-flex', 'col', this.recipe.styles.imagesContainer || ''].join(
+    return ['d-flex', 'col', this.recipe().styles.imagesContainer || ''].join(
       ' ',
     );
   }
@@ -85,7 +88,7 @@ export class RecipeComponent implements OnInit {
     return [
       'col',
       this.secondaryImages.length > 0 ? 'd-flex' : 'd-none',
-      this.recipe.styles.secondaryImagesContainer || 'flex-column',
+      this.recipe().styles.secondaryImagesContainer || 'flex-column',
     ].join(' ');
   }
 

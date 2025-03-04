@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
 interface RxTouchbarButtonOptions {
   label: string;
@@ -10,6 +10,6 @@ interface RxTouchbarButtonOptions {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DesktopTouchbarButtonComponent {
-  @Input() name!: string;
-  @Input() label!: string;
+  readonly name = input.required<string>();
+  readonly label = input.required<string>();
 }

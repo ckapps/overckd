@@ -1,15 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, output, input } from '@angular/core';
+import { MatDivider } from '@angular/material/divider';
+import { MatList, MatListItem } from '@angular/material/list';
 import { CollectionRecipe, RecipeCollection } from '@overckd/domain';
 
 @Component({
   selector: 'overckd-recipe-collection',
   templateUrl: './recipe-collection.component.html',
   styleUrls: ['./recipe-collection.component.scss'],
+  imports: [MatList, MatDivider, MatListItem],
 })
 export class RecipeCollectionComponent {
-  @Input() recipeCollection!: RecipeCollection;
+  readonly recipeCollection = input.required<RecipeCollection>();
 
-  @Output() recipeSelected = new EventEmitter<CollectionRecipe>();
+  readonly recipeSelected = output<CollectionRecipe>();
 
   onRecipeClicked(recipe: CollectionRecipe) {
     this.recipeSelected.emit(recipe);
