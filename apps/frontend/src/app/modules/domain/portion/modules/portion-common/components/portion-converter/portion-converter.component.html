@@ -1,0 +1,28 @@
+@let portionQuantifier = source(); @switch (portionQuantifier.kind) { @case
+(PortionKind.Label) {
+<div>
+  {{ portionQuantifier.label }}
+</div>
+} @case (PortionKind.Quantity) {
+<div class="portion-converter portion-converter--quantity">
+  <label class="portion-converter__label">
+    {{ 'For' }}
+    <input
+      type="number"
+      min="1"
+      [(ngModel)]="amount"
+      class="form-control portion-converter__input"
+    />
+
+    @if (portionQuantifier.label; as label) {
+    <span class="portion-converter__additional-label">
+      {{ label }}
+    </span>
+    }
+  </label>
+</div>
+} @case (PortionKind.Springform) {
+<div>
+  {{ portionQuantifier.diameter }}
+</div>
+} }

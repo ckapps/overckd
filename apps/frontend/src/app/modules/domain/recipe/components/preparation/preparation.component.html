@@ -1,0 +1,27 @@
+@for (group of preparationGroups$ | async; track group) {
+<div class="mb-2">
+  @if (group.label) {
+  <h5>{{ group.label }}</h5>
+  } @if (!group.stepsEnumerated) {
+  <div class="text-justify">
+    @for (step of group.steps; track step) {
+    <overckd-preparation-step
+      [step]="step"
+      [stepsEnumerated]="group.stepsEnumerated"
+    />
+    }
+  </div>
+  } @else {
+
+  <ol [start]="group.start || 1">
+    @for (step of group.steps; track step) {
+    <overckd-preparation-step
+      [step]="step"
+      [stepsEnumerated]="group.stepsEnumerated"
+    />
+    }
+  </ol>
+
+  }
+</div>
+}

@@ -1,0 +1,18 @@
+<ckad-main-menu-group [groupName]="'Collections'" [icon]="faListAlt">
+  @if (collections$ | async; as collections) {
+  <mat-nav-list>
+    @for (collection of collections; track collection) {
+    <a
+      mat-list-item
+      [class]="itemClass"
+      [routerLink]="['./collections/', 'collection', collection.id]"
+      [routerLinkActive]="itemActiveClass"
+    >
+      <ckad-main-menu-item>
+        {{ collection.name }}
+      </ckad-main-menu-item>
+    </a>
+    }
+  </mat-nav-list>
+  }
+</ckad-main-menu-group>

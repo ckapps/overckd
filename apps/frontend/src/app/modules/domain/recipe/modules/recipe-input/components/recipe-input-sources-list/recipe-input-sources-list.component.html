@@ -1,0 +1,33 @@
+<h2 class="d-flex flex-row justify-content-between">
+  <span>
+    {{ label() }}
+  </span>
+
+  <ckad-button-raised (click)="onOpenAddViewClicked()">Add </ckad-button-raised>
+</h2>
+
+<ckad-mutable-list>
+  @for (item of items$ | async; track item) {
+  <ckad-mutable-list-item>
+    <fa-icon [icon]="iconLink"></fa-icon>
+    {{ item }}
+  </ckad-mutable-list-item>
+  }
+</ckad-mutable-list>
+
+<div [class.d-none]="(isAdding$ | async) !== true">
+  <overckd-recipe-input-source
+    [url]="newItem()"
+    (urlChange)="newItem.set($event)"
+  />
+
+  <div class="d-flex flex-row justify-content-end">
+    <ckad-button-raised color="primary" (click)="onAddClicked()"
+      >Add
+    </ckad-button-raised>
+
+    @if (isAdding$ | async) {
+    <ckad-button (click)="onCancelAddClicked()">Cancel </ckad-button>
+    }
+  </div>
+</div>

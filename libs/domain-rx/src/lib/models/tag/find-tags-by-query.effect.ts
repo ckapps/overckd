@@ -1,0 +1,43 @@
+import { act, matchEvent, useContext } from '@marblejs/core';
+import { MsgEffect, reply } from '@marblejs/messaging';
+import { eventValidator$ } from '@marblejs/middleware-io';
+import * as Fn from 'effect/Function';
+import { map } from 'rxjs';
+import {
+  eventCreator,
+  OverckdEventType,
+} from '../../core/events/event-creator';
+import { TagRepositoryToken } from '../../tokens';
+import { FindTagByQueryEvent, TagQueryType } from './tag.query';
+
+const createEvent = eventCreator(TagQueryType.FindByQuery);
+
+/**
+ * Effect to get recipe by name
+ *
+ * @param event$
+ * @param ctx
+ */
+export const findTagsByQuery: MsgEffect = (event$, ctx) => {
+  const repo = useContext(TagRepositoryToken)(ctx.ask);
+
+  return event$.pipe(
+    matchEvent(FindTagByQueryEvent),
+    act(eventValidator$(FindTagByQueryEvent)),
+    act(event =>
+      Fn.pipe(
+        event.payload,
+        repo.findByQuery,
+        map(payload =>
+          reply(event)(createEvent(OverckdEventType.Result, { payload })),
+        ),
+        // catchError(error =>
+        //   of({
+        //     type: 'GET_USER_ERROR',
+        //     error: { name: error.name, message: error.message },
+        //   }),
+        // ),
+      ),
+    ),
+  );
+};

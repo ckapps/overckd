@@ -1,0 +1,19 @@
+{
+  "name": "domain-rx",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/domain-rx/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/domain-rx",
+        "main": "libs/domain-rx/src/index.ts",
+        "tsConfig": "libs/domain-rx/tsconfig.lib.json",
+        "assets": ["libs/domain-rx/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

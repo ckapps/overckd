@@ -1,0 +1,10 @@
+<button class="btn" (click)="onNavigateBack()">
+  <fa-icon [icon]="faChevronLeft" />
+</button>
+<button
+  class="btn"
+  [disabled]="(forwardCount | async) === 0"
+  (click)="onNavigateForward()"
+>
+  <fa-icon [icon]="faChevronRight" />
+</button>

@@ -1,0 +1,19 @@
+{
+  "name": "yaml",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/yaml/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/yaml",
+        "main": "libs/yaml/src/index.ts",
+        "tsConfig": "libs/yaml/tsconfig.lib.json",
+        "assets": ["libs/yaml/*.md"]
+      }
+    }
+  },
+  "tags": []
+}
