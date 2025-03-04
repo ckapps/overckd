@@ -1,7 +1,6 @@
-import { RecipeIngredient } from '../recipe-ingredient/recipe-ingredient.model';
+import * as Timer from '../../timer';
 import { RecipeIngredientGroup } from '../recipe-ingredient-group/recipe-ingredient-group.types';
-import { RecipeTimer, TimerId } from '../recipe-timer/recipe-timer.model';
-
+import { RecipeIngredient } from '../recipe-ingredient/recipe-ingredient.model';
 import { BaseRecipe } from './recipe-base.types';
 
 export type Labeled<T> = T & {
@@ -17,7 +16,7 @@ export interface Recipe
   /**
    * Timers for this recipe
    */
-  timers?: Record<TimerId, RecipeTimer>;
+  timers?: Record<Timer.TimerId, Timer.Timer>;
 
   // Style visual appearances
   styles: {

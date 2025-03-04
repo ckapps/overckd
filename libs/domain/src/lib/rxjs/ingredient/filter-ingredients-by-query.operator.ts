@@ -1,9 +1,7 @@
 import { regexpFromString } from '@overckd/core';
 import { MonoTypeOperatorFunction } from 'rxjs';
-import {
-  Ingredient,
-  IngredientQuery,
-} from '../../models/ingredient/ingredient.model';
+import { Ingredient } from '../../ingredient';
+import { IngredientQuery } from '../../models/ingredient.queries';
 import { filterByQuery } from '../search';
 
 /**

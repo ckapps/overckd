@@ -1,7 +1,7 @@
 export type Slug = string;
 
 /**
- * Matches all single or repeated ' '.
+ * .
  */
 const replaceRegex = /\s+/g;
 

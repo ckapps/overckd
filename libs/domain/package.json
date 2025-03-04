@@ -2,8 +2,14 @@
   "name": "@overckd/domain",
   "version": "0.0.1",
   "type": "commonjs",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.js",
+    "./slug": "./src/lib/slug.js"
+  },
   "peerDependencies": {
     "@ckapp/rxjs-snafu": "~0.1.9",
+    "effect": "^3.13.4",
     "rxjs": "~7.8.1"
   }
 }

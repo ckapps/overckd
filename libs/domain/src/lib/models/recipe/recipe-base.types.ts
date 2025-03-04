@@ -1,5 +1,5 @@
-import { PortionQuantifier } from '../portion-quantifier/portion-quantifier.types';
-import { RecipePreparationStep } from '../recipe-preparation-step/recipe-preparation-step.types';
+import { PortionQuantifier } from '../../portion';
+import { PreparationStep } from '../../preparation-step';
 
 export type RecipeBaseLink = string;
 
@@ -23,7 +23,7 @@ export interface BaseRecipe<TIngredient> {
   /**
    * The steps of preparation
    */
-  steps: RecipePreparationStep[];
+  steps: PreparationStep[];
   /**
    * A list of tips
    */

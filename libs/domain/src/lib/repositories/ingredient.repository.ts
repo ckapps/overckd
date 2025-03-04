@@ -1,9 +1,6 @@
 import { Observable } from 'rxjs';
-
-import {
-  Ingredient,
-  IngredientQuery,
-} from '../models/ingredient/ingredient.model';
+import { Ingredient } from '../ingredient';
+import { IngredientQuery } from '../models/ingredient.queries';
 import { Page } from '../search';
 
 /**

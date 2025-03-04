@@ -1,6 +1,6 @@
-import * as t from 'io-ts';
 import { Tag } from '@overckd/domain';
-import { slug } from '@overckd/core';
+import * as Slug from '@overckd/domain/slug';
+import * as t from 'io-ts';
 import { tag } from '../codec/tag/tag.codec';
 import { overckdFileCodec } from './overckd-file';
 
@@ -27,7 +27,7 @@ function decodeTagsFile(i: TagsFileContent) {
     t =>
       ({
         ...t,
-        uri: slug(t.label),
+        uri: Slug.fromString(t.label),
       } as Tag),
   );
 }

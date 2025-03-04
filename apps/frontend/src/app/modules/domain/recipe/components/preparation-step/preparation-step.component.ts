@@ -1,5 +1,5 @@
 import { booleanAttribute, Component, input } from '@angular/core';
-import { RecipePreparationStep } from '@overckd/domain';
+import { PreparationStep } from '@overckd/domain';
 
 /**
  * Component for displaying a recipe preparation step
@@ -11,30 +11,6 @@ import { RecipePreparationStep } from '@overckd/domain';
   imports: [],
 })
 export class PreparationStepComponent {
-  readonly step = input.required<RecipePreparationStep>();
+  readonly step = input.required<PreparationStep.PreparationStep>();
   readonly stepsEnumerated = input(false, { transform: booleanAttribute });
-
-  public get isHtml() {
-    return !!this.stepHtml;
-  }
-
-  public get stepHtml() {
-    const { step: stepInput } = this;
-    const step = stepInput();
-    if (typeof step === 'string') {
-      return undefined;
-    }
-
-    return step.html;
-  }
-
-  public get stepText() {
-    const step = this.step();
-    return typeof step === 'string' ? step : step.text;
-  }
-
-  public get cssClasses() {
-    const step = this.step();
-    return (typeof step === 'string' ? [] : step.styles || []).join(' ');
-  }
 }

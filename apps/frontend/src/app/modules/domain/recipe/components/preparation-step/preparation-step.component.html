@@ -1,15 +1,13 @@
-@if (!stepsEnumerated()) { @if (stepHtml; as stepHtml) {
-<div [class]="cssClasses" [innerHTML]="stepHtml"></div>
-} @else {
-
-<p [class]="cssClasses">
-  {{ stepText }}
-</p>
-
-} } @if (stepsEnumerated()) { @if (stepHtml; as stepHtml) {
-<li [class]="[cssClasses, 'mb-1'].join(' ')" [innerHTML]="stepHtml"></li>
-}
-<li [class]="[cssClasses, 'mb-1'].join(' ')">
-  {{ stepText }}
+@let s = step(); @if (stepsEnumerated()) { @switch(s.format) { @case('text') {
+<li class="mb-1">
+  {{ s.text }}
 </li>
-}
+} @case('html') {
+<li class="mb-1" [innerHTML]="s.text"></li>
+} } } @else { @switch(s.format) { @case('text') {
+<p>
+  {{ s.text }}
+</p>
+} @case('html') {
+<div [innerHTML]="s.text"></div>
+} } }

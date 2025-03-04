@@ -1,5 +1,5 @@
-import { Tag } from '../tag/tag.types';
-import { DataQuery } from '../../search';
+import { DataQuery } from '../search';
+import * as Uri from '../uri';
 
 // ==================================================================
 // Ingredients
@@ -13,7 +13,7 @@ export interface IngredientSearch {
   /**
    * IDs of ingredient tags
    */
-  tags?: Tag['uri'][];
+  tags?: Uri.Uri[];
 }
 
 export type IngredientQuery = DataQuery<IngredientSearch>;

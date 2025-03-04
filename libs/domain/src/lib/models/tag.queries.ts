@@ -1,4 +1,4 @@
-import { DataQuery } from '../../search';
+import { DataQuery } from '../search';
 
 export interface TagSearch {
   /**

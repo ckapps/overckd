@@ -27,6 +27,9 @@
       "@overckd/domain-rx": [
         "libs/domain-rx/src/index.ts"
       ],
+      "@overckd/domain/slug": [
+        "libs/domain/src/lib/slug.ts"
+      ],
       "@overckd/server": [
         "libs/server/src/index.ts"
       ],

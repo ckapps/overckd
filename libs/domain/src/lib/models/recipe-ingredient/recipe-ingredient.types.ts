@@ -1,4 +1,4 @@
-import { IngredientBase } from '../ingredient/ingredient.model';
+import { IngredientBase } from '../../ingredient';
 
 export interface RecipeIngredient extends IngredientBase {
   name: string;

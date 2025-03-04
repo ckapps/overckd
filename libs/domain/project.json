@@ -11,6 +11,8 @@
         "outputPath": "dist/libs/domain",
         "main": "libs/domain/src/index.ts",
         "tsConfig": "libs/domain/tsconfig.lib.json",
+        "additionalEntryPoints": ["libs/domain/src/lib/slug.ts"],
+        "generateExportsField": true,
         "assets": ["libs/domain/*.md"]
       }
     }

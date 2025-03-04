@@ -1,12 +1,15 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
-import { RecipePreparationStep } from '@overckd/domain';
+import { PreparationStep } from '@overckd/domain';
 import { PreparationStepComponent } from './preparation-step.component';
 
 describe('PreparationStepComponent', () => {
   let spectator: Spectator<PreparationStepComponent>;
   const createComponent = createComponentFactory(PreparationStepComponent);
 
-  const step: RecipePreparationStep = 'mock-step';
+  const step: PreparationStep.PreparationStep = {
+    text: 'mock-step',
+    format: 'text',
+  };
 
   beforeEach(() => {
     spectator = createComponent({
