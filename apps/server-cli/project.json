@@ -9,6 +9,7 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
+        "buildLibsFromSource": true,
         "platform": "node",
         "outputPath": "dist/apps/server-cli",
         "format": ["cjs"],
@@ -27,6 +28,7 @@
       "configurations": {
         "development": {},
         "production": {
+          "bundle": true,
           "esbuildOptions": {
             "sourcemap": false,
             "outExtension": {
@@ -40,7 +42,8 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "server-cli:build"
+        "buildTarget": "server-cli:build",
+        "runBuildTargetDependencies": true
       },
       "configurations": {
         "development": {

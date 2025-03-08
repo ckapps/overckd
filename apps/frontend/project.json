@@ -45,12 +45,12 @@
           ],
           "outputHashing": "all"
         },
-        "electron": {
+        "desktop": {
           "outputPath": "dist/apps/frontend-electron",
           "fileReplacements": [
             {
               "replace": "apps/frontend/src/environments/environment.ts",
-              "with": "apps/frontend/src/environments/environment.electron.ts"
+              "with": "apps/frontend/src/environments/environment.desktop.ts"
             }
           ]
         },
@@ -64,18 +64,21 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "proxyConfig": "apps/frontend/proxy.conf.json"
+      },
       "configurations": {
         "production": {
           "buildTarget": "frontend:build:production"
         },
         "development": {
           "buildTarget": "frontend:build:development"
+        },
+        "desktop": {
+          "buildTarget": "frontend:build:desktop"
         }
       },
-      "defaultConfiguration": "development",
-      "options": {
-        "proxyConfig": "apps/frontend/proxy.conf.json"
-      }
+      "defaultConfiguration": "development"
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",

@@ -20,6 +20,7 @@ export const getByIdEffect: MsgEffect = (event$, ctx) => {
     act(eventValidator$(GetTagByIdEvent)),
     act(event =>
       Fn.pipe(
+        // @ts-ignore
         event.payload.uri,
         repo.getByUri,
         map(payload =>

@@ -3,7 +3,7 @@
   "tasks": [
     {
       "type": "npm",
-      "script": "start:desktop",
+      "script": "serve:desktop",
       "problemMatcher": [],
       "label": "start > desktop",
       "detail": "Serve everything for the desktop app",
@@ -16,25 +16,6 @@
       "label": "start > web",
       "detail": "Serve everything for the browser",
       "group": "build"
-    },
-    {
-      "type": "npm",
-      "script": "app:desktop:dev",
-      "problemMatcher": [],
-      "label": "run > app-dev",
-      "detail": "Run in desktop-shell",
-      "group": "build"
-    },
-    {
-      "type": "npm",
-      "script": "build:watch",
-      "problemMatcher": [],
-      "label": "build > watch",
-      "detail": "Build all packages and watch for changes",
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      }
     }
   ]
 }

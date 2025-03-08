@@ -2,7 +2,7 @@ import { ServerConfig } from './server-config.types';
 
 // TODO: Remove
 const overrideWithDevDefaults = {
-  port: 4201,
+  port: 3000,
 };
 
 /**

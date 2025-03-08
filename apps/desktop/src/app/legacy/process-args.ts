@@ -10,7 +10,9 @@
  * CLI arguments for the overckd app
  */
 interface OverckdArgs {
+  /** Whether the app is started in dev mode. */
   dev: boolean;
+  /** Path to the configuration file. */
   config?: string;
   /**
    * DEV-OPTION
@@ -20,10 +22,22 @@ interface OverckdArgs {
 }
 
 export function parseArgs(processArgs: string[]): OverckdArgs {
-  return {
+  //
+
+  const configFromEnv = process.env.OVERCKD_CONFIG;
+
+  const args: OverckdArgs = {
     dev: true,
     fromUrl: false,
+    config: configFromEnv || undefined,
   };
+
+  return args;
+
+  // return {
+  //   dev: true,
+  //   fromUrl: false,
+  // };
   // return yargs(processArgs).options({
   //   dev: {
   //     type: 'boolean',

@@ -3,6 +3,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/desktop/src",
   "projectType": "application",
+  "implicitDependencies": ["frontend"],
   "targets": {
     "build": {
       "executor": "nx-electron:build",
@@ -36,7 +37,7 @@
     "package": {
       "executor": "nx-electron:package",
       "options": {
-        "name": "apps-native-desktop",
+        "name": "Overckd",
         "frontendProject": "frontend",
         "sourcePath": "dist/apps",
         "outputPath": "dist/packages",
@@ -46,7 +47,7 @@
     "make": {
       "executor": "nx-electron:make",
       "options": {
-        "name": "apps-native-desktop",
+        "name": "Overckd",
         "frontendProject": "frontend",
         "sourcePath": "dist/apps",
         "outputPath": "dist/executables"

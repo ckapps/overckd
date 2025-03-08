@@ -26,7 +26,9 @@ export const createCollection: MsgEffect = (event$, ctx) => {
         createRecipeCollection,
         repo.add,
         mergeMap(collection => [
+          // @ts-ignore
           RecipeCollectionCreatedEvent.create(collection),
+          // @ts-ignore
           reply(event)(RecipeCollectionCreatedEvent.create(collection)),
         ]),
       ),

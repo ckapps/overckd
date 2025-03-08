@@ -26,7 +26,9 @@ export const createTagEffect: MsgEffect = (event$, ctx) => {
         createTag,
         repo.add,
         mergeMap(tag => [
+          // @ts-ignore
           TagCreatedEvent.create(tag),
+          // @ts-ignore
           reply(event)(TagCreatedEvent.create(tag)),
         ]),
       ),

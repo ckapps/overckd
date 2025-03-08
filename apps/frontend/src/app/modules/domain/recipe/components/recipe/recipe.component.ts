@@ -1,4 +1,3 @@
-import { AsyncPipe } from '@angular/common';
 import { Component, computed, HostBinding, input } from '@angular/core';
 import { Recipe, RecipeIngredientGroup } from '@overckd/domain';
 import { PortionConverterComponent } from '../../../portion/modules/portion-common/components/portion-converter/portion-converter.component';
@@ -20,7 +19,6 @@ import { RecipeTipsComponent } from '../recipe-tips/recipe-tips.component';
     RecipeTipsComponent,
     ImprovementNotesComponent,
     PreparationComponent,
-    AsyncPipe,
   ],
 })
 export class RecipeComponent {

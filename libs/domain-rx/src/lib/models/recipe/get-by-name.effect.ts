@@ -28,6 +28,7 @@ export const getRecipeByNameEffect: MsgEffect = (event$, ctx) => {
     act(eventValidator$(GetRecipeByNameEvent)),
     act(event =>
       pipe(
+        // @ts-ignore
         event.payload.name,
         repo.getByName,
         tap(

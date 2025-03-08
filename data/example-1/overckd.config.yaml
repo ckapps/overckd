@@ -13,4 +13,4 @@ paths:
 # Server
 ###########################
 server:
-  port: 4201
+  port: 3000

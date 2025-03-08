@@ -23,6 +23,7 @@ export const getById: MsgEffect = (event$, ctx) => {
     act(eventValidator$(GetRecipeCollectionByIdEvent)),
     act(event =>
       pipe(
+        // @ts-ignore
         event.payload.id,
         repo.getById,
         map(payload =>
