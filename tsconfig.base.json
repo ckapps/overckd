@@ -10,33 +10,46 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@overckd/core": [
-        "libs/core/src/index.ts"
+      "@ckapp/ckad-angular": ["libs/@ckapp/ckad-angular/src/index.ts"],
+      "@ckapp/ckad-angular/button": [
+        "libs/@ckapp/ckad-angular/button/src/index.ts"
       ],
-      "@overckd/domain": [
-        "libs/domain/src/index.ts"
+      "@ckapp/ckad-angular/core": [
+        "libs/@ckapp/ckad-angular/core/src/index.ts"
       ],
-      "@overckd/domain-rx": [
-        "libs/domain-rx/src/index.ts"
+      "@ckapp/ckad-angular/input": [
+        "libs/@ckapp/ckad-angular/input/src/index.ts"
       ],
-      "@overckd/server": [
-        "libs/server/src/index.ts"
+      "@ckapp/ckad-angular/list": [
+        "libs/@ckapp/ckad-angular/list/src/index.ts"
       ],
-      "@overckd/yaml": [
-        "libs/yaml/src/index.ts"
-      ]
+      "@ckapp/ckad-angular/main-menu": [
+        "libs/@ckapp/ckad-angular/main-menu/src/index.ts"
+      ],
+      "@ckapp/ckad-desktop-angular": [
+        "libs/@ckapp/ckad-desktop-angular/src/index.ts"
+      ],
+      "@ckapp/ckad-desktop-angular/core": [
+        "libs/@ckapp/ckad-desktop-angular/core/src/index.ts"
+      ],
+      "@ckapp/ckad-desktop-angular/touchbar": [
+        "libs/@ckapp/ckad-desktop-angular/touchbar/src/index.ts"
+      ],
+      "@ckapp/ckad-desktop-angular/window": [
+        "libs/@ckapp/ckad-desktop-angular/window/src/index.ts"
+      ],
+      "@overckd/core": ["libs/core/src/index.ts"],
+      "@overckd/domain": ["libs/domain/src/index.ts"],
+      "@overckd/domain-rx": ["libs/domain-rx/src/index.ts"],
+      "@overckd/server": ["libs/server/src/index.ts"],
+      "@overckd/ui/common/angular": ["libs/ui/common/angular/src/index.ts"],
+      "@overckd/yaml": ["libs/yaml/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

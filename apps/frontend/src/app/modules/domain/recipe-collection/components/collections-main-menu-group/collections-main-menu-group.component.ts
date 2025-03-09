@@ -2,9 +2,11 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  CkadMainMenuGroupComponent,
+  CkadMainMenuItemComponent,
+} from '@ckapp/ckad-angular/main-menu';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
-import { CkadMainMenuGroupComponent } from '../../../../ckapps-design-system/ckad-ui-common/ckad-main-menu/components/main-menu-group/main-menu-group.component';
-import { CkadMainMenuItemComponent } from '../../../../ckapps-design-system/ckad-ui-common/ckad-main-menu/components/main-menu-item/main-menu-item.component';
 import { RecipeCollectionService } from '../../services/recipe-collection.service';
 
 @Component({

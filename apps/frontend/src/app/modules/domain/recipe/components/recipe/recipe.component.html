@@ -1,22 +1,20 @@
 @let _recipe = recipe();
-<div class="row">
-  <h3
-    [class]="
-      [
-        'title--v1',
-        'w-100',
-        'd-flex',
-        'flex-row',
-        'align-items-center',
-        _recipe.styles.title || ''
-      ].join(' ')
-    "
-  >
-    {{ _recipe.name }}
-  </h3>
-</div>
 
-<div class="row flex-grow-1">
+<h3
+  [class]="
+    [
+      'title--v1',
+      'w-full',
+      'flex',
+      'align-items-center',
+      _recipe.styles.title || ''
+    ].join(' ')
+  "
+>
+  {{ _recipe.name }}
+</h3>
+
+<div class="grid grid-cols-3 gap-8 flex-grow-1">
   <div [class]="leftColCssClass">
     @if (_recipe.portion) {
     <overckd-portion-converter
@@ -49,7 +47,7 @@
     </div>
   </div>
 
-  <div class="col d-flex flex-column px-0">
+  <div class="col-span-2 flex flex-col px-0">
     <div>
       <h4 class="d-none subtitle--v2">Zubereitung</h4>
       <overckd-preparation [recipe]="_recipe" />
@@ -60,8 +58,8 @@
       <div class="row">
         <div [class]="secondaryImageContainerCssClass">
           @for (image of secondaryImages; track image; let i = $index) {
-          <div [class]="'d-flex ' + getImageCssClass(i + 1)">
-            <img [src]="image" class="w-100" />
+          <div [class]="'flex ' + getImageCssClass(i + 1)">
+            <img [src]="image" class="w-full" />
           </div>
           }
         </div>

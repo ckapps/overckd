@@ -1,32 +1,14 @@
-@import '../../../../../modules/ckapps-design-system/ckad-ui-core/ckad-ui-core.module.scss';
-
-$make-full-height: true;
-// $make-full-height: false;
-
 :host {
   break-after: page;
-  display: flex;
-  flex-direction: column;
+  @apply flex flex-col gap-8;
 
-  @if $make-full-height == true {
-    @media print {
-      height: 135vh;
-      max-height: 135vh;
-    }
-  }
-
-  .row > .title {
-    &--v1 {
-      margin-bottom: 3rem;
-      font-family: $font-heading1;
-      font-size: xxx-large;
-      font-weight: 400;
-    }
+  @media print {
+    height: 135vh;
+    max-height: 135vh;
   }
 
   .subtitle {
     &--v2 {
-      font-family: $font-heading2;
       text-align: center;
       font-weight: 300;
     }
@@ -35,4 +17,9 @@ $make-full-height: true;
   img {
     border-radius: 0.75rem;
   }
+}
+
+h3 {
+  font-size: xxx-large;
+  font-weight: 400;
 }

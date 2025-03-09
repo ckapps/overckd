@@ -1,7 +1,7 @@
 import { Component, model, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CkadInputFieldComponent } from '@ckapp/ckad-angular/input';
 import { RecipeBaseLink } from '@overckd/domain';
-import { CkadInputFieldComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-input/components/input-field/input-field.component';
 
 @Component({
   selector: 'overckd-recipe-input-source',

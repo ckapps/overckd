@@ -1,0 +1,14 @@
+{
+  "name": "@ckapp/ckad-angular",
+  "version": "0.0.1",
+  "private": true,
+  "peerDependencies": {
+    "@angular/core": "^19.1.0",
+    "@angular/material": "^19.1.0",
+    "@angular/forms": "^19.1.0",
+    "effect": "^3.0.0",
+    "@fortawesome/angular-fontawesome": "^1.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.0.0"
+  },
+  "sideEffects": false
+}

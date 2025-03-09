@@ -1,0 +1,20 @@
+{
+  "name": "overckd-ui-common-angular",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ui/common/angular/src",
+  "prefix": "overckd-common",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:shared", "framework:angular"],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/ui/common/angular/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

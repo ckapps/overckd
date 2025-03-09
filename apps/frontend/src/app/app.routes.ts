@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
+import { OverckdNotFoundPage } from '@overckd/ui/common/angular';
 import { HomePageComponent } from './pages/home/home.component';
-import { NotFoundPageComponent } from './pages/not-found/not-found.component';
 
 export const appRoutes: Route[] = [
   {
@@ -16,14 +16,14 @@ export const appRoutes: Route[] = [
   {
     path: 'recipes',
     loadChildren: () =>
-      import('./routes/recipes/recipes.module').then(m => m.RecipesModule),
+      import('./routes/recipes/recipe.routes').then(m => m.routes),
   },
   {
     path: 'collections',
     loadChildren: () =>
-      import('./routes/recipe-collections/recipe-collections.module').then(
-        m => m.RecipeCollectionsModule,
+      import('./routes/recipe-collections/recipe-collection.routes').then(
+        m => m.routes,
       ),
   },
-  { path: '**', component: NotFoundPageComponent },
+  { path: '**', component: OverckdNotFoundPage },
 ];

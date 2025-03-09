@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { CkadDesktopWindowTitleBar } from '@ckapp/ckad-desktop-angular/window';
 import { AppComponent } from './app.component';
 import { AppMainMenuComponent } from './components/app-main-menu/app-main-menu.component';
-import { UiDesktopModule } from './modules/ui-desktop/ui-desktop.module';
 
 @Component({
   selector: 'ckad-desktop-window-title-bar',
@@ -27,7 +27,7 @@ describe('AppComponent', () => {
 
     TestBed.overrideComponent(AppComponent, {
       remove: {
-        imports: [AppMainMenuComponent, UiDesktopModule],
+        imports: [AppMainMenuComponent, CkadDesktopWindowTitleBar],
       },
       add: {
         imports: [MockAppMainMenuComponent, MockWindowTitleBarComponent],

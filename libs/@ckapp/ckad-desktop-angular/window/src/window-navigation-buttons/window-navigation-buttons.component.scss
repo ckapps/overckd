@@ -1,0 +1,12 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+
+  align-items: center;
+  -webkit-app-region: no-drag;
+
+  > .btn {
+    color: rgb(241, 241, 241);
+  }
+}

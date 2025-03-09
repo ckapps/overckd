@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import {
+  CkadMainMenuComponent,
+  CkadMainMenuGroupComponent,
+  CkadMainMenuItemComponent,
+} from '@ckapp/ckad-angular/main-menu';
+import {
   faFileContract,
   faHome,
   faPlusCircle,
@@ -19,7 +24,15 @@ import { UiModule } from '../../modules/ui/ui.module';
   selector: 'app-main-menu',
   templateUrl: './app-main-menu.component.html',
   styleUrls: ['./app-main-menu.component.scss'],
-  imports: [MatListModule, RouterModule, RecipeCollectionModule, UiModule],
+  imports: [
+    CkadMainMenuComponent,
+    CkadMainMenuItemComponent,
+    CkadMainMenuGroupComponent,
+    MatListModule,
+    RouterModule,
+    RecipeCollectionModule,
+    UiModule,
+  ],
 })
 export class AppMainMenuComponent {
   readonly itemClass = 'ckapps-main-menu-item';

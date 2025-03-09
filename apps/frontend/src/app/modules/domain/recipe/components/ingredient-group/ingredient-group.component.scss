@@ -1,5 +1,3 @@
-@import '../../../../../modules/ckapps-design-system/ckad-ui-core/ckad-ui-core.module.scss';
-
 :host {
   display: block;
   margin-bottom: 1.5rem;
@@ -8,11 +6,6 @@
     &--v1 {
       margin-bottom: 0.75rem;
       text-align: center;
-      font-family: $font-heading2;
-    }
-
-    &--v2 {
-      font-family: $font-heading1;
     }
   }
 }

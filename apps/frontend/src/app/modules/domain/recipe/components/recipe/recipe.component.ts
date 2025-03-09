@@ -48,14 +48,9 @@ export class RecipeComponent {
   public get leftColCssClass() {
     const justify = true;
 
-    return [
-      'col-4',
-      'd-flex',
-      'flex-column',
-      'border-right',
-      'mr-5',
-      justify ? 'justify-content-between' : '',
-    ].join(' ');
+    return ['flex', 'flex-col', justify ? 'justify-content-between' : ''].join(
+      ' ',
+    );
   }
 
   get primaryImage() {
@@ -69,7 +64,7 @@ export class RecipeComponent {
   getImageCssClass(index: number) {
     const { images } = this.recipe().styles;
 
-    return (images && images[index]) || 'w-100';
+    return (images && images[index]) || 'w-full';
   }
 
   get dividerCssClass() {
@@ -77,7 +72,7 @@ export class RecipeComponent {
   }
 
   get primaryImageContainerCssClass() {
-    return ['d-flex', 'col', this.recipe().styles.imagesContainer || ''].join(
+    return ['flex', 'col', this.recipe().styles.imagesContainer || ''].join(
       ' ',
     );
   }
@@ -85,8 +80,8 @@ export class RecipeComponent {
   get secondaryImageContainerCssClass() {
     return [
       'col',
-      this.secondaryImages.length > 0 ? 'd-flex' : 'd-none',
-      this.recipe().styles.secondaryImagesContainer || 'flex-column',
+      this.secondaryImages.length > 0 ? 'flex' : 'hidden',
+      this.recipe().styles.secondaryImagesContainer || 'flex-col',
     ].join(' ');
   }
 

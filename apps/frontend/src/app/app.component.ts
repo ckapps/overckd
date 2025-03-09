@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CkadDesktopWindowTitleBar } from '@ckapp/ckad-desktop-angular/window';
 import { ApplicationShell } from '../environments/application-shell.enum';
 import { environment } from '../environments/environment';
 import { AppMainMenuComponent } from './components/app-main-menu/app-main-menu.component';
-import { UiDesktopModule } from './modules/ui-desktop/ui-desktop.module';
 
 @Component({
-  imports: [RouterModule, UiDesktopModule, AppMainMenuComponent],
+  imports: [RouterModule, CkadDesktopWindowTitleBar, AppMainMenuComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

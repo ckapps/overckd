@@ -25,7 +25,7 @@ export class EmptyRecipePageComponent {
     ingredients: generateEmpty(15, { name: '' }),
     images: [],
     styles: {
-      title: 'w-100 border-bottom',
+      title: 'w-full border-bottom',
     },
   };
 }

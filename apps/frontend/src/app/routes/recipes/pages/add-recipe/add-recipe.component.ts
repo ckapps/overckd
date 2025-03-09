@@ -2,21 +2,21 @@ import { Component } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  Validators,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from '@angular/forms';
-import { Recipe } from '@overckd/domain';
+import { MatButton } from '@angular/material/button';
 import {
-  MatStepper,
   MatStep,
   MatStepLabel,
+  MatStepper,
   MatStepperNext,
 } from '@angular/material/stepper';
-import { CkadInputFieldComponent } from '../../../../modules/ckapps-design-system/ckad-ui-common/ckad-input/components/input-field/input-field.component';
+import { CkadInputFieldComponent } from '@ckapp/ckad-angular/input';
+import { Recipe } from '@overckd/domain';
 import { PortionQuantifierInputComponent } from '../../../../modules/domain/portion/modules/portion-input/components/portion-quantifier-input/portion-quantifier-input.component';
 import { RecipeInputSourcesListComponent } from '../../../../modules/domain/recipe/modules/recipe-input/components/recipe-input-sources-list/recipe-input-sources-list.component';
-import { MatButton } from '@angular/material/button';
 
 @Component({
   templateUrl: './add-recipe.component.html',

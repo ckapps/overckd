@@ -88,4 +88,4 @@ recipe:
 
   styles:
     imagesContainer: justify-content-end
-    secondaryImagesContainer: flex-column justify-content-between col-5 px-0
+    secondaryImagesContainer: flex-col justify-content-between col-5 px-0
