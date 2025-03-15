@@ -74,10 +74,7 @@ export const MockRecipeCollectionRespository: Reader<
   const repo = new RecipeCollectionRepo();
 
   return {
-    add: (...args) => repo.add(...args),
     getAll: (...args) => repo.getAll(...args),
     getById: (...args) => repo.getById(...args),
-    removeById: (...args) => repo.removeById(...args),
-    update: (...args) => repo.update(...args),
   };
 });

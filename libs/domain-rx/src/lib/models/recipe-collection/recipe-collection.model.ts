@@ -1,35 +1,44 @@
-import { RecipeCollection, CollectionRecipe } from '@overckd/domain';
+import { RecipeCollectionRepo } from '@_shared/recipe-collection/application';
+import { useContext } from '@marblejs/core';
 import {
-  CollectionRecipeDto,
-  RecipeCollectionDto,
-} from './recipe-collection.type';
+  RecipeCollectionFromObject,
+  RecipeCollectionId,
+  RecipeCollectionNotFound,
+} from '@overckd/domain-experimental';
+import { Effect, Layer, Option, Schema } from 'effect';
+import * as Arr from 'effect/Array';
+import * as Fn from 'effect/Function';
+import { firstValueFrom } from 'rxjs';
+import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
+import { RecipeCollectionRepositoryToken } from '../models.tokens';
 
-/**
- * Creates the data from the DTO.
- *
- * @param dto DTO
- */
-export function createCollectionRecipe(
-  dto: CollectionRecipeDto,
-): CollectionRecipe {
-  const { id, name } = dto;
-  return { id, name };
-}
+const decode = Schema.decodeSync(RecipeCollectionFromObject);
 
-/**
- * Creates the data from the DTO.
- *
- * @param dto DTO
- */
-export function createRecipeCollection(
-  dto: RecipeCollectionDto,
-): RecipeCollection {
-  const { id, recipes, name, description } = dto;
+export const RecipeCollectionRepoMarbleInterop = Layer.effect(
+  RecipeCollectionRepo,
+  Effect.gen(function* () {
+    const ctx = yield* MarbleJsContextProvider;
+    const repo = useContext(RecipeCollectionRepositoryToken)(ctx);
 
-  return {
-    id,
-    name,
-    description,
-    recipes: recipes.map(createCollectionRecipe),
-  };
-}
+    return {
+      findById: (id: RecipeCollectionId) =>
+        Effect.promise(() => firstValueFrom(repo.getById(id))).pipe(
+          Effect.map(Option.fromNullable),
+          Effect.flatMap(
+            Fn.flow(
+              Option.map(Effect.succeed),
+              Option.getOrElse(() =>
+                Effect.fail(RecipeCollectionNotFound.make({ id })),
+              ),
+            ),
+          ),
+          Effect.map(collection => decode(collection)),
+        ),
+      getAll: Effect.promise(() =>
+        firstValueFrom(repo.getAll().pipe(), {
+          defaultValue: [],
+        }),
+      ).pipe(Effect.map(Arr.map(c => decode(c)))),
+    };
+  }),
+);

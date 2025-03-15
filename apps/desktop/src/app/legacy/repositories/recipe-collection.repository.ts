@@ -1,20 +1,12 @@
 import { Context, createReader, useContext } from '@marblejs/core';
 import { RecipeCollectionRepository } from '@overckd/domain';
 import { Reader } from 'fp-ts/lib/Reader';
-import { defer, filter, first, from, map, mergeMap } from 'rxjs';
+import { defer, first, from } from 'rxjs';
 import { RecipeCollectionDbCollectionToken } from '../db/collections/db.collections.tokens';
-import { pluckData, pluckDataStrict, pluckManyData } from '../db/rxjs';
+import { pluckData, pluckManyData } from '../db/rxjs';
 import { RepositoryLogScope, scoped } from '../logging';
 
 const logger = scoped<RepositoryLogScope>(RepositoryLogScope.RecipeCollection);
-
-function isNull(value: unknown): value is null {
-  return value === null;
-}
-
-function isNotNull<T>(value: T | null): value is T {
-  return !isNull(value);
-}
 
 export const RecipeCollectionFileRespository: Reader<
   Context,
@@ -50,37 +42,9 @@ export const RecipeCollectionFileRespository: Reader<
       return from(findOneByIdQuery.eq(id).exec());
     }).pipe(pluckData(), first());
 
-  // ================================================================================
-  // Commands
-  const add: RecipeCollectionRepository['add'] = collection =>
-    from(recipeCollectionCollection.upsert(collection)).pipe(pluckDataStrict());
-
-  const removeById: RecipeCollectionRepository['removeById'] = id =>
-    findOneByIdQuery.eq(id).$.pipe(
-      filter(isNotNull),
-      first(),
-      mergeMap(value =>
-        from(value.remove()).pipe(
-          map(doc => {
-            if (!doc) {
-              // TODO(db): Make an error class
-              throw new Error('not found');
-            }
-            return doc.toMutableJSON();
-          }),
-        ),
-      ),
-    );
-
   return {
     // Queries
     getAll,
     getById,
-    // Commands
-    add,
-    removeById,
-    update: (c, id) => {
-      throw new Error('Method not implemented.');
-    },
   };
 });
