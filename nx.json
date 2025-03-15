@@ -111,8 +111,5 @@
       "style": "scss"
     }
   },
-  "nxCloudAccessToken": "YzM3ZWI4ODktNzY2MC00MmFmLThlNTEtNTAxZjlhZDJhM2FifHJlYWQtd3JpdGU=",
-  "useInferencePlugins": false,
-  "defaultBase": "main",
-  "defaultProject": "desktop"
+  "nxCloudAccessToken": "YzM3ZWI4ODktNzY2MC00MmFmLThlNTEtNTAxZjlhZDJhM2FifHJlYWQtd3JpdGU="
 }
