@@ -17,6 +17,9 @@
     "paths": {
       "@overckd/core": ["libs/core/src/index.ts"],
       "@overckd/domain": ["libs/domain/src/index.ts"],
+      "@overckd/domain-experimental": [
+        "libs/@overckd/domain-experimental/src/index.ts"
+      ],
       "@overckd/domain-rx": ["libs/domain-rx/src/index.ts"],
       "@overckd/server": ["libs/server/src/index.ts"],
       "@overckd/yaml": ["libs/yaml/src/index.ts"]
