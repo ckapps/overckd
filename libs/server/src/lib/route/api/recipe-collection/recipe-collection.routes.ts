@@ -1,7 +1,6 @@
 import { combineRoutes } from '@marblejs/http';
 import {
   getCollections$,
-  postRecipeCollection$,
   getCollectionsById$,
 } from './recipe-collection.effects';
 
@@ -13,6 +12,5 @@ import {
  */
 export const recipeCollectionRoutes$ = combineRoutes('/collections', [
   getCollections$,
-  postRecipeCollection$,
   getCollectionsById$,
 ]);

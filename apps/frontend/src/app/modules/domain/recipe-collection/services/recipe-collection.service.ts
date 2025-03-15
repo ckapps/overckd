@@ -11,13 +11,4 @@ export abstract class RecipeCollectionService
   abstract getAll(): Observable<RecipeCollection[]>;
 
   abstract getById(id: string): Observable<RecipeCollection>;
-
-  abstract add(collection: RecipeCollection): Observable<RecipeCollection>;
-
-  abstract removeById(id: string): Observable<RecipeCollection>;
-
-  abstract update(
-    collection: RecipeCollection,
-    id: string,
-  ): Observable<RecipeCollection>;
 }

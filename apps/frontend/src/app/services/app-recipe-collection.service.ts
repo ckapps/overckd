@@ -32,22 +32,4 @@ export class AppRecipeCollectionService implements RecipeCollectionService {
       this.#urlBuilder.urlFromSegments([this.#apiResource, id]),
     );
   }
-
-  add(collection: RecipeCollection): Observable<RecipeCollection> {
-    // TODO: request and update collections
-    throw new Error('Method not implemented.');
-  }
-
-  removeById(id: string): Observable<RecipeCollection> {
-    // TODO: request and update collections
-    throw new Error('Method not implemented.');
-  }
-
-  update(
-    collection: RecipeCollection,
-    id: string,
-  ): Observable<RecipeCollection> {
-    // TODO: request and update collections
-    throw new Error('Method not implemented.');
-  }
 }
