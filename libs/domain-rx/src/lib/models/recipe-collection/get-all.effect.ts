@@ -1,7 +1,8 @@
 import { RecipeCollectionUseCase } from '@_shared/recipe-collection/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
-import { Effect, Logger, LogLevel } from 'effect';
+import { RecipeCollectionFromObject } from '@overckd/domain-experimental';
+import { Effect, Logger, LogLevel, Schema } from 'effect';
 import * as Fn from 'effect/Function';
 import { from, map } from 'rxjs';
 import {
@@ -18,18 +19,21 @@ import {
 const createEvent = eventCreator(RecipeCollectionQueryType.GetAll);
 
 export const getAll: MsgEffect = (event$, ctx) => {
-  const getAll = RecipeCollectionUseCase.getAll.pipe(
-    Logger.withMinimumLogLevel(LogLevel.Debug),
-    Effect.provide(RecipeCollectionRepoMarbleInterop),
-    Effect.provideService(MarbleJsContextProvider, ctx.ask),
-  );
+  const getAll = RecipeCollectionUseCase.getAll
+    .pipe(
+      Effect.flatMap(Schema.encode(Schema.Array(RecipeCollectionFromObject))),
+    )
+    .pipe(
+      Logger.withMinimumLogLevel(LogLevel.Debug),
+      Effect.provide(RecipeCollectionRepoMarbleInterop),
+      Effect.provideService(MarbleJsContextProvider, ctx.ask),
+    );
 
   return event$.pipe(
     matchEvent(GetAllRecipeCollectionsEvent),
     act(event =>
       Fn.pipe(
-        undefined,
-        () => Effect.runPromise(getAll),
+        Effect.runPromise(getAll),
         result => from(result),
         map(payload =>
           reply(event)(createEvent(OverckdEventType.Result, { payload })),

@@ -12,33 +12,28 @@ import { firstValueFrom } from 'rxjs';
 import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
 import { RecipeCollectionRepositoryToken } from '../models.tokens';
 
-const decode = Schema.decodeSync(RecipeCollectionFromObject);
-
 export const RecipeCollectionRepoMarbleInterop = Layer.effect(
   RecipeCollectionRepo,
   Effect.gen(function* () {
     const ctx = yield* MarbleJsContextProvider;
     const repo = useContext(RecipeCollectionRepositoryToken)(ctx);
+    const decode = Schema.decodeSync(RecipeCollectionFromObject);
 
     return {
       findById: (id: RecipeCollectionId) =>
-        Effect.promise(() => firstValueFrom(repo.getById(id))).pipe(
+        Fn.pipe(
+          Effect.promise(() => firstValueFrom(repo.getById(id))),
           Effect.map(Option.fromNullable),
-          Effect.flatMap(
-            Fn.flow(
-              Option.map(Effect.succeed),
-              Option.getOrElse(() =>
-                Effect.fail(RecipeCollectionNotFound.make({ id })),
-              ),
-            ),
-          ),
-          Effect.map(collection => decode(collection)),
+          Effect.flatten,
+          Effect.map(decode),
+          Effect.mapError(() => RecipeCollectionNotFound.make({ id })),
         ),
-      getAll: Effect.promise(() =>
-        firstValueFrom(repo.getAll().pipe(), {
-          defaultValue: [],
-        }),
-      ).pipe(Effect.map(Arr.map(c => decode(c)))),
+      getAll: Fn.pipe(
+        Effect.promise(() =>
+          firstValueFrom(repo.getAll(), { defaultValue: [] }),
+        ),
+        Effect.map(Arr.map(c => decode(c))),
+      ),
     };
   }),
 );

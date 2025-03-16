@@ -2,8 +2,11 @@ import { RecipeCollectionUseCase } from '@_shared/recipe-collection/application'
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import { RecipeCollectionId } from '@overckd/domain-experimental';
-import { Effect, Logger, LogLevel } from 'effect';
+import {
+  RecipeCollectionFromObject,
+  RecipeCollectionId,
+} from '@overckd/domain-experimental';
+import { Effect, Logger, LogLevel, Schema } from 'effect';
 import { pipe } from 'effect/Function';
 import { from, map } from 'rxjs';
 import {
@@ -21,11 +24,13 @@ const createEvent = eventCreator(RecipeCollectionQueryType.GetById);
 
 export const getById: MsgEffect = (event$, ctx) => {
   const findById = (id: RecipeCollectionId) =>
-    RecipeCollectionUseCase.findById(id).pipe(
-      Logger.withMinimumLogLevel(LogLevel.Debug),
-      Effect.provide(RecipeCollectionRepoMarbleInterop),
-      Effect.provideService(MarbleJsContextProvider, ctx.ask),
-    );
+    RecipeCollectionUseCase.findById(id)
+      .pipe(Effect.flatMap(Schema.encode(RecipeCollectionFromObject)))
+      .pipe(
+        Logger.withMinimumLogLevel(LogLevel.Debug),
+        Effect.provide(RecipeCollectionRepoMarbleInterop),
+        Effect.provideService(MarbleJsContextProvider, ctx.ask),
+      );
 
   return event$.pipe(
     matchEvent(GetRecipeCollectionByIdEvent),
