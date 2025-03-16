@@ -1,16 +1,7 @@
-import { switchExpandItems } from '@ckapp/rxjs-snafu/lib/cjs/array/operators';
 import { Context, createReader } from '@marblejs/core';
-import {
-  BaseTag,
-  Page,
-  Tag,
-  TagQuery,
-  TagRepository,
-  asPagedResult,
-  filterTagsByQuery,
-} from '@overckd/domain';
+import { Tag, TagRepository } from '@overckd/domain';
 import { Reader } from 'fp-ts/lib/Reader';
-import { Observable, of, take, withLatestFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 import { InMemoryRepo } from './in-memory-repo';
 import { UriFactory } from './utils';
 
@@ -26,27 +17,8 @@ function makeTag(label: string, color?: string, icon?: string): Tag {
 }
 
 class TagRepo extends InMemoryRepo<Tag> implements TagRepository {
-  add(tag: BaseTag): Observable<Tag> {
-    return this._add(tag);
-  }
-  removeByUri(uri: string): Observable<Tag> {
-    return this._remove({ uri });
-  }
   getByUri(uri: string): Observable<Tag | undefined> {
     return this.findItem({ uri });
-  }
-  update(uri: string, tag: Tag): Observable<Tag | undefined> {
-    return this._update(tag);
-  }
-  findByQuery(query: TagQuery): Observable<Page<Tag>> {
-    const query$ = of(query);
-    const items$ = this.all.pipe(take(1), switchExpandItems());
-
-    return items$.pipe(
-      withLatestFrom(query$),
-      filterTagsByQuery(),
-      asPagedResult(),
-    );
   }
 
   equals(a: Tag, b: Tag): boolean {
@@ -65,10 +37,6 @@ export const MockTagRespository: Reader<Context, TagRepository> =
     const repo = new TagRepo(initialValue);
 
     return {
-      add: (...args) => repo.add(...args),
       getByUri: (...args) => repo.getByUri(...args),
-      findByQuery: (...args) => repo.findByQuery(...args),
-      removeByUri: (...args) => repo.removeByUri(...args),
-      update: (...args) => repo.update(...args),
     };
   });

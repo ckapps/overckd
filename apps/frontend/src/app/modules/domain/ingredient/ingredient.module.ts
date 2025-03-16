@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 // Module submodules
 import { IngredientCommonModule } from './modules/ingredient-common/ingredient-common.module';
-import { IngredientInputModule } from './modules/ingredient-input/ingredient-input.module';
 
 @NgModule({
   declarations: [],
@@ -11,12 +10,10 @@ import { IngredientInputModule } from './modules/ingredient-input/ingredient-inp
     CommonModule,
     // Module submodules
     IngredientCommonModule,
-    IngredientInputModule,
   ],
   exports: [
     // Module submodules
     IngredientCommonModule,
-    IngredientInputModule,
   ],
 })
 export class IngredientModule {}

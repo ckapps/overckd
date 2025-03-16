@@ -1,19 +1,30 @@
-import { act, matchEvent, useContext } from '@marblejs/core';
+import { TagUseCase } from '@_shared/tag/application';
+import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
+import { TagFromObject, TagId } from '@overckd/domain-experimental';
+import { Effect, Logger, LogLevel, Schema } from 'effect';
 import * as Fn from 'effect/Function';
-import { map } from 'rxjs';
+import { from, map } from 'rxjs';
 import {
   eventCreator,
   OverckdEventType,
 } from '../../core/events/event-creator';
-import { TagRepositoryToken } from '../../tokens';
+import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
+import { TagRepoMarbleInterop } from './tag.model';
 import { GetTagByIdEvent, TagQueryType } from './tag.query';
 
 const createEvent = eventCreator(TagQueryType.GetById);
 
 export const getByIdEffect: MsgEffect = (event$, ctx) => {
-  const repo = useContext(TagRepositoryToken)(ctx.ask);
+  const findById = (id: TagId) =>
+    TagUseCase.findById(id)
+      .pipe(Effect.flatMap(Schema.encode(TagFromObject)))
+      .pipe(
+        Logger.withMinimumLogLevel(LogLevel.Debug),
+        Effect.provide(TagRepoMarbleInterop),
+        Effect.provideService(MarbleJsContextProvider, ctx.ask),
+      );
 
   return event$.pipe(
     matchEvent(GetTagByIdEvent),
@@ -22,7 +33,9 @@ export const getByIdEffect: MsgEffect = (event$, ctx) => {
       Fn.pipe(
         // @ts-ignore
         event.payload.uri,
-        repo.getByUri,
+        TagId.make,
+        id => Effect.runPromise(findById(id)),
+        p => from(p),
         map(payload =>
           reply(event)(createEvent(OverckdEventType.Result, { payload })),
         ),
