@@ -13,8 +13,7 @@
         "main": "libs/@overckd/domain-experimental/src/index.ts",
         "tsConfig": "libs/@overckd/domain-experimental/tsconfig.lib.json",
         "assets": [],
-        "format": ["cjs"],
-        "generatePackageJson": true
+        "format": ["cjs"]
       }
     }
   }
