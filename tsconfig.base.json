@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@_shared/ingredient/infra-rxdb": [
+        "libs/shared/ingredient/infra-rxdb/src/index.ts"
+      ],
       "@_shared/recipe-collection/application": [
         "libs/shared/recipe-collection/application/src/index.ts"
       ],

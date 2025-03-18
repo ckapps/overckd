@@ -1,3 +1,4 @@
+import { createIngredientDbCollection } from '@_shared/ingredient/infra-rxdb';
 import { createRecipeCollectionDbCollection } from '@_shared/recipe-collection/infra-rxdb';
 import { createRecipeDbCollection } from '@_shared/recipe/infra-rxdb';
 import { createTagDbCollection } from '@_shared/tag/infra-rxdb';
@@ -20,7 +21,6 @@ import {
   RecipeDbCollectionToken,
   TagDbCollectionToken,
 } from './db.collections.tokens';
-import { createIngredientDbCollection } from './ingredients/ingredient.db.create';
 
 type DbCollectionDependencies = BoundDependency<unknown, ContextDependency>[];
 

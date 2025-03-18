@@ -1,0 +1,9 @@
+{
+  "name": "ingredient-infra-rxdb",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/ingredient/infra-rxdb/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project ingredient-infra-rxdb --web",
+  "targets": {}
+}
