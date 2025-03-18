@@ -1,0 +1,9 @@
+{
+  "name": "tag-infra-rxdb",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/tag/infra-rxdb/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project tag-infra-rxdb --web",
+  "targets": {}
+}
