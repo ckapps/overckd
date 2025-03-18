@@ -1,8 +1,8 @@
 import { RecipeCollectionRepo } from '@_shared/recipe-collection/application';
 import { useContext } from '@marblejs/core';
 import {
-  RecipeCollectionFromObject,
   RecipeCollectionId,
+  RecipeCollectionJson,
   RecipeCollectionNotFound,
 } from '@overckd/domain-experimental';
 import { Effect, Layer, Option, Schema } from 'effect';
@@ -17,7 +17,7 @@ export const RecipeCollectionRepoMarbleInterop = Layer.effect(
   Effect.gen(function* () {
     const ctx = yield* MarbleJsContextProvider;
     const repo = useContext(RecipeCollectionRepositoryToken)(ctx);
-    const decode = Schema.decodeSync(RecipeCollectionFromObject);
+    const decode = Schema.decodeSync(RecipeCollectionJson);
 
     return {
       findById: (id: RecipeCollectionId) =>

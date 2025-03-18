@@ -1,3 +1,4 @@
+import * as HttpApiSchema from '@effect/platform/HttpApiSchema';
 import * as Schema from 'effect/Schema';
 
 /**
@@ -16,14 +17,21 @@ export const TagId = Schema.NonEmptyString.pipe(
 /**
  * @category Models
  */
-export class Tag extends Schema.Class<Tag>('@overckd/Tag')({
-  /** tag URI. */
-  uri: TagId,
-  /** the tag label. */
-  label: Schema.NonEmptyString,
-  /** Tag icon. */
-  icon: Schema.OptionFromSelf(Schema.String),
-}) {}
+export class Tag extends Schema.Class<Tag>('@overckd/Tag')(
+  {
+    /** tag URI. */
+    uri: TagId,
+    /** the tag label. */
+    label: Schema.NonEmptyString,
+    /** Tag icon. */
+    icon: Schema.OptionFromSelf(Schema.String),
+  },
+  {
+    identifier: 'Tag',
+    title: 'Tag',
+    description: 'A tag to apply to entities',
+  },
+) {}
 
 /**
  * @category Errors
@@ -31,11 +39,8 @@ export class Tag extends Schema.Class<Tag>('@overckd/Tag')({
 export class TagNotFound extends Schema.TaggedError<TagNotFound>()(
   'TagNotFound',
   { id: TagId },
+  HttpApiSchema.annotations({ status: 404 }),
 ) {}
-
-/**
- * @category Models
- */
 
 /**
  * @category instances
@@ -50,7 +55,7 @@ export const TagIdFromString = Schema.String.pipe(Schema.compose(TagId));
 /**
  * @category Schemas
  */
-export const TagFromObject = Schema.Struct({
+export const TagFromJson = Schema.Struct({
   uri: TagIdFromString,
   label: Schema.NonEmptyString,
   icon: Schema.optionalWith(Schema.NonEmptyString, {

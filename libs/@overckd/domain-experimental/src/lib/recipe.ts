@@ -1,4 +1,3 @@
-import { RecipeRef } from './internal/recipe-ref.model';
-import { RecipeId } from './internal/recipe-shared.model';
+import { RecipeId, RecipeRef } from './internal/recipe.model';
 
 export { RecipeId, RecipeRef };

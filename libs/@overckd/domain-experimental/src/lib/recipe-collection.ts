@@ -1,13 +1,15 @@
-import { RecipeCollectionId } from './internal/recipe-collection-shared.model';
 import {
   RecipeCollection,
-  RecipeCollectionFromObject,
+  RecipeCollectionId,
+  RecipeCollectionIdFromString,
+  RecipeCollectionJson,
   RecipeCollectionNotFound,
 } from './internal/recipe-collection.model';
 
 export {
   RecipeCollection,
-  RecipeCollectionFromObject,
   RecipeCollectionId,
+  RecipeCollectionIdFromString,
+  RecipeCollectionJson,
   RecipeCollectionNotFound,
 };

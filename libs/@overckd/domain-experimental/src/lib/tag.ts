@@ -1,3 +1,3 @@
-import { Tag, TagFromObject, TagId, TagNotFound } from './internal/tag.model';
+import { Tag, TagFromJson, TagId, TagNotFound } from './internal/tag.model';
 
-export { Tag, TagFromObject, TagId, TagNotFound };
+export { Tag, TagFromJson, TagId, TagNotFound };

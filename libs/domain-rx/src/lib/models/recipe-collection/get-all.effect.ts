@@ -1,7 +1,7 @@
 import { RecipeCollectionUseCase } from '@_shared/recipe-collection/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
-import { RecipeCollectionFromObject } from '@overckd/domain-experimental';
+import { RecipeCollectionJson } from '@overckd/domain-experimental';
 import { Effect, Logger, LogLevel, Schema } from 'effect';
 import * as Fn from 'effect/Function';
 import { from, map } from 'rxjs';
@@ -20,9 +20,7 @@ const createEvent = eventCreator(RecipeCollectionQueryType.GetAll);
 
 export const getAll: MsgEffect = (event$, ctx) => {
   const getAll = RecipeCollectionUseCase.getAll
-    .pipe(
-      Effect.flatMap(Schema.encode(Schema.Array(RecipeCollectionFromObject))),
-    )
+    .pipe(Effect.flatMap(Schema.encode(Schema.Array(RecipeCollectionJson))))
     .pipe(
       Logger.withMinimumLogLevel(LogLevel.Debug),
       Effect.provide(RecipeCollectionRepoMarbleInterop),

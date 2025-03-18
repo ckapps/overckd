@@ -1,10 +1,6 @@
 import { TagRepo } from '@_shared/tag/application';
 import { useContext } from '@marblejs/core';
-import {
-  TagFromObject,
-  TagId,
-  TagNotFound,
-} from '@overckd/domain-experimental';
+import { TagFromJson, TagId, TagNotFound } from '@overckd/domain-experimental';
 import { Effect, Layer, Option, Schema } from 'effect';
 import * as Fn from 'effect/Function';
 import { firstValueFrom } from 'rxjs';
@@ -16,7 +12,7 @@ export const TagRepoMarbleInterop = Layer.effect(
   Effect.gen(function* () {
     const ctx = yield* MarbleJsContextProvider;
     const repo = useContext(TagRepositoryToken)(ctx);
-    const decode = Schema.decodeSync(TagFromObject);
+    const decode = Schema.decodeSync(TagFromJson);
 
     return {
       findById: (id: TagId) =>
