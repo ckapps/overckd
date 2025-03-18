@@ -1,3 +1,4 @@
+import { createRecipeCollectionDbCollection } from '@_shared/recipe-collection/infra-rxdb';
 import {
   logEnterExit,
   LogLevel,
@@ -18,7 +19,6 @@ import {
   TagDbCollectionToken,
 } from './db.collections.tokens';
 import { createIngredientDbCollection } from './ingredients/ingredient.db.create';
-import { createRecipeCollectionDbCollection } from './recipe-collection/recipe-collection.db.create';
 import { createRecipeDbCollection } from './recipe/recipe.db.create';
 import { createTagDbCollection } from './tag/tag.db.create';
 
