@@ -21,6 +21,9 @@
       "@_shared/recipe-collection/infra-rxdb": [
         "libs/shared/recipe-collection/infra-rxdb/src/index.ts"
       ],
+      "@_shared/recipe/infra-rxdb": [
+        "libs/shared/recipe/infra-rxdb/src/index.ts"
+      ],
       "@_shared/tag/application": ["libs/shared/tag/application/src/index.ts"],
       "@_shared/tag/infra-rxdb": ["libs/shared/tag/infra-rxdb/src/index.ts"],
       "@overckd/core": ["libs/core/src/index.ts"],
