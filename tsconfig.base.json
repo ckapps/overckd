@@ -18,6 +18,9 @@
       "@_shared/recipe-collection/application": [
         "libs/shared/recipe-collection/application/src/index.ts"
       ],
+      "@_shared/recipe-collection/infra-rxdb": [
+        "libs/shared/recipe-collection/infra-rxdb/src/index.ts"
+      ],
       "@_shared/tag/application": ["libs/shared/tag/application/src/index.ts"],
       "@overckd/core": ["libs/core/src/index.ts"],
       "@overckd/domain": ["libs/domain/src/index.ts"],
