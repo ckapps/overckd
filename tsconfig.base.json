@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@_backend/overckd/adapter-rest": [
+        "libs/backend/overckd/adapter-rest/src/index.ts"
+      ],
       "@_backend/recipe-collection/adapter-rest": [
         "libs/backend/recipe-collection/adapter-rest/src/index.ts"
       ],
