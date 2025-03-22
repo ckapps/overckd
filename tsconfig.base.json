@@ -15,23 +15,23 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@_backend/collection/adapter-rest": [
+        "libs/backend/collection/adapter-rest/src/index.ts"
+      ],
+      "@_backend/collection/infra-http": [
+        "libs/backend/collection/infra-http/src/index.ts"
+      ],
       "@_backend/overckd/adapter-rest": [
         "libs/backend/overckd/adapter-rest/src/index.ts"
       ],
-      "@_backend/recipe-collection/adapter-rest": [
-        "libs/backend/recipe-collection/adapter-rest/src/index.ts"
+      "@_shared/collection/application": [
+        "libs/shared/collection/application/src/index.ts"
       ],
-      "@_backend/recipe-collection/infra-http": [
-        "libs/backend/recipe-collection/infra-http/src/index.ts"
+      "@_shared/collection/infra-rxdb": [
+        "libs/shared/collection/infra-rxdb/src/index.ts"
       ],
       "@_shared/ingredient/infra-rxdb": [
         "libs/shared/ingredient/infra-rxdb/src/index.ts"
-      ],
-      "@_shared/recipe-collection/application": [
-        "libs/shared/recipe-collection/application/src/index.ts"
-      ],
-      "@_shared/recipe-collection/infra-rxdb": [
-        "libs/shared/recipe-collection/infra-rxdb/src/index.ts"
       ],
       "@_shared/recipe/infra-rxdb": [
         "libs/shared/recipe/infra-rxdb/src/index.ts"

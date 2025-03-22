@@ -1,5 +1,5 @@
 import { createIngredientDbCollection } from '@_shared/ingredient/infra-rxdb';
-import { createRecipeCollectionDbCollection } from '@_shared/recipe-collection/infra-rxdb';
+import { createRecipeCollectionDbCollection } from '@_shared/collection/infra-rxdb';
 import { createRecipeDbCollection } from '@_shared/recipe/infra-rxdb';
 import { createTagDbCollection } from '@_shared/tag/infra-rxdb';
 import {
