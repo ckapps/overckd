@@ -24,13 +24,15 @@ const createEvent = eventCreator(RecipeCollectionQueryType.GetById);
 
 export const getById: MsgEffect = (event$, ctx) => {
   const findById = (id: RecipeCollectionId) =>
-    RecipeCollectionUseCase.findById(id)
-      .pipe(Effect.flatMap(Schema.encode(RecipeCollectionJson)))
-      .pipe(
-        Logger.withMinimumLogLevel(LogLevel.Debug),
-        Effect.provide(RecipeCollectionRepoMarbleInterop),
-        Effect.provideService(MarbleJsContextProvider, ctx.ask),
-      );
+    RecipeCollectionUseCase.pipe(
+      Effect.flatMap(useCases => useCases.findById(id)),
+      Effect.flatMap(Schema.encode(RecipeCollectionJson)),
+    ).pipe(
+      Logger.withMinimumLogLevel(LogLevel.Debug),
+      Effect.provide(RecipeCollectionUseCase.Default),
+      Effect.provide(RecipeCollectionRepoMarbleInterop),
+      Effect.provideService(MarbleJsContextProvider, ctx.ask),
+    );
 
   return event$.pipe(
     matchEvent(GetRecipeCollectionByIdEvent),
