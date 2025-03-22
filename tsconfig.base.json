@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@_backend/recipe-collection/adapter-rest": [
+        "libs/backend/recipe-collection/adapter-rest/src/index.ts"
+      ],
       "@_shared/ingredient/infra-rxdb": [
         "libs/shared/ingredient/infra-rxdb/src/index.ts"
       ],
