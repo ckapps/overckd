@@ -1,9 +1,9 @@
 import { NodeRuntime } from '@effect/platform-node';
 import { Layer } from 'effect';
 import { HttpLive } from './app.http';
-import { RecipeCollectionTestRepo } from './recipe-collection.repo';
+import { CollectionTestRepo } from './collection.repo';
 
-const TestReposLive = RecipeCollectionTestRepo;
+const TestReposLive = CollectionTestRepo;
 
 HttpLive.pipe(
   // Provide repositories

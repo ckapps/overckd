@@ -1,11 +1,8 @@
-import { RecipeCollectionUseCase } from '@_shared/recipe-collection/application';
+import { CollectionUseCase } from '@_shared/collection/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import {
-  RecipeCollectionId,
-  RecipeCollectionJson,
-} from '@overckd/domain-experimental';
+import { CollectionId, CollectionJson } from '@overckd/domain-experimental';
 import { Effect, Logger, LogLevel, Schema } from 'effect';
 import { pipe } from 'effect/Function';
 import { from, map } from 'rxjs';
@@ -23,13 +20,13 @@ import {
 const createEvent = eventCreator(RecipeCollectionQueryType.GetById);
 
 export const getById: MsgEffect = (event$, ctx) => {
-  const findById = (id: RecipeCollectionId) =>
-    RecipeCollectionUseCase.pipe(
+  const findById = (id: CollectionId) =>
+    CollectionUseCase.pipe(
       Effect.flatMap(useCases => useCases.findById(id)),
-      Effect.flatMap(Schema.encode(RecipeCollectionJson)),
+      Effect.flatMap(Schema.encode(CollectionJson)),
     ).pipe(
       Logger.withMinimumLogLevel(LogLevel.Debug),
-      Effect.provide(RecipeCollectionUseCase.Default),
+      Effect.provide(CollectionUseCase.Default),
       Effect.provide(RecipeCollectionRepoMarbleInterop),
       Effect.provideService(MarbleJsContextProvider, ctx.ask),
     );
@@ -41,7 +38,7 @@ export const getById: MsgEffect = (event$, ctx) => {
       pipe(
         // @ts-ignore
         event.payload.id,
-        RecipeCollectionId.make,
+        CollectionId.make,
         id => Effect.runPromise(findById(id)),
         result => from(result),
         map(payload =>
