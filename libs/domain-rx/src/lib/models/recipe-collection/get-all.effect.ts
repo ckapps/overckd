@@ -19,13 +19,15 @@ import {
 const createEvent = eventCreator(RecipeCollectionQueryType.GetAll);
 
 export const getAll: MsgEffect = (event$, ctx) => {
-  const getAll = RecipeCollectionUseCase.getAll
-    .pipe(Effect.flatMap(Schema.encode(Schema.Array(RecipeCollectionJson))))
-    .pipe(
-      Logger.withMinimumLogLevel(LogLevel.Debug),
-      Effect.provide(RecipeCollectionRepoMarbleInterop),
-      Effect.provideService(MarbleJsContextProvider, ctx.ask),
-    );
+  const getAll = RecipeCollectionUseCase.pipe(
+    Effect.flatMap(useCases => useCases.getAll),
+    Effect.flatMap(Schema.encode(Schema.Array(RecipeCollectionJson))),
+  ).pipe(
+    Logger.withMinimumLogLevel(LogLevel.Debug),
+    Effect.provide(RecipeCollectionUseCase.Default),
+    Effect.provide(RecipeCollectionRepoMarbleInterop),
+    Effect.provideService(MarbleJsContextProvider, ctx.ask),
+  );
 
   return event$.pipe(
     matchEvent(GetAllRecipeCollectionsEvent),

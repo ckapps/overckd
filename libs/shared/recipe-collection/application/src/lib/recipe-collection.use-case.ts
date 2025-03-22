@@ -1,21 +1,25 @@
 import { RecipeCollectionId } from '@overckd/domain-experimental';
-import { Effect } from 'effect';
+import { Effect, pipe } from 'effect';
 import { RecipeCollectionRepo } from './recipe-collection.repostitory';
 
-/**
- * Get all recipe collections.
- */
-export const getAll = Effect.gen(function* () {
-  const repo = yield* RecipeCollectionRepo;
-  return yield* repo.getAll;
-}).pipe(Effect.withSpan('RecipeCollection.getAll'));
+export class RecipeCollectionUseCase extends Effect.Service<RecipeCollectionUseCase>()(
+  'RecipeCollection',
+  {
+    effect: Effect.gen(function* () {
+      const repo = yield* RecipeCollectionRepo;
 
-/**
- * Find a recipe collection by its id.
- * @param id Id of the recipe collection
- */
-export const findById = (id: RecipeCollectionId) =>
-  Effect.gen(function* () {
-    const repo = yield* RecipeCollectionRepo;
-    return yield* repo.findById(id);
-  }).pipe(Effect.withSpan('RecipeCollection.findById', { attributes: { id } }));
+      const getAll = repo.getAll.pipe(
+        Effect.withSpan('RecipeCollection.getAll'),
+      );
+
+      const findById = (id: RecipeCollectionId) =>
+        pipe(
+          repo.findById(id),
+          Effect.withSpan('RecipeCollection.findById', { attributes: { id } }),
+          // policyRequire("Person", "read")
+        );
+
+      return { getAll, findById } as const;
+    }),
+  },
+) {}
