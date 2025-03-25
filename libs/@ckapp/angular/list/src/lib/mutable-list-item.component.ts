@@ -8,6 +8,5 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'ckad-mutable-list-item',
   templateUrl: './mutable-list-item.component.html',
-  styleUrls: ['./mutable-list-item.component.scss'],
 })
 export class CkadMutableListItemComponent {}

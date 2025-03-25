@@ -50,6 +50,8 @@
       "@_shared/tag/infra-rxdb": ["libs/shared/tag/infra-rxdb/src/index.ts"],
       "@_shared/ui": ["libs/shared/ui/src/index.ts"],
       "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
+      "@ckapp/angular/button": ["libs/@ckapp/angular/button/src/index.ts"],
+      "@ckapp/angular/list": ["libs/@ckapp/angular/list/src/index.ts"],
       "@ckapp/angular/main-menu": [
         "libs/@ckapp/angular/main-menu/src/index.ts"
       ],

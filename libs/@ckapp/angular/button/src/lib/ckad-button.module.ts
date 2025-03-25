@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CkadButtonRaisedComponent } from './components/button-raised/button-raised.component';
-import { CkadButtonButtonComponent } from './components/button/button.component';
+import { CkadButtonRaisedComponent } from './button-raised.component';
+import { CkadButtonButtonComponent } from './button.component';
 
 /**
  * Module that exposes buttons
