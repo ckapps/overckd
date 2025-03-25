@@ -1,16 +1,16 @@
+import { IconsModule } from '@_shared/ui';
 import { NgStyle } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { MatChip } from '@angular/material/chips';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ColorService } from '@ckapp/angular';
 import { IconName, IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Tag } from '@overckd/domain';
-import { ColorService } from '../../../../../../ckapps-design-system/ckad-core/services/color.service';
 
 @Component({
   selector: 'overckd-tag-chip',
   templateUrl: './tag-chip.component.html',
   styleUrls: ['./tag-chip.component.scss'],
-  imports: [MatChip, NgStyle, FontAwesomeModule],
+  imports: [MatChip, NgStyle, IconsModule],
 })
 export class TagChipComponent {
   readonly #colorService = inject(ColorService);
