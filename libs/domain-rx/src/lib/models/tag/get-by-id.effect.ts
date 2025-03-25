@@ -18,13 +18,15 @@ const createEvent = eventCreator(TagQueryType.GetById);
 
 export const getByIdEffect: MsgEffect = (event$, ctx) => {
   const findById = (id: TagId) =>
-    TagUseCase.findById(id)
-      .pipe(Effect.flatMap(Schema.encode(TagFromJson)))
-      .pipe(
-        Logger.withMinimumLogLevel(LogLevel.Debug),
-        Effect.provide(TagRepoMarbleInterop),
-        Effect.provideService(MarbleJsContextProvider, ctx.ask),
-      );
+    TagUseCase.pipe(
+      Effect.flatMap(useCases => useCases.findById(id)),
+      Effect.flatMap(Schema.encode(TagFromJson)),
+    ).pipe(
+      Logger.withMinimumLogLevel(LogLevel.Debug),
+      Effect.provide(TagUseCase.Default),
+      Effect.provide(TagRepoMarbleInterop),
+      Effect.provideService(MarbleJsContextProvider, ctx.ask),
+    );
 
   return event$.pipe(
     matchEvent(GetTagByIdEvent),

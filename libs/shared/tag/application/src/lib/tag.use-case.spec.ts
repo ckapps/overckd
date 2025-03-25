@@ -2,26 +2,34 @@ import { Tag, TagId } from '@overckd/domain-experimental';
 import { Effect, Option } from 'effect';
 import { describe, it, vi } from 'vitest';
 import { TagRepo } from './tag.repostitory';
-import * as UseCase from './tag.use-case';
+import { TagUseCase } from './tag.use-case';
 
 describe('Tag/use-case', () => {
-  const recipeCollection = Tag.make({
+  const tag = Tag.make({
     uri: TagId.make('id'),
     label: 'name',
     icon: Option.none(),
   });
 
-  describe('getfindByIdAll', () => {
+  describe('findById', () => {
     const repo: any = {
-      findById: vi.fn(() => Effect.succeed([recipeCollection])),
+      findById: vi.fn(() => Effect.succeed([tag])),
     };
 
+    const findById = (id: TagId) =>
+      Effect.gen(function* () {
+        const uc = yield* TagUseCase;
+        return yield* uc.findById(id);
+      });
+
     it('should return all from repo', () => {
-      const uri = recipeCollection.uri;
       const result = Effect.runSync(
-        UseCase.findById(uri).pipe(Effect.provideService(TagRepo, repo)),
+        findById(tag.uri).pipe(
+          Effect.provide(TagUseCase.Default),
+          Effect.provideService(TagRepo, repo),
+        ),
       );
-      expect(result).toEqual([recipeCollection]);
+      expect(result).toEqual([tag]);
     });
   });
 });
