@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { CkadListItemComponent } from './components/list-item/list-item.component';
-import { CkadListComponent } from './components/list/list.component';
-import { CkadMutableListItemComponent } from './components/mutable-list-item/mutable-list-item.component';
-import { CkadMutableListComponent } from './components/mutable-list/mutable-list.component';
+import { CkadListItemComponent } from './list-item.component';
+import { CkadListComponent } from './list.component';
+import { CkadMutableListItemComponent } from './mutable-list-item.component';
+import { CkadMutableListComponent } from './mutable-list.component';
 
 /**
  * **ckapps design/module**

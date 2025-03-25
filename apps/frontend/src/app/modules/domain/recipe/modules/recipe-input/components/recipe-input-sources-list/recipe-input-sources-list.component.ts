@@ -2,15 +2,19 @@ import { AsyncPipe } from '@angular/common';
 import { Component, forwardRef, input, OnInit, signal } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import {
+  CkadButtonButtonComponent,
+  CkadButtonRaisedComponent,
+} from '@ckapp/angular/button';
+import {
+  CkadMutableListComponent,
+  CkadMutableListItemComponent,
+} from '@ckapp/angular/list';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { RecipeBaseLink } from '@overckd/domain';
 import * as Fn from 'effect/Function';
 import { BehaviorSubject, map, Subject, switchMap, tap } from 'rxjs';
-import { CkadButtonRaisedComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-button/components/button-raised/button-raised.component';
-import { CkadButtonButtonComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-button/components/button/button.component';
-import { CkadMutableListItemComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-list/components/mutable-list-item/mutable-list-item.component';
-import { CkadMutableListComponent } from '../../../../../../ckapps-design-system/ckad-ui-common/ckad-list/components/mutable-list/mutable-list.component';
 import { RecipeInputSourceComponent } from '../recipe-input-source/recipe-input-source.component';
 
 /**

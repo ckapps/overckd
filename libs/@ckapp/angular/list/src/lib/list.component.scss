@@ -1,6 +1,7 @@
-@import './list.variables.scss';
-
 @mixin ckad-list() {
+  // Variables for list
+  $ckad-list--default--border-radius: 0.25rem !default;
+
   display: flex;
   flex-direction: column;
   padding-left: 0;

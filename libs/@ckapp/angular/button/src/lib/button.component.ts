@@ -1,7 +1,7 @@
 import { Component, HostBinding, input } from '@angular/core';
 import { MatButton } from '@angular/material/button';
 import { ThemePalette } from '@angular/material/core';
-import { CkadButtonBase } from '../../button-base.type';
+import { CkadButtonBase } from './button-base.type';
 
 @Component({
   selector: 'ckad-button',
