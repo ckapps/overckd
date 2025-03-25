@@ -1,10 +1,12 @@
 import { Component, input } from '@angular/core';
 import { MatListItem, MatNavList } from '@angular/material/list';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import {
+  CkadMainMenuGroupComponent,
+  CkadMainMenuItemComponent,
+} from '@ckapp/angular/main-menu';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
 import { RecipeCollection } from '@overckd/domain';
-import { CkadMainMenuGroupComponent } from '../../../../ckapps-design-system/ckad-ui-common/ckad-main-menu/components/main-menu-group/main-menu-group.component';
-import { CkadMainMenuItemComponent } from '../../../../ckapps-design-system/ckad-ui-common/ckad-main-menu/components/main-menu-item/main-menu-item.component';
 
 @Component({
   selector: 'overckd-collections-main-menu-group',

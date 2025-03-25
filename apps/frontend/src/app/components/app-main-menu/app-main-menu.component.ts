@@ -3,6 +3,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
+import { CkadMainMenuModule } from '@ckapp/angular/main-menu';
 import {
   faFileContract,
   faHome,
@@ -10,7 +11,6 @@ import {
   faUtensils,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
-import { CkadUiCommonModule } from '../../modules/ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { RecipeCollectionModule } from '../../modules/domain/recipe-collection/recipe-collection.module';
 import { RecipeCollectionService } from '../../modules/domain/recipe-collection/services/recipe-collection.service';
 
@@ -26,7 +26,7 @@ import { RecipeCollectionService } from '../../modules/domain/recipe-collection/
     MatListModule,
     RouterModule,
     RecipeCollectionModule,
-    CkadUiCommonModule,
+    CkadMainMenuModule,
     SharedUiModule,
   ],
 })

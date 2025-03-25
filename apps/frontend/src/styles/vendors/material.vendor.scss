@@ -50,4 +50,3 @@ $overckd-app-theme: mat.m2-define-light-theme(
 
 // Themeing our components
 @import '../../app/modules/ckapps-design-system/ckad-ui-common/ckad-ui-common.module.scss';
-@include ckapps-main-menu-item-theme($overckd-app-theme);

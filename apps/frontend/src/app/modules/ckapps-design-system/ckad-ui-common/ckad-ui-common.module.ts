@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 // Submodules
 import { CkadButtonModule } from './ckad-button/ckad-button.module';
 import { CkadInputModule } from './ckad-input/ckad-input.module';
 import { CkadListModule } from './ckad-list/ckad-list.module';
-import { CkadMainMenuModule } from './ckad-main-menu/ckad-main-menu.module';
 
 @NgModule({
   declarations: [],
@@ -15,13 +14,7 @@ import { CkadMainMenuModule } from './ckad-main-menu/ckad-main-menu.module';
     CkadButtonModule,
     CkadInputModule,
     CkadListModule,
-    CkadMainMenuModule,
   ],
-  exports: [
-    CkadButtonModule,
-    CkadInputModule,
-    CkadListModule,
-    CkadMainMenuModule,
-  ],
+  exports: [CkadButtonModule, CkadInputModule, CkadListModule],
 })
 export class CkadUiCommonModule {}
