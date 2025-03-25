@@ -1,7 +1,7 @@
 import * as O from 'effect/Option';
 import * as Schema from 'effect/Schema';
 import { describe, expect, it } from 'vitest';
-import { Tag, TagFromObject, TagId } from './tag.model';
+import { Tag, TagFromJson, TagId } from './tag.model';
 
 describe('Tag', () => {
   it('should make a new tag', () => {
@@ -14,8 +14,8 @@ describe('Tag', () => {
     expect(tag).toBeDefined();
   });
 
-  describe('TagFromObject', () => {
-    const decode = Schema.decodeSync(TagFromObject);
+  describe('TagFromJson', () => {
+    const decode = Schema.decodeSync(TagFromJson);
 
     it('should make a new tag from an object', () => {
       const tag = decode({
