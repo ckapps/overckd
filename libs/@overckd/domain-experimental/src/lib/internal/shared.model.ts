@@ -18,3 +18,26 @@ export const OptionNonEmptyString = Schema.optionalWith(Schema.NonEmptyString, {
   nullable: true,
   as: 'Option',
 });
+
+/**
+ * @category Symbols
+ */
+export const HtmlStringTypeId: unique symbol = Symbol.for(
+  '@overckd/HtmlString',
+);
+
+/**
+ * @category Models
+ */
+export type HtmlString = typeof HtmlString.Type;
+export const HtmlString = Schema.String.pipe(
+  Schema.brand(HtmlStringTypeId),
+).annotations({ identifier: 'HtmlString' });
+
+/**
+ * @category Models
+ */
+export type NonEmptyHtmlString = typeof HtmlString.Type;
+export const NonEmptyHtmlString = Schema.NonEmptyString.pipe(
+  Schema.brand(HtmlStringTypeId),
+).annotations({ identifier: 'HtmlString' });
