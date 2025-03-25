@@ -1,4 +1,4 @@
-@import '../../../styles/overckd.base.scss';
+@import '../../../styles/overckd.variables.scss';
 
 :host {
   height: 100%;
@@ -8,12 +8,6 @@
   place-items: center;
 
   font-family: $font-heading1;
-
-  // background: radial-gradient(
-  //   circle at center,
-  //   lighten($ckad-body--background-color, 5%) 50%,
-  //   $ckad-body--background-color 100%
-  // );
 }
 .title {
   line-height: 1.2;

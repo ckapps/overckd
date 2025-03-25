@@ -1,6 +1,4 @@
-@use '../../../../modules/ckapps-design-system/ckad-ui-core/scss/mixins/page.mixin.scss'
-  as ckad-page;
-
 :host {
-  @include ckad-page.ckad-page-default();
+  @apply block w-full min-h-full overflow-auto;
+  @apply bg-white p-20;
 }
