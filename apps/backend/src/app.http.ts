@@ -6,7 +6,7 @@ import {
   HttpMiddleware,
   HttpServer,
 } from '@effect/platform';
-import { NodeHttpServer } from '@effect/platform-node';
+import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import { Layer } from 'effect';
 import { createServer } from 'http';
 

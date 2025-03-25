@@ -2093,46 +2093,48 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.6.3.tgz#f13c7c205915eb91ae54c557f5e92bddd8be0e83"
   integrity sha512-4B4OijXeVNOPZlYA2oEwWOTkzyltLao+xbotHQeqN++Rv27Y6s818+n2Qkp8q+Fxhn0t/5lA5X1Mxktud8eayQ==
 
-"@effect/cli@^0.57.0":
-  version "0.57.0"
-  resolved "https://registry.yarnpkg.com/@effect/cli/-/cli-0.57.0.tgz#97f230339db77de012c2d642d28b5625df3fce2c"
-  integrity sha512-okk88B9e9bPJ0LrcVcLSAdiOklWwQvw/NFZzr2N8NbRnFPJ2mWy+Op3pvaypZxJT9vwGTDT+tBMqLL9A/lFU8A==
+"@effect/cli@^0.59.1":
+  version "0.59.1"
+  resolved "https://registry.yarnpkg.com/@effect/cli/-/cli-0.59.1.tgz#d67ad944cf570d800440477693ef0597b449e30a"
+  integrity sha512-d4LM+fk9n5PRbz9/CCiKq+/e8Ztid0u6co6R14ITH9n7FJlG99NGpt8aMn2E+wCjOiCUox+Q85oNEFyVPkvXYA==
   dependencies:
     ini "^4.1.3"
     toml "^3.0.0"
     yaml "^2.5.0"
 
-"@effect/platform-browser@^0.57.0":
-  version "0.57.0"
-  resolved "https://registry.yarnpkg.com/@effect/platform-browser/-/platform-browser-0.57.0.tgz#b82cdddb1e54f2dc566937a1d9c9f1df7b766aac"
-  integrity sha512-CDXvRSehCElYt566lHRQxRIXjE+un+uTDGS94h4Zk1j6RNIZR1ZAE4biMVF7tRX0aWS//VVdVryaegpnr8i2ag==
+"@effect/platform-browser@^0.59.1":
+  version "0.59.1"
+  resolved "https://registry.yarnpkg.com/@effect/platform-browser/-/platform-browser-0.59.1.tgz#a24d0271f17c5cabbd03d89d2243ad1f8dcc85fd"
+  integrity sha512-wE9rljYnbp6N/XKr9gHHoiXcWYhKCVPdETVKhieuAbk7TFk4HrqCw141QUyfX49Z3gkV6+RdycFHicQjQpepAA==
   dependencies:
     multipasta "^0.2.5"
 
-"@effect/platform-node-shared@^0.28.0":
-  version "0.28.0"
-  resolved "https://registry.yarnpkg.com/@effect/platform-node-shared/-/platform-node-shared-0.28.0.tgz#aee635d25581c07ed34dcde0b4189be0b4963958"
-  integrity sha512-Pxf7i8oKr4yDkOnzhxgQ96so0/joFDXOlbjBCOBBA6wn2ZPj+ycbk/6/B6E4cLURp/Mt9VAEr5Dxn8bj+5PLew==
+"@effect/platform-node-shared@^0.30.4":
+  version "0.30.4"
+  resolved "https://registry.yarnpkg.com/@effect/platform-node-shared/-/platform-node-shared-0.30.4.tgz#25bb4492a6fa772c6424ff4a298f54a4fcb3b993"
+  integrity sha512-0bhT6nOspiRyAnMkkIhLDQHXE1TqLG7V54BoqdzNIIsUE7OG/BXTdVKa764J5+14dzM6KGP7L8dvhoGecn14qQ==
   dependencies:
     "@parcel/watcher" "^2.4.1"
     multipasta "^0.2.5"
+    ws "^8.18.0"
 
-"@effect/platform-node@^0.74.0":
-  version "0.74.0"
-  resolved "https://registry.yarnpkg.com/@effect/platform-node/-/platform-node-0.74.0.tgz#1756feac7948214fcb3e6e178b8fe7fdc865ff67"
-  integrity sha512-gPUcLaqAdMvV+QhkQnqjxxEUcvPvamnpRue2n6b2TMqy00XJAtOdtjYoUaT1ILPEL/3ZYfUSKswivZehV9nEnQ==
+"@effect/platform-node@^0.76.4":
+  version "0.76.4"
+  resolved "https://registry.yarnpkg.com/@effect/platform-node/-/platform-node-0.76.4.tgz#54fd9c9f071844a88730bd557fe956af9c31fdd5"
+  integrity sha512-Tmb7e+iN/cT6Kl0xaI56+4rXyOsBNr/SBtZai7DCxoZWVgAFePfS8QXSaI1bb037PbOll2zg+krhAOx72Tj1zA==
   dependencies:
-    "@effect/platform-node-shared" "^0.28.0"
+    "@effect/platform-node-shared" "^0.30.4"
     mime "^3.0.0"
     undici "^7.1.0"
     ws "^8.18.0"
 
-"@effect/platform@^0.78.0":
-  version "0.78.0"
-  resolved "https://registry.yarnpkg.com/@effect/platform/-/platform-0.78.0.tgz#a04ae528c214d164e8a975ce9ebccfa101ca01a5"
-  integrity sha512-2vGIfBtPO7zPioVy4wmSbeF0VWfj3GLpB9+6JT7K0lZVeYogHF2GTuPDB87xMILw86Ecz9iR98JuA9Co7PgxKQ==
+"@effect/platform@^0.80.1":
+  version "0.80.1"
+  resolved "https://registry.yarnpkg.com/@effect/platform/-/platform-0.80.1.tgz#1813f2dcf2eba69e80ffff772c3a137b3a86937a"
+  integrity sha512-unObetsvXAk4HJn1DM/icnzOjyQ9B2xpUm+jE+g3Oc9OAi0VHVVF3F3eEsw+hWG8deJ46zWjz3Z3iCSi0ER5eQ==
   dependencies:
     find-my-way-ts "^0.1.5"
+    msgpackr "^1.11.2"
     multipasta "^0.2.5"
 
 "@electron/asar@^3.2.7":
@@ -9694,10 +9696,10 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-effect@^3.13.4:
-  version "3.13.4"
-  resolved "https://registry.yarnpkg.com/effect/-/effect-3.13.4.tgz#ecee2b6267fd0245d3abd1694429481de944b8ad"
-  integrity sha512-XZgCImyBpONuKdsBRk37JfV7242yxTu8r/TcL5ZELIyqRbMYa+Prr86cz1INxXi7iFXfU0havZkCJGyYp1BsiA==
+effect@^3.14.1:
+  version "3.14.1"
+  resolved "https://registry.yarnpkg.com/effect/-/effect-3.14.1.tgz#1b5eaa445e1c5ff639763b9d6a5f9d5ee2daab61"
+  integrity sha512-YrE6KYUu8r+fF3/cvdM+SZRZRjarVGhfcJwQjP/YyMmF79fwE1Rf0nWqLZ9Xfw7a9njm5/wmrYP83RYt5WTTbQ==
   dependencies:
     "@standard-schema/spec" "^1.0.0"
     fast-check "^3.23.1"
