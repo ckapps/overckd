@@ -1,5 +1,6 @@
 import { SharedUiModule } from '@_shared/ui';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import {
@@ -11,6 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { CkadUiCommonModule } from '../../modules/ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { RecipeCollectionModule } from '../../modules/domain/recipe-collection/recipe-collection.module';
+import { RecipeCollectionService } from '../../modules/domain/recipe-collection/services/recipe-collection.service';
 
 /**
  * Component that displays the apps
@@ -29,6 +31,15 @@ import { RecipeCollectionModule } from '../../modules/domain/recipe-collection/r
   ],
 })
 export class AppMainMenuComponent {
+  readonly #recipeCollectionService = inject(RecipeCollectionService);
+
+  protected readonly collections = toSignal(
+    this.#recipeCollectionService.collections$,
+    {
+      initialValue: [],
+    },
+  );
+
   readonly itemClass = 'ckapps-main-menu-item';
   readonly itemActiveClass = 'ckapps-main-menu-item--active';
   public faHome = faHome;

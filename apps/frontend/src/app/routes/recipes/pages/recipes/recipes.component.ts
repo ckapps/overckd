@@ -1,14 +1,14 @@
+import { CollectionComponent } from '@_shared/collection/ui';
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { CollectionRecipe } from '@overckd/domain';
-import { RecipeCollectionComponent } from '../../../../modules/domain/recipe-collection/components/recipe-collection/recipe-collection.component';
 import { RecipeCollectionService } from '../../../../modules/domain/recipe-collection/services/recipe-collection.service';
 
 @Component({
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.scss'],
-  imports: [RecipeCollectionComponent, AsyncPipe],
+  imports: [CollectionComponent, AsyncPipe],
 })
 export class RecipesPageComponent {
   readonly #router = inject(Router);

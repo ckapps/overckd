@@ -1,20 +1,19 @@
-import { Component, output, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { MatList, MatListItem } from '@angular/material/list';
 import { CollectionRecipe, RecipeCollection } from '@overckd/domain';
 
 @Component({
-  selector: 'overckd-recipe-collection',
+  selector: 'overckd-collection',
   templateUrl: './recipe-collection.component.html',
-  styleUrls: ['./recipe-collection.component.scss'],
   imports: [MatList, MatDivider, MatListItem],
 })
-export class RecipeCollectionComponent {
-  readonly recipeCollection = input.required<RecipeCollection>();
+export class CollectionComponent {
+  readonly collection = input.required<RecipeCollection>();
 
-  readonly recipeSelected = output<CollectionRecipe>();
+  readonly selected = output<CollectionRecipe>();
 
   onRecipeClicked(recipe: CollectionRecipe) {
-    this.recipeSelected.emit(recipe);
+    this.selected.emit(recipe);
   }
 }
