@@ -1,7 +1,6 @@
 import { combineEffects } from '@marblejs/core';
 
 import {
-  ingredientEventEffects$,
   recipeCollectionEventEffects$,
   recipeEventEffects$,
   tagEventEffects$,
@@ -17,7 +16,6 @@ export * from './lib/tokens';
  * Domain related event effects
  */
 export const domainEventEffects$ = combineEffects(
-  ingredientEventEffects$,
   recipeEventEffects$,
   recipeCollectionEventEffects$,
   tagEventEffects$,
