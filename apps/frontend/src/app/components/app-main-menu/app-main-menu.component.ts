@@ -1,3 +1,4 @@
+import { CollectionMainMenuGroupComponent } from '@_shared/collection/ui';
 import { SharedUiModule } from '@_shared/ui';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -11,7 +12,6 @@ import {
   faUtensils,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
-import { RecipeCollectionModule } from '../../modules/domain/recipe-collection/recipe-collection.module';
 import { RecipeCollectionService } from '../../modules/domain/recipe-collection/services/recipe-collection.service';
 
 /**
@@ -25,7 +25,7 @@ import { RecipeCollectionService } from '../../modules/domain/recipe-collection/
   imports: [
     MatListModule,
     RouterModule,
-    RecipeCollectionModule,
+    CollectionMainMenuGroupComponent,
     CkadMainMenuModule,
     SharedUiModule,
   ],

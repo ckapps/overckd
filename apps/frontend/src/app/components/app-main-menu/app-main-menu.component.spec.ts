@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { RecipeCollectionModule } from '../../modules/domain/recipe-collection/recipe-collection.module';
+import { EMPTY } from 'rxjs';
+import { RecipeCollectionService } from '../../modules/domain/recipe-collection/services/recipe-collection.service';
 import { AppMainMenuComponent } from './app-main-menu.component';
 
 @Component({
@@ -16,19 +17,21 @@ describe('AppMainMenuComponent', () => {
   let component: AppMainMenuComponent;
   let fixture: ComponentFixture<AppMainMenuComponent>;
 
+  const mockRecipeCollectionService = {
+    collections$: EMPTY,
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      providers: [provideRouter([]), provideNoopAnimations()],
+      providers: [
+        provideRouter([]),
+        provideNoopAnimations(),
+        {
+          provide: RecipeCollectionService,
+          useValue: mockRecipeCollectionService,
+        },
+      ],
     }).compileComponents();
-
-    TestBed.overrideComponent(AppMainMenuComponent, {
-      remove: {
-        imports: [RecipeCollectionModule],
-      },
-      add: {
-        imports: [MockCollectionsMainMenuGroupComponent],
-      },
-    });
   });
 
   beforeEach(() => {
