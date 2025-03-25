@@ -1,8 +1,8 @@
 @for (recipeCollection of recipeGroups$ | async; track recipeCollection) {
 <section>
-  <overckd-recipe-collection
-    [recipeCollection]="recipeCollection"
-    (recipeSelected)="onRecipeSelected($event)"
+  <overckd-collection
+    [collection]="recipeCollection"
+    (selected)="onRecipeSelected($event)"
   />
 </section>
 }
