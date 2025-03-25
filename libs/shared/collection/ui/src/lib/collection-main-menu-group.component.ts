@@ -9,9 +9,8 @@ import { faListAlt } from '@fortawesome/free-solid-svg-icons';
 import { RecipeCollection } from '@overckd/domain';
 
 @Component({
-  selector: 'overckd-collections-main-menu-group',
-  templateUrl: './collections-main-menu-group.component.html',
-  styleUrls: ['./collections-main-menu-group.component.scss'],
+  selector: 'overckd-collection-main-menu-group',
+  templateUrl: './collection-main-menu-group.component.html',
   imports: [
     CkadMainMenuGroupComponent,
     MatNavList,
@@ -21,7 +20,7 @@ import { RecipeCollection } from '@overckd/domain';
     CkadMainMenuItemComponent,
   ],
 })
-export class CollectionsMainMenuGroupComponent {
+export class CollectionMainMenuGroupComponent {
   readonly collections = input.required<ReadonlyArray<RecipeCollection>>();
 
   readonly itemClass = 'ckapps-main-menu-item';

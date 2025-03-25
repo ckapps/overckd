@@ -5,7 +5,7 @@ import { CollectionRecipe, RecipeCollection } from '@overckd/domain';
 
 @Component({
   selector: 'overckd-collection',
-  templateUrl: './recipe-collection.component.html',
+  templateUrl: './collection.component.html',
   imports: [MatList, MatDivider, MatListItem],
 })
 export class CollectionComponent {
