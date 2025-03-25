@@ -1,5 +1,6 @@
 import { HttpCollectionLive } from '@_backend/collection/infra-http';
 import { OverckdApi } from '@_backend/overckd/adapter-rest';
+import { HttpRecipeLive } from '@_backend/recipe/infra-http';
 import {
   HttpApiBuilder,
   HttpApiSwagger,
@@ -12,6 +13,7 @@ import { createServer } from 'http';
 
 const ApiLive = Layer.provide(HttpApiBuilder.api(OverckdApi), [
   HttpCollectionLive,
+  HttpRecipeLive,
   // TODO: add more API implementations here
 ]);
 

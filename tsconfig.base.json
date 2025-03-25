@@ -27,6 +27,9 @@
       "@_backend/recipe/adapter-rest": [
         "libs/backend/recipe/adapter-rest/src/index.ts"
       ],
+      "@_backend/recipe/infra-http": [
+        "libs/backend/recipe/infra-http/src/index.ts"
+      ],
       "@_shared/collection/application": [
         "libs/shared/collection/application/src/index.ts"
       ],
