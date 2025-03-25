@@ -1,12 +1,15 @@
 import { Option, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
+import { Portion, PortionKind } from './portion.model';
 import {
   RecipePreparation,
+  RecipePreparationJson,
   UnionRecipePreparation,
 } from './recipe-preparation.model';
 
 describe('RecipePreparation', () => {
   const decode = Schema.decodeSync(RecipePreparation);
+  const decodeJson = Schema.decodeSync(RecipePreparationJson);
 
   const unitIngredientAmount = {
     _tag: 'UnitIngredientAmount' as const,
@@ -18,9 +21,20 @@ describe('RecipePreparation', () => {
     name: 'ingredient',
     amount: Option.some(unitIngredientAmount),
   };
+  const unitIngredientJson = {
+    uri: 'ingredient',
+    name: 'ingredient',
+    amount: unitIngredientAmount,
+  };
 
-  const labelPortion = {
-    label: 'Portion',
+  const quantityPortion: Portion = {
+    kind: PortionKind.Quantity,
+    label: Option.none(),
+    quantity: 1,
+  };
+  const quantityPortionJson = {
+    kind: PortionKind.Quantity as const,
+    quantity: 1,
   };
 
   describe('BasicRecipePreparation', () => {
@@ -31,7 +45,20 @@ describe('RecipePreparation', () => {
         name: 'name',
         basedOn: [],
         ingredients: [unitIngredient],
-        portion: labelPortion,
+        portion: quantityPortion,
+        steps: [{ instruction: 'Step 1' }, { instruction: 'Step 2' }],
+      });
+
+      expect(recipe).toBeDefined();
+    });
+    it('should decode from JSON', () => {
+      const recipe = decodeJson({
+        _tag: 'BasicRecipePreparation',
+        id: 'my-recipe',
+        name: 'name',
+        basedOn: [],
+        ingredients: [unitIngredientJson],
+        portion: quantityPortionJson,
         steps: [{ instruction: 'Step 1' }, { instruction: 'Step 2' }],
       });
 
@@ -45,7 +72,7 @@ describe('RecipePreparation', () => {
         _tag: 'UnionRecipePreparation',
         id: 'union-recipe',
         name: 'union recipe',
-        portion: labelPortion,
+        portion: quantityPortion,
         recipes: [
           {
             _tag: 'BasicRecipePreparation',
@@ -68,12 +95,40 @@ describe('RecipePreparation', () => {
 
       expect(recipe).toBeDefined();
     });
+    it('should decode from JSON', () => {
+      const recipe = decodeJson({
+        _tag: 'UnionRecipePreparation',
+        id: 'union-recipe',
+        name: 'union recipe',
+        portion: quantityPortionJson,
+        recipes: [
+          {
+            _tag: 'BasicRecipePreparation',
+            id: 'recipe-1',
+            name: 'recipe-1',
+            basedOn: [],
+            ingredients: [unitIngredientJson],
+            steps: [{ instruction: 'Step 1' }, { instruction: 'Step 2' }],
+          },
+          {
+            _tag: 'BasicRecipePreparation',
+            id: 'recipe-2',
+            name: 'recipe-2',
+            basedOn: [],
+            ingredients: [unitIngredientJson],
+            steps: [{ instruction: 'Step 1' }, { instruction: 'Step 2' }],
+          },
+        ],
+      });
+
+      expect(recipe).toBeDefined();
+    });
     it('should decode nested', () => {
       const recipe = decode({
         _tag: 'UnionRecipePreparation',
         id: 'union-recipe',
         name: 'union recipe',
-        portion: labelPortion,
+        portion: quantityPortion,
         recipes: [
           {
             _tag: 'UnionRecipePreparation',
