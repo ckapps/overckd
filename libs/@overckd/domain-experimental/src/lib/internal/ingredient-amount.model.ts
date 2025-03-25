@@ -22,6 +22,10 @@ export const CountIngredientAmount = Schema.Struct({
     default: Fn.constant(1),
   }),
 });
+/**
+ * @category Schemas
+ */
+export const CountIngredientAmountJson = CountIngredientAmount;
 
 /**
  * An Amount that is measured in a unit.
@@ -44,6 +48,10 @@ export const UnitIngredientAmount = Schema.Struct({
     default: Fn.constant(1),
   }),
 });
+/**
+ * @category Schemas
+ */
+export const UnitIngredientAmountJson = UnitIngredientAmount;
 
 /**
  * An amount that is only described by a label.
@@ -55,6 +63,10 @@ export const LabelIngredientAmount = Schema.Struct({
   /** A label. */
   label: Schema.NonEmptyString,
 });
+/**
+ * @category Schemas
+ */
+export const LabelIngredientAmountJson = LabelIngredientAmount;
 
 /**
  * @category Models
@@ -68,6 +80,15 @@ export const IngredientAmount = Schema.Union(
   UnitIngredientAmount,
   LabelIngredientAmount,
 );
+
+/**
+ * @category Schemas
+ */
+export const IngredientAmountJson = Schema.Union(
+  CountIngredientAmountJson,
+  UnitIngredientAmountJson,
+  LabelIngredientAmountJson,
+).pipe(Schema.compose(IngredientAmount));
 
 /**
  * Scales the given `amount` by the given `scalar`.

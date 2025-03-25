@@ -1,3 +1,8 @@
-import { RecipeId, RecipeRef } from './internal/recipe.model';
+import {
+  RecipeId,
+  RecipeIdFromString,
+  RecipeNotFound,
+  RecipeRef,
+} from './internal/recipe.model';
 
-export { RecipeId, RecipeRef };
+export { RecipeId, RecipeIdFromString, RecipeNotFound, RecipeRef };

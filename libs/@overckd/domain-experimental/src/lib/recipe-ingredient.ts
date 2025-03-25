@@ -1,3 +1,6 @@
-import { RecipeIngredient } from './internal/recipe-ingredient.model';
+import {
+  RecipeIngredient,
+  RecipeIngredientJson,
+} from './internal/recipe-ingredient.model';
 
-export { RecipeIngredient };
+export { RecipeIngredient, RecipeIngredientJson };

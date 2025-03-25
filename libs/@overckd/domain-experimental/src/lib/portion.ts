@@ -1,14 +1,14 @@
 import {
-  LabelPortion,
   Portion,
+  PortionJson,
   PortionKind,
   QuantityPortion,
   SpringformPortion,
 } from './internal/portion.model';
 
 export {
-  LabelPortion,
   Portion,
+  PortionJson,
   PortionKind,
   QuantityPortion,
   SpringformPortion,

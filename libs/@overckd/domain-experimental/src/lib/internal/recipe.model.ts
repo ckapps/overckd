@@ -1,3 +1,4 @@
+import * as HttpApiSchema from '@effect/platform/HttpApiSchema';
 import * as Schema from 'effect/Schema';
 
 /**
@@ -11,7 +12,11 @@ export const RecipeIdTypeId: unique symbol = Symbol.for('@overckd/RecipeId');
 export type RecipeId = typeof RecipeId.Type;
 export const RecipeId = Schema.NonEmptyString.pipe(
   Schema.brand(RecipeIdTypeId),
-).annotations({ identifier: 'RecipeId' });
+).annotations({
+  identifier: 'RecipeId',
+  title: 'Recipe ID',
+  description: 'A unique identifier for a recipe',
+});
 
 /**
  * @category Schemas
@@ -37,6 +42,15 @@ export class RecipeRef extends Schema.Class<RecipeRef>('@overckd/RecipeRef')(
  * @category instances
  */
 export const Equivalence = Schema.equivalence(RecipeRef);
+
+/**
+ * @category Errors
+ */
+export class RecipeNotFound extends Schema.TaggedError<RecipeNotFound>()(
+  'RecipeNotFound',
+  { id: RecipeId },
+  HttpApiSchema.annotations({ status: 404 }),
+) {}
 
 /**
  * @category Schemas

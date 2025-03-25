@@ -5,20 +5,9 @@ import * as Schema from 'effect/Schema';
 import { OptionNonEmptyString } from './shared.model';
 
 export enum PortionKind {
-  Label = 'label',
   Quantity = 'quantity',
   Springform = 'springform',
 }
-
-/**
- * Use as a general description of a portion.
- *
- * @category Models
- */
-export const LabelPortion = Schema.Struct({
-  /** Label */
-  label: Schema.NonEmptyString,
-});
 
 /**
  * Use to describe a portion with a quantity.
@@ -26,6 +15,17 @@ export const LabelPortion = Schema.Struct({
  * @category Models
  */
 export const QuantityPortion = Schema.Struct({
+  kind: Schema.Literal(`${PortionKind.Quantity}`),
+  /** Optional label. */
+  label: Schema.OptionFromSelf(Schema.NonEmptyString),
+  /** Quantity. */
+  quantity: Schema.Positive,
+});
+/**
+ * @category Schemas
+ */
+export const QuantityPortionJson = Schema.Struct({
+  kind: Schema.Literal(`${PortionKind.Quantity}`),
   /** Optional label. */
   label: OptionNonEmptyString,
   /** Quantity. */
@@ -38,25 +38,28 @@ export const QuantityPortion = Schema.Struct({
  * @category Models
  */
 export const SpringformPortion = Schema.Struct({
+  kind: Schema.Literal(`${PortionKind.Springform}`),
   /** The diameter in centimeter. */
   diameter: Schema.Positive,
 });
+/**
+ * @category Schemas
+ */
+export const SpringformPortionJson = SpringformPortion;
 
 /**
  * @category Models
  */
 export type Portion = Schema.Schema.Type<typeof Portion>;
-export const Portion = Schema.Union(
-  LabelPortion.pipe(
-    Schema.attachPropertySignature('kind', `${PortionKind.Label}`),
-  ),
-  QuantityPortion.pipe(
-    Schema.attachPropertySignature('kind', `${PortionKind.Quantity}`),
-  ),
-  SpringformPortion.pipe(
-    Schema.attachPropertySignature('kind', `${PortionKind.Springform}`),
-  ),
-);
+export const Portion = Schema.Union(QuantityPortion, SpringformPortion);
+
+/**
+ * @category Schemas
+ */
+export const PortionJson = Schema.Union(
+  QuantityPortionJson,
+  SpringformPortionJson,
+).pipe(Schema.compose(Portion));
 
 /**
  * Extracts the portion quantity information from the given `portion`.

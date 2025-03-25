@@ -32,7 +32,11 @@ export const HtmlStringTypeId: unique symbol = Symbol.for(
 export type HtmlString = typeof HtmlString.Type;
 export const HtmlString = Schema.String.pipe(
   Schema.brand(HtmlStringTypeId),
-).annotations({ identifier: 'HtmlString' });
+).annotations({
+  identifier: 'HtmlString',
+  title: 'htmlString',
+  description: 'A HTML encoded string',
+});
 
 /**
  * @category Models
@@ -40,4 +44,8 @@ export const HtmlString = Schema.String.pipe(
 export type NonEmptyHtmlString = typeof HtmlString.Type;
 export const NonEmptyHtmlString = Schema.NonEmptyString.pipe(
   Schema.brand(HtmlStringTypeId),
-).annotations({ identifier: 'HtmlString' });
+).annotations({
+  identifier: 'NonEmptyHtmlString',
+  title: 'nonEmptyHtmlString',
+  description: 'A HTML encoded string',
+});
