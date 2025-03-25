@@ -1,6 +1,7 @@
+import { SharedUiModule } from '@_shared/ui';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { UiModule } from '../../ui/ui.module';
+import { CkadUiCommonModule } from '../../ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { IngredientModule } from '../ingredient/ingredient.module';
 import { PortionCommonModule } from '../portion/modules/portion-common/portion-common.module';
 import { ImprovementNotesComponent } from './components/improvement-notes/improvement-notes.component';
@@ -22,7 +23,8 @@ import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
   imports: [
     FormsModule,
     // External modules
-    UiModule,
+    CkadUiCommonModule,
+    SharedUiModule,
     IngredientModule,
     PortionCommonModule,
     // Module submodules

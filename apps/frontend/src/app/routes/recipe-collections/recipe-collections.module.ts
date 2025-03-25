@@ -1,7 +1,8 @@
+import { SharedUiModule } from '@_shared/ui';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { CkadUiCommonModule } from '../../modules/ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { DomainModule } from '../../modules/domain/domain.module';
-import { UiModule } from '../../modules/ui/ui.module';
 import { RecipeCollectionPageWrapperComponent } from './components/recipe-collection-page-wrapper/recipe-collection-page-wrapper.component';
 import { RecipeCollectionPageComponent } from './pages/recipe-collection-page/recipe-collection-page.component';
 import { RecipeCollectionsRoutingModule } from './recipe-collections-routing.module';
@@ -11,7 +12,8 @@ import { RecipeCollectionsRoutingModule } from './recipe-collections-routing.mod
     CommonModule,
     RecipeCollectionsRoutingModule,
     DomainModule,
-    UiModule,
+    CkadUiCommonModule,
+    SharedUiModule,
     RecipeCollectionPageWrapperComponent,
     RecipeCollectionPageComponent,
   ],

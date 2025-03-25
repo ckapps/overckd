@@ -1,3 +1,4 @@
+import { SharedUiModule } from '@_shared/ui';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -8,7 +9,7 @@ import { MatListModule } from '@angular/material/list';
 import { CkadButtonModule } from '../../../../ckapps-design-system/ckad-ui-common/ckad-button/ckad-button.module';
 import { CkadInputModule } from '../../../../ckapps-design-system/ckad-ui-common/ckad-input/ckad-input.module';
 import { CkadListModule } from '../../../../ckapps-design-system/ckad-ui-common/ckad-list/ckad-list.module';
-import { UiModule } from '../../../../ui/ui.module';
+import { CkadUiCommonModule } from '../../../../ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { IngredientModule } from '../../../ingredient/ingredient.module';
 import { RecipeInputSourceComponent } from './components/recipe-input-source/recipe-input-source.component';
 import { RecipeInputSourcesListComponent } from './components/recipe-input-sources-list/recipe-input-sources-list.component';
@@ -29,7 +30,8 @@ import { RecipeInputSourcesListComponent } from './components/recipe-input-sourc
     MatInputModule,
     MatListModule,
     // External modules
-    UiModule,
+    CkadUiCommonModule,
+    SharedUiModule,
     CkadButtonModule,
     CkadInputModule,
     CkadListModule,

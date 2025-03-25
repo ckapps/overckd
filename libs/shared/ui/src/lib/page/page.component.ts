@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'overckd-page',
-  templateUrl: './page.component.html',
+  template: '<ng-content />',
   styleUrls: ['./page.component.scss'],
+  standalone: true,
 })
 export class PageComponent {}

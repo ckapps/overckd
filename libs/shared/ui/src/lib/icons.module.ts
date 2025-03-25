@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgModule, inject } from '@angular/core';
 import {
   FaIconLibrary,
@@ -9,8 +8,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 
 @NgModule({
-  declarations: [],
-  imports: [CommonModule, FontAwesomeModule],
+  imports: [FontAwesomeModule],
   exports: [FontAwesomeModule],
 })
 export class IconsModule {
