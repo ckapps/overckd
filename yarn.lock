@@ -2093,49 +2093,66 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.6.3.tgz#f13c7c205915eb91ae54c557f5e92bddd8be0e83"
   integrity sha512-4B4OijXeVNOPZlYA2oEwWOTkzyltLao+xbotHQeqN++Rv27Y6s818+n2Qkp8q+Fxhn0t/5lA5X1Mxktud8eayQ==
 
-"@effect/cli@^0.59.1":
-  version "0.59.1"
-  resolved "https://registry.yarnpkg.com/@effect/cli/-/cli-0.59.1.tgz#d67ad944cf570d800440477693ef0597b449e30a"
-  integrity sha512-d4LM+fk9n5PRbz9/CCiKq+/e8Ztid0u6co6R14ITH9n7FJlG99NGpt8aMn2E+wCjOiCUox+Q85oNEFyVPkvXYA==
+"@effect/cli@~0.59.14":
+  version "0.59.14"
+  resolved "https://registry.yarnpkg.com/@effect/cli/-/cli-0.59.14.tgz#65fa39267c01dd7fc285f5183ae35b6fe660184d"
+  integrity sha512-zwd2gX/EMYxIJ9mXtaHUPpbO8y7h6M4WYR2JuWjqPO7zmMpc9/1bhPQY9Ee2tEWTDiwS8GypcvvkrxEiPlpVZw==
   dependencies:
     ini "^4.1.3"
     toml "^3.0.0"
     yaml "^2.5.0"
 
-"@effect/platform-browser@^0.59.1":
-  version "0.59.1"
-  resolved "https://registry.yarnpkg.com/@effect/platform-browser/-/platform-browser-0.59.1.tgz#a24d0271f17c5cabbd03d89d2243ad1f8dcc85fd"
-  integrity sha512-wE9rljYnbp6N/XKr9gHHoiXcWYhKCVPdETVKhieuAbk7TFk4HrqCw141QUyfX49Z3gkV6+RdycFHicQjQpepAA==
+"@effect/platform-browser@~0.60.5":
+  version "0.60.5"
+  resolved "https://registry.yarnpkg.com/@effect/platform-browser/-/platform-browser-0.60.5.tgz#ac80e5cc530158fa37f8d78480dc4cd24d5aae81"
+  integrity sha512-gFU40vM470nbr3n+5w66+drQxp7KDUXkIm+q8XGp9csdaxBdJ+hhurNJrR0kOWVxMd/SD3k7QdIxB+JN8Jo5hg==
   dependencies:
     multipasta "^0.2.5"
 
-"@effect/platform-node-shared@^0.30.4":
-  version "0.30.4"
-  resolved "https://registry.yarnpkg.com/@effect/platform-node-shared/-/platform-node-shared-0.30.4.tgz#25bb4492a6fa772c6424ff4a298f54a4fcb3b993"
-  integrity sha512-0bhT6nOspiRyAnMkkIhLDQHXE1TqLG7V54BoqdzNIIsUE7OG/BXTdVKa764J5+14dzM6KGP7L8dvhoGecn14qQ==
+"@effect/platform-node-shared@^0.31.2":
+  version "0.31.2"
+  resolved "https://registry.yarnpkg.com/@effect/platform-node-shared/-/platform-node-shared-0.31.2.tgz#838be09bd75e5bbc8f39227944d80e137c88e533"
+  integrity sha512-WVGJoamOpLOQiqsYdpyEbgZOnUk0lDmJ4D7S/R95cw4K140GaSllTbsY0ijiXQOLdc/n7uCdBs+G6GyBDbFghQ==
   dependencies:
     "@parcel/watcher" "^2.4.1"
     multipasta "^0.2.5"
     ws "^8.18.0"
 
-"@effect/platform-node@^0.76.4":
-  version "0.76.4"
-  resolved "https://registry.yarnpkg.com/@effect/platform-node/-/platform-node-0.76.4.tgz#54fd9c9f071844a88730bd557fe956af9c31fdd5"
-  integrity sha512-Tmb7e+iN/cT6Kl0xaI56+4rXyOsBNr/SBtZai7DCxoZWVgAFePfS8QXSaI1bb037PbOll2zg+krhAOx72Tj1zA==
+"@effect/platform-node@~0.77.2":
+  version "0.77.2"
+  resolved "https://registry.yarnpkg.com/@effect/platform-node/-/platform-node-0.77.2.tgz#a6003435a54ee0d32b50b9acfc6ce2bf368689fc"
+  integrity sha512-e1ZqJG+POSuoUAbGKT4nHP84ilGrCGTZYjY1kPB5Z2qo2LIznFmPsV4ig1Gspx5bO0tU350iS2MNdvYECtNQzw==
   dependencies:
-    "@effect/platform-node-shared" "^0.30.4"
+    "@effect/platform-node-shared" "^0.31.2"
     mime "^3.0.0"
     undici "^7.1.0"
     ws "^8.18.0"
 
-"@effect/platform@^0.80.1":
-  version "0.80.1"
-  resolved "https://registry.yarnpkg.com/@effect/platform/-/platform-0.80.1.tgz#1813f2dcf2eba69e80ffff772c3a137b3a86937a"
-  integrity sha512-unObetsvXAk4HJn1DM/icnzOjyQ9B2xpUm+jE+g3Oc9OAi0VHVVF3F3eEsw+hWG8deJ46zWjz3Z3iCSi0ER5eQ==
+"@effect/platform@~0.80.14":
+  version "0.80.14"
+  resolved "https://registry.yarnpkg.com/@effect/platform/-/platform-0.80.14.tgz#b51cdd14f8cb82931880921ffb73d5fc797c0e0c"
+  integrity sha512-yUFeqSzL6Pu66XOmNkvcqGeEkmQit13Ei0jXlumU8YEpAweRe2pmiOZqYoGTzsIn0BJhepx7O6cjmkKSi/PQ4Q==
   dependencies:
     find-my-way-ts "^0.1.5"
     msgpackr "^1.11.2"
     multipasta "^0.2.5"
+
+"@effect/printer-ansi@~0.42.14":
+  version "0.42.14"
+  resolved "https://registry.yarnpkg.com/@effect/printer-ansi/-/printer-ansi-0.42.14.tgz#800af4ef8c11be426be634ae1025b5a94ff5ad9c"
+  integrity sha512-1eynmXXlhfethFrRhJx4qC0ufrQW5cjNtdzYakOLnePc9tmIkOXph9tOoO9l40Blm3cK+1KV8iETe4e7ShdCkw==
+  dependencies:
+    "@effect/printer" "^0.42.14"
+
+"@effect/printer@^0.42.14":
+  version "0.42.14"
+  resolved "https://registry.yarnpkg.com/@effect/printer/-/printer-0.42.14.tgz#6636942f6f809bdd0e522a644bbaeb1bf4b119f6"
+  integrity sha512-rAlW2AuqDp7hwesR4SI0bkZW1S3T32VjdoTw4NBAjqFAztouML2uygdROb9uc1MZLt5SbhqItt8wIGWI6rbYZQ==
+
+"@effect/typeclass@~0.33.14":
+  version "0.33.14"
+  resolved "https://registry.yarnpkg.com/@effect/typeclass/-/typeclass-0.33.14.tgz#8d633a3795dad39eae4ff3cd63b8c822710aea7d"
+  integrity sha512-D22IqrCqI4rHzBb+ynkWKAskbL7jsnA0fhrLfoS0LQtlHrFJQTzSs8CdDBU4zdmw+ZbohICZmDMzxbmyka0K5g==
 
 "@electron/asar@^3.2.7":
   version "3.3.1"

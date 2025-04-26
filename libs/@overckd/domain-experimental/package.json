@@ -5,5 +5,8 @@
   "type": "commonjs",
   "main": "./index.cjs",
   "types": "./index.d.ts",
-  "dependencies": {}
+  "peerDependencies": {
+    "@effect/platform": "~0.80.14",
+    "effect": "^3.14.1"
+  }
 }

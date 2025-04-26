@@ -7,9 +7,7 @@ import {
   HttpMiddleware,
   HttpServer,
 } from '@effect/platform';
-import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
-import { Layer } from 'effect';
-import { createServer } from 'http';
+import * as Layer from 'effect/Layer';
 
 const ApiLive = Layer.provide(HttpApiBuilder.api(OverckdApi), [
   HttpCollectionLive,
@@ -23,5 +21,4 @@ export const HttpLive = HttpApiBuilder.serve(HttpMiddleware.logger).pipe(
   Layer.provide(HttpApiBuilder.middlewareCors()),
   Layer.provide(ApiLive),
   HttpServer.withLogAddress,
-  Layer.provide(NodeHttpServer.layer(createServer, { port: 3000 })),
 );
