@@ -1,14 +1,11 @@
-import * as NodeRuntime from '@effect/platform-node/NodeRuntime';
-import { Layer } from 'effect';
+import * as Layer from 'effect/Layer';
 import { HttpLive } from './app.http';
 import { CollectionTestRepo } from './collection.repo';
 import { RecipeTestRepo } from './recipe.repo';
 
 const TestReposLive = Layer.mergeAll(CollectionTestRepo, RecipeTestRepo);
 
-HttpLive.pipe(
+export const OverckdBackend = HttpLive.pipe(
   // Provide repositories
   Layer.provide(TestReposLive),
-  Layer.launch,
-  NodeRuntime.runMain,
 );
