@@ -10,7 +10,10 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": [
+      "es2020",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -36,7 +39,9 @@
       "@_shared/collection/infra-rxdb": [
         "libs/shared/collection/infra-rxdb/src/index.ts"
       ],
-      "@_shared/collection/ui": ["libs/shared/collection/ui/src/index.ts"],
+      "@_shared/collection/ui": [
+        "libs/shared/collection/ui/src/index.ts"
+      ],
       "@_shared/ingredient/infra-rxdb": [
         "libs/shared/ingredient/infra-rxdb/src/index.ts"
       ],
@@ -46,24 +51,49 @@
       "@_shared/recipe/infra-rxdb": [
         "libs/shared/recipe/infra-rxdb/src/index.ts"
       ],
-      "@_shared/tag/application": ["libs/shared/tag/application/src/index.ts"],
-      "@_shared/tag/infra-rxdb": ["libs/shared/tag/infra-rxdb/src/index.ts"],
-      "@_shared/ui": ["libs/shared/ui/src/index.ts"],
-      "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
-      "@ckapp/angular/button": ["libs/@ckapp/angular/button/src/index.ts"],
-      "@ckapp/angular/list": ["libs/@ckapp/angular/list/src/index.ts"],
+      "@_shared/tag/application": [
+        "libs/shared/tag/application/src/index.ts"
+      ],
+      "@_shared/tag/infra-rxdb": [
+        "libs/shared/tag/infra-rxdb/src/index.ts"
+      ],
+      "@_shared/ui": [
+        "libs/shared/ui/src/index.ts"
+      ],
+      "@ckapp/angular": [
+        "libs/@ckapp/angular/src/index.ts"
+      ],
+      "@ckapp/angular/button": [
+        "libs/@ckapp/angular/button/src/index.ts"
+      ],
+      "@ckapp/angular/list": [
+        "libs/@ckapp/angular/list/src/index.ts"
+      ],
       "@ckapp/angular/main-menu": [
         "libs/@ckapp/angular/main-menu/src/index.ts"
       ],
-      "@overckd/core": ["libs/core/src/index.ts"],
-      "@overckd/domain": ["libs/domain/src/index.ts"],
+      "@overckd/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@overckd/domain": [
+        "libs/domain/src/index.ts"
+      ],
       "@overckd/domain-experimental": [
         "libs/@overckd/domain-experimental/src/index.ts"
       ],
-      "@overckd/domain-rx": ["libs/domain-rx/src/index.ts"],
-      "@overckd/server": ["libs/server/src/index.ts"],
-      "@overckd/yaml": ["libs/yaml/src/index.ts"]
+      "@overckd/domain-rx": [
+        "libs/domain-rx/src/index.ts"
+      ],
+      "@overckd/server": [
+        "libs/server/src/index.ts"
+      ],
+      "@overckd/yaml": [
+        "libs/yaml/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
