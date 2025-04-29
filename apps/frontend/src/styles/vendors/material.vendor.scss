@@ -1,8 +1,8 @@
 @use '@angular/material' as mat;
 
-// Plus imports for other components in your app.
-
-@import '../variables/colors.variables.scss';
+$overckd-app-primary: #b170e3;
+$overckd-app-accent: #70b3e3;
+$overckd-app-warn: #e3b570;
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -47,6 +47,3 @@ $overckd-app-theme: mat.m2-define-light-theme(
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.core-theme($overckd-app-theme);
-
-// Themeing our components
-@import '../../app/modules/ckapps-design-system/ckad-ui-common/ckad-ui-common.module.scss';

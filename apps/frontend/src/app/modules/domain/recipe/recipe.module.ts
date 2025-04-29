@@ -1,7 +1,6 @@
 import { SharedUiModule } from '@_shared/ui';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CkadUiCommonModule } from '../../ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { IngredientModule } from '../ingredient/ingredient.module';
 import { PortionCommonModule } from '../portion/modules/portion-common/portion-common.module';
 import { ImprovementNotesComponent } from './components/improvement-notes/improvement-notes.component';
@@ -12,7 +11,6 @@ import { PreparationStepComponent } from './components/preparation-step/preparat
 import { PreparationComponent } from './components/preparation/preparation.component';
 import { RecipeTipsComponent } from './components/recipe-tips/recipe-tips.component';
 import { RecipeComponent } from './components/recipe/recipe.component';
-import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
 
 /**
  * **overckd/module**
@@ -23,12 +21,10 @@ import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
   imports: [
     FormsModule,
     // External modules
-    CkadUiCommonModule,
     SharedUiModule,
     IngredientModule,
     PortionCommonModule,
     // Module submodules
-    RecipeInputModule,
     IngredientComponent,
     IngredientListComponent,
     PreparationComponent,
@@ -38,11 +34,6 @@ import { RecipeInputModule } from './modules/recipe-input/recipe-input.module';
     IngredientGroupComponent,
     RecipeTipsComponent,
   ],
-  exports: [
-    // Module submodules
-    RecipeInputModule,
-    // Module components
-    RecipeComponent,
-  ],
+  exports: [RecipeComponent],
 })
 export class RecipeModule {}

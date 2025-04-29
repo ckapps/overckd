@@ -1,13 +1,7 @@
-@import '../../../styles/overckd.variables.scss';
-
 :host {
-  height: 100%;
-  width: 100%;
-
-  display: grid;
-  place-items: center;
-
-  font-family: $font-heading1;
+  @apply grid place-items-center
+  size-full
+  font-heading-1;
 }
 .title {
   line-height: 1.2;

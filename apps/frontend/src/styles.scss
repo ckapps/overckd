@@ -4,20 +4,31 @@
 
 /* You can add global styles to this file, and also import other style files */
 @import './styles/overckd.vendors.scss';
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,
+body {
+  user-select: none;
+  -webkit-app-region: no-drag;
+}
+
+body {
+  @apply bg-neutral-700;
+  @apply font-body;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
 @import './styles/misc';
 @import './styles/print';
-
-//
-@import './styles/modules';
-
-@layer base {
-  html,
-  body {
-    user-select: none;
-    -webkit-app-region: no-drag;
-  }
-
-  body {
-    font-family: Roboto, 'Helvetica Neue', sans-serif;
-  }
-}
