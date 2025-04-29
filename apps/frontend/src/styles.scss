@@ -10,6 +10,14 @@
 //
 @import './styles/modules';
 
-body {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+@layer base {
+  html,
+  body {
+    user-select: none;
+    -webkit-app-region: no-drag;
+  }
+
+  body {
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+  }
 }

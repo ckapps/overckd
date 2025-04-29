@@ -8,7 +8,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { CkadButtonModule } from '@ckapp/angular/button';
 import { CkadListModule } from '@ckapp/angular/list';
-import { CkadInputModule } from '../../../../ckapps-design-system/ckad-ui-common/ckad-input/ckad-input.module';
 import { CkadUiCommonModule } from '../../../../ckapps-design-system/ckad-ui-common/ckad-ui-common.module';
 import { IngredientModule } from '../../../ingredient/ingredient.module';
 import { RecipeInputSourceComponent } from './components/recipe-input-source/recipe-input-source.component';
@@ -33,7 +32,6 @@ import { RecipeInputSourcesListComponent } from './components/recipe-input-sourc
     CkadUiCommonModule,
     SharedUiModule,
     CkadButtonModule,
-    CkadInputModule,
     CkadListModule,
     // Other domain modules
     IngredientModule,
