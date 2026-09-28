@@ -49,7 +49,7 @@ describe('logging/create-file-logger', () => {
       (logFunction: keyof Logger) => {
         fileLogger[logFunction]();
 
-        expect(mockLogger[logFunction]).toBeCalled();
+        expect(mockLogger[logFunction]).toHaveBeenCalled();
       },
     );
   });
