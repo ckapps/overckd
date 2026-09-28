@@ -23,7 +23,7 @@ overckd is an approach to offer an decentralized app for managing your recipes.
 Make sure that the following is installed on your machine
 
 - NodeJS
-- Yarn (Package manager)
+- pnpm (Package manager)
 - Python (required for electron > node-gyp > @effect/platform-node)
 
 ```sh
@@ -33,14 +33,14 @@ brew install node python python-setuptools
 After cloning make sure to install the dependencies using:
 
 ```sh
-yarn
+pnpm install
 ```
 
-Personally I would suggest to install Nx locally as well. This will allow you to run nx commands directly. If you choose not to, then all commands in this guide need to be prefixed with `yarn`.
+Personally I would suggest to install Nx locally as well. This will allow you to run nx commands directly. If you choose not to, then all commands in this guide need to be prefixed with `pnpx`.
 
 ```sh
 nx serve frontend # with nx CLI installed
-yarn nx serve frontend # without nx CLI installed
+pnpx nx serve frontend # without nx CLI installed
 ```
 
 ### Tools
@@ -53,7 +53,7 @@ The project uses different tools
 - [`commitlint`](https://commitlint.js.org/): Linting for commit messages (using [`conventional commits`](https://www.conventionalcommits.org/en/v1.0.0/))
 - [`eslint`](https://eslint.org/): For linting the source files
 - [`prettier`](https://prettier.io/): Used for automatic code formatting
-- [`yarn`](https://yarnpkg.com/): Alternative package manager client
+- [`pnpm`](https://pnpm.io/): Alternative package manager client
 
 As an IDE I use [VSCode](https://code.visualstudio.com/), which means that I try to keep the configuration for it up to date.
 
@@ -94,7 +94,7 @@ Both options perform the same more or less, which is
 For convenience you can just run
 
 ```sh
-yarn serve:web
+pnpm run serve:web
 ```
 
 This will start the serve command for both projects, `server-cli` and `frontend`.
@@ -104,7 +104,7 @@ This will start the serve command for both projects, `server-cli` and `frontend`
 For convenience you can just run
 
 ```sh
-yarn serve:desktop
+pnpm run serve:desktop
 ```
 
 This will start the serve command for both projects, `desktop` and `frontend`.

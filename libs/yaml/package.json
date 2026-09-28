@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "type": "commonjs",
   "dependencies": {
-    "@overckd/core": "*",
-    "@overckd/domain": "*"
+    "@overckd/core": "workspace:*",
+    "@overckd/domain": "workspace:*"
   },
   "peerDependencies": {
     "@types/js-yaml": "^3.12.5",
