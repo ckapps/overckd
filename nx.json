@@ -135,6 +135,5 @@
       "unitTestRunner": "vitest",
       "useProjectJson": true
     }
-  },
-  "nxCloudAccessToken": "YzM3ZWI4ODktNzY2MC00MmFmLThlNTEtNTAxZjlhZDJhM2FifHJlYWQtd3JpdGU="
+  }
 }
