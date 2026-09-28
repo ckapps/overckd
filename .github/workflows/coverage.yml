@@ -17,6 +17,6 @@ jobs:
           run_install: true
       - run: pnpx nx run-many -t test
       - name: Coveralls
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@v2.3.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
