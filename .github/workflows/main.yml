@@ -7,16 +7,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ['22']
-
-    name: Node ${{ matrix.node }} build
+    name: Node LTS build
 
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6.1.0
+      - uses: pnpm/setup@v3.0.0
         with:
-          run_install: true
+          install: true
+          runtime: node@lts
       - run: pnpx nx run-many -t build
       - run: pnpx nx run-many -t lint
