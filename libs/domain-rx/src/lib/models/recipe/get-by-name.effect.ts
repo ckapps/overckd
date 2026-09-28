@@ -28,6 +28,7 @@ export const getRecipeByNameEffect: MsgEffect = (event$, ctx) => {
     act(eventValidator$(GetRecipeByNameEvent)),
     act(event =>
       pipe(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         event.payload.name,
         repo.getByName,

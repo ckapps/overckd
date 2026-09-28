@@ -36,6 +36,7 @@ export const getById: MsgEffect = (event$, ctx) => {
     act(eventValidator$(GetRecipeCollectionByIdEvent)),
     act(event =>
       pipe(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         event.payload.id,
         CollectionId.make,

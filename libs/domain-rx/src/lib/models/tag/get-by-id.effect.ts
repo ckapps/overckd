@@ -33,6 +33,7 @@ export const getByIdEffect: MsgEffect = (event$, ctx) => {
     act(eventValidator$(GetTagByIdEvent)),
     act(event =>
       Fn.pipe(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         event.payload.uri,
         TagId.make,
