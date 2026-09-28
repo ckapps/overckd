@@ -1,9 +1,9 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
-import { CollectionComponent } from './collection.component';
+import { CollectionRecipeListComponent } from './collection-recipe-list.component';
 
-describe('CollectionComponent', () => {
-  let spectator: Spectator<CollectionComponent>;
-  const createComponent = createComponentFactory(CollectionComponent);
+describe('CollectionRecipeListComponent', () => {
+  let spectator: Spectator<CollectionRecipeListComponent>;
+  const createComponent = createComponentFactory(CollectionRecipeListComponent);
 
   const recipeCollection = {
     id: 'mock-id',

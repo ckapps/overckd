@@ -1,6 +1,6 @@
 @if (recipeCollection$ | async; as recipeCollection) {
 <article>
-  <overckd-collection
+  <overckd-collection-recipe-list
     [collection]="recipeCollection"
     (selected)="onRecipeSelected($event)"
   />

@@ -1,4 +1,4 @@
-import { CollectionComponent } from '@_shared/collection/ui';
+import { CollectionRecipeListComponent } from '@_shared/collection/ui';
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { RecipeCollectionService } from '../../../../modules/domain/recipe-colle
 @Component({
   templateUrl: './recipe-collection-page.component.html',
   styleUrls: ['./recipe-collection-page.component.scss'],
-  imports: [CollectionComponent, AsyncPipe],
+  imports: [CollectionRecipeListComponent, AsyncPipe],
 })
 export class RecipeCollectionPageComponent {
   readonly #route = inject(ActivatedRoute);
