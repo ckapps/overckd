@@ -15,9 +15,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v6.1.0
         with:
-          node-version: ${{ matrix.node }}
-      - run: yarn install
-      - run: yarn nx run-many -t build
-      - run: yarn nx run-many -t lint
+          run_install: true
+      - run: pnpx nx run-many -t build
+      - run: pnpx nx run-many -t lint
