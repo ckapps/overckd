@@ -16,7 +16,6 @@ const logger = scoped(DbLogScope.Db);
  * @returns
  */
 export function createDb(): Observable<RxDatabase> {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   addRxPlugin(RxDBQueryBuilderPlugin);
 
   const createDb$ = defer(() => {

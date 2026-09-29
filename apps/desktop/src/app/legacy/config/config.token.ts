@@ -10,6 +10,5 @@ import { AppConfig } from './app-config.types';
 export const AppConfigToken = createContextToken<AppConfig>('AppConfig');
 
 export const AppConfigReader = createReader<AppConfig>(
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   () => require('./config').config,
 );

@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withXhr } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import {
   ErrorStateMatcher,
@@ -21,7 +21,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideStore(),
     provideEffects(),
-    provideHttpClient(),
+    provideHttpClient(withXhr()),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     provideAnimations(),
     // External modules

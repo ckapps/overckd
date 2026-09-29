@@ -1,7 +1,7 @@
-import { Component, OnInit, input } from '@angular/core';
+import { AsyncPipe } from '@angular/common';
+import { Component, input, OnInit } from '@angular/core';
 import { Recipe } from '@overckd/domain';
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 import { PreparationStepComponent } from '../preparation-step/preparation-step.component';
 
 interface PreparationGroup {

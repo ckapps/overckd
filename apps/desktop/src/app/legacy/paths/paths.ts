@@ -7,6 +7,5 @@ import { AppPaths } from './config/app-paths.types';
 // }
 
 export function getPaths(): AppPaths {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   return require('../config/config').config.paths as AppPaths;
 }
