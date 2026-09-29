@@ -18,7 +18,7 @@ function generateEmpty<T>(count: number, object: T): T[] {
   imports: [RecipeComponent],
 })
 export class EmptyRecipePageComponent {
-  recipe: Recipe = {
+  readonly recipe: Recipe = {
     name: generateEmpty(25, '').join(' '),
     tips: generateEmpty(3, '<br /><br />'),
     steps: [],

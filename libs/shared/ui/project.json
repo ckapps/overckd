@@ -5,9 +5,5 @@
   "prefix": "lib",
   "projectType": "library",
   "tags": ["type:ui", "scope:shared"],
-  "targets": {
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    }
-  }
+  "targets": {}
 }

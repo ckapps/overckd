@@ -5,17 +5,5 @@
   "prefix": "overckd-collection",
   "projectType": "library",
   "tags": ["type:ui", "scope:shared"],
-  "targets": {
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/shared/collection/ui/jest.config.ts",
-        "tsConfig": "libs/shared/collection/ui/tsconfig.spec.json"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    }
-  }
+  "targets": {}
 }
