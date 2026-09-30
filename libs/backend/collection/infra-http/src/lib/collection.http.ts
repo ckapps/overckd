@@ -6,7 +6,7 @@ import { HttpApiBuilder } from 'effect/http-api';
 
 export const HttpCollectionLive = HttpApiBuilder.group(
   OverckdApi,
-  'recipe-collection',
+  'collection',
   handlers =>
     Effect.gen(function* () {
       const queries = yield* CollectionQueries;

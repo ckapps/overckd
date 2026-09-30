@@ -4,9 +4,14 @@ import {
   CollectionNotFound,
 } from '@overckd/domain-experimental';
 import { Schema } from 'effect';
-import { HttpApiEndpoint, HttpApiGroup, OpenApi } from 'effect/http-api';
+import {
+  HttpApiEndpoint,
+  HttpApiGroup,
+  HttpApiSchema,
+  OpenApi,
+} from 'effect/http-api';
 
-export class CollectionApi extends HttpApiGroup.make('recipe-collection')
+export class CollectionApi extends HttpApiGroup.make('collection')
   .add(
     HttpApiEndpoint.get('getAll', '/', {
       success: Schema.Array(CollectionJson),
@@ -16,7 +21,7 @@ export class CollectionApi extends HttpApiGroup.make('recipe-collection')
     HttpApiEndpoint.get('findById', '/:id', {
       params: { id: CollectionIdFromString },
       success: CollectionJson,
-      error: CollectionNotFound,
+      error: CollectionNotFound.pipe(HttpApiSchema.status(404)),
     }),
   )
   .prefix('/collections')
