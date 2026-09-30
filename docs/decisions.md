@@ -4,7 +4,7 @@ Why the architecture is the way it is, and what was considered and rejected.
 Read this before proposing a structural change. When a decision changes, update
 its entry and move the old choice to **Rejected** with the reason.
 
-All decisions below were made on 2026-09-30.
+All decisions below were made on 2026-09-30, unless an entry says otherwise.
 
 ## Hexagonal architecture on Effect
 
@@ -151,3 +151,22 @@ from the app.
 - **Rejected for now:** dropping rxdb in favour of files plus a later SQL
   adapter; a local-first store in the browser (a different topology; possible
   later without retagging).
+
+## Test helpers in `@overckd/testing`
+
+Helpers that specs of several libs share, such as the `<Feature>Repo`
+conformance suites, live in one core lib, `@overckd/testing` (`type:testing`
+`platform:any`), with one folder per feature. Adapters may depend on it from
+their spec files only; lint rejects the import anywhere else. Made on
+2026-10-01.
+
+- **Why:** the helpers import vitest, which must stay out of the libs that
+  ship. A lib of its own keeps vitest out of their compile scope, is
+  typechecked on its own, and its tag makes the boundary checkable. One lib is
+  enough for now; split it per feature when it grows.
+- **Rejected:** a `testing` entry point of each application lib
+  (`@overckd/<feature>/application/testing`): vitest in the application lib's
+  compile scope, and nothing stops production code from importing it.
+  `tools/`: no Nx project, so no tags and no boundary checks, and the project
+  graph wouldn't see the adapters depending on it. One testing lib per feature:
+  more libs than the helpers need today.

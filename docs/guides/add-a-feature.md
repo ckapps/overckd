@@ -77,6 +77,7 @@ Check the dry-run output (files under the chosen directory, an `UPDATE` of
 | ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------- |
 | add `<Feature>Api` to `OverckdApi`                                                                      | `libs/@overckd/api-http`                              | `libs/backend/overckd/adapter-rest` |
 | add the feature's YAML file codec, if it has files                                                      | `libs/@overckd/codec-yaml`                            | `libs/yaml`                         |
+| add the `<Feature>Repo` conformance suite                                                               | `libs/@overckd/testing`                               | same                                |
 | add `<Feature>HttpController`, `<Feature>QueriesLocal`, `<Feature>CommandsLocal` to the app's `ApiLive` | `apps/backend`, `apps/desktop`                        | `apps/backend/src/app.http.ts`      |
 | provide a `<Feature>Repo*`                                                                              | each server-side app (`apps/backend`, `apps/desktop`) | `apps/backend/src/main.ts`          |
 | add `<Feature>QueriesHttp`, `<Feature>CommandsHttp` to the runtime layer                                | `apps/frontend/src/app/app.config.ts`                 | n/a yet                             |

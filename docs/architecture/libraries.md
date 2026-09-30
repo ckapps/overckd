@@ -29,6 +29,7 @@ libs/
 │   ├── domain/                     all models, ids, errors, pure functions (one lib)
 │   ├── api-http/                   OverckdApi: adds every feature's HttpApiGroup
 │   ├── codec-yaml/                 YAML files ↔ domain values (collections, recipes, tags, ingredients)
+│   ├── testing/                    helpers for specs, e.g. <Feature>Repo conformance suites
 │   └── <feature>/                  collection, recipe, tag, ingredient, …
 │       ├── application/            ports + *Local implementations
 │       ├── api-http/               <Feature>Api (HttpApiGroup)
@@ -69,6 +70,7 @@ tightly linked (a recipe references ingredients, which reference tags, …).
 | `@overckd/domain`                              | `type:domain` `platform:any`                                                               | Schema models, branded ids, `TaggedError`s, command inputs, pure functions, canonical `*Json` codecs                                                              | services, effectful workflows, HTTP status codes, storage formats, framework code                 |
 | `@overckd/api-http`                            | `type:contract` `platform:any`                                                             | `OverckdApi`, the root `HttpApi`                                                                                                                                  | anything else                                                                                     |
 | `@overckd/codec-yaml`                          | `type:contract` `platform:any`                                                             | codecs between the YAML files (collections, recipes, tags, ingredients) and the domain models, including YAML parsing                                             | file I/O and paths, app config formats                                                            |
+| `@overckd/testing`                             | `type:testing` `platform:any`                                                              | helpers shared by specs, e.g. the `<Feature>Repo` conformance suites, one folder per feature; may import vitest                                                   | code that runs outside tests                                                                      |
 | `@overckd/<feature>/application`               | `type:application` `platform:any`                                                          | inbound ports `<Feature>Queries` / `<Feature>Commands`, outbound port `<Feature>Repo`, `*Local` implementations                                                   | schemas that cross the wire (→ domain), transport or storage code, providing its own dependencies |
 | `@overckd/<feature>/api-http`                  | `type:contract` `platform:any`                                                             | the feature's `HttpApiGroup` (`<Feature>Api`) incl. status codes and OpenAPI annotations                                                                          | handler or client code                                                                            |
 | `@overckd/<feature>/adapter-http-server`       | `type:adapter` `platform:any`                                                              | `<Feature>HttpController`: each endpoint calls one port method                                                                                                    | business logic, error remapping                                                                   |
@@ -94,22 +96,28 @@ under `@overckd-app/desktop/` are tagged by their role like any other lib, with
 Each project has exactly one `type:*` tag and one `platform:*` tag, and both must
 allow an import. The rules follow roles, not folders.
 
-| `type:`         | may depend on                          |
-| --------------- | -------------------------------------- |
-| `domain`        | domain, util                           |
-| `application`   | application, domain, util              |
-| `contract`      | contract, domain, util                 |
-| `adapter`       | application, contract, domain, util    |
-| `data-access`   | data-access, application, domain, util |
-| `ui`            | ui, domain, util                       |
-| `feature`       | feature, data-access, ui, domain, util |
-| `util`          | util                                   |
-| `app`, `legacy` | anything                               |
+| `type:`         | may depend on                                                       |
+| --------------- | ------------------------------------------------------------------- |
+| `domain`        | domain, util                                                        |
+| `application`   | application, domain, util                                           |
+| `contract`      | contract, domain, util                                              |
+| `adapter`       | application, contract, domain, util, testing (from spec files only) |
+| `data-access`   | data-access, application, domain, util                              |
+| `ui`            | ui, domain, util                                                    |
+| `feature`       | feature, data-access, ui, domain, util                              |
+| `util`          | util                                                                |
+| `testing`       | testing, application, domain, util                                  |
+| `app`, `legacy` | anything                                                            |
 
 Pages depend inwards only: a feature lib reaches a port through its
 `data-access` lib, never through the application lib or an adapter. Data-access
 libs may depend on each other, so stores can build on other features' data
 access.
+
+Only spec files may import `@overckd/testing`, because its helpers import
+vitest. The module-boundary rule can't tell spec files from other files, so it
+lets adapters depend on the testing lib, and `no-restricted-imports` rejects the
+import outside spec files.
 
 | `platform:` | may depend on | meaning                                                                      |
 | ----------- | ------------- | ---------------------------------------------------------------------------- |
