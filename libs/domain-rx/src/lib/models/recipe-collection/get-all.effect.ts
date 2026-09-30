@@ -2,8 +2,7 @@ import { CollectionUseCase } from '@_shared/collection/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { CollectionJson } from '@overckd/domain-experimental';
-import { Effect, Logger, LogLevel, Schema } from 'effect';
-import * as Fn from 'effect/Function';
+import { Effect, Function as Fn, References, Schema } from 'effect';
 import { from, map } from 'rxjs';
 import {
   eventCreator,
@@ -21,10 +20,10 @@ const createEvent = eventCreator(RecipeCollectionQueryType.GetAll);
 export const getAll: MsgEffect = (event$, ctx) => {
   const getAll = CollectionUseCase.pipe(
     Effect.flatMap(useCases => useCases.getAll),
-    Effect.flatMap(Schema.encode(Schema.Array(CollectionJson))),
+    Effect.flatMap(Schema.encodeEffect(Schema.Array(CollectionJson))),
   ).pipe(
-    Logger.withMinimumLogLevel(LogLevel.Debug),
-    Effect.provide(CollectionUseCase.Default),
+    Effect.provideService(References.MinimumLogLevel, 'Debug'),
+    Effect.provide(CollectionUseCase.layer),
     Effect.provide(RecipeCollectionRepoMarbleInterop),
     Effect.provideService(MarbleJsContextProvider, ctx.ask),
   );

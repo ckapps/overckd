@@ -1,5 +1,4 @@
-import * as Fn from 'effect/Function';
-import * as Schema from 'effect/Schema';
+import { Effect, Schema } from 'effect';
 import {
   IngredientAmount,
   IngredientAmountJson,
@@ -18,13 +17,13 @@ export class RecipeIngredient extends Schema.Class<RecipeIngredient>(
     /** the name of the ingredient. */
     name: Schema.NonEmptyString,
     /** How much of this ingredient. */
-    amount: Schema.OptionFromSelf(IngredientAmount),
+    amount: Schema.Option(IngredientAmount),
     /**
      * Wheter this ingredient can be considered optional.
      */
-    optional: Schema.optionalWith(Schema.Boolean, {
-      default: Fn.constFalse,
-    }),
+    optional: Schema.Boolean.pipe(
+      Schema.withDecodingDefaultType(Effect.succeed(false)),
+    ),
   },
   {
     identifier: 'RecipeIngredient',
@@ -36,7 +35,7 @@ export class RecipeIngredient extends Schema.Class<RecipeIngredient>(
 /**
  * @category instances
  */
-export const Equivalence = Schema.equivalence(RecipeIngredient);
+export const Equivalence = Schema.toEquivalence(RecipeIngredient);
 
 /**
  * @category Schemas
@@ -47,13 +46,11 @@ export const RecipeIngredientJson = Schema.Struct({
   /** the name of the ingredient. */
   name: Schema.NonEmptyString,
   /** How much of this ingredient. */
-  amount: Schema.optionalWith(IngredientAmountJson, {
-    as: 'Option',
-  }),
+  amount: Schema.OptionFromOptional(IngredientAmountJson),
   /**
    * Wheter this ingredient can be considered optional.
    */
-  optional: Schema.optionalWith(Schema.Boolean, {
-    default: Fn.constFalse,
-  }),
-}).pipe(Schema.compose(RecipeIngredient));
+  optional: Schema.Boolean.pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(false)),
+  ),
+}).pipe(Schema.decodeTo(RecipeIngredient));

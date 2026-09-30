@@ -1,13 +1,10 @@
-import * as HttpApiSchema from '@effect/platform/HttpApiSchema';
-import * as Schema from 'effect/Schema';
+import { Schema } from 'effect';
 import { Tag } from './tag.model';
 
 /**
- * @category Symbols
+ * @category Brands
  */
-export const IngredientIdTypeId: unique symbol = Symbol.for(
-  '@overckd/IngredientId',
-);
+export const IngredientIdTypeId = '@overckd/IngredientId';
 
 /**
  * @category Models
@@ -15,7 +12,7 @@ export const IngredientIdTypeId: unique symbol = Symbol.for(
 export type IngredientId = typeof IngredientId.Type;
 export const IngredientId = Schema.NonEmptyString.pipe(
   Schema.brand(IngredientIdTypeId),
-).annotations({ identifier: 'IngredientId' });
+).annotate({ identifier: 'IngredientId' });
 
 /**
  * @category Models
@@ -42,17 +39,17 @@ export class Ingredient extends Schema.Class<Ingredient>('@overckd/Ingredient')(
 export class IngredientNotFound extends Schema.TaggedError<IngredientNotFound>()(
   'IngredientNotFound',
   { id: IngredientId },
-  HttpApiSchema.annotations({ status: 404 }),
+  { httpApiStatus: 404 },
 ) {}
 
 /**
  * @category instances
  */
-export const Equivalence = Schema.equivalence(Ingredient);
+export const Equivalence = Schema.toEquivalence(Ingredient);
 
 /**
  * @category Schemas
  */
 export const IngredientIdFromString = Schema.String.pipe(
-  Schema.compose(IngredientId),
+  Schema.decodeTo(IngredientId),
 );

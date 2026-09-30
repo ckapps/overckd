@@ -1,7 +1,5 @@
-import * as Fn from 'effect/Function';
-import * as Match from 'effect/Match';
-import * as Schema from 'effect/Schema';
-import { PositiveInt } from './shared.model';
+import { Effect, Function as Fn, Match, Schema } from 'effect';
+import { Positive, PositiveInt } from './shared.model';
 
 /**
  * An amount that is measured by the count.
@@ -18,9 +16,9 @@ export const CountIngredientAmount = Schema.Struct({
    *
    * Default is `1`.
    */
-  scaleFactor: Schema.optionalWith(PositiveInt, {
-    default: Fn.constant(1),
-  }),
+  scaleFactor: PositiveInt.pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(1)),
+  ),
 });
 /**
  * @category Schemas
@@ -37,16 +35,14 @@ export const UnitIngredientAmount = Schema.Struct({
   /** Unit of the amount. */
   unit: Schema.NonEmptyString,
   /** How much of this ingredient. */
-  value: Schema.Positive,
+  value: Positive,
   /**
    * Optional scale factor for this ingredient, to control by how much this ingredient
    * scales, when the overall recipe is scaled.
    *
    * Default is `1`.
    */
-  scaleFactor: Schema.optionalWith(Schema.Positive, {
-    default: Fn.constant(1),
-  }),
+  scaleFactor: Positive.pipe(Schema.withDecodingDefaultType(Effect.succeed(1))),
 });
 /**
  * @category Schemas
@@ -75,20 +71,20 @@ export type IngredientAmount = Schema.Schema.Type<typeof IngredientAmount>;
 /**
  * @category Schemas
  */
-export const IngredientAmount = Schema.Union(
+export const IngredientAmount = Schema.Union([
   CountIngredientAmount,
   UnitIngredientAmount,
   LabelIngredientAmount,
-);
+]);
 
 /**
  * @category Schemas
  */
-export const IngredientAmountJson = Schema.Union(
+export const IngredientAmountJson = Schema.Union([
   CountIngredientAmountJson,
   UnitIngredientAmountJson,
   LabelIngredientAmountJson,
-).pipe(Schema.compose(IngredientAmount));
+]).pipe(Schema.decodeTo(IngredientAmount));
 
 /**
  * Scales the given `amount` by the given `scalar`.

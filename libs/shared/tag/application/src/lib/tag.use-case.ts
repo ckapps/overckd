@@ -1,9 +1,9 @@
 import { TagId } from '@overckd/domain-experimental';
-import { Effect, pipe } from 'effect';
+import { Context, Effect, Layer, pipe } from 'effect';
 import { TagRepo } from './tag.repostitory';
 
-export class TagUseCase extends Effect.Service<TagUseCase>()('TagUseCase', {
-  effect: Effect.gen(function* () {
+export class TagUseCase extends Context.Service<TagUseCase>()('TagUseCase', {
+  make: Effect.gen(function* () {
     const repo = yield* TagRepo;
 
     /**
@@ -18,4 +18,6 @@ export class TagUseCase extends Effect.Service<TagUseCase>()('TagUseCase', {
 
     return { findById } as const;
   }),
-}) {}
+}) {
+  static readonly layer = Layer.effect(this, this.make);
+}

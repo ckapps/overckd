@@ -3,8 +3,7 @@ import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
 import { TagFromJson, TagId } from '@overckd/domain-experimental';
-import { Effect, Logger, LogLevel, Schema } from 'effect';
-import * as Fn from 'effect/Function';
+import { Effect, Function as Fn, References, Schema } from 'effect';
 import { from, map } from 'rxjs';
 import {
   eventCreator,
@@ -20,10 +19,10 @@ export const getByIdEffect: MsgEffect = (event$, ctx) => {
   const findById = (id: TagId) =>
     TagUseCase.pipe(
       Effect.flatMap(useCases => useCases.findById(id)),
-      Effect.flatMap(Schema.encode(TagFromJson)),
+      Effect.flatMap(Schema.encodeEffect(TagFromJson)),
     ).pipe(
-      Logger.withMinimumLogLevel(LogLevel.Debug),
-      Effect.provide(TagUseCase.Default),
+      Effect.provideService(References.MinimumLogLevel, 'Debug'),
+      Effect.provide(TagUseCase.layer),
       Effect.provide(TagRepoMarbleInterop),
       Effect.provideService(MarbleJsContextProvider, ctx.ask),
     );

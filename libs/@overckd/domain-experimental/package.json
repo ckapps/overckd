@@ -6,7 +6,6 @@
   "main": "./index.cjs",
   "types": "./index.d.ts",
   "peerDependencies": {
-    "@effect/platform": "~0.80.14",
-    "effect": "^3.14.1"
+    "effect": "^4.0.0-rc.118"
   }
 }

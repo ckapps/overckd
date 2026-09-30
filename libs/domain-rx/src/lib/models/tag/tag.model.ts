@@ -1,7 +1,7 @@
 import { TagRepo } from '@_shared/tag/application';
 import { useContext } from '@marblejs/core';
 import { TagFromJson, TagId, TagNotFound } from '@overckd/domain-experimental';
-import { Effect, Layer, Option, Schema } from 'effect';
+import { Effect, Layer, Schema } from 'effect';
 import * as Fn from 'effect/Function';
 import { firstValueFrom } from 'rxjs';
 import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
@@ -18,8 +18,7 @@ export const TagRepoMarbleInterop = Layer.effect(
       findById: (id: TagId) =>
         Fn.pipe(
           Effect.promise(() => firstValueFrom(repo.getByUri(id))),
-          Effect.map(Option.fromNullable),
-          Effect.flatten,
+          Effect.flatMap(Effect.fromNullishOr),
           Effect.tap(baseTag => Effect.logDebug('baseTag', baseTag)),
           Effect.map(decode),
           Effect.mapError(() => TagNotFound.make({ id })),

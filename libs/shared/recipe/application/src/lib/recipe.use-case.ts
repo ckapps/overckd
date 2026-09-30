@@ -1,12 +1,11 @@
 import { RecipeId } from '@overckd/domain-experimental';
-import * as Effect from 'effect/Effect';
-import * as Fn from 'effect/Function';
+import { Context, Effect, Function as Fn, Layer } from 'effect';
 import { RecipeRepo } from './recipe.repostitory';
 
-export class RecipeUseCase extends Effect.Service<RecipeUseCase>()(
+export class RecipeUseCase extends Context.Service<RecipeUseCase>()(
   'RecipeUseCase',
   {
-    effect: Effect.gen(function* () {
+    make: Effect.gen(function* () {
       const repo = yield* RecipeRepo;
 
       const findById = (id: RecipeId) =>
@@ -19,4 +18,6 @@ export class RecipeUseCase extends Effect.Service<RecipeUseCase>()(
       return { findById } as const;
     }),
   },
-) {}
+) {
+  static readonly layer = Layer.effect(this, this.make);
+}

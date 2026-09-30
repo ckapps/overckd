@@ -1,8 +1,5 @@
-import * as Match from 'effect/Match';
-import * as Num from 'effect/Number';
-import * as O from 'effect/Option';
-import * as Schema from 'effect/Schema';
-import { OptionNonEmptyString } from './shared.model';
+import { Match, Number as Num, Option as O, Schema } from 'effect';
+import { OptionNonEmptyString, Positive } from './shared.model';
 
 export enum PortionKind {
   Quantity = 'quantity',
@@ -17,9 +14,9 @@ export enum PortionKind {
 export const QuantityPortion = Schema.Struct({
   kind: Schema.Literal(`${PortionKind.Quantity}`),
   /** Optional label. */
-  label: Schema.OptionFromSelf(Schema.NonEmptyString),
+  label: Schema.Option(Schema.NonEmptyString),
   /** Quantity. */
-  quantity: Schema.Positive,
+  quantity: Positive,
 });
 /**
  * @category Schemas
@@ -29,7 +26,7 @@ export const QuantityPortionJson = Schema.Struct({
   /** Optional label. */
   label: OptionNonEmptyString,
   /** Quantity. */
-  quantity: Schema.Positive,
+  quantity: Positive,
 });
 
 /**
@@ -40,7 +37,7 @@ export const QuantityPortionJson = Schema.Struct({
 export const SpringformPortion = Schema.Struct({
   kind: Schema.Literal(`${PortionKind.Springform}`),
   /** The diameter in centimeter. */
-  diameter: Schema.Positive,
+  diameter: Positive,
 });
 /**
  * @category Schemas
@@ -51,15 +48,15 @@ export const SpringformPortionJson = SpringformPortion;
  * @category Models
  */
 export type Portion = Schema.Schema.Type<typeof Portion>;
-export const Portion = Schema.Union(QuantityPortion, SpringformPortion);
+export const Portion = Schema.Union([QuantityPortion, SpringformPortion]);
 
 /**
  * @category Schemas
  */
-export const PortionJson = Schema.Union(
+export const PortionJson = Schema.Union([
   QuantityPortionJson,
   SpringformPortionJson,
-).pipe(Schema.compose(Portion));
+]).pipe(Schema.decodeTo(Portion));
 
 /**
  * Extracts the portion quantity information from the given `portion`.

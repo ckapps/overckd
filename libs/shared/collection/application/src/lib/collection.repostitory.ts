@@ -5,9 +5,7 @@ import {
 } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
-export class CollectionRepo extends Context.Tag(
-  '@overckd/collection/application/repo',
-)<
+export class CollectionRepo extends Context.Service<
   CollectionRepo,
   {
     /**
@@ -23,4 +21,4 @@ export class CollectionRepo extends Context.Tag(
       id: CollectionId,
     ) => Effect.Effect<Collection, CollectionNotFound>;
   }
->() {}
+>()('@overckd/collection/application/repo') {}

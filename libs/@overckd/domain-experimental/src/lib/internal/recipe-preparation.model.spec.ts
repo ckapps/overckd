@@ -10,6 +10,7 @@ import {
 describe('RecipePreparation', () => {
   const decode = Schema.decodeSync(RecipePreparation);
   const decodeJson = Schema.decodeSync(RecipePreparationJson);
+  const encodeJson = Schema.encodeSync(RecipePreparationJson);
 
   const unitIngredientAmount = {
     _tag: 'UnitIngredientAmount' as const,
@@ -36,6 +37,20 @@ describe('RecipePreparation', () => {
     kind: PortionKind.Quantity as const,
     quantity: 1,
   };
+  const basicRecipeJson = (id: string) => ({
+    _tag: 'BasicRecipePreparation' as const,
+    id,
+    name: id,
+    basedOn: [],
+    ingredients: [
+      {
+        ...unitIngredientJson,
+        amount: { ...unitIngredientAmount, scaleFactor: 1 },
+        optional: false,
+      },
+    ] as const,
+    steps: [{ instruction: 'Step 1' }, { instruction: 'Step 2' }] as const,
+  });
 
   describe('BasicRecipePreparation', () => {
     it('should decode', () => {
@@ -63,6 +78,14 @@ describe('RecipePreparation', () => {
       });
 
       expect(recipe).toBeDefined();
+    });
+    it('should encode to JSON', () => {
+      const json: Schema.Codec.Encoded<typeof RecipePreparationJson> = {
+        ...basicRecipeJson('my-recipe'),
+        portion: quantityPortionJson,
+      };
+
+      expect(encodeJson(decodeJson(json))).toEqual(json);
     });
   });
 
@@ -122,6 +145,17 @@ describe('RecipePreparation', () => {
       });
 
       expect(recipe).toBeDefined();
+    });
+    it('should encode to JSON', () => {
+      const json: Schema.Codec.Encoded<typeof RecipePreparationJson> = {
+        _tag: 'UnionRecipePreparation',
+        id: 'union-recipe',
+        name: 'union recipe',
+        portion: quantityPortionJson,
+        recipes: [basicRecipeJson('recipe-1'), basicRecipeJson('recipe-2')],
+      };
+
+      expect(encodeJson(decodeJson(json))).toEqual(json);
     });
     it('should decode nested', () => {
       const recipe = decode({

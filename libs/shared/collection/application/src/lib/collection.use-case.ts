@@ -1,11 +1,11 @@
 import { CollectionId } from '@overckd/domain-experimental';
-import { Effect, pipe } from 'effect';
+import { Context, Effect, Layer, pipe } from 'effect';
 import { CollectionRepo } from './collection.repostitory';
 
-export class CollectionUseCase extends Effect.Service<CollectionUseCase>()(
+export class CollectionUseCase extends Context.Service<CollectionUseCase>()(
   'CollectionUseCase',
   {
-    effect: Effect.gen(function* () {
+    make: Effect.gen(function* () {
       const repo = yield* CollectionRepo;
 
       const getAll = repo.getAll.pipe(Effect.withSpan('Collection.getAll'));
@@ -20,4 +20,6 @@ export class CollectionUseCase extends Effect.Service<CollectionUseCase>()(
       return { getAll, findById } as const;
     }),
   },
-) {}
+) {
+  static readonly layer = Layer.effect(this, this.make);
+}
