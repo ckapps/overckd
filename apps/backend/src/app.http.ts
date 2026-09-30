@@ -2,6 +2,7 @@ import { HttpCollectionLive } from '@_backend/collection/infra-http';
 import { OverckdApi } from '@_backend/overckd/adapter-rest';
 import { HttpRecipeLive } from '@_backend/recipe/infra-http';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
+import { RecipeQueriesLocal } from '@overckd/recipe/application';
 import { Layer } from 'effect';
 import { HttpRouter } from 'effect/http';
 import { HttpApiBuilder, HttpApiSwagger } from 'effect/http-api';
@@ -14,7 +15,7 @@ const ApiLive = HttpApiBuilder.layer(OverckdApi, {
     HttpRecipeLive,
     // TODO: add more API implementations here
   ]),
-  Layer.provide(CollectionQueriesLocal),
+  Layer.provide([CollectionQueriesLocal, RecipeQueriesLocal]),
 );
 
 // `HttpRouter.serve` applies the request logger and logs the server address
