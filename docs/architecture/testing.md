@@ -86,9 +86,9 @@ the real request encoding, routing and response decoding. Mock the ports; no
 use cases or repositories are involved.
 
 ```ts
-// libs/@overckd/collection/adapter-http-server/src/lib/collection.api.handlers.spec.ts
+// libs/@overckd/collection/adapter-http-server/src/lib/collection.controller.spec.ts
 const TestLayer = Layer.mergeAll(
-  CollectionApiHandlers.pipe(
+  CollectionHttpController.pipe(
     Layer.provide(
       Layer.mock(CollectionQueries, {
         getAll: Effect.succeed([desserts]),
@@ -102,7 +102,7 @@ const TestLayer = Layer.mergeAll(
 
 const run = <A, E>(effect: Effect.Effect<A, E, Layer.Success<typeof TestLayer> | Scope.Scope>) => Effect.runPromise(effect.pipe(Effect.provide(TestLayer), Effect.scoped));
 
-describe('CollectionApiHandlers', () => {
+describe('CollectionHttpController', () => {
   const makeClient = HttpApiTest.groups(OverckdApi, ['collection']);
 
   it('answers unknown ids with a typed 404', async () => {

@@ -32,7 +32,7 @@ libs/
 │   └── <feature>/                  collection, recipe, tag, ingredient, …
 │       ├── application/            ports + *Local implementations
 │       ├── api-http/               <Feature>Api (HttpApiGroup)
-│       ├── adapter-http-server/    <Feature>ApiHandlers
+│       ├── adapter-http-server/    <Feature>HttpController
 │       ├── adapter-http-client/    <Feature>QueriesHttp, <Feature>CommandsHttp
 │       ├── adapter-fs/             <Feature>RepoFs (YAML files)
 │       ├── adapter-rxdb/           <Feature>RepoRxdb (database)
@@ -71,7 +71,7 @@ tightly linked (a recipe references ingredients, which reference tags, …).
 | `@overckd/codec-yaml`                          | `type:contract` `platform:any`                                                             | codecs between the YAML files (collections, recipes, tags, ingredients) and the domain models, including YAML parsing                                             | file I/O and paths, app config formats                                                            |
 | `@overckd/<feature>/application`               | `type:application` `platform:any`                                                          | inbound ports `<Feature>Queries` / `<Feature>Commands`, outbound port `<Feature>Repo`, `*Local` implementations                                                   | schemas that cross the wire (→ domain), transport or storage code, providing its own dependencies |
 | `@overckd/<feature>/api-http`                  | `type:contract` `platform:any`                                                             | the feature's `HttpApiGroup` (`<Feature>Api`) incl. status codes and OpenAPI annotations                                                                          | handler or client code                                                                            |
-| `@overckd/<feature>/adapter-http-server`       | `type:adapter` `platform:any`                                                              | `<Feature>ApiHandlers`: each endpoint calls one port method                                                                                                       | business logic, error remapping                                                                   |
+| `@overckd/<feature>/adapter-http-server`       | `type:adapter` `platform:any`                                                              | `<Feature>HttpController`: each endpoint calls one port method                                                                                                    | business logic, error remapping                                                                   |
 | `@overckd/<feature>/adapter-http-client`       | `type:adapter` `platform:any`                                                              | `*Http` implementations of the inbound ports (via `HttpApiClient`)                                                                                                | base URLs or other config, business logic                                                         |
 | `@overckd/<feature>/adapter-<tech>`            | `type:adapter` `platform:any` (`platform:node` only if it must import a Node-only package) | `<Feature>Repo<Tech>` implementations, their private format codecs (e.g. rxdb documents) and error mapping; YAML files via `@overckd/codec-yaml`                  | business logic                                                                                    |
 | `@overckd-app/<feature>/data-access`           | `type:data-access` `platform:browser`                                                      | the Angular access to the ports: `inject<Port>()` bindings derived from them (queries → `ResourceRef`, commands → `Promise`), NgRx stores for shared client state | business logic, choosing implementations, components                                              |
@@ -148,12 +148,12 @@ Check with `pnpm nx affected -t lint` (or `pnpm nx run <project>:lint`).
 
 | What                      | Convention                                                    | Example                                                                               |
 | ------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| Lib path and import alias | identical: `libs/<alias>`                                     | `libs/@overckd/collection/application` ↔ `@overckd/collection/application`            |
+| Lib path and import alias | identical: `libs/<alias>`                                     | `libs/@overckd/collection/application` ↔ `@overckd/collection/application`           |
 | Nx project                | the alias without `@`, `/` → `-`                              | `overckd-collection-application`, `overckd-app-collection-ui`, `ckapp-angular-effect` |
 | Inbound ports             | `<Feature>Queries` (reads), `<Feature>Commands` (changes)     | `CollectionQueries`                                                                   |
 | Outbound port             | `<Feature>Repo`, one per aggregate                            | `CollectionRepo`                                                                      |
 | Implementation            | `<Port><Impl>`; a function if it takes parameters             | `CollectionQueriesLocal`, `CollectionQueriesHttp`, `CollectionRepoFs({ file })`       |
-| HTTP handlers             | `<Feature>ApiHandlers`                                        | `CollectionApiHandlers`                                                               |
+| HTTP controller           | `<Feature>HttpController`                                     | `CollectionHttpController`                                                            |
 | HTTP API group            | `<Feature>Api`; group id = feature name; prefix = plural path | `HttpApiGroup.make('collection')…prefix('/collections')`                              |
 | Angular binding           | `inject<Port>()`                                              | `injectCollectionQueries()`                                                           |
 | Service key               | `'@overckd/<feature>/<role>/<Name>'`                          | `'@overckd/collection/application/CollectionQueries'`                                 |
@@ -165,7 +165,7 @@ Check with `pnpm nx affected -t lint` (or `pnpm nx run <project>:lint`).
 File names inside a lib: port `collection-queries.ts`, implementations
 `collection-queries.local.ts` / `collection-queries.http.ts`, repository
 implementations `collection-repo.fs.ts`, HTTP API group `collection.api.ts`,
-handlers `collection.api.handlers.ts`, Angular bindings `collection.bindings.ts`.
+HTTP controller `collection.controller.ts`, Angular bindings `collection.bindings.ts`.
 Tests sit next to the file as `*.spec.ts`. Every lib exports its public API from
 `src/index.ts` only.
 
