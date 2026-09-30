@@ -1,7 +1,7 @@
 import { OverckdApi } from '@_backend/overckd/adapter-rest';
-import { CollectionUseCase } from '@overckd/collection/application';
+import { CollectionQueries } from '@overckd/collection/application';
 import { CollectionNotFound } from '@overckd/domain-experimental';
-import { Effect, Layer, pipe } from 'effect';
+import { Effect, pipe } from 'effect';
 import { HttpApiBuilder } from 'effect/http-api';
 
 export const HttpCollectionLive = HttpApiBuilder.group(
@@ -9,15 +9,15 @@ export const HttpCollectionLive = HttpApiBuilder.group(
   'recipe-collection',
   handlers =>
     Effect.gen(function* () {
-      const recipeCollection = yield* CollectionUseCase;
+      const queries = yield* CollectionQueries;
 
       return handlers
-        .handle('getAll', () => recipeCollection.getAll)
+        .handle('getAll', () => queries.getAll)
         .handle('findById', ({ params }) =>
           pipe(
-            recipeCollection.findById(params.id),
+            queries.findById(params.id),
             Effect.mapError(() => new CollectionNotFound({ id: params.id })),
           ),
         );
     }),
-).pipe(Layer.provide([CollectionUseCase.layer]));
+);

@@ -1,4 +1,7 @@
-import { CollectionUseCase } from '@overckd/collection/application';
+import {
+  CollectionQueries,
+  CollectionQueriesLocal,
+} from '@overckd/collection/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
@@ -20,12 +23,12 @@ const createEvent = eventCreator(RecipeCollectionQueryType.GetById);
 
 export const getById: MsgEffect = (event$, ctx) => {
   const findById = (id: CollectionId) =>
-    CollectionUseCase.pipe(
-      Effect.flatMap(useCases => useCases.findById(id)),
+    CollectionQueries.pipe(
+      Effect.flatMap(queries => queries.findById(id)),
       Effect.flatMap(Schema.encodeEffect(CollectionJson)),
     ).pipe(
       Effect.provideService(References.MinimumLogLevel, 'Debug'),
-      Effect.provide(CollectionUseCase.layer),
+      Effect.provide(CollectionQueriesLocal),
       Effect.provide(RecipeCollectionRepoMarbleInterop),
       Effect.provideService(MarbleJsContextProvider, ctx.ask),
     );
