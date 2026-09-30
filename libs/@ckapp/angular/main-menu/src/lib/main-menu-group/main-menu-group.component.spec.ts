@@ -1,5 +1,5 @@
 import { faAddressBook } from '@fortawesome/free-regular-svg-icons';
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { CkadMainMenuGroupComponent } from './main-menu-group.component';
 
 describe('MainMenuGroupComponent', () => {
