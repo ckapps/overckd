@@ -40,7 +40,6 @@
       "@_shared/recipe/infra-rxdb": [
         "libs/shared/recipe/infra-rxdb/src/index.ts"
       ],
-      "@_shared/tag/application": ["libs/shared/tag/application/src/index.ts"],
       "@_shared/tag/infra-rxdb": ["libs/shared/tag/infra-rxdb/src/index.ts"],
       "@_shared/ui": ["libs/shared/ui/src/index.ts"],
       "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
@@ -66,7 +65,8 @@
       ],
       "@overckd/recipe/application": [
         "libs/@overckd/recipe/application/src/index.ts"
-      ]
+      ],
+      "@overckd/tag/application": ["libs/@overckd/tag/application/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

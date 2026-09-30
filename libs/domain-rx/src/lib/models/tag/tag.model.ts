@@ -1,4 +1,4 @@
-import { TagRepo } from '@_shared/tag/application';
+import { TagRepo } from '@overckd/tag/application';
 import { useContext } from '@marblejs/core';
 import { TagFromJson, TagId, TagNotFound } from '@overckd/domain-experimental';
 import { Effect, Layer, Schema } from 'effect';

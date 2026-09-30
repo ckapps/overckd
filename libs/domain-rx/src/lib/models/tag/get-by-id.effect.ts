@@ -1,4 +1,4 @@
-import { TagUseCase } from '@_shared/tag/application';
+import { TagUseCase } from '@overckd/tag/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
