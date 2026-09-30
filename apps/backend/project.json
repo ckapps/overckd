@@ -74,5 +74,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["type:app", "platform:node"]
 }

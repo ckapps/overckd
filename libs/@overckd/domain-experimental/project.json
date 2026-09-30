@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/@overckd/domain-experimental/src",
   "projectType": "library",
-  "tags": ["type:domain"],
+  "tags": ["type:domain", "platform:any"],
   "targets": {
     "build": {
       "executor": "@nx/esbuild:esbuild",

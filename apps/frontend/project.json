@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "overckd",
   "sourceRoot": "apps/frontend/src",
-  "tags": [],
+  "tags": ["type:app", "platform:browser"],
   "targets": {
     "build": {
       "executor": "@angular/build:application",

@@ -3,7 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/backend/recipe/infra-http/src",
   "projectType": "library",
-  "tags": ["type:infra", "scope:backend"],
+  "tags": ["type:adapter", "platform:any"],
   "// targets": "to see all targets run: nx show project backend-recipe-infra-http --web",
   "targets": {}
 }
