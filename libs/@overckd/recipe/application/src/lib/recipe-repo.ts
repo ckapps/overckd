@@ -5,6 +5,7 @@ import {
 } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
+/** Outbound port: where recipes are stored. */
 export class RecipeRepo extends Context.Service<
   RecipeRepo,
   {
@@ -16,4 +17,4 @@ export class RecipeRepo extends Context.Service<
       id: RecipeId,
     ) => Effect.Effect<RecipePreparation, RecipeNotFound>;
   }
->()('@overckd/recipe/application/repo') {}
+>()('@overckd/recipe/application/RecipeRepo') {}
