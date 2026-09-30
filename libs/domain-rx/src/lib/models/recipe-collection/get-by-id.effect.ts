@@ -1,0 +1,56 @@
+import { CollectionUseCase } from '@_shared/collection/application';
+import { act, matchEvent } from '@marblejs/core';
+import { MsgEffect, reply } from '@marblejs/messaging';
+import { eventValidator$ } from '@marblejs/middleware-io';
+import { CollectionId, CollectionJson } from '@overckd/domain-experimental';
+import { Effect, Function as Fn, References, Schema } from 'effect';
+import { from, map } from 'rxjs';
+import {
+  eventCreator,
+  OverckdEventType,
+} from '../../core/events/event-creator';
+import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
+import { RecipeCollectionRepoMarbleInterop } from './recipe-collection.model';
+import {
+  GetRecipeCollectionByIdEvent,
+  RecipeCollectionQueryType,
+} from './recipe-collection.query';
+
+const createEvent = eventCreator(RecipeCollectionQueryType.GetById);
+
+export const getById: MsgEffect = (event$, ctx) => {
+  const findById = (id: CollectionId) =>
+    CollectionUseCase.pipe(
+      Effect.flatMap(useCases => useCases.findById(id)),
+      Effect.flatMap(Schema.encodeEffect(CollectionJson)),
+    ).pipe(
+      Effect.provideService(References.MinimumLogLevel, 'Debug'),
+      Effect.provide(CollectionUseCase.layer),
+      Effect.provide(RecipeCollectionRepoMarbleInterop),
+      Effect.provideService(MarbleJsContextProvider, ctx.ask),
+    );
+
+  return event$.pipe(
+    matchEvent(GetRecipeCollectionByIdEvent),
+    act(eventValidator$(GetRecipeCollectionByIdEvent)),
+    act(event =>
+      Fn.pipe(
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        event.payload.id,
+        CollectionId.make,
+        id => Effect.runPromise(findById(id)),
+        result => from(result),
+        map(payload =>
+          reply(event)(createEvent(OverckdEventType.Result, { payload })),
+        ),
+        // catchError(error =>
+        //   of({
+        //     type: 'GET_USER_ERROR',
+        //     error: { name: error.name, message: error.message },
+        //   }),
+        // ),
+      ),
+    ),
+  );
+};

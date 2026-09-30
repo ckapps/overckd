@@ -1,0 +1,11 @@
+{
+  "name": "@ckapp/angular",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "21.2.9",
+    "@angular/material": "21.2.9",
+    "@fortawesome/angular-fontawesome": "^1.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2"
+  },
+  "sideEffects": false
+}

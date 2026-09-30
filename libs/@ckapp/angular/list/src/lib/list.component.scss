@@ -1,0 +1,16 @@
+@mixin ckad-list() {
+  // Variables for list
+  $ckad-list--default--border-radius: 0.25rem !default;
+
+  display: flex;
+  flex-direction: column;
+  padding-left: 0;
+  margin-bottom: 0;
+
+  // from variables
+  border-radius: $ckad-list--default--border-radius;
+}
+
+:host {
+  @include ckad-list();
+}

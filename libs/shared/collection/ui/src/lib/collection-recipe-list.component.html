@@ -1,0 +1,12 @@
+<h2>{{ collection().name }}</h2>
+
+<mat-list>
+  <mat-divider />
+  @for (recipe of collection().recipes; track recipe) {
+  <mat-list-item (click)="onRecipeClicked(recipe)">
+    {{ recipe.name }}
+  </mat-list-item>
+
+  <mat-divider />
+  }
+</mat-list>

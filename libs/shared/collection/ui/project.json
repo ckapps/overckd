@@ -1,0 +1,9 @@
+{
+  "name": "collection-ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/collection/ui/src",
+  "prefix": "overckd-collection",
+  "projectType": "library",
+  "tags": ["type:ui", "scope:shared"],
+  "targets": {}
+}

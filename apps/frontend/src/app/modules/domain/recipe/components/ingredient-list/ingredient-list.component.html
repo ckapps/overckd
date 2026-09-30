@@ -1,0 +1,16 @@
+@for (group of ingredientGroups$ | async; track group) {
+<div>
+  <overckd-ingredient-group [ingredientGroup]="group">
+    <overckd-ingredient-list
+      [ingredients]="group.ingredients"
+      [amountScale]="amountScale()"
+    />
+  </overckd-ingredient-group>
+</div>
+}
+
+<ul>
+  @for (ingredient of ingredientList$ | async; track ingredient) {
+  <overckd-ingredient [ingredient]="ingredient" [amountScale]="amountScale()" />
+  }
+</ul>

@@ -1,0 +1,9 @@
+{
+  "name": "backend-collection-adapter-rest",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/backend/collection/adapter-rest/src",
+  "projectType": "library",
+  "tags": ["type:adapter", "scope:backend"],
+  "// targets": "to see all targets run: nx show project backend-collection-adapter-rest --web",
+  "targets": {}
+}

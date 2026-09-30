@@ -1,0 +1,9 @@
+{
+  "name": "collection-application",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/collection/application/src",
+  "projectType": "library",
+  "tags": ["type:application", "scope:shared"],
+  "// targets": "to see all targets run: nx show project collection-application --web",
+  "targets": {}
+}

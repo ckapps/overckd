@@ -1,0 +1,16 @@
+:host {
+  display: block;
+  margin-bottom: 1.5rem;
+
+  > .label {
+    &--v1 {
+      margin-bottom: 0.75rem;
+      text-align: center;
+      @apply font-heading-2;
+    }
+
+    &--v2 {
+      @apply font-heading-1;
+    }
+  }
+}

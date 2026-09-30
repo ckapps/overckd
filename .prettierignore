@@ -1,10 +1,14 @@
-# Artifacts
-dist
-coverage
+# Add files here to ignore them from prettier formatting
+/dist
+/coverage
 .angular
 packages/server/api
-
+pnpm-lock.yaml
 
 # Other files
 CHANGELOG.md
 tsconfig*.json
+
+/.nx/cache
+/.nx/workspace-data
+.nx/self-healing

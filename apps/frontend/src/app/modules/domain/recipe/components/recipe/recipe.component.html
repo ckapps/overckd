@@ -1,0 +1,76 @@
+@let _recipe = recipe();
+<div class="row">
+  <h3
+    [class]="
+      [
+        'title--v1',
+        'w-100',
+        'd-flex',
+        'flex-row',
+        'align-items-center',
+        _recipe.styles.title || ''
+      ].join(' ')
+    "
+  >
+    {{ _recipe.name }}
+  </h3>
+</div>
+
+<div class="row flex-grow-1">
+  <div [class]="leftColCssClass">
+    @if (_recipe.portion) {
+    <overckd-portion-converter
+      [source]="_recipe.portion"
+      (scaleFactorChanged)="onScaleFactorChanged($event)"
+    >
+    </overckd-portion-converter>
+    } @if (ingredients(); as _ingredients) {
+    <div>
+      <h4 class="d-none subtitle--v2">Zutaten</h4>
+      <overckd-ingredient-list
+        [ingredients]="_ingredients"
+        [amountScale]="portionScaling"
+      />
+    </div>
+    } @if (_recipe.tips.length > 0) {
+
+    <img src="./assets/divider.png" [class]="dividerCssClass" />
+    <div>
+      <h4 class="subtitle--v2">Tipps</h4>
+      <overckd-recipe-tips [recipe]="_recipe" />
+    </div>
+
+    }
+
+    <img src="./assets/divider.png" [class]="dividerCssClass" />
+    <div>
+      <h4 class="subtitle--v2">Verbesserungen</h4>
+      <overckd-improvement-notes [numberOfLines]="numberOfLines()" />
+    </div>
+  </div>
+
+  <div class="col d-flex flex-column px-0">
+    <div>
+      <h4 class="d-none subtitle--v2">Zubereitung</h4>
+      <overckd-preparation [recipe]="_recipe" />
+    </div>
+
+    @if (primaryImage) {
+    <div class="container-fluid mt-5">
+      <div class="row">
+        <div [class]="secondaryImageContainerCssClass">
+          @for (image of secondaryImages; track image; let i = $index) {
+          <div [class]="'d-flex ' + getImageCssClass(i + 1)">
+            <img [src]="image" class="w-100" />
+          </div>
+          }
+        </div>
+
+        <div [class]="primaryImageContainerCssClass">
+          <img [src]="primaryImage" [class]="getImageCssClass(0)" />
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</div>

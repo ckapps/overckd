@@ -1,0 +1,78 @@
+{
+  "name": "backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/backend",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/backend/src/main.ts",
+        "tsConfig": "apps/backend/tsconfig.app.json",
+        "assets": ["apps/backend/src/assets"],
+        "additionalEntryPoints": ["apps/backend/src/cli.ts"],
+        "generateExportsField": true,
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "bundle": true,
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        },
+        "serve": {
+          "platform": "node",
+          "outputPath": "dist/apps/backend-serve",
+          "format": ["cjs"],
+          "bundle": false,
+          "main": "apps/backend/src/cli.ts",
+          "tsConfig": "apps/backend/tsconfig.app.json",
+          "assets": [],
+          "generateExportsField": false,
+          "generatePackageJson": false,
+          "esbuildOptions": {
+            "sourcemap": true,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "dependsOn": ["^build"],
+      "options": {
+        "buildTarget": "backend:build:serve",
+        "runBuildTargetDependencies": false
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "backend:build:serve"
+        },
+        "production": {
+          "buildTarget": "backend:build:serve"
+        }
+      }
+    }
+  },
+  "tags": []
+}

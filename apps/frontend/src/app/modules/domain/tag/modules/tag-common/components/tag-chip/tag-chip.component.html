@@ -1,0 +1,11 @@
+@if (tag(); as _tag) {
+<mat-chip
+  [class]="getChipClasses(_tag)"
+  [ngStyle]="{ 'background-color': _tag.color }"
+>
+  @if (_tag.icon) {
+  <fa-icon [icon]="getIcon(_tag.icon)" class="mr-2" />
+  }
+  {{ _tag.label }}
+</mat-chip>
+}

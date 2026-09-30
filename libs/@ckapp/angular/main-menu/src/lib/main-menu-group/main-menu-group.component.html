@@ -1,0 +1,16 @@
+<mat-expansion-panel
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+  expanded
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      @if (icon()) {
+      <fa-icon [icon]="icon()" class="mr-2" />
+      }
+      {{ groupName() }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+
+  <ng-content></ng-content>
+</mat-expansion-panel>

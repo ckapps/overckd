@@ -1,0 +1,9 @@
+{
+  "name": "@overckd/backend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "commonjs",
+  "bin": {
+    "overckd": "./cli.js"
+  }
+}

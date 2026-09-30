@@ -1,0 +1,19 @@
+$app-main-menu--background-color: transparent;
+$app-main-menu--color: white;
+$app-main-menu--padding: 0.6em;
+
+:host {
+  display: block;
+  overflow: auto;
+
+  padding: $app-main-menu--padding;
+  background-color: $app-main-menu--background-color;
+  color: $app-main-menu--color;
+
+  .mat-mdc-list-base {
+    --mat-list-list-item-container-shape: 0.5rem;
+    --mat-list-list-item-label-text-color: #{$app-main-menu--color};
+    --mat-list-list-item-hover-label-text-color: #{$app-main-menu--color};
+    --mat-list-list-item-focus-label-text-color: #{$app-main-menu--color};
+  }
+}

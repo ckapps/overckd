@@ -1,0 +1,35 @@
+$make-full-height: true; // false
+
+:host {
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+
+  @if $make-full-height == true {
+    @media print {
+      height: 135vh;
+      max-height: 135vh;
+    }
+  }
+
+  .row > .title {
+    &--v1 {
+      margin-bottom: 3rem;
+      @apply font-heading-1;
+      font-size: xxx-large;
+      font-weight: 400;
+    }
+  }
+
+  .subtitle {
+    &--v2 {
+      @apply font-heading-2;
+      text-align: center;
+      font-weight: 300;
+    }
+  }
+
+  img {
+    border-radius: 0.75rem;
+  }
+}

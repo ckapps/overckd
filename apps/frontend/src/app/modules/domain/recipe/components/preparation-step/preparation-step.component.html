@@ -1,0 +1,15 @@
+@if (!stepsEnumerated()) { @if (stepHtml; as stepHtml) {
+<div [class]="cssClasses" [innerHTML]="stepHtml"></div>
+} @else {
+
+<p [class]="cssClasses">
+  {{ stepText }}
+</p>
+
+} } @if (stepsEnumerated()) { @if (stepHtml; as stepHtml) {
+<li [class]="[cssClasses, 'mb-1'].join(' ')" [innerHTML]="stepHtml"></li>
+}
+<li [class]="[cssClasses, 'mb-1'].join(' ')">
+  {{ stepText }}
+</li>
+}

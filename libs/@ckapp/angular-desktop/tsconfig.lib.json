@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../dist/out-tsc",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": [],
+    "moduleResolution": "bundler"
+  },
+  "exclude": [
+    "**/*.spec.ts",
+    "test-setup.ts",
+    "**/*.test.ts",
+    "vite.config.mts",
+    "src/test-setup.ts"
+  ],
+  "include": [
+    "**/*.ts"
+  ]
+}

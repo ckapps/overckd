@@ -1,0 +1,26 @@
+{
+  "name": "@overckd/frontend",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "21.2.9",
+    "@angular/cdk": "21.2.9",
+    "@angular/common": "21.2.9",
+    "@angular/core": "21.2.9",
+    "@angular/forms": "21.2.9",
+    "@angular/material": "21.2.9",
+    "@angular/router": "21.2.9",
+    "@ckapp/rxjs-snafu": "~0.1.9",
+    "@fortawesome/angular-fontawesome": "^1.0.0",
+    "@fortawesome/fontawesome-svg-core": "^6.7.2",
+    "@fortawesome/free-brands-svg-icons": "^6.7.2",
+    "@fortawesome/free-regular-svg-icons": "^6.7.2",
+    "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@overckd/domain": "workspace:*",
+    "bootstrap": "^5.3.0",
+    "qs": "^6.9.6",
+    "rxjs": "~7.8.1",
+    "tslib": "^2.5.2",
+    "zone.js": "0.16.3"
+  }
+}

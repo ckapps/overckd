@@ -2,6 +2,9 @@ name: Test Coveralls
 
 on: ['push', 'pull_request']
 
+permissions:
+  contents: read
+
 jobs:
   coverage:
     name: Coverage
@@ -11,15 +14,15 @@ jobs:
     if: "!contains(github.event.head_commit.author.name, 'Bump version')"
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v3.0.0
         with:
-          node-version: '16'
-      - run: yarn install
-      - run: yarn lerna bootstrap --ci
-      - run: yarn build
-      - run: yarn test:coverage
+          install: true
+          runtime: node@lts
+      - run: pnpm nx run-many -t test --coverage.enabled --coverage.reporter=lcov
+      - run: node tools/scripts/merge-lcov.mjs
       - name: Coveralls
-        uses: coverallsapp/github-action@v2
+        uses: coverallsapp/github-action@v2.3.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage/lcov.info

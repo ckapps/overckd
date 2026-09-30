@@ -1,0 +1,8 @@
+:host {
+  @apply max-h-screen overflow-auto
+    bg-transparent;
+
+  > nav {
+    @apply flex flex-col;
+  }
+}

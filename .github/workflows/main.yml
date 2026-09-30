@@ -7,18 +7,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ['16']
-
-    name: Node ${{ matrix.node }} build
+    name: Node LTS build
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
         with:
-          node-version: ${{ matrix.node }}
-      - run: yarn install
-      - run: yarn lerna bootstrap --ci
-      - run: yarn build
-      - run: yarn lint
+          fetch-depth: 0
+          filter: tree:0
+      - uses: pnpm/setup@v3.0.0
+        with:
+          install: true
+          runtime: node@lts
+      - uses: nrwl/nx-set-shas@v5
+      - run: pnpm nx run-many -t build
+      - run: pnpm nx affected -t typecheck
+      - run: pnpm nx affected -t lint

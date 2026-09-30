@@ -1,0 +1,35 @@
+:host {
+  display: block;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+
+  ::ng-deep .mat-expansion-panel {
+    background: inherit;
+    color: inherit;
+    box-shadow: none;
+  }
+
+  ::ng-deep .mat-expansion-panel-header {
+    padding: 0 16px;
+  }
+
+  ::ng-deep .mat-expansion-panel-header-title {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-list-item {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-expansion-panel-header-description,
+  ::ng-deep .mat-expansion-indicator::after {
+    color: inherit;
+  }
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}

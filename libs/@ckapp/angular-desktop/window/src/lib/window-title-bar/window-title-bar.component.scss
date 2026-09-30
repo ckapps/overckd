@@ -1,0 +1,19 @@
+:host {
+  @apply flex flex-row items-center;
+  // Make some space for the native icons
+  @apply w-full px-28 select-none;
+  height: 2.1em; //maybe even smaller, e.g. 22 or 20
+
+  @apply text-neutral-50 bg-neutral-800;
+  @apply border-b;
+  border-bottom-color: rgb(110, 110, 110);
+
+  -webkit-app-region: drag;
+
+  &.inset {
+    height: 2.6em;
+  }
+  &.big {
+    height: 3rem;
+  }
+}
