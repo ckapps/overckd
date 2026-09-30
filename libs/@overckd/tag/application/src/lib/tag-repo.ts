@@ -1,6 +1,7 @@
 import { Tag, TagId, TagNotFound } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
+/** Outbound port: where tags are stored. */
 export class TagRepo extends Context.Service<
   TagRepo,
   {
@@ -10,4 +11,4 @@ export class TagRepo extends Context.Service<
      */
     readonly findById: (id: TagId) => Effect.Effect<Tag, TagNotFound>;
   }
->()('@overckd/tag/application/repo') {}
+>()('@overckd/tag/application/TagRepo') {}

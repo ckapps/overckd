@@ -1,2 +1,3 @@
-export { TagRepo } from './lib/tag.repostitory';
-export { TagUseCase } from './lib/tag.use-case';
+export { TagQueries } from './lib/tag-queries';
+export { TagQueriesLocal } from './lib/tag-queries.local';
+export { TagRepo } from './lib/tag-repo';
