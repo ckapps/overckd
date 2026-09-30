@@ -4,15 +4,14 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir:
-    '../../../../node_modules/.vite/libs/backend/recipe-collection/adapter-rest',
+  cacheDir: '../../../../node_modules/.vite/libs/@overckd/collection/api-http',
   plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
   // Uncomment this if you are using workers.
   // worker: {
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
-    name: 'backend-collection-adapter-rest',
+    name: 'overckd-collection-api-http',
     passWithNoTests: true,
     watch: false,
     globals: true,
@@ -21,7 +20,7 @@ export default defineConfig(() => ({
     reporters: ['default'],
     coverage: {
       reportsDirectory:
-        '../../../../coverage/libs/backend/recipe-collection/adapter-rest',
+        '../../../../coverage/libs/@overckd/collection/api-http',
       provider: 'v8' as const,
     },
   },
