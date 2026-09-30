@@ -11,9 +11,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          filter: tree:0
       - uses: pnpm/setup@v3.0.0
         with:
           install: true
           runtime: node@lts
-      - run: pnpx nx run-many -t build
-      - run: pnpx nx run-many -t lint
+      - uses: nrwl/nx-set-shas@v5
+      - run: pnpm nx run-many -t build
+      - run: pnpm nx affected -t typecheck
+      - run: pnpm nx run-many -t lint
