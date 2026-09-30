@@ -1,4 +1,4 @@
-import { HttpCollectionLive } from '@_backend/collection/infra-http';
+import { HttpCollectionLive } from '@overckd/collection/adapter-http-server';
 import { OverckdApi } from '@overckd/api-http';
 import { HttpRecipeLive } from '@_backend/recipe/infra-http';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
