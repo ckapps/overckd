@@ -6,6 +6,29 @@ core: a hexagonal (ports & adapters) architecture built on
 rules that keep it intact, and step-by-step guides for common changes. They are
 written for people and AI agents alike.
 
+> **Target vs. current.** The docs describe the target architecture. Parts of
+> the code predate it; [libraries](architecture/libraries.md#current-to-target-mapping)
+> maps every project to its target place, and
+> [legacy code](guides/work-with-legacy-code.md) explains how to treat the rest.
+> New code follows the docs. Pages that describe code which doesn't exist yet
+> say so in a **Status** note.
+
+## I want to…
+
+| …                                                            | Read                                                                                                      |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- |
+| know where code goes and what may import what                | [architecture/libraries.md](architecture/libraries.md)                                                    |
+| understand ports, adapters and composition (worked example)  | [architecture/ports-and-adapters.md](architecture/ports-and-adapters.md)                                  |
+| add a query or a command                                     | [guides/add-an-operation.md](guides/add-an-operation.md)                                                  |
+| add a feature (e.g. ingredients)                             | [guides/add-a-feature.md](guides/add-a-feature.md)                                                        |
+| add a storage adapter (files, rxdb, …)                       | [architecture/ports-and-adapters.md](architecture/ports-and-adapters.md#6-outbound-adapters-repositories) |
+| change legacy code                                           | [guides/work-with-legacy-code.md](guides/work-with-legacy-code.md)                                        |
+| write Effect code                                            | [architecture/effect.md](architecture/effect.md)                                                          |
+| build Angular UI                                             | [architecture/frontend.md](architecture/frontend.md)                                                      |
+| work on the Electron app                                     | [architecture/desktop.md](architecture/desktop.md)                                                        |
+| write tests                                                  | [architecture/testing.md](architecture/testing.md)                                                        |
+| know why something is built this way, or propose changing it | [decisions.md](decisions.md)                                                                              |
+
 ## Pillars
 
 1. **Hexagonal.** The domain and the application know nothing about HTTP,
