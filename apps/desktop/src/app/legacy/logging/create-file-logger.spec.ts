@@ -5,13 +5,13 @@ import { createFileLogger } from './create-file-logger';
 
 describe('logging/create-file-logger', () => {
   const mockLogger = {
-    debug: jest.fn(),
-    error: jest.fn(),
-    info: jest.fn(),
-    warn: jest.fn(),
-    verbose: jest.fn(),
-    silly: jest.fn(),
-    log: jest.fn(),
+    debug: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
+    verbose: vi.fn(),
+    silly: vi.fn(),
+    log: vi.fn(),
   };
 
   let fileLogger: Logger;
@@ -45,7 +45,7 @@ describe('logging/create-file-logger', () => {
       [LogLevel.Verbose],
       [LogLevel.Warning],
     ] as TestCase[])(
-      'should call log function %p',
+      'should call log function %s',
       (logFunction: keyof Logger) => {
         fileLogger[logFunction]();
 
