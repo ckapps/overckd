@@ -1,4 +1,4 @@
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { CollectionMainMenuGroupComponent } from './collection-main-menu-group.component';
 
 describe('CollectionsMainMenuGroupComponent', () => {
