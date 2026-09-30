@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as t from 'io-ts';
 
 import { portionQuantifier } from '../portion-quantifier';
