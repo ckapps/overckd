@@ -11,7 +11,6 @@
       "!{projectRoot}/eslint.config.mjs",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
       "!{projectRoot}/src/test-setup.[jt]s",
       "!{projectRoot}/test-setup.[jt]s",
       "!{projectRoot}/cypress/**/*",
@@ -26,11 +25,6 @@
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
     },
-    "@ngneat/spectator:spectator-component": {
-      "options": {
-        "jest": true
-      }
-    },
     "@nx/eslint:lint": {
       "cache": true,
       "inputs": [
@@ -41,19 +35,6 @@
         "{workspaceRoot}/eslint.config.mjs",
         "{workspaceRoot}/tools/eslint-rules/**/*"
       ]
-    },
-    "@nx/jest:jest": {
-      "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
     },
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
@@ -95,13 +76,6 @@
       }
     },
     {
-      "plugin": "@nx/jest/plugin",
-      "exclude": ["e2e/**/*"],
-      "options": {
-        "targetName": "test"
-      }
-    },
-    {
       "plugin": "@nx/vite/plugin",
       "options": {
         "buildTargetName": "build",
@@ -125,12 +99,12 @@
     "@nx/angular:application": {
       "style": "scss",
       "linter": "eslint",
-      "unitTestRunner": "jest",
+      "unitTestRunner": "vitest-analog",
       "e2eTestRunner": "cypress"
     },
     "@nx/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest-analog"
     },
     "@nx/angular:component": {
       "style": "scss",
