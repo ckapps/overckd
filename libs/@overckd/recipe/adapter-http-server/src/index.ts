@@ -1,1 +1,1 @@
-export * from './lib/recipe.http';
+export { RecipeHttpController } from './lib/recipe.controller';
