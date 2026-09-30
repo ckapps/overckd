@@ -66,7 +66,8 @@
       ],
       "@overckd/recipe/adapter-http-server": [
         "libs/@overckd/recipe/adapter-http-server/src/index.ts"
-      ]
+      ],
+      "@overckd/testing": ["libs/@overckd/testing/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
