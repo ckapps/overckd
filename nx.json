@@ -12,10 +12,7 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s",
-      "!{projectRoot}/cypress/**/*",
-      "!{projectRoot}/**/*.cy.[jt]s?(x)",
-      "!{projectRoot}/cypress.config.[jt]s"
+      "!{projectRoot}/test-setup.[jt]s"
     ],
     "sharedGlobals": []
   },
@@ -35,9 +32,6 @@
         "{workspaceRoot}/eslint.config.mjs",
         "{workspaceRoot}/tools/eslint-rules/**/*"
       ]
-    },
-    "e2e-ci--**/*": {
-      "dependsOn": ["^build"]
     },
     "@nx/esbuild:esbuild": {
       "cache": true,
@@ -60,15 +54,6 @@
     }
   },
   "plugins": [
-    {
-      "plugin": "@nx/cypress/plugin",
-      "options": {
-        "targetName": "e2e",
-        "openTargetName": "open-cypress",
-        "componentTestingTargetName": "component-test",
-        "ciTargetName": "e2e-ci"
-      }
-    },
     {
       "plugin": "@nx/eslint/plugin",
       "options": {
@@ -100,7 +85,7 @@
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "vitest-analog",
-      "e2eTestRunner": "cypress"
+      "e2eTestRunner": "none"
     },
     "@nx/angular:library": {
       "linter": "eslint",
