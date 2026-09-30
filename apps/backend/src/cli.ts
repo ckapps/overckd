@@ -3,15 +3,7 @@
 import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import * as NodeRuntime from '@effect/platform-node/NodeRuntime';
 import * as NodeServices from '@effect/platform-node/NodeServices';
-import {
-  Config,
-  Effect,
-  Function as Fn,
-  Layer,
-  LogLevel,
-  References,
-  Schema,
-} from 'effect';
+import { Config, Effect, Function as Fn, Layer } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { createServer } from 'node:http';
 import { OverckdBackend } from './main';
@@ -29,24 +21,13 @@ const port = Flag.Int('port').pipe(
   Flag.withFallbackConfig(Config.Int('PORT')),
 );
 
-const logLevelSchema = Schema.Literals(LogLevel.values);
-
-const logLevel = Flag.String('logLevel').pipe(
-  Flag.withSchema(logLevelSchema),
-  Flag.withDefault('Info'),
-);
-
-export const command = Command.make(
-  'overckd',
-  { logLevel, port },
-  ({ logLevel, port }) =>
-    Fn.pipe(
-      main,
-      Effect.provideService(References.MinimumLogLevel, logLevel),
-      Effect.provide(
-        Layer.mergeAll(NodeHttpServer.layer(createServer, { port })),
-      ),
+export const command = Command.make('overckd', { port }, ({ port }) =>
+  Fn.pipe(
+    main,
+    Effect.provide(
+      Layer.mergeAll(NodeHttpServer.layer(createServer, { port })),
     ),
+  ),
 );
 
 const run = Command.run(command, {
