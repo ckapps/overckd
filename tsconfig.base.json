@@ -15,9 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@_backend/recipe/infra-http": [
-        "libs/backend/recipe/infra-http/src/index.ts"
-      ],
       "@_shared/collection/infra-rxdb": [
         "libs/shared/collection/infra-rxdb/src/index.ts"
       ],
@@ -66,6 +63,9 @@
       "@overckd/api-http": ["libs/@overckd/api-http/src/index.ts"],
       "@overckd/collection/adapter-http-server": [
         "libs/@overckd/collection/adapter-http-server/src/index.ts"
+      ],
+      "@overckd/recipe/adapter-http-server": [
+        "libs/@overckd/recipe/adapter-http-server/src/index.ts"
       ]
     }
   },
