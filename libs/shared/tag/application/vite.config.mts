@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'tag-application',
     watch: false,
     globals: true,
     environment: 'node',

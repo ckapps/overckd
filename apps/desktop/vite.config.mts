@@ -6,6 +6,7 @@ export default defineConfig(() => ({
   cacheDir: '../../node_modules/.vite/apps/desktop',
   plugins: [nxViteTsPaths()],
   test: {
+    name: 'desktop',
     watch: false,
     globals: true,
     environment: 'node',

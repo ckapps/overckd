@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'server-cli',
     watch: false,
     globals: true,
     environment: 'node',

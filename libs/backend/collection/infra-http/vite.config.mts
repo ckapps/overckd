@@ -12,6 +12,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'backend-collection-infra-http',
     passWithNoTests: true,
     watch: false,
     globals: true,

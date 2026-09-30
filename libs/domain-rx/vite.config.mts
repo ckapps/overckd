@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'domain-rx',
     watch: false,
     globals: true,
     environment: 'node',

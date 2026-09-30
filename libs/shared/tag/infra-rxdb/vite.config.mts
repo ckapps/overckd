@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'tag-infra-rxdb',
     passWithNoTests: true,
     watch: false,
     globals: true,
