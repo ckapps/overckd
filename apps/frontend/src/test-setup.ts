@@ -1,9 +1,8 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import '@angular/compiler';
+import '@analogjs/vitest-angular/setup-snapshots';
+import { setupTestBed } from '@analogjs/vitest-angular/setup-testbed';
 
-setupZoneTestEnv({
-  errorOnUnknownElements: true,
-  errorOnUnknownProperties: true,
-});
+setupTestBed();
 
 // Load FontAwesome icons
 import { library } from '@fortawesome/fontawesome-svg-core';

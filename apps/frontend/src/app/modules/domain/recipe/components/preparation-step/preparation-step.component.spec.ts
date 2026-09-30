@@ -1,4 +1,4 @@
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { RecipePreparationStep } from '@overckd/domain';
 import { PreparationStepComponent } from './preparation-step.component';
 

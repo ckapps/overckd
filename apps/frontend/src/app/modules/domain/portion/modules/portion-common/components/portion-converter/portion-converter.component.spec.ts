@@ -1,4 +1,4 @@
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { PortionKind, PortionQuantifier } from '@overckd/domain';
 import { PortionConverterService } from '../../services/portion-converter.service';
 import { PortionConverterComponent } from './portion-converter.component';

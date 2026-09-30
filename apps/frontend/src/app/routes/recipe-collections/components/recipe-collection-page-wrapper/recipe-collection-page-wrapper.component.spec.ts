@@ -1,5 +1,5 @@
 import { provideRouter } from '@angular/router';
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { RecipeCollectionPageWrapperComponent } from './recipe-collection-page-wrapper.component';
 
 describe('RecipeCollectionPageWrapperComponent', () => {

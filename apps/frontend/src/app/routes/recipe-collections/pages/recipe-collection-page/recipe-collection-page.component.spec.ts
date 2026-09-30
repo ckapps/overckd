@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { EMPTY } from 'rxjs';
 import { RecipeCollectionService } from '../../../../modules/domain/recipe-collection/services/recipe-collection.service';
 import { RecipeCollectionPageComponent } from './recipe-collection-page.component';
@@ -15,11 +15,11 @@ describe('RecipeCollectionPageComponent', () => {
       },
       {
         provide: Router,
-        useValue: { navigate: jest.fn() },
+        useValue: { navigate: vi.fn() },
       },
       {
         provide: RecipeCollectionService,
-        useValue: { getById: jest.fn().mockReturnValue(EMPTY) },
+        useValue: { getById: vi.fn().mockReturnValue(EMPTY) },
       },
     ],
   });

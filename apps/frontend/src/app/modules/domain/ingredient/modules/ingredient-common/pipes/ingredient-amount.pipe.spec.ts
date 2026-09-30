@@ -1,5 +1,5 @@
 import { LOCALE_ID } from '@angular/core';
-import { SpectatorPipe, createPipeFactory } from '@ngneat/spectator/jest';
+import { SpectatorPipe, createPipeFactory } from '@ngneat/spectator/vitest';
 import { RecipeIngredient } from '@overckd/domain';
 import { IngredientAmountPipe } from './ingredient-amount.pipe';
 

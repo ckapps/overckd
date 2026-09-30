@@ -1,5 +1,5 @@
 import { provideRouter } from '@angular/router';
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { EMPTY } from 'rxjs';
 import { RecipeCollectionService } from '../../../../modules/domain/recipe-collection/services/recipe-collection.service';
 import { RecipesPageComponent } from './recipes.component';
