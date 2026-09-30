@@ -1,20 +1,22 @@
 @if (ingredient$ | async; as _ingredient) {
+  <span>
+    @if (_ingredient.optional) {
+      <span> optional: </span>
+    }
+    @if (_ingredient.amount !== undefined) {
+      <span class="font-weight-bold">
+        {{ _ingredient | ingredientAmount }}
+      </span>
+    }
+    @if (_ingredient.unit) {
+      <span> {{ _ingredient.unit }} </span>
+    }
 
-<span>
-  @if (_ingredient.optional) {
-  <span> optional: </span>
-  } @if (_ingredient.amount !== undefined) {
-  <span class="font-weight-bold">
-    {{ _ingredient | ingredientAmount }}
+    <span [innerHTML]="_ingredient.name"></span>
   </span>
-  } @if (_ingredient.unit) {
-  <span> {{ _ingredient.unit }} </span>
+
+  @if (alternatives$ | async; as _alternatives) {
+    <br />
+    (alternativ: {{ _alternatives }})
   }
-
-  <span [innerHTML]="_ingredient.name"></span>
-</span>
-
-@if (alternatives$ | async; as _alternatives) {
-
-<br />
-(alternativ: {{ _alternatives }}) } }
+}

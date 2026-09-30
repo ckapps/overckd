@@ -28,7 +28,7 @@ function decodeTagsFile(i: TagsFileContent) {
       ({
         ...t,
         uri: slug(t.label),
-      } as Tag),
+      }) as Tag,
   );
 }
 
