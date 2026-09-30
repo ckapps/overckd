@@ -1,4 +1,4 @@
-import { TagUseCase } from '@overckd/tag/application';
+import { TagQueries, TagQueriesLocal } from '@overckd/tag/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
@@ -17,12 +17,12 @@ const createEvent = eventCreator(TagQueryType.GetById);
 
 export const getByIdEffect: MsgEffect = (event$, ctx) => {
   const findById = (id: TagId) =>
-    TagUseCase.pipe(
-      Effect.flatMap(useCases => useCases.findById(id)),
+    TagQueries.pipe(
+      Effect.flatMap(queries => queries.findById(id)),
       Effect.flatMap(Schema.encodeEffect(TagFromJson)),
     ).pipe(
       Effect.provideService(References.MinimumLogLevel, 'Debug'),
-      Effect.provide(TagUseCase.layer),
+      Effect.provide(TagQueriesLocal),
       Effect.provide(TagRepoMarbleInterop),
       Effect.provideService(MarbleJsContextProvider, ctx.ask),
     );
