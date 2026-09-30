@@ -47,12 +47,14 @@ const typeConstraints = [
     ],
   },
   {
+    // `type:testing` only from spec files, see `testOnlyImports`.
     sourceTag: 'type:adapter',
     onlyDependOnLibsWithTags: [
       'type:application',
       'type:contract',
       'type:domain',
       'type:util',
+      'type:testing',
     ],
     bannedExternalImports: legacyStacks,
   },
@@ -89,6 +91,17 @@ const typeConstraints = [
     onlyDependOnLibsWithTags: ['type:util'],
     bannedExternalImports: legacyStacks,
   },
+  {
+    // Helpers for specs, e.g. the repository conformance suites. Imports vitest.
+    sourceTag: 'type:testing',
+    onlyDependOnLibsWithTags: [
+      'type:testing',
+      'type:application',
+      'type:domain',
+      'type:util',
+    ],
+    bannedExternalImports: legacyStacks,
+  },
   // Composition roots wire everything together.
   { sourceTag: 'type:app', onlyDependOnLibsWithTags: ['*'] },
   // Frozen pre-architecture code; may bridge into the new code (strangler).
@@ -115,6 +128,9 @@ const platformConstraints = [
   },
 ];
 
+/** Test helpers pull in vitest: only spec files may import them. */
+const testOnlyImports = ['@overckd/testing', '@overckd/testing/*'];
+
 export default [
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
@@ -135,6 +151,23 @@ export default [
           enforceBuildableLibDependency: true,
           allow: [],
           depConstraints: [...typeConstraints, ...platformConstraints],
+        },
+      ],
+    },
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    ignores: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.test.ts', '**/*.test.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              group: testOnlyImports,
+              message: 'Test helpers may only be imported by spec files.',
+            },
+          ],
         },
       ],
     },
