@@ -3,10 +3,10 @@
 <mat-list>
   <mat-divider />
   @for (recipe of collection().recipes; track recipe) {
-  <mat-list-item (click)="onRecipeClicked(recipe)">
-    {{ recipe.name }}
-  </mat-list-item>
+    <mat-list-item (click)="onRecipeClicked(recipe)">
+      {{ recipe.name }}
+    </mat-list-item>
 
-  <mat-divider />
+    <mat-divider />
   }
 </mat-list>
