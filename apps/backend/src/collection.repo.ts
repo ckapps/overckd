@@ -4,6 +4,7 @@ import { Effect, Layer } from 'effect';
 
 export const CollectionTestRepo = Layer.effect(
   CollectionRepo,
+  // eslint-disable-next-line require-yield
   Effect.gen(function* () {
     return {
       getAll: Effect.succeed([

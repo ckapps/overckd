@@ -15,6 +15,7 @@ import * as Schema from 'effect/Schema';
 
 export const RecipeTestRepo = Layer.effect(
   RecipeRepo,
+  // eslint-disable-next-line require-yield
   Effect.gen(function* () {
     const decode = Schema.decode(RecipePreparation);
 
