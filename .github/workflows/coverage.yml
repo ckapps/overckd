@@ -2,6 +2,9 @@ name: Test Coveralls
 
 on: ['push', 'pull_request']
 
+permissions:
+  contents: read
+
 jobs:
   coverage:
     name: Coverage
@@ -16,8 +19,10 @@ jobs:
         with:
           install: true
           runtime: node@lts
-      - run: pnpx nx run-many -t test
+      - run: pnpm nx run-many -t test --coverage.enabled --coverage.reporter=lcov
+      - run: node tools/scripts/merge-lcov.mjs
       - name: Coveralls
         uses: coverallsapp/github-action@v2.3.8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          file: coverage/lcov.info
