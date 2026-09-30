@@ -69,15 +69,27 @@ describe('CollectionQueriesLocal', () => {
 ## Repository adapters
 
 Every implementation of a `<Feature>Repo` must behave the same. Write the
-expected behaviour once as a conformance suite, a function that takes a layer
-and registers tests, exported from a `testing` entry point of the application
-lib (e.g. `@overckd/collection/application/testing`). Each adapter lib runs it
-against its own implementation: `CollectionRepoMemory`, `CollectionRepoFs` on an
-in-memory file system (`FileSystem.layerNoop` with the few methods the adapter
-calls, backed by a `Map`), `CollectionRepoRxdb` on in-memory storage. Adapters
-may depend on the application lib, so this respects the dependency rules. The
-module-boundary rule covers spec files too, so a `platform:any` adapter can't
-use Node's file system in its tests.
+expected behaviour once as a conformance suite in `@overckd/testing`
+(`src/lib/<feature>/`): a function that registers tests and takes a function
+building the repository from seed data, so each adapter decides how to store
+it. Each adapter lib runs it against its own implementation:
+`CollectionRepoMemory`, `CollectionRepoFs` on an in-memory file system
+(`FileSystem.layerNoop` with the few methods the adapter calls, backed by a
+`Map`), `CollectionRepoRxdb` on in-memory storage.
+
+```ts
+// libs/@overckd/collection/adapter-memory/src/lib/collection-repo.memory.spec.ts
+import { collectionRepoConformance } from '@overckd/testing';
+
+describe('CollectionRepoMemory', () => {
+  collectionRepoConformance(CollectionRepoMemory);
+});
+```
+
+The testing lib imports vitest, so only spec files may import it
+([dependency rules](libraries.md#dependency-rules)). The module-boundary rule
+covers spec files too, so a `platform:any` adapter can't use Node's file system
+in its tests.
 
 ## HTTP handlers
 
