@@ -21,9 +21,6 @@
       "@_backend/overckd/adapter-rest": [
         "libs/backend/overckd/adapter-rest/src/index.ts"
       ],
-      "@_backend/recipe/adapter-rest": [
-        "libs/backend/recipe/adapter-rest/src/index.ts"
-      ],
       "@_backend/recipe/infra-http": [
         "libs/backend/recipe/infra-http/src/index.ts"
       ],
@@ -68,7 +65,8 @@
       ],
       "@overckd/collection/api-http": [
         "libs/@overckd/collection/api-http/src/index.ts"
-      ]
+      ],
+      "@overckd/recipe/api-http": ["libs/@overckd/recipe/api-http/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
