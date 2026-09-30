@@ -1,1 +1,1 @@
-export * from './lib/collection.http';
+export { CollectionHttpController } from './lib/collection.controller';

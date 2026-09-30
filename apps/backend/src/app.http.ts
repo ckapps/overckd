@@ -1,4 +1,4 @@
-import { HttpCollectionLive } from '@overckd/collection/adapter-http-server';
+import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
 import { OverckdApi } from '@overckd/api-http';
 import { HttpRecipeLive } from '@_backend/recipe/infra-http';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
@@ -11,7 +11,7 @@ const ApiLive = HttpApiBuilder.layer(OverckdApi, {
   openapiPath: '/openapi.json',
 }).pipe(
   Layer.provide([
-    HttpCollectionLive,
+    CollectionHttpController,
     HttpRecipeLive,
     // TODO: add more API implementations here
   ]),
