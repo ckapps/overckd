@@ -4,6 +4,6 @@
   "sourceRoot": "libs/shared/ui/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["type:ui", "scope:shared"],
+  "tags": ["type:ui", "platform:browser"],
   "targets": {}
 }

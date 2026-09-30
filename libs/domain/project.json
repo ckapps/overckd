@@ -4,5 +4,5 @@
   "sourceRoot": "libs/domain/src",
   "projectType": "library",
   "targets": {},
-  "tags": []
+  "tags": ["type:legacy", "platform:any"]
 }

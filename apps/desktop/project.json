@@ -4,6 +4,7 @@
   "sourceRoot": "apps/desktop/src",
   "projectType": "application",
   "implicitDependencies": ["frontend"],
+  "tags": ["type:app", "platform:node"],
   "targets": {
     "build": {
       "executor": "nx-electron:build",

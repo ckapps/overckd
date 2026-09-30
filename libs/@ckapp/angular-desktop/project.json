@@ -4,7 +4,7 @@
   "sourceRoot": "libs/@ckapp/angular-desktop/src",
   "prefix": "ckad-desktop",
   "projectType": "library",
-  "tags": [],
+  "tags": ["type:ui", "platform:browser"],
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",

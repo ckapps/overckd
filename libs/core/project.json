@@ -4,5 +4,5 @@
   "sourceRoot": "libs/core/src",
   "projectType": "library",
   "targets": {},
-  "tags": []
+  "tags": ["type:util", "platform:any"]
 }
