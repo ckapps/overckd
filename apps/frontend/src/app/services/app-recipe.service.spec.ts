@@ -1,6 +1,9 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { createServiceFactory, SpectatorService } from '@ngneat/spectator/jest';
+import {
+  createServiceFactory,
+  SpectatorService,
+} from '@ngneat/spectator/vitest';
 import { AppRecipeService } from './app-recipe.service';
 import { UrlBuilderService } from './url-builder.service';
 

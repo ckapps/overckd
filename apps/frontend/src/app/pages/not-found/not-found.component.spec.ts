@@ -1,4 +1,4 @@
-import { createComponentFactory, Spectator } from '@ngneat/spectator/jest';
+import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { NotFoundPageComponent } from './not-found.component';
 
 describe('EmptyComponent', () => {

@@ -3,14 +3,21 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "preserve",
-    "target": "es2016",
-    "types": ["jest", "node", "jest-extended"],
+    "types": [
+      "vitest/globals",
+      "vitest/importMeta",
+      "vite/client",
+      "node",
+      "vitest"
+    ],
     "moduleResolution": "bundler",
     "isolatedModules": true
   },
-  "files": ["src/test-setup.ts"],
+  "files": [
+    "src/test-setup.ts"
+  ],
   "include": [
-    "jest.config.ts",
+    "vite.config.mts",
     "src/**/*.test.ts",
     "src/**/*.spec.ts",
     "src/**/*.d.ts"
