@@ -358,6 +358,12 @@ importers:
         specifier: 0.16.3
         version: 0.16.3
     devDependencies:
+      '@analogjs/vite-plugin-angular':
+        specifier: ~2.1.2
+        version: 2.1.3(@angular-devkit/build-angular@21.2.9(eeab8b760a1da83cdf74736babc89e48))(@angular/build@21.2.9(062764db3d3cde6ef1025fe342c58c55))
+      '@analogjs/vitest-angular':
+        specifier: ~2.1.2
+        version: 2.1.3(@analogjs/vite-plugin-angular@2.1.3(@angular-devkit/build-angular@21.2.9(eeab8b760a1da83cdf74736babc89e48))(@angular/build@21.2.9(062764db3d3cde6ef1025fe342c58c55)))(@angular-devkit/architect@0.2102.9(chokidar@5.0.0))(vitest@4.1.9)
       '@angular-devkit/build-angular':
         specifier: 21.2.9
         version: 21.2.9(eeab8b760a1da83cdf74736babc89e48)
@@ -793,6 +799,30 @@ packages:
         integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==,
       }
     engines: { node: '>=6.0.0' }
+
+  '@analogjs/vite-plugin-angular@2.1.3':
+    resolution:
+      {
+        integrity: sha512-mXL3LPMRC0nEWzSLP6sguXYUm+J4l+qRZmR9czhTQKWFP+PbNas6UHF6txe1fQs1pc/tMb7HQPZCEoaPMlol9Q==,
+      }
+    peerDependencies:
+      '@angular-devkit/build-angular': ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+      '@angular/build': ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0
+    peerDependenciesMeta:
+      '@angular-devkit/build-angular':
+        optional: true
+      '@angular/build':
+        optional: true
+
+  '@analogjs/vitest-angular@2.1.3':
+    resolution:
+      {
+        integrity: sha512-oRZxP/8cnf7g6e+VDYkILeA2gQLDS+oDrytiPixoA5YQwlroGtB1B3DkPOuzSSlI3Z9YMHkdL3OLKFIcuCDr5g==,
+      }
+    peerDependencies:
+      '@analogjs/vite-plugin-angular': '*'
+      '@angular-devkit/architect': '>=0.1500.0 < 0.2200.0'
+      vitest: ^1.3.1 || ^2.0.0 || ^3.0.0 || ^4.0.0
 
   '@angular-devkit/architect@0.2102.9':
     resolution:
@@ -7087,6 +7117,12 @@ packages:
       }
     engines: { node: '>= 10' }
 
+  '@ts-morph/common@0.22.0':
+    resolution:
+      {
+        integrity: sha512-HqNBuV/oIlMKdkLshXd1zKBqNQCsuPEsgQOkfFQ/eUKjRlwndXW1AjN9LVkBEIukm00gGXSRmfkl0Wv5VXLnlw==,
+      }
+
   '@tsconfig/node10@1.0.13':
     resolution:
       {
@@ -9831,6 +9867,12 @@ packages:
         integrity: sha512-QVb0dM5HvG+uaxitm8wONl7jltx8dqhfU33DcqtOZcLSVIKSDDLDi7+0LbAKiyI8hD9u42m2YxXSkMGWThaecQ==,
       }
     engines: { iojs: '>= 1.0.0', node: '>= 0.12.0' }
+
+  code-block-writer@12.0.0:
+    resolution:
+      {
+        integrity: sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==,
+      }
 
   collect-v8-coverage@1.0.3:
     resolution:
@@ -15201,6 +15243,14 @@ packages:
     engines: { node: '>=10' }
     hasBin: true
 
+  mkdirp@3.0.1:
+    resolution:
+      {
+        integrity: sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg==,
+      }
+    engines: { node: '>=10' }
+    hasBin: true
+
   modifyjs@0.3.1:
     resolution:
       {
@@ -16115,6 +16165,12 @@ packages:
         integrity: sha512-CiyeOxFT/JZyN5m0z9PfXw4SCBJ6Sygz1Dpl0wqjlhDEGGBP1GnsUVEL0p63hoG1fcj3fHynXi9NYO4nWOL+qQ==,
       }
     engines: { node: '>= 0.8' }
+
+  path-browserify@1.0.1:
+    resolution:
+      {
+        integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==,
+      }
 
   path-exists@4.0.0:
     resolution:
@@ -19204,6 +19260,12 @@ packages:
       loader-utils:
         optional: true
 
+  ts-morph@21.0.1:
+    resolution:
+      {
+        integrity: sha512-dbDtVdEAncKctzrVZ+Nr7kHpHkv+0JDJb2MjjpBaj8bFeCkePU9rHfMklmhuLFnpeq/EJZk2IhStY6NzqgjOkg==,
+      }
+
   ts-node@10.9.1:
     resolution:
       {
@@ -20671,6 +20733,19 @@ snapshots:
     dependencies:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
+
+  '@analogjs/vite-plugin-angular@2.1.3(@angular-devkit/build-angular@21.2.9(eeab8b760a1da83cdf74736babc89e48))(@angular/build@21.2.9(062764db3d3cde6ef1025fe342c58c55))':
+    dependencies:
+      ts-morph: 21.0.1
+    optionalDependencies:
+      '@angular-devkit/build-angular': 21.2.9(eeab8b760a1da83cdf74736babc89e48)
+      '@angular/build': 21.2.9(062764db3d3cde6ef1025fe342c58c55)
+
+  '@analogjs/vitest-angular@2.1.3(@analogjs/vite-plugin-angular@2.1.3(@angular-devkit/build-angular@21.2.9(eeab8b760a1da83cdf74736babc89e48))(@angular/build@21.2.9(062764db3d3cde6ef1025fe342c58c55)))(@angular-devkit/architect@0.2102.9(chokidar@5.0.0))(vitest@4.1.9)':
+    dependencies:
+      '@analogjs/vite-plugin-angular': 2.1.3(@angular-devkit/build-angular@21.2.9(eeab8b760a1da83cdf74736babc89e48))(@angular/build@21.2.9(062764db3d3cde6ef1025fe342c58c55))
+      '@angular-devkit/architect': 0.2102.9(chokidar@5.0.0)
+      vitest: 4.1.9(@types/node@18.19.9)(@vitest/coverage-v8@4.1.9)(@vitest/ui@4.1.9)(jsdom@22.1.0(supports-color@8.1.1))(vite@7.3.6(@types/node@18.19.9)(jiti@2.4.2)(less@4.9.1(supports-color@8.1.1))(sass-embedded@1.105.0)(sass@1.105.0)(terser@5.46.0)(yaml@2.9.1))
 
   '@angular-devkit/architect@0.2102.9(chokidar@5.0.0)':
     dependencies:
@@ -26035,6 +26110,13 @@ snapshots:
 
   '@tootallnate/once@2.0.1': {}
 
+  '@ts-morph/common@0.22.0':
+    dependencies:
+      fast-glob: 3.3.3
+      minimatch: 9.0.9
+      mkdirp: 3.0.1
+      path-browserify: 1.0.1
+
   '@tsconfig/node10@1.0.13': {}
 
   '@tsconfig/node12@1.0.11': {}
@@ -27991,6 +28073,8 @@ snapshots:
   clone@2.1.2: {}
 
   co@4.6.0: {}
+
+  code-block-writer@12.0.0: {}
 
   collect-v8-coverage@1.0.3: {}
 
@@ -31833,6 +31917,8 @@ snapshots:
 
   mkdirp@1.0.4: {}
 
+  mkdirp@3.0.1: {}
+
   modifyjs@0.3.1:
     dependencies:
       clone: 2.1.2
@@ -32669,6 +32755,8 @@ snapshots:
       entities: 8.1.0
 
   parseurl@1.3.3: {}
+
+  path-browserify@1.0.1: {}
 
   path-exists@4.0.0: {}
 
@@ -34727,6 +34815,11 @@ snapshots:
       webpack: 5.111.1(@swc/core@1.16.2(@swc/helpers@0.5.23))(cssnano@7.1.9(postcss@8.5.28))(csso@5.0.5)(esbuild@0.19.9)(postcss@8.5.28)(svgo@4.1.0)(uglify-js@3.19.3)
     optionalDependencies:
       loader-utils: 2.0.4
+
+  ts-morph@21.0.1:
+    dependencies:
+      '@ts-morph/common': 0.22.0
+      code-block-writer: 12.0.0
 
   ts-node@10.9.1(@swc/core@1.16.2(@swc/helpers@0.5.23))(@types/node@18.19.9)(typescript@5.9.3):
     dependencies:
