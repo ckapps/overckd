@@ -1,4 +1,4 @@
-import baseConfig from '../../../../eslint.config.mjs';
+import baseConfig from '../../../eslint.config.mjs';
 
 export default [
   ...baseConfig,
@@ -8,7 +8,7 @@ export default [
     rules: {},
     languageOptions: {
       parserOptions: {
-        project: ['libs/backend/overckd/adapter-rest/tsconfig.*?.json'],
+        project: ['libs/@overckd/api-http/tsconfig.*?.json'],
       },
     },
   },
