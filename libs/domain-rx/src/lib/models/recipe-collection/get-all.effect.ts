@@ -1,4 +1,4 @@
-import { CollectionUseCase } from '@_shared/collection/application';
+import { CollectionUseCase } from '@overckd/collection/application';
 import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { CollectionJson } from '@overckd/domain-experimental';
