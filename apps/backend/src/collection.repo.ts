@@ -1,4 +1,4 @@
-import { CollectionRepo } from '@_shared/collection/application';
+import { CollectionRepo } from '@overckd/collection/application';
 import { Collection, CollectionId } from '@overckd/domain-experimental';
 import { Effect, Layer } from 'effect';
 

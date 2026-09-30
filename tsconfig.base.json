@@ -30,9 +30,6 @@
       "@_backend/recipe/infra-http": [
         "libs/backend/recipe/infra-http/src/index.ts"
       ],
-      "@_shared/collection/application": [
-        "libs/shared/collection/application/src/index.ts"
-      ],
       "@_shared/collection/infra-rxdb": [
         "libs/shared/collection/infra-rxdb/src/index.ts"
       ],
@@ -66,7 +63,10 @@
       ],
       "@overckd/domain-rx": ["libs/domain-rx/src/index.ts"],
       "@overckd/server": ["libs/server/src/index.ts"],
-      "@overckd/yaml": ["libs/yaml/src/index.ts"]
+      "@overckd/yaml": ["libs/yaml/src/index.ts"],
+      "@overckd/collection/application": [
+        "libs/@overckd/collection/application/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

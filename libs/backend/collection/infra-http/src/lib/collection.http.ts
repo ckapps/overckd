@@ -1,5 +1,5 @@
 import { OverckdApi } from '@_backend/overckd/adapter-rest';
-import { CollectionUseCase } from '@_shared/collection/application';
+import { CollectionUseCase } from '@overckd/collection/application';
 import { CollectionNotFound } from '@overckd/domain-experimental';
 import { Effect, Layer, pipe } from 'effect';
 import { HttpApiBuilder } from 'effect/http-api';

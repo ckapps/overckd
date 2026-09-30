@@ -1,4 +1,4 @@
-import { CollectionRepo } from '@_shared/collection/application';
+import { CollectionRepo } from '@overckd/collection/application';
 import { useContext } from '@marblejs/core';
 import {
   CollectionId,
