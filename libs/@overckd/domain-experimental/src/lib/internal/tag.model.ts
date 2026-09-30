@@ -38,7 +38,6 @@ export class Tag extends Schema.Class<Tag>('@overckd/Tag')(
 export class TagNotFound extends Schema.TaggedError<TagNotFound>()(
   'TagNotFound',
   { id: TagId },
-  { httpApiStatus: 404 },
 ) {}
 
 /**
