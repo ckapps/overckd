@@ -1,9 +1,0 @@
-{
-  "name": "backend-collection-infra-http",
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/backend/collection/infra-http/src",
-  "projectType": "library",
-  "tags": ["type:adapter", "platform:any"],
-  "// targets": "to see all targets run: nx show project backend-collection-infra-http --web",
-  "targets": {}
-}

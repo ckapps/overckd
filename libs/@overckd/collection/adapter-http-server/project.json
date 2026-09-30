@@ -1,0 +1,9 @@
+{
+  "name": "overckd-collection-adapter-http-server",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd/collection/adapter-http-server/src",
+  "projectType": "library",
+  "tags": ["type:adapter", "platform:any"],
+  "// targets": "to see all targets run: nx show project overckd-collection-adapter-http-server --web",
+  "targets": {}
+}

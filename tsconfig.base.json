@@ -15,9 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@_backend/collection/infra-http": [
-        "libs/backend/collection/infra-http/src/index.ts"
-      ],
       "@_backend/recipe/infra-http": [
         "libs/backend/recipe/infra-http/src/index.ts"
       ],
@@ -66,7 +63,10 @@
       "@overckd/recipe/api-http": [
         "libs/@overckd/recipe/api-http/src/index.ts"
       ],
-      "@overckd/api-http": ["libs/@overckd/api-http/src/index.ts"]
+      "@overckd/api-http": ["libs/@overckd/api-http/src/index.ts"],
+      "@overckd/collection/adapter-http-server": [
+        "libs/@overckd/collection/adapter-http-server/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
