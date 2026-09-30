@@ -8,7 +8,7 @@ export default [
     rules: {},
     languageOptions: {
       parserOptions: {
-        project: ['libs/shared/tag/application/tsconfig.*?.json'],
+        project: ['libs/@overckd/tag/application/tsconfig.*?.json'],
       },
     },
   },
