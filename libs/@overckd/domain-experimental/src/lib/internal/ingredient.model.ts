@@ -39,7 +39,6 @@ export class Ingredient extends Schema.Class<Ingredient>('@overckd/Ingredient')(
 export class IngredientNotFound extends Schema.TaggedError<IngredientNotFound>()(
   'IngredientNotFound',
   { id: IngredientId },
-  { httpApiStatus: 404 },
 ) {}
 
 /**
