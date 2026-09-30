@@ -5,7 +5,7 @@ describe('utils/uri-factory', () => {
     ['overckd://', []],
     ['overckd://test', ['test']],
     ['overckd://test/mock', ['test', 'mock']],
-  ])('should start with %p with base %p', (expected, base) => {
+  ])('should start with %s with base %s', (expected, base) => {
     const factory = UriFactory(base);
 
     const result1 = factory('');
