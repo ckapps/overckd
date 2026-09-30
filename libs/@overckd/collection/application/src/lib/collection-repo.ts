@@ -5,6 +5,7 @@ import {
 } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
+/** Outbound port: where collections are stored. */
 export class CollectionRepo extends Context.Service<
   CollectionRepo,
   {
@@ -21,4 +22,4 @@ export class CollectionRepo extends Context.Service<
       id: CollectionId,
     ) => Effect.Effect<Collection, CollectionNotFound>;
   }
->()('@overckd/collection/application/repo') {}
+>()('@overckd/collection/application/CollectionRepo') {}
