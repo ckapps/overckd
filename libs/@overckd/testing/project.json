@@ -1,0 +1,9 @@
+{
+  "name": "overckd-testing",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd/testing/src",
+  "projectType": "library",
+  "tags": ["type:testing", "platform:any"],
+  "// targets": "to see all targets run: nx show project overckd-testing --web",
+  "targets": {}
+}
