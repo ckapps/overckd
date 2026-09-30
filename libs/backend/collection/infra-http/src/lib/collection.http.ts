@@ -1,4 +1,4 @@
-import { OverckdApi } from '@_backend/overckd/adapter-rest';
+import { OverckdApi } from '@overckd/api-http';
 import { CollectionQueries } from '@overckd/collection/application';
 import { CollectionNotFound } from '@overckd/domain-experimental';
 import { Effect, pipe } from 'effect';

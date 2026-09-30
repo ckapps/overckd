@@ -1,4 +1,4 @@
-import { OverckdApi } from '@_backend/overckd/adapter-rest';
+import { OverckdApi } from '@overckd/api-http';
 import { RecipeQueries } from '@overckd/recipe/application';
 import { RecipeNotFound } from '@overckd/domain-experimental';
 import { Effect, pipe } from 'effect';

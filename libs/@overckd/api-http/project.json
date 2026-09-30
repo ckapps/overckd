@@ -1,0 +1,9 @@
+{
+  "name": "overckd-api-http",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd/api-http/src",
+  "projectType": "library",
+  "tags": ["type:contract", "platform:any"],
+  "// targets": "to see all targets run: nx show project overckd-api-http --web",
+  "targets": {}
+}

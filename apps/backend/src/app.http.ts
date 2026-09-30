@@ -1,5 +1,5 @@
 import { HttpCollectionLive } from '@_backend/collection/infra-http';
-import { OverckdApi } from '@_backend/overckd/adapter-rest';
+import { OverckdApi } from '@overckd/api-http';
 import { HttpRecipeLive } from '@_backend/recipe/infra-http';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
 import { RecipeQueriesLocal } from '@overckd/recipe/application';
