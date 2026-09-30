@@ -1,5 +1,5 @@
 import { OverckdApi } from '@_backend/overckd/adapter-rest';
-import { RecipeUseCase } from '@_shared/recipe/application';
+import { RecipeUseCase } from '@overckd/recipe/application';
 import { RecipeNotFound } from '@overckd/domain-experimental';
 import { Effect, Layer, pipe } from 'effect';
 import { HttpApiBuilder } from 'effect/http-api';

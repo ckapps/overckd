@@ -1,4 +1,4 @@
-import { RecipeRepo } from '@_shared/recipe/application';
+import { RecipeRepo } from '@overckd/recipe/application';
 import {
   IngredientAmount,
   IngredientId,

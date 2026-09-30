@@ -37,9 +37,6 @@
       "@_shared/ingredient/infra-rxdb": [
         "libs/shared/ingredient/infra-rxdb/src/index.ts"
       ],
-      "@_shared/recipe/application": [
-        "libs/shared/recipe/application/src/index.ts"
-      ],
       "@_shared/recipe/infra-rxdb": [
         "libs/shared/recipe/infra-rxdb/src/index.ts"
       ],
@@ -66,6 +63,9 @@
       "@overckd/yaml": ["libs/yaml/src/index.ts"],
       "@overckd/collection/application": [
         "libs/@overckd/collection/application/src/index.ts"
+      ],
+      "@overckd/recipe/application": [
+        "libs/@overckd/recipe/application/src/index.ts"
       ]
     }
   },
