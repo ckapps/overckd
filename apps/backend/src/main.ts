@@ -1,19 +1,12 @@
 import { CollectionRepoMemory } from '@overckd/collection/adapter-memory';
-import { Collection, CollectionId } from '@overckd/domain-experimental';
+import { RecipeRepoMemory } from '@overckd/recipe/adapter-memory';
 import * as Layer from 'effect/Layer';
 import { HttpLive } from './app.http';
-import { RecipeTestRepo } from './recipe.repo';
+import { collections, recipes } from './seed';
 
 const TestReposLive = Layer.mergeAll(
-  CollectionRepoMemory([
-    Collection.make({
-      id: CollectionId.make('1'),
-      name: 'Test',
-      description: 'Test description',
-      recipes: [],
-    }),
-  ]),
-  RecipeTestRepo,
+  CollectionRepoMemory(collections),
+  RecipeRepoMemory(recipes),
 );
 
 export const OverckdBackend = HttpLive.pipe(
