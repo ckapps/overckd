@@ -8,7 +8,7 @@ export default [
     rules: {},
     languageOptions: {
       parserOptions: {
-        project: ['libs/backend/recipe/infra-http/tsconfig.*?.json'],
+        project: ['libs/@overckd/recipe/adapter-http-server/tsconfig.*?.json'],
       },
     },
   },

@@ -1,6 +1,6 @@
 import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
 import { OverckdApi } from '@overckd/api-http';
-import { HttpRecipeLive } from '@_backend/recipe/infra-http';
+import { HttpRecipeLive } from '@overckd/recipe/adapter-http-server';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
 import { RecipeQueriesLocal } from '@overckd/recipe/application';
 import { Layer } from 'effect';
