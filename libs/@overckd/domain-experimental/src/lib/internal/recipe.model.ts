@@ -48,7 +48,6 @@ export const Equivalence = Schema.toEquivalence(RecipeRef);
 export class RecipeNotFound extends Schema.TaggedError<RecipeNotFound>()(
   'RecipeNotFound',
   { id: RecipeId },
-  { httpApiStatus: 404 },
 ) {}
 
 /**

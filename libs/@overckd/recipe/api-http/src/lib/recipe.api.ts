@@ -3,14 +3,19 @@ import {
   RecipeNotFound,
   RecipePreparationJson,
 } from '@overckd/domain-experimental';
-import { HttpApiEndpoint, HttpApiGroup, OpenApi } from 'effect/http-api';
+import {
+  HttpApiEndpoint,
+  HttpApiGroup,
+  HttpApiSchema,
+  OpenApi,
+} from 'effect/http-api';
 
 export class RecipeApi extends HttpApiGroup.make('recipe')
   .add(
     HttpApiEndpoint.get('findById', '/:id', {
       params: { id: RecipeIdFromString },
       success: RecipePreparationJson,
-      error: RecipeNotFound,
+      error: RecipeNotFound.pipe(HttpApiSchema.status(404)),
     }),
   )
   .prefix('/recipes')
