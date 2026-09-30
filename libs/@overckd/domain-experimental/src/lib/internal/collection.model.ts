@@ -52,7 +52,6 @@ export const Equivalence = Schema.toEquivalence(Collection);
 export class CollectionNotFound extends Schema.TaggedError<CollectionNotFound>()(
   'CollectionNotFound',
   { id: CollectionId },
-  { httpApiStatus: 404 },
 ) {}
 
 /**
