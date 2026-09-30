@@ -1,4 +1,4 @@
-import { CollectionApi } from '@_backend/collection/adapter-rest';
+import { CollectionApi } from '@overckd/collection/api-http';
 import { RecipeApi } from '@_backend/recipe/adapter-rest';
 import { HttpApi, OpenApi } from 'effect/http-api';
 
