@@ -8,16 +8,13 @@ import {
   RecipeIngredient,
   RecipePreparation,
 } from '@overckd/domain-experimental';
-import * as Effect from 'effect/Effect';
-import * as Layer from 'effect/Layer';
-import * as O from 'effect/Option';
-import * as Schema from 'effect/Schema';
+import { Effect, Layer, Option as O, Schema } from 'effect';
 
 export const RecipeTestRepo = Layer.effect(
   RecipeRepo,
   // eslint-disable-next-line require-yield
   Effect.gen(function* () {
-    const decode = Schema.decode(RecipePreparation);
+    const decode = Schema.decodeEffect(RecipePreparation);
 
     const unitIngredientAmount: IngredientAmount = {
       _tag: 'UnitIngredientAmount' as const,
@@ -25,12 +22,13 @@ export const RecipeTestRepo = Layer.effect(
       unit: 'g',
       scaleFactor: 1,
     };
-    const unitIngredient: RecipeIngredient = {
+    // v4 `Schema.Class` encoders require actual class instances
+    const unitIngredient = RecipeIngredient.make({
       uri: IngredientId.make('ingredient'),
       name: 'ingredient',
       amount: O.some(unitIngredientAmount),
       optional: false,
-    };
+    });
 
     const quantityPortion: Portion.Portion = {
       kind: 'quantity',

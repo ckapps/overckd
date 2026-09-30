@@ -25,7 +25,7 @@ describe('Tag/use-case', () => {
     it('should return all from repo', () => {
       const result = Effect.runSync(
         findById(tag.uri).pipe(
-          Effect.provide(TagUseCase.Default),
+          Effect.provide(TagUseCase.layer),
           Effect.provideService(TagRepo, repo),
         ),
       );

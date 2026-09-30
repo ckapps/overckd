@@ -1,10 +1,9 @@
-import * as HttpApiSchema from '@effect/platform/HttpApiSchema';
-import * as Schema from 'effect/Schema';
+import { Schema } from 'effect';
 
 /**
- * @category Symbols
+ * @category Brands
  */
-export const RecipeIdTypeId: unique symbol = Symbol.for('@overckd/RecipeId');
+export const RecipeIdTypeId = '@overckd/RecipeId';
 
 /**
  * @category Models
@@ -12,7 +11,7 @@ export const RecipeIdTypeId: unique symbol = Symbol.for('@overckd/RecipeId');
 export type RecipeId = typeof RecipeId.Type;
 export const RecipeId = Schema.NonEmptyString.pipe(
   Schema.brand(RecipeIdTypeId),
-).annotations({
+).annotate({
   identifier: 'RecipeId',
   title: 'Recipe ID',
   description: 'A unique identifier for a recipe',
@@ -21,7 +20,7 @@ export const RecipeId = Schema.NonEmptyString.pipe(
 /**
  * @category Schemas
  */
-export const RecipeIdFromString = Schema.String.pipe(Schema.compose(RecipeId));
+export const RecipeIdFromString = Schema.String.pipe(Schema.decodeTo(RecipeId));
 
 /**
  * @category Models
@@ -41,7 +40,7 @@ export class RecipeRef extends Schema.Class<RecipeRef>('@overckd/RecipeRef')(
 /**
  * @category instances
  */
-export const Equivalence = Schema.equivalence(RecipeRef);
+export const Equivalence = Schema.toEquivalence(RecipeRef);
 
 /**
  * @category Errors
@@ -49,7 +48,7 @@ export const Equivalence = Schema.equivalence(RecipeRef);
 export class RecipeNotFound extends Schema.TaggedError<RecipeNotFound>()(
   'RecipeNotFound',
   { id: RecipeId },
-  HttpApiSchema.annotations({ status: 404 }),
+  { httpApiStatus: 404 },
 ) {}
 
 /**
@@ -58,4 +57,4 @@ export class RecipeNotFound extends Schema.TaggedError<RecipeNotFound>()(
 export const RecipeRefJson = Schema.Struct({
   id: RecipeIdFromString,
   name: Schema.NonEmptyString,
-}).pipe(Schema.compose(RecipeRef));
+}).pipe(Schema.decodeTo(RecipeRef));

@@ -5,9 +5,7 @@ import {
   CollectionJson,
   CollectionNotFound,
 } from '@overckd/domain-experimental';
-import { Effect, Layer, Option, Schema } from 'effect';
-import * as Arr from 'effect/Array';
-import * as Fn from 'effect/Function';
+import { Array as Arr, Effect, Function as Fn, Layer, Schema } from 'effect';
 import { firstValueFrom } from 'rxjs';
 import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
 import { RecipeCollectionRepositoryToken } from '../models.tokens';
@@ -23,8 +21,7 @@ export const RecipeCollectionRepoMarbleInterop = Layer.effect(
       findById: (id: CollectionId) =>
         Fn.pipe(
           Effect.promise(() => firstValueFrom(repo.getById(id))),
-          Effect.map(Option.fromNullable),
-          Effect.flatten,
+          Effect.flatMap(Effect.fromNullishOr),
           Effect.map(decode),
           Effect.mapError(() => CollectionNotFound.make({ id })),
         ),

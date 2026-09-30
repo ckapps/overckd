@@ -1,10 +1,9 @@
-import * as HttpApiSchema from '@effect/platform/HttpApiSchema';
-import * as Schema from 'effect/Schema';
+import { Schema } from 'effect';
 
 /**
- * @category Symbols
+ * @category Brands
  */
-export const TagIdTypeId: unique symbol = Symbol.for('@overckd/TagId');
+export const TagIdTypeId = '@overckd/TagId';
 
 /**
  * @category Models
@@ -12,7 +11,7 @@ export const TagIdTypeId: unique symbol = Symbol.for('@overckd/TagId');
 export type TagId = typeof TagId.Type;
 export const TagId = Schema.NonEmptyString.pipe(
   Schema.brand(TagIdTypeId),
-).annotations({ identifier: 'TagId' });
+).annotate({ identifier: 'TagId' });
 
 /**
  * @category Models
@@ -24,7 +23,7 @@ export class Tag extends Schema.Class<Tag>('@overckd/Tag')(
     /** the tag label. */
     label: Schema.NonEmptyString,
     /** Tag icon. */
-    icon: Schema.OptionFromSelf(Schema.String),
+    icon: Schema.Option(Schema.String),
   },
   {
     identifier: 'Tag',
@@ -39,18 +38,18 @@ export class Tag extends Schema.Class<Tag>('@overckd/Tag')(
 export class TagNotFound extends Schema.TaggedError<TagNotFound>()(
   'TagNotFound',
   { id: TagId },
-  HttpApiSchema.annotations({ status: 404 }),
+  { httpApiStatus: 404 },
 ) {}
 
 /**
  * @category instances
  */
-export const Equivalence = Schema.equivalence(Tag);
+export const Equivalence = Schema.toEquivalence(Tag);
 
 /**
  * @category Schemas
  */
-export const TagIdFromString = Schema.String.pipe(Schema.compose(TagId));
+export const TagIdFromString = Schema.String.pipe(Schema.decodeTo(TagId));
 
 /**
  * @category Schemas
@@ -58,8 +57,5 @@ export const TagIdFromString = Schema.String.pipe(Schema.compose(TagId));
 export const TagFromJson = Schema.Struct({
   uri: TagIdFromString,
   label: Schema.NonEmptyString,
-  icon: Schema.optionalWith(Schema.NonEmptyString, {
-    nullable: true,
-    as: 'Option',
-  }),
-}).pipe(Schema.compose(Tag));
+  icon: Schema.OptionFromOptionalNullOr(Schema.NonEmptyString),
+}).pipe(Schema.decodeTo(Tag));

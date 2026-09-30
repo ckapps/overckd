@@ -1,8 +1,8 @@
 import { OverckdApi } from '@_backend/overckd/adapter-rest';
 import { CollectionUseCase } from '@_shared/collection/application';
-import { HttpApiBuilder } from '@effect/platform';
 import { CollectionNotFound } from '@overckd/domain-experimental';
 import { Effect, Layer, pipe } from 'effect';
+import { HttpApiBuilder } from 'effect/http-api';
 
 export const HttpCollectionLive = HttpApiBuilder.group(
   OverckdApi,
@@ -13,11 +13,11 @@ export const HttpCollectionLive = HttpApiBuilder.group(
 
       return handlers
         .handle('getAll', () => recipeCollection.getAll)
-        .handle('findById', ({ path }) =>
+        .handle('findById', ({ params }) =>
           pipe(
-            recipeCollection.findById(path.id),
-            Effect.mapError(() => new CollectionNotFound({ id: path.id })),
+            recipeCollection.findById(params.id),
+            Effect.mapError(() => new CollectionNotFound({ id: params.id })),
           ),
         );
     }),
-).pipe(Layer.provide([CollectionUseCase.Default]));
+).pipe(Layer.provide([CollectionUseCase.layer]));

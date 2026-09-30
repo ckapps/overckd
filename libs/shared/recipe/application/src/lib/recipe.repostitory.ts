@@ -3,10 +3,9 @@ import {
   RecipeNotFound,
   RecipePreparation,
 } from '@overckd/domain-experimental';
-import * as Context from 'effect/Context';
-import * as Effect from 'effect/Effect';
+import { Context, Effect } from 'effect';
 
-export class RecipeRepo extends Context.Tag('@overckd/recipe/application/repo')<
+export class RecipeRepo extends Context.Service<
   RecipeRepo,
   {
     /**
@@ -17,4 +16,4 @@ export class RecipeRepo extends Context.Tag('@overckd/recipe/application/repo')<
       id: RecipeId,
     ) => Effect.Effect<RecipePreparation, RecipeNotFound>;
   }
->() {}
+>()('@overckd/recipe/application/repo') {}

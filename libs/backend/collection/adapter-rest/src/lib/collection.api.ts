@@ -1,21 +1,28 @@
-import { HttpApiEndpoint, HttpApiGroup, OpenApi } from '@effect/platform';
 import {
   CollectionIdFromString,
   CollectionJson,
   CollectionNotFound,
 } from '@overckd/domain-experimental';
 import { Schema } from 'effect';
+import { HttpApiEndpoint, HttpApiGroup, OpenApi } from 'effect/http-api';
 
 export class CollectionApi extends HttpApiGroup.make('recipe-collection')
   .add(
-    HttpApiEndpoint.get('getAll', '/').addSuccess(Schema.Array(CollectionJson)),
+    HttpApiEndpoint.get('getAll', '/', {
+      success: Schema.Array(CollectionJson),
+    }),
   )
   .add(
-    HttpApiEndpoint.get('findById', '/:id')
-      .setPath(Schema.Struct({ id: CollectionIdFromString }))
-      .addSuccess(CollectionJson)
-      .addError(CollectionNotFound),
+    HttpApiEndpoint.get('findById', '/:id', {
+      params: { id: CollectionIdFromString },
+      success: CollectionJson,
+      error: CollectionNotFound,
+    }),
   )
   .prefix('/collections')
-  .annotate(OpenApi.Title, 'Recipe Collection')
-  .annotate(OpenApi.Description, 'Manage collections of recipes') {}
+  .annotateMerge(
+    OpenApi.annotations({
+      title: 'Recipe Collection',
+      description: 'Manage collections of recipes',
+    }),
+  ) {}

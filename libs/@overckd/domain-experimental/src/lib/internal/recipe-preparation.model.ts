@@ -1,5 +1,4 @@
-import * as Arr from 'effect/Array';
-import * as Schema from 'effect/Schema';
+import { Array as Arr, Schema, Tuple } from 'effect';
 import { Portion, PortionJson } from './portion.model';
 import {
   RecipeIngredient,
@@ -18,7 +17,7 @@ export type PreparationStep = Schema.Schema.Type<typeof PreparationStep>;
 /**
  * @category Models
  */
-export type PreparationStepEncoded = Schema.Schema.Encoded<
+export type PreparationStepEncoded = Schema.Codec.Encoded<
   typeof PreparationStep
 >;
 /**
@@ -27,7 +26,7 @@ export type PreparationStepEncoded = Schema.Schema.Encoded<
 export const PreparationStep = Schema.Struct({
   /** Textual representation of the step. */
   instruction: NonEmptyHtmlString,
-}).annotations({
+}).annotate({
   identifier: 'PreparationStep',
   title: 'Recipe Preparation Step',
   description: 'A step within a recipe.',
@@ -38,7 +37,7 @@ export type PreparationStepJson = Schema.Schema.Type<
 /**
  * @category Models
  */
-export type PreparationStepJsonEncoded = Schema.Schema.Encoded<
+export type PreparationStepJsonEncoded = Schema.Codec.Encoded<
   typeof PreparationStepJson
 >;
 /**
@@ -50,7 +49,7 @@ const baseFields = {
   /** Recipe identifier. */
   id: RecipeId,
   /** Name of the recipe. */
-  name: Schema.NonEmptyString.annotations({
+  name: Schema.NonEmptyString.annotate({
     title: 'Recipe Name',
     description: 'The name of the recipe.',
   }),
@@ -75,7 +74,7 @@ export interface BasicRecipePreparation
 interface BasicRecipePreparationEncoded
   extends Schema.Struct.Encoded<typeof baseFields> {
   readonly _tag: 'BasicRecipePreparation';
-  readonly basedOn: Schema.Schema.Encoded<typeof RecipeSourceLinks>;
+  readonly basedOn: Schema.Codec.Encoded<typeof RecipeSourceLinks>;
   readonly ingredients: Arr.NonEmptyReadonlyArray<
     typeof RecipeIngredient.Encoded
   >;
@@ -93,10 +92,10 @@ export interface BasicRecipePreparationJson
   /** Steps of preparation. */
   readonly steps: Arr.NonEmptyReadonlyArray<PreparationStepJson>;
 }
-interface BasicRecipePreparationJsonEncoded
+export interface BasicRecipePreparationJsonEncoded
   extends Schema.Struct.Encoded<typeof baseFieldsJson> {
   readonly _tag: 'BasicRecipePreparation';
-  readonly basedOn: Schema.Schema.Encoded<typeof RecipeSourceLinksJson>;
+  readonly basedOn: Schema.Codec.Encoded<typeof RecipeSourceLinksJson>;
   readonly ingredients: Arr.NonEmptyReadonlyArray<
     typeof RecipeIngredientJson.Encoded
   >;
@@ -114,15 +113,12 @@ export const BasicRecipePreparation = Schema.TaggedStruct(
     ingredients: Schema.NonEmptyArray(RecipeIngredient),
     steps: Schema.NonEmptyArray(PreparationStep),
   },
-).annotations({
+).annotate({
   identifier: 'BasicRecipePreparation',
   title: 'Recipe Preparation',
   description: 'A recipe with preparation steps.',
 });
-/**
- * @category Schemas
- */
-export const BasicRecipePreparationJson = Schema.TaggedStruct(
+const BasicRecipePreparationJsonStruct = Schema.TaggedStruct(
   'BasicRecipePreparation',
   {
     ...baseFields,
@@ -131,13 +127,19 @@ export const BasicRecipePreparationJson = Schema.TaggedStruct(
     ingredients: Schema.NonEmptyArray(RecipeIngredientJson),
     steps: Schema.NonEmptyArray(PreparationStepJson),
   },
-)
-  .annotations({
-    identifier: 'BasicRecipePreparation',
-    title: 'Recipe Preparation',
-    description: 'A recipe with preparation steps.',
-  })
-  .pipe(Schema.compose(BasicRecipePreparation));
+).annotate({
+  identifier: 'BasicRecipePreparation',
+  title: 'Recipe Preparation',
+  description: 'A recipe with preparation steps.',
+});
+/**
+ * @category Schemas
+ */
+export const BasicRecipePreparationJson = BasicRecipePreparationJsonStruct.pipe(
+  // Decode to the type side, so encoding hands the nested `RecipeIngredient`
+  // instances to `RecipeIngredientJson` instead of their encoded plain objects.
+  Schema.decodeTo(Schema.toType(BasicRecipePreparation)),
+);
 
 export interface UnionRecipePreparation
   extends Schema.Struct.Type<typeof baseFields> {
@@ -154,7 +156,7 @@ export interface UnionRecipePreparationJson
   readonly _tag: 'UnionRecipePreparation';
   readonly recipes: Arr.NonEmptyReadonlyArray<AnyRecipePreparationJson>;
 }
-interface UnionRecipePreparationJsonEncoded
+export interface UnionRecipePreparationJsonEncoded
   extends Schema.Struct.Encoded<typeof baseFields> {
   readonly _tag: 'UnionRecipePreparation';
   readonly recipes: Arr.NonEmptyReadonlyArray<AnyRecipePreparationJsonEncoded>;
@@ -168,12 +170,30 @@ export const UnionRecipePreparation = Schema.TaggedStruct(
     ...baseFields,
     recipes: Schema.NonEmptyArray(
       Schema.suspend(
-        (): Schema.Schema<AnyRecipePreparation, AnyRecipePreparationEncoded> =>
+        (): Schema.Codec<AnyRecipePreparation, AnyRecipePreparationEncoded> =>
           AnyRecipePreparation,
       ),
     ),
   },
-).annotations({
+).annotate({
+  identifier: 'UnionRecipePreparation',
+  title: 'Union Recipe Preparation',
+  description: 'A recipe that is a union of multiple recipes.',
+});
+const UnionRecipePreparationJsonStruct = Schema.TaggedStruct(
+  'UnionRecipePreparation',
+  {
+    ...baseFieldsJson,
+    recipes: Schema.NonEmptyArray(
+      Schema.suspend(
+        (): Schema.Codec<
+          AnyRecipePreparationJson,
+          AnyRecipePreparationJsonEncoded
+        > => AnyRecipePreparationJson,
+      ),
+    ),
+  },
+).annotate({
   identifier: 'UnionRecipePreparation',
   title: 'Union Recipe Preparation',
   description: 'A recipe that is a union of multiple recipes.',
@@ -181,26 +201,9 @@ export const UnionRecipePreparation = Schema.TaggedStruct(
 /**
  * @category Schemas
  */
-export const UnionRecipePreparationJson = Schema.TaggedStruct(
-  'UnionRecipePreparation',
-  {
-    ...baseFieldsJson,
-    recipes: Schema.NonEmptyArray(
-      Schema.suspend(
-        (): Schema.Schema<
-          AnyRecipePreparationJson,
-          AnyRecipePreparationJsonEncoded
-        > => AnyRecipePreparationJson,
-      ),
-    ),
-  },
-)
-  .annotations({
-    identifier: 'UnionRecipePreparation',
-    title: 'Union Recipe Preparation',
-    description: 'A recipe that is a union of multiple recipes.',
-  })
-  .pipe(Schema.compose(UnionRecipePreparation));
+export const UnionRecipePreparationJson = UnionRecipePreparationJsonStruct.pipe(
+  Schema.decodeTo(Schema.toType(UnionRecipePreparation)),
+);
 
 const recipePreparationFields = {
   portion: Portion,
@@ -221,16 +224,16 @@ export type AnyRecipePreparationEncoded =
 /**
  * @category Schemas
  */
-export const AnyRecipePreparation = Schema.Union(
+export const AnyRecipePreparation = Schema.Union([
   BasicRecipePreparation,
   UnionRecipePreparation,
-).annotations({
+]).annotate({
   identifier: 'AnyRecipePreparation',
 });
-export const AnyRecipePreparationJson = Schema.Union(
+export const AnyRecipePreparationJson = Schema.Union([
   BasicRecipePreparationJson,
   UnionRecipePreparationJson,
-).annotations({
+]).annotate({
   identifier: 'AnyRecipePreparation',
 });
 export type AnyRecipePreparationJson =
@@ -258,10 +261,9 @@ export type RecipePreparationEncoded = (
 /**
  * @category Schemas
  */
-export const RecipePreparation = Schema.extend(
-  Schema.Struct(recipePreparationFields),
-  AnyRecipePreparation,
-).annotations({
+export const RecipePreparation = AnyRecipePreparation.mapMembers(
+  Tuple.map(Schema.fieldsAssign(recipePreparationFields)),
+).annotate({
   identifier: 'RecipePreparation',
   title: 'Recipe Preparation',
   description: 'How to prepare a recipe.',
@@ -270,7 +272,9 @@ export const RecipePreparation = Schema.extend(
 /**
  * @category Schemas
  */
-export const RecipePreparationJson = Schema.extend(
-  Schema.Struct(recipePreparationFieldsJson),
-  AnyRecipePreparationJson,
-).pipe(Schema.compose(RecipePreparation));
+export const RecipePreparationJson = Schema.Union([
+  BasicRecipePreparationJsonStruct,
+  UnionRecipePreparationJsonStruct,
+])
+  .mapMembers(Tuple.map(Schema.fieldsAssign(recipePreparationFieldsJson)))
+  .pipe(Schema.decodeTo(Schema.toType(RecipePreparation)));

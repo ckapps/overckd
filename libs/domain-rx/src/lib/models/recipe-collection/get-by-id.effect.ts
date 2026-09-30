@@ -3,8 +3,7 @@ import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
 import { CollectionId, CollectionJson } from '@overckd/domain-experimental';
-import { Effect, Logger, LogLevel, Schema } from 'effect';
-import { pipe } from 'effect/Function';
+import { Effect, Function as Fn, References, Schema } from 'effect';
 import { from, map } from 'rxjs';
 import {
   eventCreator,
@@ -23,10 +22,10 @@ export const getById: MsgEffect = (event$, ctx) => {
   const findById = (id: CollectionId) =>
     CollectionUseCase.pipe(
       Effect.flatMap(useCases => useCases.findById(id)),
-      Effect.flatMap(Schema.encode(CollectionJson)),
+      Effect.flatMap(Schema.encodeEffect(CollectionJson)),
     ).pipe(
-      Logger.withMinimumLogLevel(LogLevel.Debug),
-      Effect.provide(CollectionUseCase.Default),
+      Effect.provideService(References.MinimumLogLevel, 'Debug'),
+      Effect.provide(CollectionUseCase.layer),
       Effect.provide(RecipeCollectionRepoMarbleInterop),
       Effect.provideService(MarbleJsContextProvider, ctx.ask),
     );
@@ -35,7 +34,7 @@ export const getById: MsgEffect = (event$, ctx) => {
     matchEvent(GetRecipeCollectionByIdEvent),
     act(eventValidator$(GetRecipeCollectionByIdEvent)),
     act(event =>
-      pipe(
+      Fn.pipe(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         event.payload.id,

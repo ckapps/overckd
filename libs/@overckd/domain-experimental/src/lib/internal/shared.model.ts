@@ -1,30 +1,32 @@
-import * as Schema from 'effect/Schema';
+import { Schema } from 'effect';
+
+/**
+ * A positive number.
+ *
+ * @category Models
+ */
+export const Positive = Schema.Number.check(Schema.isGreaterThan(0));
 
 /**
  * A positive integer.
  *
  * @category Models
  */
-export const PositiveInt = Schema.asSchema(
-  Schema.extend(Schema.Positive, Schema.Int),
-);
+export const PositiveInt = Schema.Int.check(Schema.isGreaterThan(0));
 
 /**
  * A non-empty string as an option.
  *
  * @category Models
  */
-export const OptionNonEmptyString = Schema.optionalWith(Schema.NonEmptyString, {
-  nullable: true,
-  as: 'Option',
-});
+export const OptionNonEmptyString = Schema.OptionFromOptionalNullOr(
+  Schema.NonEmptyString,
+);
 
 /**
- * @category Symbols
+ * @category Brands
  */
-export const HtmlStringTypeId: unique symbol = Symbol.for(
-  '@overckd/HtmlString',
-);
+export const HtmlStringTypeId = '@overckd/HtmlString';
 
 /**
  * @category Models
@@ -32,7 +34,7 @@ export const HtmlStringTypeId: unique symbol = Symbol.for(
 export type HtmlString = typeof HtmlString.Type;
 export const HtmlString = Schema.String.pipe(
   Schema.brand(HtmlStringTypeId),
-).annotations({
+).annotate({
   identifier: 'HtmlString',
   title: 'htmlString',
   description: 'A HTML encoded string',
@@ -44,7 +46,7 @@ export const HtmlString = Schema.String.pipe(
 export type NonEmptyHtmlString = typeof HtmlString.Type;
 export const NonEmptyHtmlString = Schema.NonEmptyString.pipe(
   Schema.brand(HtmlStringTypeId),
-).annotations({
+).annotate({
   identifier: 'NonEmptyHtmlString',
   title: 'nonEmptyHtmlString',
   description: 'A HTML encoded string',

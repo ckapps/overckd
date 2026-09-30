@@ -1,13 +1,10 @@
-import * as HttpApiSchema from '@effect/platform/HttpApiSchema';
-import * as Schema from 'effect/Schema';
+import { Schema, SchemaTransformation } from 'effect';
 import { RecipeRef, RecipeRefJson } from './recipe.model';
 
 /**
- * @category Symbols
+ * @category Brands
  */
-export const CollectionIdTypeId: unique symbol = Symbol.for(
-  '@overckd/CollectionId',
-);
+export const CollectionIdTypeId = '@overckd/CollectionId';
 
 /**
  * @category Models
@@ -15,7 +12,7 @@ export const CollectionIdTypeId: unique symbol = Symbol.for(
 export type CollectionId = typeof CollectionId.Type;
 export const CollectionId = Schema.NonEmptyString.pipe(
   Schema.brand(CollectionIdTypeId),
-).annotations({
+).annotate({
   identifier: 'CollectionId',
   description: 'Identifier for a recipe collection',
 });
@@ -24,7 +21,7 @@ export const CollectionId = Schema.NonEmptyString.pipe(
  * @category Schemas
  */
 export const CollectionIdFromString = Schema.NonEmptyString.pipe(
-  Schema.compose(CollectionId),
+  Schema.decodeTo(CollectionId),
 );
 
 /**
@@ -47,7 +44,7 @@ export class Collection extends Schema.Class<Collection>('@overckd/collection')(
 /**
  * @category instances
  */
-export const Equivalence = Schema.equivalence(Collection);
+export const Equivalence = Schema.toEquivalence(Collection);
 
 /**
  * @category Errors
@@ -55,7 +52,7 @@ export const Equivalence = Schema.equivalence(Collection);
 export class CollectionNotFound extends Schema.TaggedError<CollectionNotFound>()(
   'CollectionNotFound',
   { id: CollectionId },
-  HttpApiSchema.annotations({ status: 404 }),
+  { httpApiStatus: 404 },
 ) {}
 
 /**
@@ -66,4 +63,14 @@ export const CollectionJson = Schema.Struct({
   name: Schema.NonEmptyString,
   description: Schema.String,
   recipes: Schema.Array(RecipeRefJson),
-}).pipe(Schema.compose(Collection));
+}).pipe(
+  // Decode to the type side, so encoding hands the nested `RecipeRef`
+  // instances to `RecipeRefJson` instead of their encoded plain objects.
+  Schema.decodeTo(
+    Schema.toType(Collection),
+    SchemaTransformation.transform({
+      decode: fields => Collection.make(fields),
+      encode: collection => collection,
+    }),
+  ),
+);

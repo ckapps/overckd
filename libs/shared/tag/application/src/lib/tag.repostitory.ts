@@ -1,7 +1,7 @@
 import { Tag, TagId, TagNotFound } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
-export class TagRepo extends Context.Tag('@overckd/tag/application/repo')<
+export class TagRepo extends Context.Service<
   TagRepo,
   {
     /**
@@ -10,4 +10,4 @@ export class TagRepo extends Context.Tag('@overckd/tag/application/repo')<
      */
     readonly findById: (id: TagId) => Effect.Effect<Tag, TagNotFound>;
   }
->() {}
+>()('@overckd/tag/application/repo') {}

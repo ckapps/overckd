@@ -26,7 +26,7 @@ describe('Collection/use-case', () => {
     it('should return all from repo', () => {
       const result = Effect.runSync(
         getAll.pipe(
-          Effect.provide(CollectionUseCase.Default),
+          Effect.provide(CollectionUseCase.layer),
           Effect.provideService(CollectionRepo, repo),
         ),
       );
