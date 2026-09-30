@@ -12,6 +12,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'collection-application',
     watch: false,
     globals: true,
     environment: 'node',

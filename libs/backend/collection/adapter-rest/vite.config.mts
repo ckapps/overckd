@@ -12,6 +12,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'backend-collection-adapter-rest',
     passWithNoTests: true,
     watch: false,
     globals: true,

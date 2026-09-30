@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'backend-recipe-adapter-rest',
     passWithNoTests: true,
     watch: false,
     globals: true,

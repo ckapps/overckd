@@ -11,6 +11,7 @@ export default defineConfig(() => ({
   //  plugins: [ nxViteTsPaths() ],
   // },
   test: {
+    name: 'backend-recipe-infra-http',
     passWithNoTests: true,
     watch: false,
     globals: true,
