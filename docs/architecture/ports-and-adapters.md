@@ -5,11 +5,9 @@ on this page is typechecked against the installed Effect version, and all of it
 except the file-system adapter sketch also ran in tests; treat it as the template when you
 add code.
 
-> **Status:** the collection feature exists today in an older shape
-> (`CollectionUseCase` in `libs/shared/collection/application`, the contract in
-> `libs/backend/collection/adapter-rest`, handlers in
-> `libs/backend/collection/infra-http`). New code follows this page; see the
-> [mapping](libraries.md#current-to-target-mapping).
+> **Status:** the collection ports, `CollectionQueriesLocal`, the contract and
+> the handlers follow this page. `CollectionCommands` and the repository
+> adapters (§6) don't exist yet; see the [migration plan](../migration.md).
 
 ## 1. Ports
 
@@ -187,8 +185,8 @@ error mapping: typed port errors pass through, and the contract gives them their
 status code.
 
 ```ts
-// libs/@overckd/collection/adapter-http-server/src/lib/collection.api.handlers.ts
-export const CollectionApiHandlers = HttpApiBuilder.group(
+// libs/@overckd/collection/adapter-http-server/src/lib/collection.controller.ts
+export const CollectionHttpController = HttpApiBuilder.group(
   OverckdApi,
   'collection',
   Effect.fn(function* (handlers) {
@@ -396,7 +394,7 @@ a transport:
 /** The API: the contract, served by the handlers, backed by the local use cases. */
 const ApiLive = HttpApiBuilder.layer(OverckdApi, {
   openapiPath: '/openapi.json',
-}).pipe(Layer.provide(CollectionApiHandlers), Layer.provide([CollectionQueriesLocal, CollectionCommandsLocal]));
+}).pipe(Layer.provide(CollectionHttpController), Layer.provide([CollectionQueriesLocal, CollectionCommandsLocal]));
 
 const HttpLive = HttpRouter.serve(Layer.mergeAll(ApiLive, HttpApiSwagger.layer(OverckdApi), HttpRouter.cors())).pipe(
   // Swap for CollectionRepoRxdb / CollectionRepoFs without touching anything else.

@@ -90,13 +90,13 @@ implementation differs.
 ```
 Web
   browser   page ─▶ data-access ─▶ CollectionQueriesHttp ── fetch /api/collections ──┐
-  backend   NodeHttpServer ─▶ CollectionApiHandlers ─▶ CollectionQueriesLocal ◀──────┘
-                                                        └─▶ CollectionRepoRxdb
+  backend   NodeHttpServer ─▶ CollectionHttpController ─▶ CollectionQueriesLocal ◀───┘
+                                                           └─▶ CollectionRepoRxdb
 
 Desktop (one Electron app, no TCP port)
   renderer  page ─▶ data-access ─▶ CollectionQueriesHttp ── fetch overckd://app/api/collections ──┐
-  main      protocol.handle('overckd') ─▶ CollectionApiHandlers ─▶ CollectionQueriesLocal ◀───────┘
-                                                                    └─▶ CollectionRepoFs
+  main      protocol.handle('overckd') ─▶ CollectionHttpController ─▶ CollectionQueriesLocal ◀────┘
+                                                                       └─▶ CollectionRepoFs
 
 Tests
   any port with Layer.mock or CollectionRepoMemory; no network, no files

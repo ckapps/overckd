@@ -84,7 +84,7 @@ The payload schema is where untrusted input is validated.
 
 ## 6. Handler
 
-One line in `<Feature>ApiHandlers`. No logic, no error mapping:
+One line in `<Feature>HttpController`. No logic, no error mapping:
 
 ```ts
 rename: ({ params, payload }) => commands.rename(params.id, payload.name),

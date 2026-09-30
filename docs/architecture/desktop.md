@@ -13,7 +13,7 @@ a custom `overckd://` protocol.
 
 ```
 renderer  page ─▶ data-access ─▶ CollectionQueriesHttp ── fetch overckd://app/api/… ──┐
-main      protocol.handle('overckd', handler) ─▶ CollectionApiHandlers ◀──────────────┘
+main      protocol.handle('overckd', handler) ─▶ CollectionHttpController ◀───────────┘
             ─▶ CollectionQueriesLocal ─▶ CollectionRepoFs (YAML files)
 ```
 
@@ -29,7 +29,7 @@ main      protocol.handle('overckd', handler) ─▶ CollectionApiHandlers ◀�
 import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import { OverckdApi } from '@overckd/api-http';
 import { CollectionRepoFs } from '@overckd/collection/adapter-fs';
-import { CollectionApiHandlers } from '@overckd/collection/adapter-http-server';
+import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
 import { CollectionCommandsLocal, CollectionQueriesLocal } from '@overckd/collection/application';
 import { Layer } from 'effect';
 import { HttpRouter } from 'effect/http';
@@ -37,7 +37,7 @@ import { HttpApiBuilder } from 'effect/http-api';
 import { app, protocol } from 'electron';
 
 /** The same API as the backend: contract, handlers, local use cases. */
-const ApiLive = HttpApiBuilder.layer(OverckdApi).pipe(Layer.provide(CollectionApiHandlers), Layer.provide([CollectionQueriesLocal, CollectionCommandsLocal]));
+const ApiLive = HttpApiBuilder.layer(OverckdApi).pipe(Layer.provide(CollectionHttpController), Layer.provide([CollectionQueriesLocal, CollectionCommandsLocal]));
 
 export const start = (dataDir: string) => {
   // Must run before the app is ready.
