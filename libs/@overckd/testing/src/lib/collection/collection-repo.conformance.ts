@@ -2,23 +2,31 @@ import {
   Collection,
   CollectionId,
   CollectionNotFound,
+  RecipeId,
+  RecipeRef,
 } from '@overckd/domain-experimental';
 import { Effect, Layer } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { CollectionRepo } from '@overckd/collection/application';
 
+// Every collection holds a recipe, and a recipe ref's id is its name: the
+// collections file keeps only collections with recipes, and names its recipes
+// without ids.
+
 const desserts = Collection.make({
   id: CollectionId.make('desserts'),
   name: 'Desserts',
   description: '',
-  recipes: [],
+  recipes: [
+    RecipeRef.make({ id: RecipeId.make('Pancakes'), name: 'Pancakes' }),
+  ],
 });
 
 const mains = Collection.make({
   id: CollectionId.make('mains'),
   name: 'Mains',
   description: 'Main courses',
-  recipes: [],
+  recipes: [RecipeRef.make({ id: RecipeId.make('Bread'), name: 'Bread' })],
 });
 
 /**
