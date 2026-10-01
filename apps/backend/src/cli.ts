@@ -16,16 +16,18 @@ const main = (version: ApiVersion) =>
     Effect.catchDefect(e => Effect.logFatal('Defect', e)),
   );
 
+// A fallback config is read only while the flag has no default, so the
+// defaults come last.
+
 const port = Flag.Int('port').pipe(
   Flag.withAlias('p'),
-  Flag.withDefault(3000),
   Flag.withDescription('Port to run the server on'),
   Flag.withFallbackConfig(Config.Int('PORT')),
+  Flag.withDefault(3000),
 );
 
 const apiVersion = Flag.Literals('api-version', ApiVersions).pipe(
   Flag.withDescription('Version of the HTTP API to serve'),
-  // The fallback is read only while the flag has no default
   Flag.withFallbackConfig(Config.Literals(ApiVersions, 'API_VERSION')),
   Flag.withDefault('legacy'),
 );
