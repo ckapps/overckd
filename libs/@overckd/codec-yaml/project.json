@@ -1,0 +1,9 @@
+{
+  "name": "overckd-codec-yaml",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd/codec-yaml/src",
+  "projectType": "library",
+  "tags": ["type:contract", "platform:any"],
+  "// targets": "to see all targets run: nx show project overckd-codec-yaml --web",
+  "targets": {}
+}
