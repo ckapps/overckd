@@ -1,4 +1,4 @@
-import { CollectionId } from '@overckd/domain-experimental';
+import { CollectionFindByIdPayload } from '@overckd/domain-experimental';
 import { Effect, Layer } from 'effect';
 import { CollectionQueries } from './collection-queries';
 import { CollectionRepo } from './collection-repo';
@@ -11,8 +11,8 @@ export const CollectionQueriesLocal = Layer.effect(
 
     return CollectionQueries.of({
       getAll: repo.getAll.pipe(Effect.withSpan('CollectionQueries.getAll')),
-      findById: Effect.fn('CollectionQueries.findById')((id: CollectionId) =>
-        repo.findById(id),
+      findById: Effect.fn('CollectionQueries.findById')(
+        ({ id }: CollectionFindByIdPayload) => repo.findById(id),
       ),
     });
   }),

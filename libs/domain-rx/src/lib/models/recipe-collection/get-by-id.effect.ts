@@ -24,7 +24,7 @@ const createEvent = eventCreator(RecipeCollectionQueryType.GetById);
 export const getById: MsgEffect = (event$, ctx) => {
   const findById = (id: CollectionId) =>
     CollectionQueries.pipe(
-      Effect.flatMap(queries => queries.findById(id)),
+      Effect.flatMap(queries => queries.findById({ id })),
       Effect.flatMap(Schema.encodeEffect(CollectionJson)),
     ).pipe(
       Effect.provideService(References.MinimumLogLevel, 'Debug'),

@@ -55,6 +55,20 @@ export class CollectionNotFound extends Schema.TaggedError<CollectionNotFound>()
 ) {}
 
 /**
+ * @category Payloads
+ */
+export type CollectionFindByIdPayload = typeof CollectionFindByIdPayload.Type;
+export const CollectionFindByIdPayload = Schema.Struct({
+  /** Id of the recipe collection. */
+  id: CollectionId,
+});
+
+/**
+ * @category Errors
+ */
+export type CollectionFindByIdError = CollectionNotFound;
+
+/**
  * @category Schemas
  */
 export const CollectionJson = Schema.Struct({

@@ -1,7 +1,7 @@
 import {
   Collection,
-  CollectionId,
-  CollectionNotFound,
+  CollectionFindByIdError,
+  CollectionFindByIdPayload,
 } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
@@ -16,10 +16,9 @@ export class CollectionQueries extends Context.Service<
 
     /**
      * Find a recipe collection by its id.
-     * @param id Id of the recipe collection
      */
     readonly findById: (
-      id: CollectionId,
-    ) => Effect.Effect<Collection, CollectionNotFound>;
+      payload: CollectionFindByIdPayload,
+    ) => Effect.Effect<Collection, CollectionFindByIdError>;
   }
 >()('@overckd/collection/application/CollectionQueries') {}
