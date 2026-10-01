@@ -76,7 +76,8 @@
       ],
       "@overckd/adapter-http-server-legacy": [
         "libs/@overckd/adapter-http-server-legacy/src/index.ts"
-      ]
+      ],
+      "@overckd/codec-yaml": ["libs/@overckd/codec-yaml/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
