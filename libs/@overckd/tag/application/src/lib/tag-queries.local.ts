@@ -1,4 +1,4 @@
-import { TagId } from '@overckd/domain-experimental';
+import { TagFindByIdPayload } from '@overckd/domain-experimental';
 import { Effect, Layer } from 'effect';
 import { TagQueries } from './tag-queries';
 import { TagRepo } from './tag-repo';
@@ -10,7 +10,7 @@ export const TagQueriesLocal = Layer.effect(
     const repo = yield* TagRepo;
 
     return TagQueries.of({
-      findById: Effect.fn('TagQueries.findById')((id: TagId) =>
+      findById: Effect.fn('TagQueries.findById')(({ id }: TagFindByIdPayload) =>
         repo.findById(id),
       ),
     });

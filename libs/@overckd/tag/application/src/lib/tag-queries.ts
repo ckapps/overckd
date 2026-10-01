@@ -1,4 +1,8 @@
-import { Tag, TagId, TagNotFound } from '@overckd/domain-experimental';
+import {
+  Tag,
+  TagFindByIdError,
+  TagFindByIdPayload,
+} from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
 
 /** Inbound port: everything that reads tags. */
@@ -7,8 +11,9 @@ export class TagQueries extends Context.Service<
   {
     /**
      * Find a tag by its ID.
-     * @param id Tag ID
      */
-    readonly findById: (id: TagId) => Effect.Effect<Tag, TagNotFound>;
+    readonly findById: (
+      payload: TagFindByIdPayload,
+    ) => Effect.Effect<Tag, TagFindByIdError>;
   }
 >()('@overckd/tag/application/TagQueries') {}
