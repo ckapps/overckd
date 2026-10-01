@@ -41,6 +41,20 @@ export class TagNotFound extends Schema.TaggedError<TagNotFound>()(
 ) {}
 
 /**
+ * @category Payloads
+ */
+export type TagFindByIdPayload = typeof TagFindByIdPayload.Type;
+export const TagFindByIdPayload = Schema.Struct({
+  /** Tag ID. */
+  id: TagId,
+});
+
+/**
+ * @category Errors
+ */
+export type TagFindByIdError = TagNotFound;
+
+/**
  * @category instances
  */
 export const Equivalence = Schema.toEquivalence(Tag);

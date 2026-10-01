@@ -18,7 +18,7 @@ const createEvent = eventCreator(TagQueryType.GetById);
 export const getByIdEffect: MsgEffect = (event$, ctx) => {
   const findById = (id: TagId) =>
     TagQueries.pipe(
-      Effect.flatMap(queries => queries.findById(id)),
+      Effect.flatMap(queries => queries.findById({ id })),
       Effect.flatMap(Schema.encodeEffect(TagFromJson)),
     ).pipe(
       Effect.provideService(References.MinimumLogLevel, 'Debug'),

@@ -18,7 +18,7 @@ describe('TagQueriesLocal', () => {
     });
 
     const tag = await Effect.runPromise(
-      TagQueries.use(queries => queries.findById(vegan.uri)).pipe(
+      TagQueries.use(queries => queries.findById({ id: vegan.uri })).pipe(
         Effect.provide(TagQueriesLocal.pipe(Layer.provide(repo))),
       ),
     );
@@ -32,7 +32,9 @@ describe('TagQueriesLocal', () => {
     });
 
     const error = await Effect.runPromise(
-      TagQueries.use(queries => queries.findById(TagId.make('nope'))).pipe(
+      TagQueries.use(queries =>
+        queries.findById({ id: TagId.make('nope') }),
+      ).pipe(
         Effect.flip,
         Effect.provide(TagQueriesLocal.pipe(Layer.provide(repo))),
       ),

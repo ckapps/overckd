@@ -1,3 +1,11 @@
-import { Tag, TagFromJson, TagId, TagNotFound } from './internal/tag.model';
+import {
+  Tag,
+  TagFindByIdPayload,
+  TagFromJson,
+  TagId,
+  TagNotFound,
+} from './internal/tag.model';
+import type { TagFindByIdError } from './internal/tag.model';
 
-export { Tag, TagFromJson, TagId, TagNotFound };
+export { Tag, TagFindByIdPayload, TagFromJson, TagId, TagNotFound };
+export type { TagFindByIdError };
