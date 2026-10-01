@@ -37,9 +37,9 @@ describe('CollectionQueriesLocal', () => {
     });
 
     const collection = await Effect.runPromise(
-      CollectionQueries.use(queries => queries.findById(desserts.id)).pipe(
-        Effect.provide(CollectionQueriesLocal.pipe(Layer.provide(repo))),
-      ),
+      CollectionQueries.use(queries =>
+        queries.findById({ id: desserts.id }),
+      ).pipe(Effect.provide(CollectionQueriesLocal.pipe(Layer.provide(repo)))),
     );
 
     expect(collection).toEqual(desserts);
@@ -52,7 +52,7 @@ describe('CollectionQueriesLocal', () => {
 
     const error = await Effect.runPromise(
       CollectionQueries.use(queries =>
-        queries.findById(CollectionId.make('nope')),
+        queries.findById({ id: CollectionId.make('nope') }),
       ).pipe(
         Effect.flip,
         Effect.provide(CollectionQueriesLocal.pipe(Layer.provide(repo))),

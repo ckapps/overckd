@@ -23,7 +23,7 @@ const TestLayer = Layer.mergeAll(
     Layer.provide(
       Layer.mock(CollectionQueries, {
         getAll: Effect.succeed([desserts]),
-        findById: id =>
+        findById: ({ id }) =>
           id === desserts.id
             ? Effect.succeed(desserts)
             : Effect.fail(new CollectionNotFound({ id })),

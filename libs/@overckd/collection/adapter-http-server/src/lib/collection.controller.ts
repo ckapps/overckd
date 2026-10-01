@@ -12,7 +12,7 @@ export const CollectionHttpController = HttpApiBuilder.group(
 
     return handlers.handleAll({
       getAll: () => queries.getAll,
-      findById: ({ params }) => queries.findById(params.id),
+      findById: ({ params }) => queries.findById(params),
     });
   }),
 );
