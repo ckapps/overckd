@@ -80,6 +80,9 @@
       "@overckd/codec-yaml": ["libs/@overckd/codec-yaml/src/index.ts"],
       "@overckd/recipe/adapter-fs": [
         "libs/@overckd/recipe/adapter-fs/src/index.ts"
+      ],
+      "@overckd/collection/adapter-fs": [
+        "libs/@overckd/collection/adapter-fs/src/index.ts"
       ]
     }
   },
