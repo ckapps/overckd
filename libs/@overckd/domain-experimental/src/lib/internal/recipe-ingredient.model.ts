@@ -5,6 +5,10 @@ import {
 } from './ingredient-amount.model';
 import { IngredientId, IngredientIdFromString } from './ingredient.model';
 
+const Alternatives = Schema.Array(Schema.NonEmptyString).pipe(
+  Schema.withDecodingDefaultType(Effect.succeed([])),
+);
+
 /**
  * @category Models
  */
@@ -24,6 +28,8 @@ export class RecipeIngredient extends Schema.Class<RecipeIngredient>(
     optional: Schema.Boolean.pipe(
       Schema.withDecodingDefaultType(Effect.succeed(false)),
     ),
+    /** Ingredients that can be used instead. */
+    alternatives: Alternatives,
   },
   {
     identifier: 'RecipeIngredient',
@@ -53,4 +59,50 @@ export const RecipeIngredientJson = Schema.Struct({
   optional: Schema.Boolean.pipe(
     Schema.withDecodingDefaultType(Effect.succeed(false)),
   ),
+  /** Ingredients that can be used instead. */
+  alternatives: Alternatives,
 }).pipe(Schema.decodeTo(RecipeIngredient));
+
+/**
+ * @category Models
+ */
+export type RecipeIngredientGroup = Schema.Schema.Type<
+  typeof RecipeIngredientGroup
+>;
+/**
+ * @category Schemas
+ */
+export const RecipeIngredientGroup = Schema.TaggedStruct(
+  'RecipeIngredientGroup',
+  {
+    /** Name of the group. */
+    name: Schema.NonEmptyString,
+    /** Label of the group. */
+    label: Schema.NonEmptyString,
+    /** Ingredients of the group. */
+    ingredients: Schema.NonEmptyArray(RecipeIngredient),
+  },
+).annotate({
+  identifier: 'RecipeIngredientGroup',
+  title: 'RecipeIngredientGroup',
+  description: 'A labeled group of ingredients used in a recipe',
+});
+
+/**
+ * @category Schemas
+ */
+export const RecipeIngredientGroupJson = Schema.TaggedStruct(
+  'RecipeIngredientGroup',
+  {
+    /** Name of the group. */
+    name: Schema.NonEmptyString,
+    /** Label of the group. */
+    label: Schema.NonEmptyString,
+    /** Ingredients of the group. */
+    ingredients: Schema.NonEmptyArray(RecipeIngredientJson),
+  },
+).pipe(
+  // Decode to the type side, so encoding hands the nested `RecipeIngredient`
+  // instances to `RecipeIngredientJson` instead of their encoded plain objects.
+  Schema.decodeTo(Schema.toType(RecipeIngredientGroup)),
+);

@@ -37,6 +37,7 @@ const quantityPortion = Portion.QuantityPortion.make({
 const recipe = RecipePreparation.make({
   id: RecipeId.make('my-recipe'),
   name: 'name',
+  tips: [],
   basedOn: [],
   ingredients: [
     RecipeIngredient.make({
@@ -44,6 +45,7 @@ const recipe = RecipePreparation.make({
       name: 'ingredient',
       amount: Option.some(unitIngredientAmount),
       optional: false,
+      alternatives: [],
     }),
   ],
   portion: quantityPortion,
@@ -51,6 +53,8 @@ const recipe = RecipePreparation.make({
     { instruction: NonEmptyHtmlString.make('Step 1') },
     { instruction: NonEmptyHtmlString.make('Step 2') },
   ],
+  stepsEnumerated: false,
+  images: [],
 });
 
 export const recipes: ReadonlyArray<RecipePreparation> = [recipe];

@@ -1,7 +1,9 @@
-import { Array as Arr, Schema, Tuple } from 'effect';
+import { Array as Arr, Effect, Schema, Tuple } from 'effect';
 import { Portion, PortionJson } from './portion.model';
 import {
   RecipeIngredient,
+  RecipeIngredientGroup,
+  RecipeIngredientGroupJson,
   RecipeIngredientJson,
 } from './recipe-ingredient.model';
 import { RecipeId, RecipeIdFromString } from './recipe.model';
@@ -9,6 +11,12 @@ import { NonEmptyHtmlString } from './shared.model';
 
 const RecipeSourceLinks = Schema.Array(Schema.NonEmptyString);
 const RecipeSourceLinksJson = RecipeSourceLinks;
+const RecipeTips = Schema.Array(Schema.NonEmptyString).pipe(
+  Schema.withDecodingDefaultType(Effect.succeed([])),
+);
+const RecipeImages = Schema.Array(Schema.NonEmptyString).pipe(
+  Schema.withDecodingDefaultType(Effect.succeed([])),
+);
 
 /**
  * @category Models
@@ -53,51 +61,68 @@ const baseFields = {
     title: 'Recipe Name',
     description: 'The name of the recipe.',
   }),
+  /** A list of tips. */
+  tips: RecipeTips,
 };
 const baseFieldsJson = {
   /** Recipe identifier. */
   id: RecipeIdFromString,
   /** Name of the recipe. */
   name: baseFields.name,
+  /** A list of tips. */
+  tips: baseFields.tips,
+};
+const basicFields = {
+  /** Whether the steps are numbered. */
+  stepsEnumerated: Schema.Boolean.pipe(
+    Schema.withDecodingDefaultType(Effect.succeed(false)),
+  ),
 };
 
 export interface BasicRecipePreparation
-  extends Schema.Struct.Type<typeof baseFields> {
+  extends Schema.Struct.Type<typeof baseFields>,
+    Schema.Struct.Type<typeof basicFields> {
   readonly _tag: 'BasicRecipePreparation';
   /** On what the recipe is based on (sources). */
   readonly basedOn: Schema.Schema.Type<typeof RecipeSourceLinks>;
-  /** Recipe ingredients. */
-  readonly ingredients: Arr.NonEmptyReadonlyArray<RecipeIngredient>;
+  /** Recipe ingredients, single or in groups. */
+  readonly ingredients: Arr.NonEmptyReadonlyArray<
+    RecipeIngredient | RecipeIngredientGroup
+  >;
   /** Steps of preparation. */
   readonly steps: Arr.NonEmptyReadonlyArray<PreparationStep>;
 }
 interface BasicRecipePreparationEncoded
-  extends Schema.Struct.Encoded<typeof baseFields> {
+  extends Schema.Struct.Encoded<typeof baseFields>,
+    Schema.Struct.Encoded<typeof basicFields> {
   readonly _tag: 'BasicRecipePreparation';
   readonly basedOn: Schema.Codec.Encoded<typeof RecipeSourceLinks>;
   readonly ingredients: Arr.NonEmptyReadonlyArray<
-    typeof RecipeIngredient.Encoded
+    typeof RecipeIngredient.Encoded | typeof RecipeIngredientGroup.Encoded
   >;
   readonly steps: Arr.NonEmptyReadonlyArray<PreparationStepEncoded>;
 }
 export interface BasicRecipePreparationJson
-  extends Schema.Struct.Type<typeof baseFieldsJson> {
+  extends Schema.Struct.Type<typeof baseFieldsJson>,
+    Schema.Struct.Type<typeof basicFields> {
   readonly _tag: 'BasicRecipePreparation';
   /** On what the recipe is based on (sources). */
   readonly basedOn: Schema.Schema.Type<typeof RecipeSourceLinksJson>;
-  /** Recipe ingredients. */
+  /** Recipe ingredients, single or in groups. */
   readonly ingredients: Arr.NonEmptyReadonlyArray<
-    typeof RecipeIngredientJson.Type
+    typeof RecipeIngredientJson.Type | typeof RecipeIngredientGroupJson.Type
   >;
   /** Steps of preparation. */
   readonly steps: Arr.NonEmptyReadonlyArray<PreparationStepJson>;
 }
 export interface BasicRecipePreparationJsonEncoded
-  extends Schema.Struct.Encoded<typeof baseFieldsJson> {
+  extends Schema.Struct.Encoded<typeof baseFieldsJson>,
+    Schema.Struct.Encoded<typeof basicFields> {
   readonly _tag: 'BasicRecipePreparation';
   readonly basedOn: Schema.Codec.Encoded<typeof RecipeSourceLinksJson>;
   readonly ingredients: Arr.NonEmptyReadonlyArray<
-    typeof RecipeIngredientJson.Encoded
+    | typeof RecipeIngredientJson.Encoded
+    | typeof RecipeIngredientGroupJson.Encoded
   >;
   readonly steps: Arr.NonEmptyReadonlyArray<PreparationStepJsonEncoded>;
 }
@@ -108,9 +133,12 @@ export const BasicRecipePreparation = Schema.TaggedStruct(
   'BasicRecipePreparation',
   {
     ...baseFieldsJson,
+    ...basicFields,
     /** On what the recipe is based on (sources). */
     basedOn: RecipeSourceLinks,
-    ingredients: Schema.NonEmptyArray(RecipeIngredient),
+    ingredients: Schema.NonEmptyArray(
+      Schema.Union([RecipeIngredient, RecipeIngredientGroup]),
+    ),
     steps: Schema.NonEmptyArray(PreparationStep),
   },
 ).annotate({
@@ -122,9 +150,12 @@ const BasicRecipePreparationJsonStruct = Schema.TaggedStruct(
   'BasicRecipePreparation',
   {
     ...baseFields,
+    ...basicFields,
     /** On what the recipe is based on (sources). */
     basedOn: RecipeSourceLinksJson,
-    ingredients: Schema.NonEmptyArray(RecipeIngredientJson),
+    ingredients: Schema.NonEmptyArray(
+      Schema.Union([RecipeIngredientJson, RecipeIngredientGroupJson]),
+    ),
     steps: Schema.NonEmptyArray(PreparationStepJson),
   },
 ).annotate({
@@ -207,9 +238,13 @@ export const UnionRecipePreparationJson = UnionRecipePreparationJsonStruct.pipe(
 
 const recipePreparationFields = {
   portion: Portion,
+  /** URLs of the images of the recipe. */
+  images: RecipeImages,
 };
 const recipePreparationFieldsJson = {
   portion: PortionJson,
+  /** URLs of the images of the recipe. */
+  images: RecipeImages,
 };
 /**
  * @category Models

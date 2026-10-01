@@ -15,26 +15,33 @@ const flour = RecipeIngredient.make({
   name: 'Flour',
   amount: Option.none(),
   optional: false,
+  alternatives: [],
 });
 
 const pancakes: RecipePreparation = {
   _tag: 'BasicRecipePreparation',
   id: RecipeId.make('pancakes'),
   name: 'Pancakes',
+  tips: [],
   basedOn: [],
   ingredients: [flour],
   portion: { kind: 'quantity', label: Option.none(), quantity: 4 },
   steps: [{ instruction: NonEmptyHtmlString.make('Mix and fry') }],
+  stepsEnumerated: false,
+  images: [],
 };
 
 const bread: RecipePreparation = {
   _tag: 'BasicRecipePreparation',
   id: RecipeId.make('bread'),
   name: 'Bread',
+  tips: [],
   basedOn: [],
   ingredients: [flour],
   portion: { kind: 'quantity', label: Option.none(), quantity: 1 },
   steps: [{ instruction: NonEmptyHtmlString.make('Knead and bake') }],
+  stepsEnumerated: false,
+  images: [],
 };
 
 /**
