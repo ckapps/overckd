@@ -9,7 +9,9 @@ only the roles you need now; add the others when their first code appears.
 
 Add the models, ids, errors and `*Json` codecs to the domain lib (today
 `libs/@overckd/domain-experimental`), following
-[domain modeling](../architecture/effect.md#domain-modeling).
+[domain modeling](../architecture/effect.md#domain-modeling), and the payloads
+and error types of the feature's queries and commands
+([add an operation](add-an-operation.md#1-domain)).
 
 ## 2. Generate the libs
 

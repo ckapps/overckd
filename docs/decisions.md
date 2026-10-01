@@ -56,6 +56,33 @@ status codes are set in the contract, not on domain errors.
 - **Rejected:** one shared `Unavailable` error on every port method (noise, and
   every adapter must map every failure into it).
 
+## Payloads and error types in the domain
+
+A `<Feature>Queries` or `<Feature>Commands` method that takes input takes one
+argument, its payload: a `Schema.Struct` named `<Feature><Method>Payload`
+(`RecipeFindByIdPayload`) in the domain lib. A method that declares errors fails
+with `<Feature><Method>Error` (`RecipeFindByIdError = RecipeNotFound`), a type
+in the domain lib. A method without input gets no payload, a method without
+errors no error type. `<Feature>Repo` methods are not covered. Made on
+2026-10-01.
+
+- **Why:** every operation's input is modelled once, as data, and its failures
+  have a name. Handlers pass the decoded parameters through when they have the
+  payload's shape, and pages, which may import the domain but not the ports,
+  can build payloads and name the errors they handle. The names follow from
+  the port method.
+- **Rejected:** positional parameters (the input has no name and no schema);
+  payloads in the application lib (pages can't import them, and schemas that
+  cross a port belong to the domain); `<Verb><Feature>…` names
+  (`FindRecipeByIdPayload`: the feature goes into the method name by hand); a
+  namespace per port (`RecipeQuery.FindByIdPayload`); error types for methods
+  without errors (`= never`).
+- **Rejected for now:** operations as `Request` classes resolved with
+  `Effect.request`: a batch runs in a fiber with the first caller's context
+  (spans, request-scoped services), one failure fails the whole batch, and a
+  `Request` class is not a schema. An adapter may still batch internally with
+  a `Request` and resolver of its own.
+
 ## Desktop serves the HTTP API over `overckd://`
 
 The renderer runs the unchanged frontend with the `*Http` implementations. The

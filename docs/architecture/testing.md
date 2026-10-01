@@ -46,7 +46,7 @@ describe('CollectionCommandsLocal', () => {
       save: collection => Effect.sync(() => void saved.push(collection)),
     });
 
-    const renamed = await Effect.runPromise(CollectionCommands.use(commands => commands.rename(desserts.id, 'Sweets')).pipe(Effect.provide(CollectionCommandsLocal.pipe(Layer.provide(repo)))));
+    const renamed = await Effect.runPromise(CollectionCommands.use(commands => commands.rename({ id: desserts.id, name: 'Sweets' })).pipe(Effect.provide(CollectionCommandsLocal.pipe(Layer.provide(repo)))));
 
     expect(renamed.name).toBe('Sweets');
     expect(saved).toEqual([renamed]);
@@ -59,7 +59,7 @@ describe('CollectionQueriesLocal', () => {
       findById: id => Effect.fail(new CollectionNotFound({ id })),
     });
 
-    const error = await Effect.runPromise(CollectionQueries.use(queries => queries.findById(CollectionId.make('nope'))).pipe(Effect.flip, Effect.provide(CollectionQueriesLocal.pipe(Layer.provide(repo)))));
+    const error = await Effect.runPromise(CollectionQueries.use(queries => queries.findById({ id: CollectionId.make('nope') })).pipe(Effect.flip, Effect.provide(CollectionQueriesLocal.pipe(Layer.provide(repo)))));
 
     expect(error).toBeInstanceOf(CollectionNotFound);
   });
@@ -104,7 +104,7 @@ const TestLayer = Layer.mergeAll(
     Layer.provide(
       Layer.mock(CollectionQueries, {
         getAll: Effect.succeed([desserts]),
-        findById: id => (id === desserts.id ? Effect.succeed(desserts) : Effect.fail(new CollectionNotFound({ id }))),
+        findById: ({ id }) => (id === desserts.id ? Effect.succeed(desserts) : Effect.fail(new CollectionNotFound({ id }))),
       }),
     ),
     Layer.provide(Layer.mock(CollectionCommands, {})),
@@ -148,7 +148,7 @@ const respondWith =
 
 const TestHttpClient = Layer.effect(HttpClient.HttpClient, Effect.map(HttpClient.HttpClient, HttpClient.mapRequest(HttpClientRequest.prependUrl('http://api.test')))).pipe(Layer.provide(FetchHttpClient.layer));
 
-const findById = (fakeFetch: typeof globalThis.fetch) => CollectionQueries.use(queries => queries.findById(CollectionId.make('desserts'))).pipe(Effect.provide(CollectionQueriesHttp.pipe(Layer.provide(TestHttpClient))), Effect.provideService(FetchHttpClient.Fetch, fakeFetch));
+const findById = (fakeFetch: typeof globalThis.fetch) => CollectionQueries.use(queries => queries.findById({ id: CollectionId.make('desserts') })).pipe(Effect.provide(CollectionQueriesHttp.pipe(Layer.provide(TestHttpClient))), Effect.provideService(FetchHttpClient.Fetch, fakeFetch));
 
 it('keeps the typed domain error', async () => {
   const error = await Effect.runPromise(findById(respondWith(404, { _tag: 'CollectionNotFound', id: 'desserts' })).pipe(Effect.flip));
@@ -178,7 +178,7 @@ stable.
 
 ```ts
 // libs/@overckd-app/collection/data-access/src/lib/collection.bindings.spec.ts
-const findDesserts = (id: CollectionId) => (id === desserts.id ? Effect.succeed(desserts) : Effect.fail(new CollectionNotFound({ id })));
+const findDesserts = ({ id }: CollectionFindByIdPayload) => (id === desserts.id ? Effect.succeed(desserts) : Effect.fail(new CollectionNotFound({ id })));
 
 beforeEach(() => {
   TestBed.configureTestingModule({
@@ -187,7 +187,7 @@ beforeEach(() => {
         Layer.mergeAll(
           Layer.mock(CollectionQueries, { findById: findDesserts }),
           Layer.mock(CollectionCommands, {
-            rename: (id, name) => Effect.map(findDesserts(id), c => Collection.make({ ...c, name })),
+            rename: ({ id, name }) => Effect.map(findDesserts({ id }), c => Collection.make({ ...c, name })),
           }),
         ),
       ),
@@ -198,22 +198,22 @@ beforeEach(() => {
 const stable = () => TestBed.inject(ApplicationRef).whenStable();
 
 it('stays idle while an input is undefined, then loads', async () => {
-  const id = signal<CollectionId | undefined>(undefined);
-  const collection = TestBed.runInInjectionContext(() => injectCollectionQueries().findById(id));
+  const payload = signal<CollectionFindByIdPayload | undefined>(undefined);
+  const collection = TestBed.runInInjectionContext(() => injectCollectionQueries().findById(payload));
   await stable();
   expect(collection.status()).toBe('idle');
 
-  id.set(desserts.id);
+  payload.set({ id: desserts.id });
   await stable();
   expect(collection.value()?.name).toBe('Desserts');
 });
 
 it('runs commands as promises that reject with typed errors', async () => {
   const commands = TestBed.runInInjectionContext(() => injectCollectionCommands());
-  await expect(commands.rename(desserts.id, 'Sweets')).resolves.toMatchObject({
+  await expect(commands.rename({ id: desserts.id, name: 'Sweets' })).resolves.toMatchObject({
     name: 'Sweets',
   });
-  await expect(commands.rename(CollectionId.make('nope'), 'x')).rejects.toBeInstanceOf(CollectionNotFound);
+  await expect(commands.rename({ id: CollectionId.make('nope'), name: 'x' })).rejects.toBeInstanceOf(CollectionNotFound);
 });
 ```
 
