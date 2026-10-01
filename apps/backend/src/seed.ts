@@ -7,20 +7,12 @@ import {
   RecipeId,
   RecipeIngredient,
   RecipePreparation,
+  RecipeRef,
   UnitIngredientAmount,
 } from '@overckd/domain-experimental';
 import { Option } from 'effect';
 
 // Stub data the backend serves until it has real storage.
-
-export const collections: ReadonlyArray<Collection> = [
-  Collection.make({
-    id: CollectionId.make('1'),
-    name: 'Test',
-    description: 'Test description',
-    recipes: [],
-  }),
-];
 
 const unitIngredientAmount = UnitIngredientAmount.make({
   value: 1,
@@ -35,8 +27,9 @@ const quantityPortion = Portion.QuantityPortion.make({
 });
 
 const recipe = RecipePreparation.make({
+  // for now, keep id and name the same
   id: RecipeId.make('my-recipe'),
-  name: 'name',
+  name: 'my-recipe',
   tips: [],
   basedOn: [],
   ingredients: [
@@ -58,3 +51,12 @@ const recipe = RecipePreparation.make({
 });
 
 export const recipes: ReadonlyArray<RecipePreparation> = [recipe];
+
+export const collections: ReadonlyArray<Collection> = [
+  Collection.make({
+    id: CollectionId.make('1'),
+    name: 'Test',
+    description: 'Test description',
+    recipes: recipes.map(r => RecipeRef.make(r)),
+  }),
+];
