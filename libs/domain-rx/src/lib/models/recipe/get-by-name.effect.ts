@@ -1,14 +1,16 @@
-import { LogLevel } from '@ckapp/rxjs-snafu/lib/cjs/log';
-import { act, matchEvent, useContext } from '@marblejs/core';
+import { act, matchEvent } from '@marblejs/core';
 import { MsgEffect, reply } from '@marblejs/messaging';
 import { eventValidator$ } from '@marblejs/middleware-io';
-import { pipe } from 'effect/Function';
-import { catchError, map, of, take, tap } from 'rxjs';
+import { Compat, RecipeId } from '@overckd/domain-experimental';
+import { RecipeQueries, RecipeQueriesLocal } from '@overckd/recipe/application';
+import { Effect, Function as Fn, References, Schema } from 'effect';
+import { catchError, from, map, of } from 'rxjs';
 import {
   eventCreator,
   OverckdEventType,
 } from '../../core/events/event-creator';
-import { LogToken, RecipeRepositoryToken } from '../../tokens';
+import { MarbleJsContextProvider } from '../../shared/marble-context-provider';
+import { RecipeRepoMarbleInterop } from './recipe.model';
 import { GetRecipeByNameEvent, RecipeQueryType } from './recipe.query';
 
 const createEvent = eventCreator(RecipeQueryType.GetByName);
@@ -20,27 +22,30 @@ const createEvent = eventCreator(RecipeQueryType.GetByName);
  * @param ctx
  */
 export const getRecipeByNameEffect: MsgEffect = (event$, ctx) => {
-  const repo = useContext(RecipeRepositoryToken)(ctx.ask);
-  const logger = useContext(LogToken)(ctx.ask);
+  // Legacy recipes have their name as id.
+  const findByName = (name: string) =>
+    RecipeQueries.pipe(
+      Effect.flatMap(queries => queries.findById({ id: RecipeId.make(name) })),
+      Effect.flatMap(Schema.encodeEffect(Compat.RecipePreparationLegacyJson)),
+      // The route answers 404 for a reply without payload.
+      Effect.catchTag('RecipeNotFound', () => Effect.succeed(undefined)),
+    ).pipe(
+      Effect.provideService(References.MinimumLogLevel, 'Debug'),
+      Effect.provide(RecipeQueriesLocal),
+      Effect.provide(RecipeRepoMarbleInterop),
+      Effect.provideService(MarbleJsContextProvider, ctx.ask),
+    );
 
   return event$.pipe(
     matchEvent(GetRecipeByNameEvent),
     act(eventValidator$(GetRecipeByNameEvent)),
     act(event =>
-      pipe(
+      Fn.pipe(
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         event.payload.name,
-        repo.getByName,
-        tap(
-          logger({
-            prefixes: ['run:'],
-            message: 'get-by-name',
-            level: LogLevel.Debug,
-            withArguments: false,
-          }),
-        ),
-        take(1),
+        name => Effect.runPromise(findByName(name)),
+        result => from(result),
         map(payload =>
           reply(event)(createEvent(OverckdEventType.Result, { payload })),
         ),
