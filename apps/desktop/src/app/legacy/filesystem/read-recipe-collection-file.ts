@@ -1,7 +1,14 @@
 import { readFile } from '@ckapp/rxjs-node-fs';
-import { RecipeCollection } from '@overckd/domain';
-import { recipeCollectionFile, yamlDecode } from '@overckd/yaml';
-import { Observable } from 'rxjs';
+import { CollectionsFileYaml } from '@overckd/codec-yaml';
+import { CollectionJson } from '@overckd/domain-experimental';
+import { Schema } from 'effect';
+import { map, Observable } from 'rxjs';
+
+/** A collection as rxdb holds it. */
+type CollectionDocument = Schema.Codec.Encoded<typeof CollectionJson>;
+
+const decodeCollectionsFile = Schema.decodeSync(CollectionsFileYaml);
+const encodeCollectionJson = Schema.encodeSync(CollectionJson);
 
 /**
  * @param filename
@@ -13,8 +20,12 @@ import { Observable } from 'rxjs';
  */
 export function readRecipeCollectionFile(
   filename: string,
-): Observable<RecipeCollection[]> {
+): Observable<CollectionDocument[]> {
   return readFile(filename, { encoding: 'utf8' }).pipe(
-    yamlDecode(recipeCollectionFile, { filename }),
+    map(text =>
+      decodeCollectionsFile(text).map(collection =>
+        encodeCollectionJson(collection),
+      ),
+    ),
   );
 }
