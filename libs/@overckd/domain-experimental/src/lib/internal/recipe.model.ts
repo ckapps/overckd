@@ -51,6 +51,20 @@ export class RecipeNotFound extends Schema.TaggedError<RecipeNotFound>()(
 ) {}
 
 /**
+ * @category Payloads
+ */
+export type RecipeFindByIdPayload = typeof RecipeFindByIdPayload.Type;
+export const RecipeFindByIdPayload = Schema.Struct({
+  /** Id of the recipe. */
+  id: RecipeId,
+});
+
+/**
+ * @category Errors
+ */
+export type RecipeFindByIdError = RecipeNotFound;
+
+/**
  * @category Schemas
  */
 export const RecipeRefJson = Schema.Struct({

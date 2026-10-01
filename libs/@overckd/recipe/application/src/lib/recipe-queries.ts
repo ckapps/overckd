@@ -1,6 +1,6 @@
 import {
-  RecipeId,
-  RecipeNotFound,
+  RecipeFindByIdError,
+  RecipeFindByIdPayload,
   RecipePreparation,
 } from '@overckd/domain-experimental';
 import { Context, Effect } from 'effect';
@@ -11,10 +11,9 @@ export class RecipeQueries extends Context.Service<
   {
     /**
      * Find a recipe by its id.
-     * @param id Id of the recipe
      */
     readonly findById: (
-      id: RecipeId,
-    ) => Effect.Effect<RecipePreparation, RecipeNotFound>;
+      payload: RecipeFindByIdPayload,
+    ) => Effect.Effect<RecipePreparation, RecipeFindByIdError>;
   }
 >()('@overckd/recipe/application/RecipeQueries') {}

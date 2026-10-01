@@ -11,7 +11,7 @@ export const RecipeHttpController = HttpApiBuilder.group(
     const queries = yield* RecipeQueries;
 
     return handlers.handleAll({
-      findById: ({ params }) => queries.findById(params.id),
+      findById: ({ params }) => queries.findById(params),
     });
   }),
 );
