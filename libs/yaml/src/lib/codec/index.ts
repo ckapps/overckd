@@ -1,8 +1,1 @@
-export {
-  ingredient,
-  IngredientDTO,
-  recipeCollection,
-  recipeCollectionRecipe,
-  tag,
-  TagDTO,
-} from './domain.codec';
+export { ingredient, IngredientDTO, tag, TagDTO } from './domain.codec';
