@@ -1,5 +1,6 @@
 import {
   CountIngredientAmount,
+  FractionIngredientAmount,
   IngredientAmount,
   IngredientAmountJson,
   LabelIngredientAmount,
@@ -8,6 +9,7 @@ import {
 
 export {
   CountIngredientAmount,
+  FractionIngredientAmount,
   IngredientAmount,
   IngredientAmountJson,
   LabelIngredientAmount,

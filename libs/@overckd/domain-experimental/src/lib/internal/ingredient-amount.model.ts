@@ -26,6 +26,28 @@ export const CountIngredientAmount = Schema.Struct({
 export const CountIngredientAmountJson = CountIngredientAmount;
 
 /**
+ * An amount that is a fraction of a count, such as half an onion.
+ *
+ * @category Models
+ */
+export const FractionIngredientAmount = Schema.Struct({
+  _tag: Schema.tag('FractionIngredientAmount'),
+  /** How much of this ingredient. */
+  value: Positive,
+  /**
+   * Optional scale factor for this ingredient, to control by how much this ingredient
+   * scales, when the overall recipe is scaled.
+   *
+   * Default is `1`.
+   */
+  scaleFactor: Positive.pipe(Schema.withDecodingDefaultType(Effect.succeed(1))),
+});
+/**
+ * @category Schemas
+ */
+export const FractionIngredientAmountJson = FractionIngredientAmount;
+
+/**
  * An Amount that is measured in a unit.
  *
  * @category Models
@@ -73,6 +95,7 @@ export type IngredientAmount = Schema.Schema.Type<typeof IngredientAmount>;
  */
 export const IngredientAmount = Schema.Union([
   CountIngredientAmount,
+  FractionIngredientAmount,
   UnitIngredientAmount,
   LabelIngredientAmount,
 ]);
@@ -82,6 +105,7 @@ export const IngredientAmount = Schema.Union([
  */
 export const IngredientAmountJson = Schema.Union([
   CountIngredientAmountJson,
+  FractionIngredientAmountJson,
   UnitIngredientAmountJson,
   LabelIngredientAmountJson,
 ]).pipe(Schema.decodeTo(IngredientAmount));
@@ -110,6 +134,11 @@ function _getScaleTransform(scalar: number) {
       CountIngredientAmount: ({ count, scaleFactor }) =>
         CountIngredientAmount.make({
           count,
+          scaleFactor,
+        }),
+      FractionIngredientAmount: ({ value, scaleFactor }) =>
+        FractionIngredientAmount.make({
+          value: _scale(value, scalar, scaleFactor),
           scaleFactor,
         }),
       UnitIngredientAmount: ({ unit, value, scaleFactor }) =>
