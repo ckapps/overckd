@@ -1,20 +1,15 @@
-import { writeFile } from '@ckapp/rxjs-node-fs';
 import { createReader, useContext } from '@marblejs/core';
 import { RecipeRepository } from '@overckd/domain';
-import { recipeFile, yamlEncode } from '@overckd/yaml';
-import * as path from 'path';
-import { defer, from, map, mapTo, mergeMap, of, take } from 'rxjs';
+import { defer, from, map, mergeMap, take } from 'rxjs';
 import { RecipeDbCollectionToken } from '../db/collections/db.collections.tokens';
 import { pluckData } from '../db/rxjs/pluck-data';
 import { pluckManyData } from '../db/rxjs/pluck-many-data';
 import { RepositoryLogScope, scoped } from '../logging';
-import { getPath, PathId } from '../paths';
 
 const logger = scoped(RepositoryLogScope.Recipe);
 
 export const RecipeFileRespository = createReader<RecipeRepository>(ask => {
   const recipeCollection = useContext(RecipeDbCollectionToken)(ask);
-  const recipesFolder = getPath(PathId.Recipes);
 
   logger.silly(`setting up RecipeFileRespository`);
 
@@ -45,27 +40,8 @@ export const RecipeFileRespository = createReader<RecipeRepository>(ask => {
     getAll,
     getByName,
     // Commands
-    add: recipe => {
-      return from(recipeCollection.upsert(recipe)).pipe(
-        map(doc => {
-          const item = doc.toMutableJSON();
-          const { name: id } = item;
-          const filename = path.resolve(recipesFolder, `${id}.recipe.yaml`);
-          return { item, filename };
-        }),
-        mergeMap(({ item, filename }) => {
-          // Encode for saving
-          return of(item).pipe(
-            // Parse to yaml
-            yamlEncode(recipeFile),
-            // Save
-            mergeMap(fileContent =>
-              writeFile(filename, fileContent, { encoding: 'utf8' }),
-            ),
-            mapTo(item),
-          );
-        }),
-      );
+    add: () => {
+      throw new Error('Method not implemented.');
     },
     removeByName: id =>
       findOneByNameQuery.eq(id).$.pipe(
