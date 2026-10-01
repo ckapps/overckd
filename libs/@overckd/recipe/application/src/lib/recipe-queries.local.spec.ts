@@ -1,6 +1,8 @@
 import {
+  IngredientId,
   NonEmptyHtmlString,
   RecipeId,
+  RecipeIngredient,
   RecipeNotFound,
   RecipePreparation,
 } from '@overckd/domain-experimental';
@@ -14,10 +16,21 @@ const pancakes: RecipePreparation = {
   _tag: 'BasicRecipePreparation',
   id: RecipeId.make('pancakes'),
   name: 'Pancakes',
+  tips: [],
   basedOn: [],
-  ingredients: [],
+  ingredients: [
+    RecipeIngredient.make({
+      uri: IngredientId.make('flour'),
+      name: 'Flour',
+      amount: Option.none(),
+      optional: false,
+      alternatives: [],
+    }),
+  ],
   portion: { kind: 'quantity', label: Option.none(), quantity: 4 },
   steps: [{ instruction: NonEmptyHtmlString.make('Mix and fry') }],
+  stepsEnumerated: false,
+  images: [],
 };
 
 describe('RecipeQueriesLocal', () => {

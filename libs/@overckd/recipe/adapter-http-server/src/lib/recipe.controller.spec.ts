@@ -18,6 +18,7 @@ const pancakes: RecipePreparation = {
   _tag: 'BasicRecipePreparation',
   id: RecipeId.make('pancakes'),
   name: 'Pancakes',
+  tips: [],
   basedOn: [],
   ingredients: [
     RecipeIngredient.make({
@@ -25,10 +26,13 @@ const pancakes: RecipePreparation = {
       name: 'Flour',
       amount: Option.none(),
       optional: false,
+      alternatives: [],
     }),
   ],
   portion: { kind: 'quantity', label: Option.none(), quantity: 4 },
   steps: [{ instruction: NonEmptyHtmlString.make('Mix and fry') }],
+  stepsEnumerated: false,
+  images: [],
 };
 
 const TestLayer = Layer.mergeAll(

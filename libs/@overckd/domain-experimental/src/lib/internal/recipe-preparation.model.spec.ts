@@ -1,4 +1,4 @@
-import { Option, Schema } from 'effect';
+import { Option, Schema, Struct } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { Portion, PortionKind } from './portion.model';
 import {
@@ -41,15 +41,18 @@ describe('RecipePreparation', () => {
     _tag: 'BasicRecipePreparation' as const,
     id,
     name: id,
+    tips: [],
     basedOn: [],
     ingredients: [
       {
         ...unitIngredientJson,
         amount: { ...unitIngredientAmount, scaleFactor: 1 },
         optional: false,
+        alternatives: [],
       },
     ] as const,
     steps: [{ instruction: 'Step 1' }, { instruction: 'Step 2' }] as const,
+    stepsEnumerated: false,
   });
 
   describe('BasicRecipePreparation', () => {
@@ -83,9 +86,44 @@ describe('RecipePreparation', () => {
       const json: Schema.Codec.Encoded<typeof RecipePreparationJson> = {
         ...basicRecipeJson('my-recipe'),
         portion: quantityPortionJson,
+        images: [],
       };
 
       expect(encodeJson(decodeJson(json))).toEqual(json);
+    });
+    it('should encode ingredient groups, tips and images to JSON', () => {
+      const json: Schema.Codec.Encoded<typeof RecipePreparationJson> = {
+        ...basicRecipeJson('my-recipe'),
+        ingredients: [
+          {
+            _tag: 'RecipeIngredientGroup',
+            name: 'dough',
+            label: 'For the dough',
+            ingredients: basicRecipeJson('my-recipe').ingredients,
+          },
+        ],
+        tips: ['Serve warm'],
+        stepsEnumerated: true,
+        portion: quantityPortionJson,
+        images: ['/images/my-recipe.jpeg'],
+      };
+
+      expect(encodeJson(decodeJson(json))).toEqual(json);
+    });
+    it('should decode from JSON without tips, images and stepsEnumerated', () => {
+      const recipe = decodeJson({
+        ...Struct.omit(basicRecipeJson('my-recipe'), [
+          'tips',
+          'stepsEnumerated',
+        ]),
+        portion: quantityPortionJson,
+      });
+
+      expect(recipe).toMatchObject({
+        tips: [],
+        stepsEnumerated: false,
+        images: [],
+      });
     });
   });
 
@@ -151,7 +189,9 @@ describe('RecipePreparation', () => {
         _tag: 'UnionRecipePreparation',
         id: 'union-recipe',
         name: 'union recipe',
+        tips: [],
         portion: quantityPortionJson,
+        images: [],
         recipes: [basicRecipeJson('recipe-1'), basicRecipeJson('recipe-2')],
       };
 

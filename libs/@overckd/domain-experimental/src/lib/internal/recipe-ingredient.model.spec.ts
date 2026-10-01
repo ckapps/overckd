@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { IngredientAmount } from './ingredient-amount.model';
 import {
   RecipeIngredient,
+  RecipeIngredientGroupJson,
   RecipeIngredientJson,
 } from './recipe-ingredient.model';
 
@@ -49,8 +50,48 @@ describe('RecipeIngredient', () => {
       name: 'ingredient',
       optional: true,
       amount: ingredientAmount,
+      alternatives: ['other ingredient'],
     });
 
-    expect(ingredient).toBeDefined();
+    expect(ingredient.alternatives).toEqual(['other ingredient']);
+  });
+  it('should decode from JSON without alternatives', () => {
+    const ingredient = decodeJson({ uri: 'ingredient', name: 'ingredient' });
+
+    expect(ingredient.alternatives).toEqual([]);
+  });
+});
+
+describe('RecipeIngredientGroup', () => {
+  const decodeJson = Schema.decodeSync(RecipeIngredientGroupJson);
+  const encodeJson = Schema.encodeSync(RecipeIngredientGroupJson);
+
+  it('should encode to JSON', () => {
+    const json: Schema.Codec.Encoded<typeof RecipeIngredientGroupJson> = {
+      _tag: 'RecipeIngredientGroup',
+      name: 'filling',
+      label: 'For the filling',
+      ingredients: [
+        {
+          uri: 'jam',
+          name: 'Jam',
+          amount: { _tag: 'LabelIngredientAmount', label: 'a glass' },
+          optional: false,
+          alternatives: [],
+        },
+      ],
+    };
+
+    expect(encodeJson(decodeJson(json))).toEqual(json);
+  });
+  it('should not decode without ingredients', () => {
+    expect(() =>
+      Schema.decodeUnknownSync(RecipeIngredientGroupJson)({
+        _tag: 'RecipeIngredientGroup',
+        name: 'filling',
+        label: 'For the filling',
+        ingredients: [],
+      }),
+    ).toThrow();
   });
 });
