@@ -1,0 +1,9 @@
+{
+  "name": "overckd-recipe-adapter-fs",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd/recipe/adapter-fs/src",
+  "projectType": "library",
+  "tags": ["type:adapter", "platform:any"],
+  "// targets": "to see all targets run: nx show project overckd-recipe-adapter-fs --web",
+  "targets": {}
+}
