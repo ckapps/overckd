@@ -171,11 +171,11 @@ export const injectCollectionCommands = () => injectCommands(CollectionCommands)
 The bindings follow the ports: a new port method is available to pages without
 touching this lib. What pages get:
 
-| Port member                                                                          | Binding                                                                                            |
-| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------- |
-| `getAll: Effect<ReadonlyArray<Collection>>`                                          | `getAll(): ResourceRef<ReadonlyArray<Collection> \| undefined>`                                    |
-| `findById: (id: CollectionId) => Effect<Collection, CollectionNotFound>`             | `findById(id: Signal<CollectionId \| undefined>): ResourceRef<Collection \| undefined>`            |
-| `rename: (id: CollectionId, name: string) => Effect<Collection, CollectionNotFound>` | `rename(id: CollectionId, name: string): Promise<Collection>`, rejecting with `CollectionNotFound` |
+| Port member                                                                                     | Binding                                                                                                   |
+| ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `getAll: Effect<ReadonlyArray<Collection>>`                                                     | `getAll(): ResourceRef<ReadonlyArray<Collection> \| undefined>`                                           |
+| `findById: (payload: CollectionFindByIdPayload) => Effect<Collection, CollectionFindByIdError>` | `findById(payload: Signal<CollectionFindByIdPayload \| undefined>): ResourceRef<Collection \| undefined>` |
+| `rename: (payload: CollectionRenamePayload) => Effect<Collection, CollectionRenameError>`       | `rename(payload: CollectionRenamePayload): Promise<Collection>`, rejecting with a `CollectionRenameError` |
 
 **Stores.** When several components share client state (selection, filters,
 drafts, …), add NgRx stores to the `data-access` lib. They read and change data
@@ -192,7 +192,7 @@ outputs and domain types, nothing else.
 
 ```ts
 // libs/@overckd-app/collection/feature-collection/src/lib/collection-page.component.ts
-import { Component, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import { injectCollectionCommands, injectCollectionQueries } from '@overckd-app/collection/data-access';
 import { CollectionId, CollectionNotFound } from '@overckd/domain';
 
@@ -200,9 +200,9 @@ import { CollectionId, CollectionNotFound } from '@overckd/domain';
   selector: 'overckd-collection-page',
   template: `
     @if (collection.value(); as c) {
-    <h1>{{ c.name }}</h1>
+      <h1>{{ c.name }}</h1>
     } @else if (collection.error()) {
-    <p>Could not load this collection.</p>
+      <p>Could not load this collection.</p>
     }
   `,
 })
@@ -212,11 +212,11 @@ export class CollectionPageComponent {
   readonly #queries = injectCollectionQueries();
   readonly #commands = injectCollectionCommands();
 
-  protected readonly collection = this.#queries.findById(this.id);
+  protected readonly collection = this.#queries.findById(computed(() => ({ id: this.id() })));
 
   protected async rename(name: string): Promise<void> {
     try {
-      await this.#commands.rename(this.id(), name);
+      await this.#commands.rename({ id: this.id(), name });
       this.collection.reload();
     } catch (error) {
       if (error instanceof CollectionNotFound) {

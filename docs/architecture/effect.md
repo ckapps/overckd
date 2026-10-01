@@ -83,11 +83,17 @@ All data that crosses a port or the wire is described with Schema in
 | Union        | `Schema.Union` of tagged members                                           | `IngredientAmount`, `RecipePreparation`   |
 | Identifier   | branded string: `Schema.NonEmptyString.pipe(Schema.brand('@overckd/XId'))` | `CollectionId`                            |
 | Error        | `Schema.TaggedError`                                                       | `CollectionNotFound`                      |
+| Payload      | `Schema.Struct` named `<Feature><Method>Payload`                           | `CollectionFindByIdPayload`               |
 | Wire format  | `*Json` codec that decodes to the model                                    | `CollectionJson`                          |
+
+The input of a `<Feature>Queries` or `<Feature>Commands` method is one payload,
+and the errors it declares have a type, `<Feature><Method>Error`
+(`CollectionFindByIdError = CollectionNotFound`)
+([decisions](../decisions.md#payloads-and-error-types-in-the-domain)).
 
 - Build entities with `X.make({ … })`. It validates and **throws** on invalid
   input (a defect), so validate untrusted input at the edge with a schema
-  (contract payloads, form input) before it reaches a port.
+  (contract params and bodies, form input) before it reaches a port.
 - `Schema.Class` encoders need real class instances. Adapters and tests
   therefore construct entities with `X.make`, and `*Json` codecs decode to the
   type side (`Schema.decodeTo(Schema.toType(X))`) so nested encoders receive

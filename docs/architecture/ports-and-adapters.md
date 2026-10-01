@@ -15,9 +15,23 @@ A port is a `Context.Service` tag **declared by an explicit interface**. The
 interface is the contract; implementations live elsewhere (usually in other
 libs), so the tag never gets a `make` or a `static layer`.
 
+The input of an inbound port method is one payload, and its errors have a type;
+both live in the domain lib, next to the models:
+
+```ts
+// libs/@overckd/domain/src/lib/internal/collection.model.ts
+export type CollectionFindByIdPayload = typeof CollectionFindByIdPayload.Type;
+export const CollectionFindByIdPayload = Schema.Struct({ id: CollectionId });
+export type CollectionFindByIdError = CollectionNotFound;
+
+export type CollectionRenamePayload = typeof CollectionRenamePayload.Type;
+export const CollectionRenamePayload = Schema.Struct({ id: CollectionId, name: Schema.NonEmptyString });
+export type CollectionRenameError = CollectionNotFound;
+```
+
 ```ts
 // libs/@overckd/collection/application/src/lib/collection-queries.ts
-import { Collection, CollectionId, CollectionNotFound } from '@overckd/domain';
+import { Collection, CollectionFindByIdError, CollectionFindByIdPayload } from '@overckd/domain';
 import { Context, Effect } from 'effect';
 
 /** Inbound port: everything that reads collections. */
@@ -25,7 +39,7 @@ export class CollectionQueries extends Context.Service<
   CollectionQueries,
   {
     readonly getAll: Effect.Effect<ReadonlyArray<Collection>>;
-    readonly findById: (id: CollectionId) => Effect.Effect<Collection, CollectionNotFound>;
+    readonly findById: (payload: CollectionFindByIdPayload) => Effect.Effect<Collection, CollectionFindByIdError>;
   }
 >()('@overckd/collection/application/CollectionQueries') {}
 ```
@@ -36,7 +50,7 @@ export class CollectionQueries extends Context.Service<
 export class CollectionCommands extends Context.Service<
   CollectionCommands,
   {
-    readonly rename: (id: CollectionId, name: string) => Effect.Effect<Collection, CollectionNotFound>;
+    readonly rename: (payload: CollectionRenamePayload) => Effect.Effect<Collection, CollectionRenameError>;
   }
 >()('@overckd/collection/application/CollectionCommands') {}
 ```
@@ -67,6 +81,11 @@ Rules for ports:
 - **Only domain types** in signatures, and **only user-actionable errors** in
   the error channel (see [errors](effect.md#errors)). The same port type must fit
   the local and the remote implementation.
+- **One payload, named errors**: an inbound port method that takes input takes
+  one `<Feature><Method>Payload`, a `Schema.Struct` in the domain lib; one that
+  declares errors fails with `<Feature><Method>Error`, a type in the domain lib.
+  A method without input or errors (`getAll`) gets neither. Repository methods
+  take plain parameters ([decisions](../decisions.md#payloads-and-error-types-in-the-domain)).
 - Service key: `'@overckd/<feature>/<role>/<Name>'`.
 
 ## 2. Local implementations: the use cases
@@ -85,7 +104,7 @@ export const CollectionQueriesLocal = Layer.effect(
 
     return CollectionQueries.of({
       getAll: repo.getAll.pipe(Effect.withSpan('CollectionQueries.getAll')),
-      findById: Effect.fn('CollectionQueries.findById')((id: CollectionId) => repo.findById(id)),
+      findById: Effect.fn('CollectionQueries.findById')(({ id }: CollectionFindByIdPayload) => repo.findById(id)),
     });
   }),
 );
@@ -98,7 +117,7 @@ export const CollectionCommandsLocal = Layer.effect(
   Effect.gen(function* () {
     const repo = yield* CollectionRepo;
 
-    const rename = Effect.fn('CollectionCommands.rename')(function* (id: CollectionId, name: string) {
+    const rename = Effect.fn('CollectionCommands.rename')(function* ({ id, name }: CollectionRenamePayload) {
       const collection = yield* repo.findById(id);
       const renamed = renameCollection(collection, name);
       yield* repo.save(renamed);
@@ -182,7 +201,9 @@ export class OverckdApi extends HttpApi.make('overckd')
 
 The handlers map each endpoint onto one port method. There is no logic and no
 error mapping: typed port errors pass through, and the contract gives them their
-status code.
+status code. When the decoded `params` already have the shape of the port
+payload, pass them on; otherwise put the payload together from `params` and the
+request body (`payload` in `HttpApi`).
 
 ```ts
 // libs/@overckd/collection/adapter-http-server/src/lib/collection.controller.ts
@@ -195,8 +216,8 @@ export const CollectionHttpController = HttpApiBuilder.group(
 
     return handlers.handleAll({
       getAll: () => queries.getAll,
-      findById: ({ params }) => queries.findById(params.id),
-      rename: ({ params, payload }) => commands.rename(params.id, payload.name),
+      findById: ({ params }) => queries.findById(params),
+      rename: ({ params, payload }) => commands.rename({ id: params.id, name: payload.name }),
     });
   }),
 );
@@ -238,8 +259,8 @@ export const CollectionQueriesHttp = Layer.effect(
         Effect.orDie,
         Effect.withSpan('CollectionQueries.getAll'),
       ),
-      findById: Effect.fn('CollectionQueries.findById')((id: CollectionId) =>
-        client.findById({ params: { id } }).pipe(
+      findById: Effect.fn('CollectionQueries.findById')((payload: CollectionFindByIdPayload) =>
+        client.findById({ params: payload }).pipe(
           // Keep the port's typed error (CollectionNotFound), everything else dies.
           Effect.catchTag(['HttpClientError', 'SchemaError'], Effect.die),
         ),
@@ -418,6 +439,7 @@ not compile.
 ## Checklist
 
 - [ ] Port declared by interface, `R = never`, key `'@overckd/<feature>/<role>/<Name>'`.
+- [ ] Input as one `<Feature><Method>Payload`, errors as `<Feature><Method>Error`, both in the domain.
 - [ ] Reads in `<Feature>Queries`, changes in `<Feature>Commands`.
 - [ ] Logic in pure domain functions; `*Local` only orchestrates.
 - [ ] No implementation provides its own dependencies.

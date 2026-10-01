@@ -21,11 +21,19 @@ Otherwise `<Feature>Queries`.
 ## 1. Domain
 
 In the domain lib, add what crosses the port or the wire, and export it from
-`src/index.ts`:
+`src/index.ts` (type-only names with `export type`):
 
-- input schemas (`<Entity>Draft` for creation payloads),
-- errors the user can act on: `Schema.TaggedError`, **no** HTTP status,
+- the payload, if the operation takes input: a `Schema.Struct` named
+  `<Feature><Method>Payload` (creation payloads can contain an `<Entity>Draft`),
+- errors the user can act on: `Schema.TaggedError`, **no** HTTP status, and if
+  the operation declares any, their type `<Feature><Method>Error`,
 - the rule itself as a pure function: `renameCollection(collection, name)`.
+
+```ts
+export type CollectionRenamePayload = typeof CollectionRenamePayload.Type;
+export const CollectionRenamePayload = Schema.Struct({ id: CollectionId, name: Schema.NonEmptyString });
+export type CollectionRenameError = CollectionNotFound;
+```
 
 ## 2. Port
 
@@ -34,9 +42,8 @@ only user-actionable errors, no requirements:
 
 ```ts
 readonly rename: (
-  id: CollectionId,
-  name: string,
-) => Effect.Effect<Collection, CollectionNotFound>;
+  payload: CollectionRenamePayload,
+) => Effect.Effect<Collection, CollectionRenameError>;
 ```
 
 If the use case needs something new from storage, add it to `<Feature>Repo`
@@ -49,7 +56,7 @@ Implement the method in `<Feature>QueriesLocal` / `<Feature>CommandsLocal` with
 function.
 
 ```ts
-const rename = Effect.fn('CollectionCommands.rename')(function* (id: CollectionId, name: string) {
+const rename = Effect.fn('CollectionCommands.rename')(function* ({ id, name }: CollectionRenamePayload) {
   const collection = yield* repo.findById(id);
   const renamed = renameCollection(collection, name);
   yield* repo.save(renamed);
@@ -80,14 +87,18 @@ Add the endpoint to `<Feature>Api`, with the status code of each error:
 )
 ```
 
-The payload schema is where untrusted input is validated.
+The endpoint's `params` and `payload` (the request body) are where untrusted
+input is validated. They describe HTTP, so their shape may differ from the port
+payload.
 
 ## 6. Handler
 
-One line in `<Feature>HttpController`. No logic, no error mapping:
+One line in `<Feature>HttpController`. No logic, no error mapping. Pass
+`params` on when they have the port payload's shape (`findById: ({ params }) =>
+queries.findById(params)`), otherwise put the payload together:
 
 ```ts
-rename: ({ params, payload }) => commands.rename(params.id, payload.name),
+rename: ({ params, payload }) => commands.rename({ id: params.id, name: payload.name }),
 ```
 
 ## 7. Remote implementation
@@ -97,7 +108,7 @@ errors the port declares; everything else dies:
 
 ```ts
 rename: Effect.fn('CollectionCommands.rename')(
-  (id: CollectionId, name: string) =>
+  ({ id, name }: CollectionRenamePayload) =>
     client
       .rename({ params: { id }, payload: { name } })
       .pipe(Effect.catchTag(['HttpClientError', 'SchemaError'], Effect.die)),
@@ -107,15 +118,15 @@ rename: Effect.fn('CollectionCommands.rename')(
 ## 8. Data access
 
 Nothing to write: the feature's `inject<Port>()` bindings derive the new method
-from the port (queries → `ResourceRef` with signal arguments, commands →
-`Promise`). Only if a store holds state that the operation changes, update that
+from the port (queries → `ResourceRef` with a signal of the payload, commands
+→ `Promise`). Only if a store holds state that the operation changes, update that
 store in `libs/@overckd-app/<feature>/data-access`.
 
 ## 9. UI
 
 Call the binding from a `feature-*` component
-(`injectCollectionCommands().rename(id, name)`); put presentational parts into
-the `ui` lib. Handle typed errors (`error instanceof CollectionNotFound`),
+(`injectCollectionCommands().rename({ id, name })`); put presentational parts
+into the `ui` lib. Handle typed errors (`error instanceof CollectionNotFound`),
 rethrow the rest.
 
 ## 10. Verify
@@ -129,13 +140,13 @@ lib; move it rather than changing the rules.
 
 ## Where does the code go?
 
-| Concern                                | Place                                          |
-| -------------------------------------- | ---------------------------------------------- |
-| shape and validation of input          | schema: domain (inputs) or contract (payloads) |
-| business rule, calculation             | pure function in the domain                    |
-| orchestration (load, apply rule, save) | `*Local` implementation                        |
-| HTTP mapping, status codes             | contract                                       |
-| transport and storage errors           | adapter (defects)                              |
-| display, user feedback                 | components                                     |
+| Concern                                | Place                                                               |
+| -------------------------------------- | ------------------------------------------------------------------- |
+| shape and validation of input          | schema: domain (port payloads) or contract (HTTP params and bodies) |
+| business rule, calculation             | pure function in the domain                                         |
+| orchestration (load, apply rule, save) | `*Local` implementation                                             |
+| HTTP mapping, status codes             | contract                                                            |
+| transport and storage errors           | adapter (defects)                                                   |
+| display, user feedback                 | components                                                          |
 
 Never put logic into handlers, data-access bindings or components.
