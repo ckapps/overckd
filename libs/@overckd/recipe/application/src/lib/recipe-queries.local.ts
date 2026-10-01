@@ -1,4 +1,4 @@
-import { RecipeId } from '@overckd/domain-experimental';
+import { RecipeFindByIdPayload } from '@overckd/domain-experimental';
 import { Effect, Layer } from 'effect';
 import { RecipeQueries } from './recipe-queries';
 import { RecipeRepo } from './recipe-repo';
@@ -10,8 +10,8 @@ export const RecipeQueriesLocal = Layer.effect(
     const repo = yield* RecipeRepo;
 
     return RecipeQueries.of({
-      findById: Effect.fn('RecipeQueries.findById')((id: RecipeId) =>
-        repo.findById(id),
+      findById: Effect.fn('RecipeQueries.findById')(
+        ({ id }: RecipeFindByIdPayload) => repo.findById(id),
       ),
     });
   }),

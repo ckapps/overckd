@@ -27,7 +27,7 @@ describe('RecipeQueriesLocal', () => {
     });
 
     const recipe = await Effect.runPromise(
-      RecipeQueries.use(queries => queries.findById(pancakes.id)).pipe(
+      RecipeQueries.use(queries => queries.findById({ id: pancakes.id })).pipe(
         Effect.provide(RecipeQueriesLocal.pipe(Layer.provide(repo))),
       ),
     );
@@ -42,7 +42,7 @@ describe('RecipeQueriesLocal', () => {
 
     const error = await Effect.runPromise(
       RecipeQueries.use(queries =>
-        queries.findById(RecipeId.make('nope')),
+        queries.findById({ id: RecipeId.make('nope') }),
       ).pipe(
         Effect.flip,
         Effect.provide(RecipeQueriesLocal.pipe(Layer.provide(repo))),

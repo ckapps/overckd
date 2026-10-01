@@ -35,7 +35,7 @@ const TestLayer = Layer.mergeAll(
   RecipeHttpController.pipe(
     Layer.provide(
       Layer.mock(RecipeQueries, {
-        findById: id =>
+        findById: ({ id }) =>
           id === pancakes.id
             ? Effect.succeed(pancakes)
             : Effect.fail(new RecipeNotFound({ id })),
