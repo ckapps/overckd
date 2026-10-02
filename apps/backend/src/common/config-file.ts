@@ -2,6 +2,7 @@ import { Context, Data } from 'effect';
 
 export enum ConfigFileSection {
   Server = 'server',
+  Repositories = 'repositories',
 }
 
 /** The config file the backend was started with. */

@@ -8,6 +8,7 @@ import {
   Struct,
 } from 'effect';
 import { Yaml } from 'effect/encoding';
+import { FullRepositoriesConfig } from '../repositories/repositories.config';
 import { ApiVersion, FullServerConfig } from '../server/server.config';
 import {
   ConfigFile,
@@ -25,6 +26,7 @@ const ServerConfigFileContent = FullServerConfig.mapFields(
 
 export const ConfigFileContent = Schema.Struct({
   [ConfigFileSection.Server]: Schema.optionalKey(ServerConfigFileContent),
+  [ConfigFileSection.Repositories]: Schema.optionalKey(FullRepositoriesConfig),
 }).annotate({
   messageUnexpectedKey: 'Unknown configuration',
 });

@@ -82,12 +82,21 @@ describe('ConfigLive', () => {
     ).toEqual({ port: 4000, apiVersion: 'next' });
   });
 
+  it('accepts a repositories section', async () => {
+    expect(
+      await Effect.runPromise(
+        serverConfig(`${yaml}repositories:\n  type: memory\n`),
+      ),
+    ).toEqual({ port: 3001, apiVersion: 'next' });
+  });
+
   it.each([
     ['no YAML', 'server: [3000', 'is no valid YAML'],
     ['no mapping', '- 3000', 'Expected a mapping of sections'],
     ['an invalid value', 'server:\n  port: 1.5', 'Expected an integer'],
     ['an unknown section', 'sever:\n  port: 3001', 'Unknown configuration'],
     ['an unknown key', 'server:\n  prot: 3001', 'Unknown configuration'],
+    ['an unknown repository type', 'repositories:\n  type: rxdb', 'memory'],
   ])('fails for a config file with %s', async (_, text, message) => {
     const error = await Effect.runPromise(Effect.flip(serverConfig(text)));
 
