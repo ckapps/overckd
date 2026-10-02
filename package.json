@@ -7,7 +7,7 @@
     "serve:web:legacy": "nx run-many -t serve -p frontend,server-cli",
     "serve:desktop": "nx run-many -t serve -p frontend,desktop -c desktop",
     "prepare": "husky install",
-    "postinstall": "pnpx electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "@angular/animations": "21.2.9",
@@ -97,6 +97,7 @@
     "angular-eslint": "21.4.0",
     "autoprefixer": "^10.4.0",
     "electron": "^35.0.0",
+    "electron-builder": "26.15.3",
     "esbuild": "0.19.9",
     "eslint": "9.39.5",
     "eslint-config-prettier": "10.1.8",
