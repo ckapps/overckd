@@ -3,44 +3,59 @@
 import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import * as NodeRuntime from '@effect/platform-node/NodeRuntime';
 import * as NodeServices from '@effect/platform-node/NodeServices';
-import { Config, Effect, Function as Fn, Layer } from 'effect';
+import { Effect, Layer, Option } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { createServer } from 'node:http';
-import { ApiVersion, ApiVersions } from './app.http';
+import { ApiVersions } from './app.http';
+import { ConfigLive } from './config/config';
+import { ServerConfig } from './config/server.config';
 import { OverckdBackend } from './main';
 
-const main = (version: ApiVersion) =>
-  OverckdBackend(version).pipe(
-    Layer.launch,
-    Effect.catch(e => Effect.logError('Uncaught error', e)),
-    Effect.catchDefect(e => Effect.logFatal('Defect', e)),
-  );
+// The flags override the environment and the config file (see `ConfigLive`),
+// so they have no defaults: the defaults live in the sections.
 
-// A fallback config is read only while the flag has no default, so the
-// defaults come last.
+const config = Flag.File('config', { mustExist: true }).pipe(
+  Flag.withAlias('c'),
+  Flag.withDescription('Config file (YAML)'),
+);
 
 const port = Flag.Int('port').pipe(
   Flag.withAlias('p'),
   Flag.withDescription('Port to run the server on'),
-  Flag.withFallbackConfig(Config.Int('PORT')),
-  Flag.withDefault(3000),
+  Flag.optional,
 );
 
 const apiVersion = Flag.Literals('api-version', ApiVersions).pipe(
   Flag.withDescription('Version of the HTTP API to serve'),
-  Flag.withFallbackConfig(Config.Literals(ApiVersions, 'API_VERSION')),
-  Flag.withDefault('legacy'),
+  Flag.optional,
+);
+
+/** The HTTP server, on the port of `ServerConfig`. */
+const ServerLive = Layer.unwrap(
+  ServerConfig.useSync(({ port }) =>
+    NodeHttpServer.layer(createServer, { port }),
+  ),
 );
 
 export const command = Command.make(
   'overckd',
-  { port, apiVersion },
-  ({ port, apiVersion }) =>
-    Fn.pipe(
-      main(apiVersion),
-      Effect.provide(
-        Layer.mergeAll(NodeHttpServer.layer(createServer, { port })),
+  { config, port, apiVersion },
+  ({ config, port, apiVersion }) =>
+    OverckdBackend.pipe(
+      Layer.provide(ServerLive),
+      Layer.provide(ServerConfig.layer),
+      Layer.provide(
+        ConfigLive({
+          file: config,
+          flags: {
+            server: {
+              port: Option.getOrUndefined(port),
+              apiVersion: Option.getOrUndefined(apiVersion),
+            },
+          },
+        }),
       ),
+      Layer.launch,
     ),
 );
 
