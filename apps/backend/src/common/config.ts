@@ -1,35 +1,33 @@
 import {
   ConfigProvider,
-  Context,
-  Data,
   Effect,
   FileSystem,
   Layer,
   Path,
   Schema,
+  Struct,
 } from 'effect';
 import { Yaml } from 'effect/encoding';
-
-/** The config file the backend was started with. */
-export class ConfigFile extends Context.Service<
+import { ApiVersion, FullServerConfig } from '../server/server.config';
+import {
   ConfigFile,
-  {
-    /** The absolute path of the file */
-    readonly file: string;
-    /** Resolves a path of the config against the file's directory */
-    readonly resolve: (path: string) => string;
-  }
->()('@overckd/backend/ConfigFile') {}
+  ConfigFileInvalid,
+  ConfigFileSection,
+} from './config-file';
 
-/** The config file is no YAML, or no mapping of sections. */
-export class ConfigFileInvalid extends Data.TaggedError('ConfigFileInvalid')<{
-  readonly message: string;
-}> {}
+export { ConfigFile, ConfigFileInvalid } from './config-file';
 
-/** What a config file may contain: sections by name, or nothing at all */
-const isConfigFileContent = Schema.is(
-  Schema.NullOr(Schema.Record(Schema.String, Schema.Unknown)),
-);
+const ServerConfigFileContent = FullServerConfig.mapFields(
+  Struct.map(Schema.optional),
+).annotate({
+  messageUnexpectedKey: 'Unknown configuration',
+});
+
+export const ConfigFileContent = Schema.Struct({
+  [ConfigFileSection.Server]: Schema.optionalKey(ServerConfigFileContent),
+}).annotate({
+  messageUnexpectedKey: 'Unknown configuration',
+});
 
 const readConfigFile = Effect.fn('readConfigFile')(function* (file: string) {
   const fs = yield* FileSystem.FileSystem;
@@ -41,26 +39,44 @@ const readConfigFile = Effect.fn('readConfigFile')(function* (file: string) {
         message: `${file} is no valid YAML: ${error instanceof Error ? error.message : String(error)}`,
       }),
   });
-  if (!isConfigFileContent(content)) {
-    return yield* new ConfigFileInvalid({
-      message: `${file} must contain a mapping of sections`,
-    });
-  }
-  return content;
+
+  const decode = Schema.decodeUnknownEffect(
+    Schema.NullOr(ConfigFileContent).annotate({
+      message: 'Expected a mapping of sections',
+    }),
+    { errors: 'all', onExcessProperty: 'error' },
+  );
+
+  return yield* decode(content).pipe(
+    Effect.mapError(
+      error =>
+        new ConfigFileInvalid({
+          message: `${file} is invalid:\n${error.message}`,
+        }),
+    ),
+  );
 });
+
+export type ConfigFlags = Readonly<{
+  [ConfigFileSection.Server]: {
+    port?: number;
+    apiVersion?: ApiVersion;
+  };
+}>;
+
+type ConfigLayerOptions = {
+  /** The config file (YAML) */
+  readonly file: string;
+  /** The values of the flags under their key paths; unsetf lags are `undefined` */
+  readonly flags: ConfigFlags;
+};
 
 /**
  * The sources of the config, highest priority first: the flags, the
  * environment (`OVERCKD_` + the key path in CONSTANT_CASE, e.g.
  * `OVERCKD_SERVER_PORT`), the config file. The defaults live in the sections.
- * @param options.file The config file (YAML)
- * @param options.flags The values of the flags under their key paths; unset
- * flags are `undefined`
  */
-export const ConfigLive = (options: {
-  readonly file: string;
-  readonly flags: object;
-}) =>
+export const ConfigLive = (options: ConfigLayerOptions) =>
   Layer.mergeAll(
     ConfigProvider.layer(
       Effect.gen(function* () {

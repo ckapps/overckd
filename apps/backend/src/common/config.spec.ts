@@ -1,7 +1,7 @@
 import { Effect, FileSystem, Layer, Path } from 'effect';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ServerConfig } from '../server/server.config';
-import { ConfigFile, ConfigLive } from './config';
+import { ConfigFile, ConfigFlags, ConfigLive } from './config';
 
 const file = '/srv/overckd/backend.config.yaml';
 
@@ -13,13 +13,13 @@ const fileSystem = (text: string) =>
   });
 
 /** `ConfigLive` on a config file with the given text */
-const configLive = (text: string, flags: object = {}) =>
+const configLive = (text: string, flags: ConfigFlags = { server: {} }) =>
   ConfigLive({ file, flags }).pipe(
     Layer.provide([fileSystem(text), Path.layer]),
   );
 
 /** The `server` section, read through `ConfigLive` */
-const serverConfig = (text: string, flags: object = {}) =>
+const serverConfig = (text: string, flags: ConfigFlags = { server: {} }) =>
   ServerConfig.useSync(server => server).pipe(
     Effect.provide(ServerConfig.layer),
     Effect.provide(configLive(text, flags)),
@@ -84,11 +84,15 @@ describe('ConfigLive', () => {
 
   it.each([
     ['no YAML', 'server: [3000', 'is no valid YAML'],
-    ['no mapping', '- 3000', 'must contain a mapping of sections'],
+    ['no mapping', '- 3000', 'Expected a mapping of sections'],
+    ['an invalid value', 'server:\n  port: 1.5', 'Expected an integer'],
+    ['an unknown section', 'sever:\n  port: 3001', 'Unknown configuration'],
+    ['an unknown key', 'server:\n  prot: 3001', 'Unknown configuration'],
   ])('fails for a config file with %s', async (_, text, message) => {
     const error = await Effect.runPromise(Effect.flip(serverConfig(text)));
 
     expect(error._tag).toBe('ConfigFileInvalid');
+    expect(error.message).toContain(file);
     expect(error.message).toContain(message);
   });
 
