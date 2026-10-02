@@ -34,39 +34,6 @@ still use the legacy domain types; they have a place in the target layout.
 `libs/domain-rx` already runs the new use cases inside the legacy marblejs
 server: `RecipeCollectionRepoMarbleInterop` implements the new
 `CollectionRepo` port with the legacy repository, and the marble effects run
-`CollectionUseCase` through `Effect.runPromise`. Bridges like this are allowed in
+`CollectionQueries` through `Effect.runPromise`. Bridges like this are allowed in
 legacy code (and only there), so a feature can switch to the new core before
 its surroundings are migrated.
-
-## Migration order
-
-Per feature (collection first; it is the furthest along):
-
-1. **Domain**: models, ids and errors in `libs/@overckd/domain-experimental`
-   (done for collection, recipe, tag and ingredient). Move HTTP status codes
-   from the error definitions (`httpApiStatus`) into the contracts
-   (`HttpApiSchema.status`).
-2. **Application**: split `<Feature>UseCase` into `<Feature>Queries` /
-   `<Feature>Commands` ports declared by interface, plus `*Local` layers; use
-   `'@overckd/<feature>/<role>/<Name>'` keys. Handlers then depend on the ports
-   instead of providing `<Feature>UseCase.layer` themselves, and
-   `apps/backend` provides the `*Local` layers.
-3. **Layout**: move the libs to `libs/@overckd/<feature>/<role>` (core) and
-   `libs/@overckd-app/<feature>/<role>` (Angular) with `nx g @nx/workspace:move`
-   (check with `--dry-run`), and switch the import aliases to match the paths
-   (`@overckd/<feature>/<role>`, `@overckd-app/<feature>/<role>`).
-4. **Repositories**: `adapter-memory` (replacing the stub repos in
-   `apps/backend/src/*.repo.ts`), `@overckd/codec-yaml` (the domain file
-   codecs of `libs/yaml`, ported from io-ts to Effect Schema; its app config
-   codecs move to the apps) and `adapter-fs` on top of it (replacing the
-   desktop's filesystem readers), `adapter-rxdb` (from `*-infra-rxdb`, on the new
-   domain).
-5. **Frontend**: `libs/@ckapp/angular-effect`, then per feature
-   `adapter-http-client` and `data-access`; switch pages to the bindings, move
-   `collection-ui` to the new domain types, delete the abstract services
-   ([frontend](../architecture/frontend.md#migration-from-today)).
-6. **Desktop**: wire the API in `apps/desktop` and serve it over `overckd://`
-   ([desktop](../architecture/desktop.md#migration-from-today)).
-7. **Cleanup**: delete `domain-rx`, `server`, `yaml`, `apps/server-cli` and the
-   legacy `libs/domain`; then rename `libs/@overckd/domain-experimental` to
-   `libs/@overckd/domain` (`@overckd/domain`).

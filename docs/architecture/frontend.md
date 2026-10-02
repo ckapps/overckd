@@ -27,7 +27,7 @@ the repositories' job.
 
 > **Status:** target. Today the pages use abstract-class services
 > (`RecipeCollectionService`) implemented with Angular's `HttpClient` and the
-> legacy domain types. See [migration](#migration-from-today).
+> legacy domain types.
 
 ## Composition root
 
@@ -240,14 +240,3 @@ domain values, but never `Effect`, `Layer` or a runtime.
 - `UrlBuilderService` (only used by those services) and `ApiRequestService`
   (unused): the contract builds the URLs.
 - Legacy domain types (`@overckd/domain`) in components.
-
-## Migration from today
-
-1. Create `libs/@ckapp/angular-effect` with the bridge above.
-2. Per feature: add `adapter-http-client` and `data-access`, register the
-   `*Http` layers in `app.config.ts`.
-3. Switch pages from the abstract services to the data-access bindings; move
-   presentational components to the new domain types (`collection-ui` today).
-4. Change `environment*.ts`: `apiUrl` becomes the origin (`''` on the web,
-   `'overckd://app'` on the desktop).
-5. Delete the old services, `UrlBuilderService` and `ApiRequestService`.

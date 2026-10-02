@@ -5,9 +5,10 @@ on this page is typechecked against the installed Effect version, and all of it
 except the file-system adapter sketch also ran in tests; treat it as the template when you
 add code.
 
-> **Status:** the collection ports, `CollectionQueriesLocal`, the contract and
-> the handlers follow this page. `CollectionCommands` and the repository
-> adapters (§6) don't exist yet; see the [migration plan](../migration.md).
+> **Status:** the collection ports, `CollectionQueriesLocal`, the contract,
+> the handlers and the memory and file repositories follow this page.
+> `CollectionCommands`, the repositories' `save` and the remote
+> implementation (§5) don't exist yet.
 
 ## 1. Ports
 
