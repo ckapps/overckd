@@ -62,7 +62,8 @@
       "dependsOn": ["^build"],
       "options": {
         "buildTarget": "backend:build:serve",
-        "runBuildTargetDependencies": false
+        "runBuildTargetDependencies": false,
+        "args": ["--config", "data/example-1/backend.config.yaml"]
       },
       "configurations": {
         "development": {
