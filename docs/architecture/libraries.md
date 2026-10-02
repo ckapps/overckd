@@ -160,7 +160,9 @@ Check with `pnpm nx affected -t lint` (or `pnpm nx run <project>:lint`).
 | Nx project                | the alias without `@`, `/` → `-`                              | `overckd-collection-application`, `overckd-app-collection-ui`, `ckapp-angular-effect` |
 | Inbound ports             | `<Feature>Queries` (reads), `<Feature>Commands` (changes)     | `CollectionQueries`                                                                   |
 | Outbound port             | `<Feature>Repo`, one per aggregate                            | `CollectionRepo`                                                                      |
-| Implementation            | `<Port><Impl>`; a function if it takes parameters             | `CollectionQueriesLocal`, `CollectionQueriesHttp`, `CollectionRepoFs({ file })`       |
+| Implementation            | `<Port><Impl>`; a function if it takes data                   | `CollectionQueriesLocal`, `CollectionQueriesHttp`, `CollectionRepoMemory(seed)`       |
+| Settings of an adapter    | `<Port><Impl>Config`, a service in the adapter's lib          | `CollectionRepoFsConfig`                                                              |
+| Config section (apps)     | `<Section>Config`, a service in the app                       | `ServerConfig` for the `server` section                                               |
 | HTTP controller           | `<Feature>HttpController`                                     | `CollectionHttpController`                                                            |
 | HTTP API group            | `<Feature>Api`; group id = feature name; prefix = plural path | `HttpApiGroup.make('collection')…prefix('/collections')`                              |
 | Angular binding           | `inject<Port>()`                                              | `injectCollectionQueries()`                                                           |
@@ -173,7 +175,9 @@ Check with `pnpm nx affected -t lint` (or `pnpm nx run <project>:lint`).
 File names inside a lib: port `collection-queries.ts`, implementations
 `collection-queries.local.ts` / `collection-queries.http.ts`, repository
 implementations `collection-repo.fs.ts`, HTTP API group `collection.api.ts`,
-HTTP controller `collection.controller.ts`, Angular bindings `collection.bindings.ts`.
+HTTP controller `collection.controller.ts`, Angular bindings `collection.bindings.ts`,
+config sections in an app `server/server.config.ts`, with the layers built
+from them in `server/server.ts`.
 Tests sit next to the file as `*.spec.ts`. Every lib exports its public API from
 `src/index.ts` only.
 

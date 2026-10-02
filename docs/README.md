@@ -22,6 +22,8 @@ written for people and AI agents alike.
 | add a query or a command                                     | [guides/add-an-operation.md](guides/add-an-operation.md)                                                  |
 | add a feature (e.g. ingredients)                             | [guides/add-a-feature.md](guides/add-a-feature.md)                                                        |
 | add a storage adapter (files, rxdb, …)                       | [architecture/ports-and-adapters.md](architecture/ports-and-adapters.md#6-outbound-adapters-repositories) |
+| add a setting (a config key, a section, a choice of adapter) | [guides/add-a-setting.md](guides/add-a-setting.md)                                                        |
+| understand how apps read their config                        | [architecture/configuration.md](architecture/configuration.md)                                            |
 | change legacy code                                           | [guides/work-with-legacy-code.md](guides/work-with-legacy-code.md)                                        |
 | write Effect code                                            | [architecture/effect.md](architecture/effect.md)                                                          |
 | build Angular UI                                             | [architecture/frontend.md](architecture/frontend.md)                                                      |

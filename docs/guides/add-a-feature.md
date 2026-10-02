@@ -75,15 +75,16 @@ Check the dry-run output (files under the chosen directory, an `UPDATE` of
 
 ## 3. Wire it into the composition roots
 
-| What                                                                                                    | Where (target)                                        | Where (today)                       |
-| ------------------------------------------------------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------- |
-| add `<Feature>Api` to `OverckdApi`                                                                      | `libs/@overckd/api-http`                              | `libs/backend/overckd/adapter-rest` |
-| add the feature's YAML file codec, if it has files                                                      | `libs/@overckd/codec-yaml`                            | `libs/yaml`                         |
-| add the `<Feature>Repo` conformance suite                                                               | `libs/@overckd/testing`                               | same                                |
-| add `<Feature>HttpController`, `<Feature>QueriesLocal`, `<Feature>CommandsLocal` to the app's `ApiLive` | `apps/backend`, `apps/desktop`                        | `apps/backend/src/app.http.ts`      |
-| provide a `<Feature>Repo*`                                                                              | each server-side app (`apps/backend`, `apps/desktop`) | `apps/backend/src/main.ts`          |
-| add `<Feature>QueriesHttp`, `<Feature>CommandsHttp` to the runtime layer                                | `apps/frontend/src/app/app.config.ts`                 | n/a yet                             |
-| lazy-load the feature's routes                                                                          | `apps/frontend/src/app/app.routes.ts`                 | same                                |
+| What                                                                                                                                                                     | Where (target)                                                                      | Where (today)                       |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------- | ----------------------------------- |
+| add `<Feature>Api` to `OverckdApi`                                                                                                                                       | `libs/@overckd/api-http`                                                            | `libs/backend/overckd/adapter-rest` |
+| add the feature's YAML file codec, if it has files                                                                                                                       | `libs/@overckd/codec-yaml`                                                          | `libs/yaml`                         |
+| add the `<Feature>Repo` conformance suite                                                                                                                                | `libs/@overckd/testing`                                                             | same                                |
+| add `<Feature>HttpController`, `<Feature>QueriesLocal`, `<Feature>CommandsLocal` to the app's `ApiLive`                                                                  | `apps/backend`, `apps/desktop`                                                      | `apps/backend/src/app.http.ts`      |
+| provide a `<Feature>Repo*` for every repository type the app's config offers ([choosing an implementation](../architecture/configuration.md#choosing-an-implementation)) | each server-side app (`apps/backend`, `apps/desktop`)                               | `apps/backend/src/main.ts`          |
+| add the path of the feature's files to `AppDirectory`, if it has files                                                                                                   | `AppDirectory` ([configuration](../architecture/configuration.md#adapter-settings)) | n/a yet                             |
+| add `<Feature>QueriesHttp`, `<Feature>CommandsHttp` to the runtime layer                                                                                                 | `apps/frontend/src/app/app.config.ts`                                               | n/a yet                             |
+| lazy-load the feature's routes                                                                                                                                           | `apps/frontend/src/app/app.routes.ts`                                               | same                                |
 
 ## 4. Verify
 
