@@ -6,3 +6,9 @@ server:
   apiVersion: legacy
 repositories:
   type: memory
+  recipes:
+    seed:
+      files: ./app/recipes/*.recipe.yaml
+  collections:
+    seed:
+      files: ./app/overckd.collections.yaml
