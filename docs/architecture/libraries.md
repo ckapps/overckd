@@ -204,4 +204,3 @@ All projects are tagged today; the paths and import aliases (`@_shared/…`,
 
 Libs that still use legacy types are tagged `type:legacy` until migrated; switch
 the tag to the real role in the same change that removes the legacy imports.
-The order of the migration is in [working with legacy code](../guides/work-with-legacy-code.md).

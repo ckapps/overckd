@@ -8,10 +8,10 @@ written for people and AI agents alike.
 
 > **Target vs. current.** The docs describe the target architecture. Parts of
 > the code predate it; [libraries](architecture/libraries.md#current-to-target-mapping)
-> maps every project to its target place, and
-> [legacy code](guides/work-with-legacy-code.md) explains how to treat the rest.
-> New code follows the docs. Pages that describe code which doesn't exist yet
-> say so in a **Status** note.
+> maps every project to its target place,
+> and [legacy code](guides/work-with-legacy-code.md) explains how to treat the
+> rest. New code follows the docs. Pages that describe code which doesn't exist
+> yet say so in a **Status** note, together with what the code does today.
 
 ## I want to…
 

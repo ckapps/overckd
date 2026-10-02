@@ -20,7 +20,7 @@ main      protocol.handle('overckd', handler) ─▶ CollectionHttpController �
 > **Status:** target. Today the main process starts the legacy marble server
 > (`libs/server`) on a TCP port, backed by an in-memory rxdb seeded from YAML,
 > and `apps/desktop/src/app/legacy/protocol.ts` holds a stub that uses the
-> deprecated `protocol.registerStringProtocol`. See [migration](#migration-from-today).
+> deprecated `protocol.registerStringProtocol`.
 
 ## Main process
 
@@ -117,15 +117,3 @@ code changes when the choice changes.
 - The preload script exposes only app-shell information. Business data flows
   only through `overckd://`, so there is no generic IPC surface.
 - No TCP port: other local processes cannot reach the API.
-
-## Migration from today
-
-1. Implement `adapter-fs` (and/or `adapter-rxdb`) for the features the desktop
-   app needs.
-2. Add the protocol code above to `apps/desktop`, wiring the same handlers and
-   use cases as the backend (today in `apps/backend/src/app.http.ts`), and start
-   it from `main.ts`.
-3. Set `apiUrl: 'overckd://app'` in `environment.desktop.ts` (once the frontend
-   uses the `*Http` implementations, see [frontend](frontend.md)).
-4. Delete `apps/desktop/src/app/legacy` and its dependencies (`libs/server`,
-   `libs/domain-rx`, `libs/yaml`, the in-memory rxdb seeding).
