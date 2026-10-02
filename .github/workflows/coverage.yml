@@ -18,7 +18,6 @@ jobs:
       - uses: pnpm/setup@v3.0.0
         with:
           install: true
-          runtime: node@lts
       - run: pnpm nx run-many -t test --coverage.enabled --coverage.reporter=lcov
       - run: node tools/scripts/merge-lcov.mjs
       - name: Coveralls
