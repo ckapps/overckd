@@ -1,7 +1,7 @@
 import { Effect, FileSystem, Layer, Path } from 'effect';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { ServerConfig } from '../server/server.config';
 import { ConfigFile, ConfigLive } from './config';
-import { ServerConfig } from './server.config';
 
 const file = '/srv/overckd/backend.config.yaml';
 

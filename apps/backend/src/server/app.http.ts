@@ -3,21 +3,18 @@ import {
   OverckdLegacyApi,
   RecipeLegacyHttpController,
 } from '@overckd/adapter-http-server-legacy';
+import { OverckdApi as OverckdNextApi } from '@overckd/api-http';
 import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
-import { OverckdApi } from '@overckd/api-http';
-import { RecipeHttpController } from '@overckd/recipe/adapter-http-server';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
+import { RecipeHttpController } from '@overckd/recipe/adapter-http-server';
 import { RecipeQueriesLocal } from '@overckd/recipe/application';
-import { Layer } from 'effect';
+import { Layer, Match } from 'effect';
 import { HttpRouter } from 'effect/http';
 import { HttpApiBuilder, HttpApiSwagger } from 'effect/http-api';
-
-/** The versions of the HTTP API the backend can serve. */
-export const ApiVersions = ['legacy', 'next'] as const;
-export type ApiVersion = (typeof ApiVersions)[number];
+import { ApiVersion, ServerConfig } from './server.config';
 
 const NextApiLive = Layer.mergeAll(
-  HttpApiBuilder.layer(OverckdApi, {
+  HttpApiBuilder.layer(OverckdNextApi, {
     openapiPath: '/openapi.json',
   }).pipe(
     Layer.provide([
@@ -26,7 +23,7 @@ const NextApiLive = Layer.mergeAll(
       // TODO: add more API implementations here
     ]),
   ),
-  HttpApiSwagger.layer(OverckdApi),
+  HttpApiSwagger.layer(OverckdNextApi),
 );
 
 // The API of the legacy frontend, until its recipe pages are migrated
@@ -39,10 +36,19 @@ const LegacyApiLive = Layer.mergeAll(
   HttpApiSwagger.layer(OverckdLegacyApi),
 );
 
-const ApiLive = { legacy: LegacyApiLive, next: NextApiLive };
+const withApi = Match.type<ApiVersion>().pipe(
+  Match.when('legacy', () => LegacyApiLive),
+  Match.when('next', () => NextApiLive),
+  Match.exhaustive,
+);
 
 // `HttpRouter.serve` applies the request logger and logs the server address
-export const HttpLive = (version: ApiVersion) =>
-  HttpRouter.serve(Layer.mergeAll(ApiLive[version], HttpRouter.cors())).pipe(
+export const HttpApiLive = (version: ApiVersion) =>
+  HttpRouter.serve(Layer.mergeAll(withApi(version), HttpRouter.cors())).pipe(
     Layer.provide([CollectionQueriesLocal, RecipeQueriesLocal]),
   );
+
+/** The backend, serving the API version of `ServerConfig`. */
+export const OverckdHttpApiLive = Layer.unwrap(
+  ServerConfig.useSync(({ apiVersion }) => HttpApiLive(apiVersion)),
+);

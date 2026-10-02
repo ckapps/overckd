@@ -1,15 +1,13 @@
 #!/usr/bin/env node
 
-import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import * as NodeRuntime from '@effect/platform-node/NodeRuntime';
 import * as NodeServices from '@effect/platform-node/NodeServices';
 import { Effect, Layer, Option } from 'effect';
 import { Command, Flag } from 'effect/cli';
-import { createServer } from 'node:http';
-import { ApiVersions } from './app.http';
-import { ConfigLive } from './config/config';
-import { ServerConfig } from './config/server.config';
-import { OverckdBackend } from './main';
+import { ConfigLive } from './common/config';
+import { OverckdReposLive } from './repositories/repositories';
+import { OverckdHttpServerLive } from './server/server';
+import { ApiVersions } from './server/server.config';
 
 // The flags override the environment and the config file (see `ConfigLive`),
 // so they have no defaults: the defaults live in the sections.
@@ -30,20 +28,12 @@ const apiVersion = Flag.Literals('api-version', ApiVersions).pipe(
   Flag.optional,
 );
 
-/** The HTTP server, on the port of `ServerConfig`. */
-const ServerLive = Layer.unwrap(
-  ServerConfig.useSync(({ port }) =>
-    NodeHttpServer.layer(createServer, { port }),
-  ),
-);
-
 export const command = Command.make(
   'overckd',
   { config, port, apiVersion },
   ({ config, port, apiVersion }) =>
-    OverckdBackend.pipe(
-      Layer.provide(ServerLive),
-      Layer.provide(ServerConfig.layer),
+    OverckdHttpServerLive.pipe(
+      Layer.provide(OverckdReposLive),
       Layer.provide(
         ConfigLive({
           file: config,
