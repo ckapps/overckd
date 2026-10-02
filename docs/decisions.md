@@ -197,3 +197,50 @@ their spec files only; lint rejects the import anywhere else. Made on
   `tools/`: no Nx project, so no tags and no boundary checks, and the project
   graph wouldn't see the adapters depending on it. One testing lib per feature:
   more libs than the helpers need today.
+
+## Configuration: one provider, sections as services
+
+An app reads its settings through one `ConfigProvider` that asks, key by key,
+the command-line flags, then the environment (`OVERCKD_` and the key path in
+CONSTANT_CASE), then the YAML file named by the required flag `--config`.
+Defaults live in the code. Each top-level key of the file is a section: a
+schema and a service (`ServerConfig`), and the rest of the app reads settings
+only through these services. A setting that chooses between implementations is
+a union on `type`. Adapters declare what they need as a service of their own
+(`RecipeRepoFsConfig`), which the app provides; libraries never read `Config`.
+See [configuration](architecture/configuration.md). Made on 2026-10-02.
+
+- **Why:** this is the precedence most tools use (Viper, Spring Boot,
+  Docker), and Effect's `ConfigProvider.orElse` merges the sources per key, so
+  a variable can override one key of the file. `Config.schema` validates a
+  section and names the key path in its errors. Defaults in the sections let
+  code add a setting before any file mentions it, and tests provide a section
+  or a provider without files or environment. An adapter's settings service
+  can be derived from other services in a layer (`AppDirectory`), and the
+  adapter stays unaware of the file's shape.
+- **Rejected:** a fallback config per flag (`Flag.withFallbackConfig`, the
+  backend's first approach): every setting would need a flag, and the file
+  can't be a source, because the flags are parsed before the file is known.
+  One schema for the whole file, decoded at startup: every new setting changes
+  it, and its type spreads through the app. `Config` in libraries: they would
+  depend on the shape of an app's file. Adapter settings as function parameters
+  (`RecipeRepoFs({ dir })`): the value must be known where the layer is
+  created, so a value derived from config needs a `Layer.unwrap` at every use.
+  Unprefixed environment variables (`PORT`, `API_VERSION`): they clash with
+  other programs' variables.
+
+## Recipe images: an `image` feature in the core
+
+The backend and the desktop app serve recipe images through an `image`
+feature: the port `ImageQueries` with `ImageQueriesLocal` on `ImageRepo`,
+`ImageRepoFs` for a directory, and `ImageHttpRoute` for `GET /images/:name`. The route sits next to `OverckdApi`, not in it, because
+the recipe files link their images without the `/api` prefix. Which directory
+the images come from is a setting (`server.images`). Made on 2026-10-02.
+
+- **Why:** both apps serve the same images, the source can change (another
+  directory, none behind a reverse proxy) without touching the route, and the
+  check that keeps a request inside the images directory exists once, with
+  tests.
+- **Rejected:** a static-file route in each app (written twice, and the
+  traversal check with it). Images in `OverckdApi`: their URLs would move
+  under `/api`, which changes the links in every recipe file.

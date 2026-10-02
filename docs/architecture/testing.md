@@ -13,6 +13,7 @@ Run tests through Nx: `pnpm nx test <project>` or `pnpm nx affected -t test`.
 | HTTP handlers                                | `HttpApiTest.groups`                                             | inbound ports with `Layer.mock`                      |
 | `*Http` (remote impl)                        | the port                                                         | `fetch`, via `FetchHttpClient.Fetch`                 |
 | `data-access` (bindings, stores), components | Angular TestBed / Spectator                                      | ports with `Layer.mock` via `provideEffectRuntime`   |
+| config sections (apps)                       | the section's service                                            | the sources, with `ConfigProvider.fromUnknown`       |
 
 Assert on errors with `Effect.flip`, which moves the error into the success
 channel. Don't compare whole `Exit` values with `toEqual`: failure causes carry

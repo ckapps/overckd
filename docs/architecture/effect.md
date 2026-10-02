@@ -50,8 +50,10 @@ import { HttpClient } from 'effect/http';
   as statics (`Users.layer`, `Users.layerMemory`); that is fine for internal
   services with a single implementation, but not for ports.
 - Implementations are `Layer.effect(Port, Effect.gen(…))` returning
-  `Port.of({ … })`, named `<Port><Impl>`. A layer that needs parameters is a
-  function returning a layer: `CollectionRepoFs({ file })`.
+  `Port.of({ … })`, named `<Port><Impl>`. A layer that takes data is a
+  function returning a layer: `CollectionRepoMemory(seed)`. Settings come from
+  a service instead: `CollectionRepoFs` reads `CollectionRepoFsConfig`
+  ([configuration](configuration.md#adapter-settings)).
 - Implementations **never provide their own dependencies**. Wiring
   (`Layer.provide`) happens only in composition roots.
 - Access a service with `yield* Port` inside `Effect.gen`, or with
@@ -157,8 +159,11 @@ is legacy bridge code (`libs/domain-rx`), which is frozen.
 ## Configuration
 
 Configuration (`Config.*`, environment, CLI flags, Angular `environment.ts`) is
-read in apps only. Libraries receive values as layer parameters
-(`CollectionRepoFs({ file })`) or services.
+read in apps only. A server-side app reads flags, environment and its config
+file through one `ConfigProvider` and hands the settings out as one service
+per section (`ServerConfig`). Libraries declare what they need as a service of
+their own (`CollectionRepoFsConfig`), which the app provides. See
+[configuration](configuration.md).
 
 ## Observability
 

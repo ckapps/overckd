@@ -283,12 +283,13 @@ A repository implementation is a `Layer` for `<Feature>Repo`, named
 Node-only package, and then only Node apps can use it. Generate the lib as in
 [add a feature](../guides/add-a-feature.md#2-generate-the-libs).
 
-- Configuration (file paths, database names) comes in as **function
-  parameters**; the composition root reads the config and passes it in.
+- Settings (file paths, database names) come from a **service of the
+  adapter's own**, `<Feature>Repo<Tech>Config`, which the app provides. The
+  adapter never reads `Config` ([adapter settings](configuration.md#adapter-settings)).
 - Use Effect's abstract platform services (`FileSystem`, `Path`, `HttpClient`),
   never `node:fs` or another platform package; the app provides the platform.
-  For rxdb, take the storage (or the database) as a parameter, so the app
-  chooses between in-memory, file-based or IndexedDB storage.
+  For rxdb, let the app provide the storage (or the database), so it chooses
+  between in-memory, file-based or IndexedDB storage.
 - Formats private to the adapter (e.g. rxdb document schemas) are **codecs
   inside it**. The YAML files are a shared format: their codecs live in
   `@overckd/codec-yaml`, and `adapter-fs` only does the I/O.
@@ -365,45 +366,57 @@ The adapter reads the file and decodes it; the format itself is not its concern:
 import { CollectionsFileYaml } from '@overckd/codec-yaml';
 import { CollectionRepo } from '@overckd/collection/application';
 import { CollectionNotFound } from '@overckd/domain';
-import { Array as Arr, Effect, FileSystem, Layer, Option, Schema } from 'effect';
+import { Array as Arr, Context, Effect, FileSystem, Layer, Option, Schema } from 'effect';
 
-/** Repository backed by a YAML file on disk. Config comes in as a parameter. */
-export const CollectionRepoFs = (options: { readonly file: string }) =>
-  Layer.effect(
-    CollectionRepo,
-    Effect.gen(function* () {
-      const fs = yield* FileSystem.FileSystem;
-      const decode = Schema.decodeEffect(CollectionsFileYaml);
+/** Configuration of `CollectionRepoFs`, provided by the app. */
+export class CollectionRepoFsConfig extends Context.Service<
+  CollectionRepoFsConfig,
+  {
+    /** The collections file (`overckd.collections.yaml`) */
+    readonly file: string;
+  }
+>()('@overckd/collection/adapter-fs/CollectionRepoFsConfig') {}
 
-      const readAll = fs.readFileString(options.file).pipe(
-        Effect.flatMap(decode),
-        Effect.map(file => file.collections),
-        // I/O and decoding failures are defects here. If users should be told which
-        // file is broken, declare a typed error on the port and map to it instead.
-        Effect.orDie,
-      );
+/** Repository backed by the YAML file of `CollectionRepoFsConfig`. */
+export const CollectionRepoFs = Layer.effect(
+  CollectionRepo,
+  Effect.gen(function* () {
+    const { file } = yield* CollectionRepoFsConfig;
+    const fs = yield* FileSystem.FileSystem;
+    const decode = Schema.decodeEffect(CollectionsFileYaml);
 
-      return CollectionRepo.of({
-        getAll: readAll.pipe(Effect.withSpan('CollectionRepo.getAll')),
-        findById: Effect.fn('CollectionRepo.findById')(function* (id) {
-          const found = Arr.findFirst(yield* readAll, c => c.id === id);
-          return yield* Option.match(found, {
-            onNone: () => Effect.fail(new CollectionNotFound({ id })),
-            onSome: Effect.succeed,
-          });
-        }),
-        save: () => Effect.die('not implemented in this sketch'),
-      });
-    }),
-  );
+    const readAll = fs.readFileString(file).pipe(
+      Effect.flatMap(decode),
+      Effect.map(file => file.collections),
+      // I/O and decoding failures are defects here. If users should be told which
+      // file is broken, declare a typed error on the port and map to it instead.
+      Effect.orDie,
+    );
+
+    return CollectionRepo.of({
+      getAll: readAll.pipe(Effect.withSpan('CollectionRepo.getAll')),
+      findById: Effect.fn('CollectionRepo.findById')(function* (id) {
+        const found = Arr.findFirst(yield* readAll, c => c.id === id);
+        return yield* Option.match(found, {
+          onNone: () => Effect.fail(new CollectionNotFound({ id })),
+          onSome: Effect.succeed,
+        });
+      }),
+      save: () => Effect.die('not implemented in this sketch'),
+    });
+  }),
+);
 ```
 
 The real YAML layout (`overckd.collections.yaml` and the `*.recipe.yaml` files
 under `data/`) is defined by the legacy io-ts codecs in `libs/yaml` today; port
 them to `@overckd/codec-yaml`. To use an adapter, provide it in the composition
-root of each app that should use it, e.g. `CollectionRepoFs({ file })` in the
-desktop main process. Nothing else changes: the ports and use cases don't know
-which repository they get.
+root of each app that should use it, together with its settings, e.g.
+`CollectionRepoFs` and `CollectionRepoFsConfig` in the desktop main process.
+An app whose config chooses the repositories picks them in one place
+([choosing an implementation](configuration.md#choosing-an-implementation)).
+Nothing else changes: the ports and use cases don't know which repository they
+get.
 
 ## 7. Composition roots
 

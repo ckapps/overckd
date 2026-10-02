@@ -28,7 +28,7 @@ main      protocol.handle('overckd', handler) ─▶ CollectionHttpController �
 // apps/desktop/src/app/api.protocol.ts
 import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import { OverckdApi } from '@overckd/api-http';
-import { CollectionRepoFs } from '@overckd/collection/adapter-fs';
+import { CollectionRepoFs, CollectionRepoFsConfig } from '@overckd/collection/adapter-fs';
 import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
 import { CollectionCommandsLocal, CollectionQueriesLocal } from '@overckd/collection/application';
 import { Layer } from 'effect';
@@ -55,7 +55,8 @@ export const start = (dataDir: string) => {
 
   const { handler, dispose } = HttpRouter.toWebHandler(
     Layer.mergeAll(ApiLive, HttpRouter.cors()).pipe(
-      Layer.provide(CollectionRepoFs({ file: `${dataDir}/overckd.collections.yaml` })),
+      Layer.provide(CollectionRepoFs),
+      Layer.provide(Layer.succeed(CollectionRepoFsConfig, { file: `${dataDir}/overckd.collections.yaml` })),
       // Node services + HTTP platform services, but no TCP server.
       Layer.provide(NodeHttpServer.layerHttpServices),
     ),
