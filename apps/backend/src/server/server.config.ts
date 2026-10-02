@@ -1,5 +1,8 @@
 import { Config, Context, Effect, Layer, Schema } from 'effect';
-import { ApiVersions } from '../app.http';
+
+/** The versions of the HTTP API the backend can serve. */
+export const ApiVersions = ['legacy', 'next'] as const;
+export type ApiVersion = (typeof ApiVersions)[number];
 
 const ServerConfigSchema = Schema.Struct({
   /** Port to run the server on */
