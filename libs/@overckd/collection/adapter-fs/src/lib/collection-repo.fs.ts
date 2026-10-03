@@ -1,11 +1,7 @@
 import { CollectionRepo } from '@overckd/collection/application';
-import { CollectionsFileYaml } from '@overckd/codec-yaml';
-import {
-  Collection,
-  CollectionId,
-  CollectionNotFound,
-} from '@overckd/domain-experimental';
-import { Context, Effect, FileSystem, Layer, Schema } from 'effect';
+import { CollectionId, CollectionNotFound } from '@overckd/domain-experimental';
+import { Context, Effect, FileSystem, Layer } from 'effect';
+import { CollectionsFileCodec, readCollectionsFile } from './collection-file';
 
 /** Configuration of `CollectionRepoFs`, provided by the app. */
 export class CollectionRepoFsConfig extends Context.Service<
@@ -13,29 +9,24 @@ export class CollectionRepoFsConfig extends Context.Service<
   {
     /** The collections file (`overckd.collections.yaml`) */
     readonly file: string;
+    /** The codec of the recipe files, which also gives the suffix of their names */
+    readonly codec: CollectionsFileCodec;
   }
 >()('@overckd/collection/adapter-fs/CollectionRepoFsConfig') {}
 
 /**
- * `CollectionRepo` that reads the collections file of
- * `CollectionRepoFsConfig`. It reads the file on every call, so it sees
- * changes made on disk.
+ * `CollectionRepo` that reads the collections file with `readCollectionsFile`
+ * on every call, so it sees changes made on disk.
  */
 export const CollectionRepoFs = Layer.effect(
   CollectionRepo,
   Effect.gen(function* () {
-    const { file } = yield* CollectionRepoFsConfig;
+    const { file, codec } = yield* CollectionRepoFsConfig;
     const fs = yield* FileSystem.FileSystem;
-    const decode = Schema.decodeEffect(CollectionsFileYaml);
-
-    const readAll: Effect.Effect<ReadonlyArray<Collection>> = fs
-      .readFileString(file)
-      .pipe(
-        Effect.flatMap(decode),
-        // I/O and decoding failures are defects: the port declares no error
-        // for a missing or broken file.
-        Effect.orDie,
-      );
+    const readAll = readCollectionsFile(file, codec).pipe(
+      Effect.provideService(FileSystem.FileSystem, fs),
+      Effect.orDie,
+    );
 
     return CollectionRepo.of({
       getAll: readAll.pipe(Effect.withSpan('CollectionRepo.getAll')),
