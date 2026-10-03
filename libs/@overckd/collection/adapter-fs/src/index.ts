@@ -1,3 +1,4 @@
+export { readCollectionsFile } from './lib/collection-file';
 export {
   CollectionRepoFs,
   CollectionRepoFsConfig,

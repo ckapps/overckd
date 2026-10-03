@@ -1,5 +1,5 @@
-import { CollectionRepo } from '@overckd/collection/application';
 import { fromYamlString } from '@overckd/codec-yaml';
+import { CollectionRepo } from '@overckd/collection/application';
 import { Collection, RecipeId } from '@overckd/domain-experimental';
 import { collectionRepoConformance } from '@overckd/testing';
 import { Effect, Exit, FileSystem, Layer, PlatformError, Schema } from 'effect';
@@ -32,7 +32,7 @@ const fileSystem = (files: ReadonlyMap<string, string>) =>
 
 const collectionRepoFs = (
   files: ReadonlyMap<string, string>,
-  config: CollectionRepoFsConfig['Service'] = { file },
+  config: CollectionRepoFsConfig['Service'] = { file, codec: 'yaml' },
 ) =>
   CollectionRepoFs.pipe(
     Layer.provide([
@@ -110,6 +110,7 @@ describe('CollectionRepoFs', () => {
   it('should die without the collections file', async () => {
     const repo = collectionRepoFs(new Map([[file, collectionsFile([])]]), {
       file: '/elsewhere/overckd.collections.yaml',
+      codec: 'yaml',
     });
 
     const exit = await run(repo, getAll);
