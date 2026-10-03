@@ -1,4 +1,5 @@
 import { Layer, Match } from 'effect';
+import { FilesystemReposLive } from './filesystem.repositories';
 import { MemoryReposLive } from './memory.repositories';
 import { RepositoriesConfig } from './repositories.config';
 
@@ -7,6 +8,7 @@ const RepositoriesFromConfig = Layer.unwrap(
     Match.value(config).pipe(
       Match.discriminatorsExhaustive('type')({
         memory: MemoryReposLive,
+        filesystem: FilesystemReposLive,
       }),
     ),
   ),
