@@ -32,14 +32,18 @@ const notFound = (method: string, path: string) =>
 /**
  * A file system with one directory, `dir`.
  * @param files The files in `dir`: name → text
+ * @param reads Where it records the paths it reads
  */
-const fileSystem = (files: ReadonlyMap<string, string>) =>
+const fileSystem = (files: ReadonlyMap<string, string>, reads: Array<string>) =>
   FileSystem.layerNoop({
-    readDirectory: path =>
-      path === dir
+    readDirectory: path => {
+      reads.push(path);
+      return path === dir
         ? Effect.succeed([...files.keys()])
-        : Effect.fail(notFound('readDirectory', path)),
+        : Effect.fail(notFound('readDirectory', path));
+    },
     readFileString: path => {
+      reads.push(path);
       const text = path.startsWith(`${dir}/`)
         ? files.get(path.slice(dir.length + 1))
         : undefined;
@@ -51,12 +55,13 @@ const fileSystem = (files: ReadonlyMap<string, string>) =>
 
 const recipeRepoFs = (
   files: ReadonlyMap<string, string>,
-  config: RecipeRepoFsConfig['Service'] = { dir },
+  config: RecipeRepoFsConfig['Service'] = { dir, codec: 'yaml' },
+  reads: Array<string> = [],
 ) =>
   RecipeRepoFs.pipe(
     Layer.provide([
       Layer.succeed(RecipeRepoFsConfig, config),
-      fileSystem(files),
+      fileSystem(files, reads),
       Path.layer,
     ]),
   );
@@ -144,11 +149,45 @@ describe('RecipeRepoFs', () => {
       new Map([['pancakes.recipe.yaml', pancakesFile]]),
       {
         dir: '/elsewhere',
+        codec: 'yaml',
       },
     );
 
     const exit = await run(repo, findById('Pancakes').pipe(Effect.exit));
 
     expect(Exit.hasDies(exit)).toBe(true);
+  });
+
+  it('should read the files once for lookups made together', async () => {
+    const reads: Array<string> = [];
+    const repo = recipeRepoFs(
+      new Map([
+        ['pancakes.recipe.yaml', pancakesFile],
+        ['waffles.recipe.yaml', pancakesFile.replace('Pancakes', 'Waffles')],
+      ]),
+      { dir, codec: 'yaml' },
+      reads,
+    );
+
+    const [pancakes, waffles, crepes] = await run(
+      repo,
+      Effect.all(
+        [
+          findById('Pancakes'),
+          findById('Waffles'),
+          findById('Crêpes').pipe(Effect.flip),
+        ],
+        { concurrency: 'unbounded' },
+      ),
+    );
+
+    expect(pancakes).toMatchObject({ name: 'Pancakes' });
+    expect(waffles).toMatchObject({ name: 'Waffles' });
+    expect(crepes).toBeInstanceOf(RecipeNotFound);
+    expect(reads).toEqual([
+      dir,
+      `${dir}/pancakes.recipe.yaml`,
+      `${dir}/waffles.recipe.yaml`,
+    ]);
   });
 });
