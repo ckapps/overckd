@@ -43,7 +43,6 @@
         "libs/@overckd/domain-experimental/src/index.ts"
       ],
       "@overckd/domain-rx": ["libs/domain-rx/src/index.ts"],
-      "@overckd/server": ["libs/server/src/index.ts"],
       "@overckd/yaml": ["libs/yaml/src/index.ts"],
       "@overckd/collection/application": [
         "libs/@overckd/collection/application/src/index.ts"
