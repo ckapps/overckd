@@ -3,7 +3,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class UrlBuilderService {
-  private readonly baseUrl = environment.apiUrl;
+  private readonly baseUrl = environment.legacyApiUrl;
 
   url(suffix: string) {
     const url = `${this.baseUrl}/${suffix}`;

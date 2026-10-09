@@ -1,18 +1,15 @@
 import { ApplicationShell } from './application-shell.enum';
-
-// export const environment = {
-//   // production: true,
-//   production: false,
-//   apiUrl: 'overckd://',
-//   shell: ApplicationShell.Desktop,
-//   // apiUrl: 'http://localhost:3000/api',
-// };
+import type { FrontendEnvironment } from './environment.type';
 
 /**
  * Configuration used for the desktop application.
  */
-export const environment = {
+export const environment: FrontendEnvironment = {
   production: false,
-  apiUrl: '/api',
   shell: ApplicationShell.Desktop,
+  legacyApiUrl: '/api',
+  api: {
+    /** The API origin: the Electron main process. */
+    url: 'overckd://app',
+  },
 };
