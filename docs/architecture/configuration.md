@@ -4,12 +4,6 @@ How an app reads its settings, shown on the backend. The code on this page was
 typechecked against the installed Effect version, and the precedence and the
 defaults were run.
 
-> **Status:** target. Today the backend reads its config file with one
-> section, `server` (port, API version). It has no `repositories` section and
-> serves memory repositories with stub data, without images. The fs adapters
-> already take their settings as services (`RecipeRepoFsConfig`,
-> `CollectionRepoFsConfig`).
-
 ## Sources and precedence
 
 Each setting is looked up in four places, highest priority first:
@@ -42,12 +36,14 @@ A config file uses only the keys it needs; everything else takes its default:
 server:
   port: 3000
   apiVersion: legacy
-  images: # optional; defaults to the images of the app directory
-    type: filesystem
-    dir: ./app/images
 repositories:
   type: filesystem # or memory, with an optional seed directory
   dir: ./app
+media: # optional; without it, the backend has no media
+  type: filesystem
+  dir: ./app/images
+  path: /images # where the backend serves them; defaults to /media
+  origin: http://localhost:3000 # where clients reach them
 ```
 
 ## Where things go

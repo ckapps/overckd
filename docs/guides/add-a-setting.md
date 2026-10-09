@@ -1,13 +1,9 @@
 # Add a setting
 
 Settings make an app configurable without code changes: a port, the API
-version, which repositories to use, where images come from. The running
+version, which repositories to use, etc. The running
 example is the backend; the concepts and the complete code are in
 [configuration](../architecture/configuration.md).
-
-> **Status:** target. Today the backend has one section, `server`; no setting
-> chooses an implementation yet, and no adapter gets its settings from the
-> config.
 
 ## 0. Decide what kind of setting it is
 
