@@ -1,0 +1,12 @@
+# Config of apps/backend, passed with `--config`. Flags and environment
+# variables (`OVERCKD_SERVER_PORT`, …) override it; left-out keys take their
+# defaults. See docs/architecture/configuration.md.
+server:
+  port: 3000
+  apiVersion: legacy
+repositories:
+  type: filesystem
+  recipes:
+    dir: ./app/recipes
+  collections:
+    file: ./app/overckd.collections.yaml
