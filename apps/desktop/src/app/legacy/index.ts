@@ -11,13 +11,12 @@ import {
   of,
   throwError,
 } from 'rxjs';
+import { startServer } from '../server/server';
 import { AppConfig, loadConfig } from './config';
-import { configureDeps } from './configure-dependencies';
 import { ExitCode } from './exit-code.enum';
 import { LogScope, scoped } from './logging';
 import { parseArgs } from './process-args';
 import { initProtocols } from './protocol';
-import { initServer } from './server';
 
 const appLog = scoped(LogScope.App);
 const appEventLog = scoped(LogScope.AppEvent);
@@ -142,6 +141,8 @@ function initProtocols$(): Observable<boolean> {
 }
 
 /**
+ * Serves the API on the port of the server config, from the files of the app
+ * directory.
  *
  * @param config App configuration
  *
@@ -150,16 +151,20 @@ function initProtocols$(): Observable<boolean> {
  * was successfully initialized
  */
 function startServer$(config: AppConfig): Observable<boolean> {
-  return initServer(config.server, configureDeps()).pipe(
-    map(initialized => {
-      if (!initialized) {
-        throw new AppInitError(
-          ExitCode.ServerStartFailed,
-          'could not initialize server',
-        );
-      }
-      return true;
-    }),
+  return from(
+    startServer({ port: config.server.port, appDirectory: config.paths.app }),
+  ).pipe(
+    map(() => true),
+    catchError(error =>
+      throwError(
+        () =>
+          new AppInitError(
+            ExitCode.ServerStartFailed,
+            'could not initialize server',
+            error instanceof Error ? error : new Error(String(error)),
+          ),
+      ),
+    ),
   );
 }
 
