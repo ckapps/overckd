@@ -2,7 +2,7 @@
 
 import * as NodeRuntime from '@effect/platform-node/NodeRuntime';
 import * as NodeServices from '@effect/platform-node/NodeServices';
-import { Effect, Layer, Option } from 'effect';
+import { Config, Effect, Layer, Option } from 'effect';
 import { Command, Flag } from 'effect/cli';
 import { ConfigLive } from './common/config';
 import { OverckdReposLive } from './repositories/repositories';
@@ -15,6 +15,7 @@ import { ApiVersions } from './server/server.config';
 const config = Flag.File('config', { mustExist: true }).pipe(
   Flag.withAlias('c'),
   Flag.withDescription('Config file (YAML)'),
+  Flag.withFallbackConfig(Config.String('OVERCKD_CONFIG')),
 );
 
 const port = Flag.Int('port').pipe(
