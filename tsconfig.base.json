@@ -26,7 +26,6 @@
       "@ckapp/angular/main-menu": [
         "libs/@ckapp/angular/main-menu/src/index.ts"
       ],
-      "@overckd/core": ["libs/core/src/index.ts"],
       "@overckd/domain-experimental": [
         "libs/@overckd/domain-experimental/src/index.ts"
       ],
