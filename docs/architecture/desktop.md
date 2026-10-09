@@ -17,71 +17,68 @@ main      protocol.handle('overckd', handler) ─▶ CollectionHttpController �
             ─▶ CollectionQueriesLocal ─▶ CollectionRepoFs (YAML files)
 ```
 
-> **Status:** target. Today the main process serves the backend's legacy API
-> (`OverckdLegacyApi`) on a TCP port (`apps/desktop/src/app/server/server.ts`),
-> with the file repositories and the images of the app directory, and
-> `apps/desktop/src/app/legacy/protocol.ts` holds a stub that uses the
-> deprecated `protocol.registerStringProtocol`.
-
 ## Main process
 
 ```ts
-// apps/desktop/src/app/api.protocol.ts
-import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
-import { OverckdApi } from '@overckd/api-http';
-import { CollectionRepoFs, CollectionRepoFsConfig } from '@overckd/collection/adapter-fs';
-import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
-import { CollectionCommandsLocal, CollectionQueriesLocal } from '@overckd/collection/application';
-import { Layer } from 'effect';
-import { HttpRouter } from 'effect/http';
-import { HttpApiBuilder } from 'effect/http-api';
-import { app, protocol } from 'electron';
-
-/** The same API as the backend: contract, handlers, local use cases. */
-const ApiLive = HttpApiBuilder.layer(OverckdApi).pipe(Layer.provide(CollectionHttpController), Layer.provide([CollectionQueriesLocal, CollectionCommandsLocal]));
-
-export const start = (dataDir: string) => {
-  // Must run before the app is ready.
+// apps/desktop/src/app/protocol/schemes.ts
+/** Registers the schemes of the API and the packaged renderer. Must run before the app is ready. */
+export const registerSchemes = () =>
   protocol.registerSchemesAsPrivileged([
-    {
-      scheme: 'overckd',
-      privileges: {
-        standard: true,
-        secure: true,
-        supportFetchAPI: true,
-        corsEnabled: true,
-      },
-    },
+    { scheme: 'overckd', privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true } },
+    { scheme: 'overckd-app', privileges: { standard: true, secure: true, supportFetchAPI: true } },
   ]);
 
-  const { handler, dispose } = HttpRouter.toWebHandler(
-    Layer.mergeAll(ApiLive, HttpRouter.cors()).pipe(
-      Layer.provide(CollectionRepoFs),
-      Layer.provide(Layer.succeed(CollectionRepoFsConfig, { file: `${dataDir}/overckd.collections.yaml` })),
-      // Node services + HTTP platform services, but no TCP server.
-      Layer.provide(NodeHttpServer.layerHttpServices),
-    ),
-  );
+// apps/desktop/src/app/protocol/api.protocol.ts
+/** The same API as the backend (contract, handlers, local use cases) and the images, on the files of the app directory. */
+export const ApiLive = Layer.mergeAll(HttpApiBuilder.layer(OverckdApi).pipe(Layer.provide([CollectionHttpController, RecipeHttpController])), MediaLive, HttpRouter.cors()).pipe(Layer.provide([CollectionQueriesLocal, RecipeQueriesLocal]), Layer.provide(RepositoriesLive('overckd://app/images')));
 
-  void app.whenReady().then(() => protocol.handle('overckd', handler));
-  app.on('will-quit', () => void dispose());
-};
+/** Serves `ApiLive` over `overckd://` while the layer lives. */
+export const ApiProtocolLive = Layer.effectDiscard(
+  Effect.gen(function* () {
+    const { handler, dispose } = HttpRouter.toWebHandler(
+      ApiLive.pipe(
+        Layer.provide(Layer.succeed(AppDirectory, yield* AppDirectory)),
+        // Node services + HTTP platform services, but no TCP server.
+        Layer.provide(NodeHttpServer.layerHttpServices),
+      ),
+    );
+    protocol.handle('overckd', request => handler(request));
+    yield* Effect.addFinalizer(() =>
+      Effect.promise(() => {
+        protocol.unhandle('overckd');
+        return dispose();
+      }),
+    );
+  }),
+);
+
+// apps/desktop/src/app/start.ts
+export function start(): Promise<void> {
+  registerSchemes();
+  // ApiProtocolLive on the app directory of the config, with logging
+  const runtime = ManagedRuntime.make(MainLive);
+  app.on('will-quit', () => void runtime.dispose());
+  return app.whenReady().then(() => runtime.context());
+}
 ```
 
 - `registerSchemesAsPrivileged` has to run before the `ready` event.
   `standard` makes `overckd://app/api/…` parse like an http URL (host `app`),
   `secure` treats it as a secure context, `supportFetchAPI` allows `fetch`, and
-  `corsEnabled` allows cross-origin calls from the renderer.
+  `corsEnabled` allows cross-origin calls from the renderer. `overckd-app` is
+  the scheme of the packaged renderer ([renderer](#renderer)).
 - `HttpRouter.toWebHandler` turns the layer into a Fetch-style
   `(Request) => Promise<Response>` handler, which is exactly what
-  `protocol.handle` expects. The layer is built immediately; `dispose` releases
-  it on quit.
+  `protocol.handle` expects. The main process builds its layers in one
+  `ManagedRuntime` once the app is ready, and disposes it on quit, which
+  unhandles the scheme and releases the API's layer.
 - `NodeHttpServer.layerHttpServices` provides the Node services (file system,
   path, …) and the HTTP platform services without starting a server.
 - It wires the same contract, handlers and use cases as the backend; only the
   repositories, the transport and extras such as Swagger differ. As in the
-  backend, forgetting a feature's handlers or use cases fails compilation (here
-  at `protocol.handle`).
+  backend, forgetting a feature's handlers or use cases fails compilation.
+- The images of the app directory are served under `overckd://app/images`,
+  where the recipes link them.
 
 This path is covered by an in-memory test: the `*Http` implementations, running
 over `FetchHttpClient`, call a `toWebHandler` handler for `overckd://app/api/…`
@@ -94,24 +91,26 @@ The renderer is `apps/frontend` built with the `desktop` configuration
 
 ```ts
 // apps/frontend/src/environments/environment.desktop.ts
-export const environment = {
+export const environment: FrontendEnvironment = {
   production: false,
-  apiUrl: 'overckd://app',
   shell: ApplicationShell.Desktop,
+  api: { url: 'overckd://app' },
 };
 ```
 
-The renderer is loaded from `http://localhost:4200` during development and
-from a `file://` URL when packaged. In both cases `overckd://app` is a different
-origin, which is why the scheme is `corsEnabled` and the API layer includes
-`HttpRouter.cors()`.
+The renderer is loaded from `http://localhost:4200` during development. The
+packaged app loads it from `overckd-app://app`, where the main process serves
+the renderer's files (`RendererProtocolLive`): a page from `file://` can't fetch
+`overckd://`. In both cases `overckd://app` is a different origin, which is why
+the scheme is `corsEnabled` and the API layer includes `HttpRouter.cors()`.
 
 ## Repositories
 
 The main process chooses the repositories in its composition root, like any
-other app: `CollectionRepoFs` to work directly on the user's YAML files (paths
-from `overckd.config.yaml`), or `CollectionRepoRxdb` for a database. No other
-code changes when the choice changes.
+other app: `RecipeRepoFs` and `CollectionRepoFs` work directly on the YAML
+files of the app directory that `overckd.config.yaml` names (`app.dir`); a
+database adapter such as `CollectionRepoRxdb` would take their place there. No
+other code changes when the choice changes.
 
 ## Security
 

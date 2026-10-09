@@ -27,7 +27,7 @@ This is the order most tools use (Viper, Spring Boot, Docker). The details:
 - **Relative paths** in the config resolve against the directory of the config
   file, so a file and the data it points to can move together.
 - **Invalid values stop the app at startup**, with the key path in the message
-  (`Expected "legacy" | "next" at ["server"]["apiVersion"]`).
+  (`Expected "next" at ["server"]["apiVersion"]`).
 
 A config file uses only the keys it needs; everything else takes its default:
 
@@ -35,7 +35,7 @@ A config file uses only the keys it needs; everything else takes its default:
 # data/example-1/backend.fs.config.yaml
 server:
   port: 3000
-  apiVersion: legacy
+  apiVersion: next
 repositories:
   type: filesystem # or memory, each repository optionally seeded from files
   recipes:
@@ -130,11 +130,11 @@ through these services (`yield* ServerConfig`), never through `Config`.
 import { Config, Context, Effect, Layer, Schema } from 'effect';
 
 /** The versions of the HTTP API the backend can serve. */
-export const ApiVersions = ['legacy', 'next'] as const;
+export const ApiVersions = ['next'] as const;
 
 const ServerConfigSchema = Schema.Struct({
   port: Schema.Int.pipe(Schema.withDecodingDefaultKey(Effect.succeed(3000))),
-  apiVersion: Schema.Literals(ApiVersions).pipe(Schema.withDecodingDefaultKey(Effect.succeed('legacy' as const))),
+  apiVersion: Schema.Literals(ApiVersions).pipe(Schema.withDecodingDefaultKey(Effect.succeed('next' as const))),
 });
 
 /** The `server` section of the config. */
@@ -353,8 +353,8 @@ export class AppDirectory extends Context.Service<
     );
 }
 
-// apps/desktop/src/app/server/server.ts
-const RepositoriesLive = (mediaUrl: string) =>
+// apps/desktop/src/app/common/repositories.ts
+export const RepositoriesLive = (mediaUrl: string) =>
   Layer.mergeAll(
     RecipeRepoFs.pipe(
       Layer.provide(
@@ -374,10 +374,6 @@ const RepositoriesLive = (mediaUrl: string) =>
     ),
   );
 ```
-
-> **Status:** target. Today the desktop app still reads its legacy config
-> (`overckd.config.yaml`, without sections), and `AppDirectory` takes its root
-> from `paths.app` there.
 
 ## Testing
 

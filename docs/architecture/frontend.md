@@ -25,36 +25,39 @@ page (feature lib) ─▶ data-access ─▶ bridge (injectQueries / injectComma
 which here always goes through the ports. It is not about persistence; that is
 the repositories' job.
 
-> **Status:** target. Today the pages use abstract-class services
-> (`RecipeCollectionService`) implemented with Angular's `HttpClient` and the
-> legacy domain types.
-
 ## Composition root
 
 `app.config.ts` decides which implementation backs each port and builds one
 runtime for the whole app:
 
 ```ts
-// apps/frontend/src/app/app.config.ts
-import { ApplicationConfig } from '@angular/core';
-import { CollectionCommandsHttp, CollectionQueriesHttp } from '@overckd/collection/adapter-http-client';
-import { provideEffectRuntime } from '@ckapp/angular-effect';
+// apps/frontend/src/app/config/api.config.ts
 import { Effect, Layer } from 'effect';
 import { FetchHttpClient, HttpClient, HttpClientRequest } from 'effect/http';
-import { environment } from '../environments/environment';
+
+export type ApiConfig = Readonly<{ url: string }>;
 
 /** The HttpClient every *Http implementation uses, pointed at the API origin. */
-const ApiHttpClient = (baseUrl: string) => Layer.effect(HttpClient.HttpClient, Effect.map(HttpClient.HttpClient, HttpClient.mapRequest(HttpClientRequest.prependUrl(baseUrl)))).pipe(Layer.provide(FetchHttpClient.layer));
+export const ApiHttpClient = (cfg: ApiConfig) => Layer.effect(HttpClient.HttpClient, Effect.map(HttpClient.HttpClient, HttpClient.mapRequest(HttpClientRequest.prependUrl(cfg.url)))).pipe(Layer.provide(FetchHttpClient.layer));
+
+// apps/frontend/src/app/app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideEffectRuntime } from '@ckapp/angular-effect';
+import { CollectionQueriesHttp } from '@overckd/collection/adapter-http-client';
+import { RecipeQueriesHttp } from '@overckd/recipe/adapter-http-client';
+import { Layer } from 'effect';
+import { environment } from '../environments/environment';
+import { ApiHttpClient } from './config/api.config';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideEffectRuntime(Layer.mergeAll(CollectionQueriesHttp, CollectionCommandsHttp).pipe(Layer.provide(ApiHttpClient(environment.apiUrl))))],
+  providers: [provideEffectRuntime(Layer.mergeAll(CollectionQueriesHttp, RecipeQueriesHttp).pipe(Layer.provide(ApiHttpClient(environment.api))))],
 };
 ```
 
-`environment.apiUrl` is the API **origin**; the contract already contains the
+`environment.api.url` is the API **origin**; the contract already contains the
 `/api` prefix:
 
-| Build   | `apiUrl`          | Requests go to                                                           |
+| Build   | `api.url`         | Requests go to                                                           |
 | ------- | ----------------- | ------------------------------------------------------------------------ |
 | web     | `''`              | `/api/…` on the page's origin (relative URLs resolve against `location`) |
 | desktop | `'overckd://app'` | the Electron main process, see [desktop](desktop.md)                     |
@@ -231,12 +234,3 @@ export class CollectionPageComponent {
 
 Components may use Effect's data modules (`Option`, `Array`, `Match`) to render
 domain values, but never `Effect`, `Layer` or a runtime.
-
-## What goes away
-
-- Abstract-class "ports" in Angular DI (`RecipeCollectionService`,
-  `RecipeService`) and their `HttpClient` implementations: swapping
-  implementations happens in Effect layers, not Angular DI.
-- `UrlBuilderService` (only used by those services) and `ApiRequestService`
-  (unused): the contract builds the URLs.
-- Legacy domain types (`@overckd/domain`) in components.

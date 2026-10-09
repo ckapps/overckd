@@ -6,9 +6,9 @@ except the file-system adapter sketch also ran in tests; treat it as the templat
 add code.
 
 > **Status:** the collection ports, `CollectionQueriesLocal`, the contract,
-> the handlers and the memory and file repositories follow this page.
-> `CollectionCommands`, the repositories' `save` and the remote
-> implementation (§5) don't exist yet.
+> the handlers, `CollectionQueriesHttp` and the memory and file repositories
+> follow this page. `CollectionCommands`, its implementations and the
+> repositories' `save` don't exist yet.
 
 ## 1. Ports
 
@@ -410,8 +410,8 @@ export const CollectionRepoFs = Layer.effect(
 ```
 
 The real YAML layout (`overckd.collections.yaml` and the `*.recipe.yaml` files
-under `data/`) is defined by the legacy io-ts codecs in `libs/yaml` today; port
-them to `@overckd/codec-yaml`. To use an adapter, provide it in the composition
+under `data/`) is defined by the codecs in `@overckd/codec-yaml`
+(`CollectionsFileYaml`, `RecipeFileYaml`). To use an adapter, provide it in the composition
 root of each app that should use it, together with its settings, e.g.
 `CollectionRepoFs` and `CollectionRepoFsConfig` in the desktop main process.
 An app whose config chooses the repositories picks them in one place

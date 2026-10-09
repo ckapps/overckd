@@ -6,12 +6,9 @@ core: a hexagonal (ports & adapters) architecture built on
 rules that keep it intact, and step-by-step guides for common changes. They are
 written for people and AI agents alike.
 
-> **Target vs. current.** The docs describe the target architecture. Parts of
-> the code predate it; [libraries](architecture/libraries.md#current-to-target-mapping)
-> maps every project to its target place,
-> and [legacy code](guides/work-with-legacy-code.md) explains how to treat the
-> rest. New code follows the docs. Pages that describe code which doesn't exist
-> yet say so in a **Status** note, together with what the code does today.
+> **Docs and code.** The docs describe the architecture, and the code follows
+> them. Pages that describe code which doesn't exist yet say so in a **Status**
+> note, together with what the code does today.
 
 ## I want to…
 
@@ -24,7 +21,6 @@ written for people and AI agents alike.
 | add a storage adapter (files, rxdb, …)                       | [architecture/ports-and-adapters.md](architecture/ports-and-adapters.md#6-outbound-adapters-repositories) |
 | add a setting (a config key, a section, a choice of adapter) | [guides/add-a-setting.md](guides/add-a-setting.md)                                                        |
 | understand how apps read their config                        | [architecture/configuration.md](architecture/configuration.md)                                            |
-| change legacy code                                           | [guides/work-with-legacy-code.md](guides/work-with-legacy-code.md)                                        |
 | write Effect code                                            | [architecture/effect.md](architecture/effect.md)                                                          |
 | build Angular UI                                             | [architecture/frontend.md](architecture/frontend.md)                                                      |
 | work on the Electron app                                     | [architecture/desktop.md](architecture/desktop.md)                                                        |
@@ -123,7 +119,6 @@ repositories. Details: [desktop](architecture/desktop.md),
 | **Contract**              | A shared, public format: the HTTP API (`api-http`, used by the handlers and the client) and the YAML files (`codec-yaml`).                                                                                                                                        |
 | **Composition root**      | An app: the only place that chooses implementations. Effects run only in the apps, the Angular bridge (`libs/@ckapp/angular-effect`) and tests.                                                                                                                   |
 | **Data access**           | The Angular side of the ports (`libs/@overckd-app/<feature>/data-access`): `inject<Port>()` bindings derived from the ports (queries → resources, commands → promises) and NgRx stores for shared client state. Nx's name for this library type; not persistence. |
-| **Legacy**                | Pre-architecture code (fp-ts, io-ts, rxjs, marblejs), tagged `type:legacy`. Frozen.                                                                                                                                                                               |
 
 ## Enforced rules
 

@@ -4,15 +4,6 @@ Adding a capability touches every role of a feature, in a fixed order from the
 inside out. The running example adds `CollectionCommands.rename`; the complete
 code is in [ports and adapters](../architecture/ports-and-adapters.md).
 
-> **Today's locations.** Until the libs are moved (see the
-> [mapping](../architecture/libraries.md#current-to-target-mapping)): domain =
-> `libs/@overckd/domain-experimental`, application =
-> `libs/shared/<feature>/application`, contract =
-> `libs/backend/<feature>/adapter-rest`, handlers =
-> `libs/backend/<feature>/infra-http`, server composition =
-> `apps/backend/src/app.http.ts`. Client adapters and data-access libs don't
-> exist yet; create them in the target layout.
-
 ## 0. Decide: query or command?
 
 If it changes state, it goes into `<Feature>Commands`, even if it returns data.
