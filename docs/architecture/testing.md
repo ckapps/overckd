@@ -22,7 +22,7 @@ span and trace annotations.
 ## Domain
 
 Pure functions and codecs need no Effect runtime. The existing specs in
-`libs/@overckd/domain-experimental/src/lib/internal/*.spec.ts` show the codec
+`libs/@overckd/domain/src/lib/internal/*.spec.ts` show the codec
 round-trip style (`Schema.decodeSync` / `Schema.encodeSync`).
 
 ## Use cases (`*Local`)

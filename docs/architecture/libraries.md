@@ -60,9 +60,6 @@ Create a role lib when the first code for that role appears; a feature does not
 need every role. The domain is deliberately a single lib because the models are
 tightly linked (a recipe references ingredients, which reference tags, …).
 
-> **Status:** this is the target. Most libs still live elsewhere; see
-> [Current to target mapping](#current-to-target-mapping).
-
 ## Roles
 
 | Lib                                            | Tags                                                                                       | Contains                                                                                                                                                          | Must not contain                                                                                  |
@@ -85,9 +82,8 @@ tightly linked (a recipe references ingredients, which reference tags, …).
 The `api-http` libs hold the HTTP contract; the name leaves room for contracts
 over other transports. `codec-yaml` is a contract too: people edit these files
 and other tools may read them, so the format lives in its own publishable lib
-rather than inside `adapter-fs`. Tags exist for two more cases: `type:util` for small,
-pure helpers (e.g. `libs/core`) and `type:legacy` for pre-architecture code
-(see [legacy code](../guides/work-with-legacy-code.md)). Electron-specific libs
+rather than inside `adapter-fs`. Besides the Angular–Effect bridge, `type:util`
+tags small, generic helpers that any role may use. Electron-specific libs
 under `@overckd-app/desktop/` are tagged by their role like any other lib, with
 `platform:node` for main-process code.
 
@@ -96,18 +92,18 @@ under `@overckd-app/desktop/` are tagged by their role like any other lib, with
 Each project has exactly one `type:*` tag and one `platform:*` tag, and both must
 allow an import. The rules follow roles, not folders.
 
-| `type:`         | may depend on                                                       |
-| --------------- | ------------------------------------------------------------------- |
-| `domain`        | domain, util                                                        |
-| `application`   | application, domain, util                                           |
-| `contract`      | contract, domain, util                                              |
-| `adapter`       | application, contract, domain, util, testing (from spec files only) |
-| `data-access`   | data-access, application, domain, util                              |
-| `ui`            | ui, domain, util                                                    |
-| `feature`       | feature, data-access, ui, domain, util                              |
-| `util`          | util                                                                |
-| `testing`       | testing, application, domain, util                                  |
-| `app`, `legacy` | anything                                                            |
+| `type:`       | may depend on                                                       |
+| ------------- | ------------------------------------------------------------------- |
+| `domain`      | domain, util                                                        |
+| `application` | application, domain, util                                           |
+| `contract`    | contract, domain, util                                              |
+| `adapter`     | application, contract, domain, util, testing (from spec files only) |
+| `data-access` | data-access, application, domain, util                              |
+| `ui`          | ui, domain, util                                                    |
+| `feature`     | feature, data-access, ui, domain, util                              |
+| `util`        | util                                                                |
+| `testing`     | testing, application, domain, util                                  |
+| `app`         | anything                                                            |
 
 Pages depend inwards only: a feature lib reaches a port through its
 `data-access` lib, never through the application lib or an adapter. Data-access
@@ -137,14 +133,14 @@ not import them; use the Effect services instead.
 
 Banned npm imports (checked against the raw import specifier):
 
-| Tag                                     | Banned                                                                                                                                     |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| every `type:` except `app` and `legacy` | `fp-ts*`, `io-ts*`, `@marblejs/*`                                                                                                          |
-| `type:domain`, `type:application`       | additionally `effect/http*`, `effect/rpc*`, `effect/sql*`, `@effect/platform*`, `@effect/sql*`, `rxjs*`, `rxdb*`, `@angular/*`, `electron` |
-| `type:contract`                         | additionally `@angular/*`, `rxjs*`, `rxdb*`, `electron`                                                                                    |
-| `platform:any`                          | `@angular/*`, `electron`, `@effect/platform*`                                                                                              |
-| `platform:node`                         | `@angular/*`, `@effect/platform-browser*`                                                                                                  |
-| `platform:browser`                      | `electron`, `@effect/platform-node*`                                                                                                       |
+| Tag                               | Banned                                                                                                                                     |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| every `type:` except `app`        | `fp-ts*`, `io-ts*`, `@marblejs/*`                                                                                                          |
+| `type:domain`, `type:application` | additionally `effect/http*`, `effect/rpc*`, `effect/sql*`, `@effect/platform*`, `@effect/sql*`, `rxjs*`, `rxdb*`, `@angular/*`, `electron` |
+| `type:contract`                   | additionally `@angular/*`, `rxjs*`, `rxdb*`, `electron`                                                                                    |
+| `platform:any`                    | `@angular/*`, `electron`, `@effect/platform*`                                                                                              |
+| `platform:node`                   | `@angular/*`, `@effect/platform-browser*`                                                                                                  |
+| `platform:browser`                | `electron`, `@effect/platform-node*`                                                                                                       |
 
 When an import is rejected, move the code to the right lib rather than loosening
 the rules. If a rule itself is wrong, change it in `eslint.config.mjs`, on this
@@ -180,27 +176,3 @@ config sections in an app `server/server.config.ts`, with the layers built
 from them in `server/server.ts`.
 Tests sit next to the file as `*.spec.ts`. Every lib exports its public API from
 `src/index.ts` only.
-
-## Current to target mapping
-
-All projects are tagged today; the paths and import aliases (`@_shared/…`,
-`@_backend/…`) still follow the old layout.
-
-| Project                                                           | Path today                          | Tags                              | Target                                                                                                                           |
-| ----------------------------------------------------------------- | ----------------------------------- | --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `overckd-domain-experimental`                                     | `libs/@overckd/domain-experimental` | `type:domain` `platform:any`      | `libs/@overckd/domain` (`@overckd/domain`), once the legacy `libs/domain` is gone                                                |
-| `backend-overckd-adapter-rest`                                    | `libs/backend/overckd/adapter-rest` | `type:contract` `platform:any`    | `libs/@overckd/api-http`                                                                                                         |
-| `backend-collection-adapter-rest`, `backend-recipe-adapter-rest`  | `libs/backend/<f>/adapter-rest`     | `type:contract` `platform:any`    | `libs/@overckd/<f>/api-http`                                                                                                     |
-| `backend-collection-infra-http`, `backend-recipe-infra-http`      | `libs/backend/<f>/infra-http`       | `type:adapter` `platform:any`     | `libs/@overckd/<f>/adapter-http-server`                                                                                          |
-| `collection-application`, `recipe-application`, `tag-application` | `libs/shared/<f>/application`       | `type:application` `platform:any` | `libs/@overckd/<f>/application`, with `*UseCase` split into Queries/Commands ports + `*Local`                                    |
-| `collection-ui`                                                   | `libs/shared/collection/ui`         | `type:legacy` `platform:browser`  | `libs/@overckd-app/collection/ui`, on the new domain                                                                             |
-| `ckapp-angular`, `ckapp-angular-desktop`                          | `libs/@ckapp/*`                     | `type:ui` `platform:browser`      | unchanged                                                                                                                        |
-| `core`                                                            | `libs/core`                         | `type:util` `platform:any`        | delete with the legacy code that uses it (or move to `@ckapp`)                                                                   |
-| `domain`                                                          | `libs/domain`                       | `type:legacy` `platform:any`      | delete; replaced by the new domain                                                                                               |
-| `yaml`                                                            | `libs/yaml`                         | `type:legacy` `platform:any`      | its domain file codecs move to `libs/@overckd/codec-yaml` (Effect Schema); its app config codecs move to the apps that read them |
-| `backend`                                                         | `apps/backend`                      | `type:app` `platform:node`        | wires handlers, `*Local` implementations and repositories (today in `src/app.http.ts`)                                           |
-| `frontend`                                                        | `apps/frontend`                     | `type:app` `platform:browser`     | data-access bindings + `provideEffectRuntime`                                                                                    |
-| `desktop`                                                         | `apps/desktop`                      | `type:app` `platform:node`        | wires the same API and serves it over `overckd://`                                                                               |
-
-Libs that still use legacy types are tagged `type:legacy` until migrated; switch
-the tag to the real role in the same change that removes the legacy imports.
