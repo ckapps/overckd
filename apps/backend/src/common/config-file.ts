@@ -3,6 +3,7 @@ import { Context, Data } from 'effect';
 export enum ConfigFileSection {
   Server = 'server',
   Repositories = 'repositories',
+  Media = 'media',
 }
 
 /** The config file the backend was started with. */

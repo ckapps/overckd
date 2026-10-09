@@ -11,6 +11,7 @@ import { RecipeQueriesLocal } from '@overckd/recipe/application';
 import { Layer, Match } from 'effect';
 import { HttpRouter } from 'effect/http';
 import { HttpApiBuilder, HttpApiSwagger } from 'effect/http-api';
+import { MediaLive } from '../media/media';
 import { ApiVersion, ServerConfig } from './server.config';
 
 const NextApiLive = Layer.mergeAll(
@@ -44,9 +45,9 @@ const withApi = Match.type<ApiVersion>().pipe(
 
 // `HttpRouter.serve` applies the request logger and logs the server address
 export const HttpApiLive = (version: ApiVersion) =>
-  HttpRouter.serve(Layer.mergeAll(withApi(version), HttpRouter.cors())).pipe(
-    Layer.provide([CollectionQueriesLocal, RecipeQueriesLocal]),
-  );
+  HttpRouter.serve(
+    Layer.mergeAll(withApi(version), MediaLive, HttpRouter.cors()),
+  ).pipe(Layer.provide([CollectionQueriesLocal, RecipeQueriesLocal]));
 
 /** The backend, serving the API version of `ServerConfig`. */
 export const OverckdHttpApiLive = Layer.unwrap(

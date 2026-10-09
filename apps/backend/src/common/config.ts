@@ -8,6 +8,7 @@ import {
   Struct,
 } from 'effect';
 import { Yaml } from 'effect/encoding';
+import { FullMediaConfig } from '../media/media.config';
 import { FullRepositoriesConfig } from '../repositories/repositories.config';
 import { ApiVersion, FullServerConfig } from '../server/server.config';
 import {
@@ -27,6 +28,7 @@ const ServerConfigFileContent = FullServerConfig.mapFields(
 export const ConfigFileContent = Schema.Struct({
   [ConfigFileSection.Server]: Schema.optionalKey(ServerConfigFileContent),
   [ConfigFileSection.Repositories]: Schema.optionalKey(FullRepositoriesConfig),
+  [ConfigFileSection.Media]: Schema.optionalKey(FullMediaConfig),
 }).annotate({
   messageUnexpectedKey: 'Unknown configuration',
 });
