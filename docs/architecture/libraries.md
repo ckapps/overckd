@@ -204,7 +204,6 @@ All projects are tagged today; the paths and import aliases (`@_shared/…`,
 | `backend`                                                                               | `apps/backend`                      | `type:app` `platform:node`        | wires handlers, `*Local` implementations and repositories (today in `src/app.http.ts`)                                           |
 | `frontend`                                                                              | `apps/frontend`                     | `type:app` `platform:browser`     | data-access bindings + `provideEffectRuntime`                                                                                    |
 | `desktop`                                                                               | `apps/desktop`                      | `type:app` `platform:node`        | wires the same API and serves it over `overckd://`                                                                               |
-| `server-cli`                                                                            | `apps/server-cli`                   | `type:app` `platform:node`        | delete                                                                                                                           |
 
 Libs that still use legacy types are tagged `type:legacy` until migrated; switch
 the tag to the real role in the same change that removes the legacy imports.

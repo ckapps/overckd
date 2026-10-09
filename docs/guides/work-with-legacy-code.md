@@ -10,7 +10,7 @@ feature (strangler pattern), not rewritten in one go.
   (`@overckd/domain`), `domain-rx`, `server`, `yaml`, the `*-infra-rxdb` libs and
   `collection-ui`.
 - Code built on fp-ts, io-ts, rxjs services or marblejs.
-- Inside apps: `apps/server-cli`, `apps/desktop/src/app/legacy`, and the
+- Inside apps: `apps/desktop/src/app/legacy`, and the
   frontend's abstract-class services (`RecipeCollectionService`,
   `AppRecipeCollectionService`, …).
 
