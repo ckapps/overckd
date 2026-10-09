@@ -4,12 +4,7 @@ import {
   OverckdLegacyApi,
   RecipeLegacyHttpController,
 } from '@overckd/adapter-http-server-legacy';
-import {
-  CollectionRepoFs,
-  CollectionRepoFsConfig,
-} from '@overckd/collection/adapter-fs';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
-import { RecipeRepoFs, RecipeRepoFsConfig } from '@overckd/recipe/adapter-fs';
 import { RecipeQueriesLocal } from '@overckd/recipe/application';
 import { Layer, ManagedRuntime } from 'effect';
 import { HttpRouter, HttpStaticServer } from 'effect/http';
@@ -17,37 +12,17 @@ import { HttpApiBuilder } from 'effect/http-api';
 import { app } from 'electron';
 import { createServer } from 'node:http';
 import { AppDirectory } from '../common/app-directory';
+import { RepositoriesLive } from '../common/repositories';
 
 /** The URL path of the images, where the recipe files link them */
 const mediaPath = '/images';
 
-/**
- * File repositories on the app directory, which read the files on every call.
- * The recipes link their images under `mediaUrl`.
- */
-const RepositoriesLive = (mediaUrl: string) =>
-  Layer.mergeAll(
-    RecipeRepoFs.pipe(
-      Layer.provide(
-        Layer.effect(
-          RecipeRepoFsConfig,
-          AppDirectory.useSync(({ recipes }) =>
-            RecipeRepoFsConfig.of({ dir: recipes, codec: 'yaml', mediaUrl }),
-          ),
-        ),
-      ),
-    ),
-    CollectionRepoFs.pipe(
-      Layer.provide(
-        Layer.effect(
-          CollectionRepoFsConfig,
-          AppDirectory.useSync(({ collectionsFile }) =>
-            CollectionRepoFsConfig.of({ file: collectionsFile, codec: 'yaml' }),
-          ),
-        ),
-      ),
-    ),
-  );
+/** Where clients reach the server on `port` */
+const serverOrigin = (port: number) => `http://localhost:${port}`;
+
+/** Where clients reach the images of the server on `port` */
+export const serverMediaUrl = (port: number) =>
+  `${serverOrigin(port)}${mediaPath}`;
 
 /** The images of the app directory under `mediaPath` */
 const MediaLive = Layer.unwrap(
@@ -101,7 +76,7 @@ export const startServer = async ({
 }: ServerOptions): Promise<void> => {
   const runtime = ManagedRuntime.make(
     // `HttpRouter.serve` applies the request logger and logs the server address
-    HttpRouter.serve(HttpAppLive(`http://localhost:${port}`)).pipe(
+    HttpRouter.serve(HttpAppLive(serverOrigin(port))).pipe(
       Layer.provide(AppDirectory.layer(appDirectory)),
       Layer.provide(NodeHttpServer.layer(createServer, { port })),
     ),
