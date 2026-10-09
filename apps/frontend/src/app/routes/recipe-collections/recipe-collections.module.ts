@@ -1,4 +1,4 @@
-import { SharedUiModule } from '@_shared/ui';
+import { SharedUiModule } from '@overckd-app/ui';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DomainModule } from '../../modules/domain/domain.module';

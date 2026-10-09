@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@_shared/collection/ui": ["libs/shared/collection/ui/src/index.ts"],
-      "@_shared/ui": ["libs/shared/ui/src/index.ts"],
       "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
       "@ckapp/angular-desktop": ["libs/@ckapp/angular-desktop/src/index.ts"],
       "@ckapp/angular-desktop/window": [
@@ -71,7 +70,8 @@
       ],
       "@overckd/collection/adapter-fs": [
         "libs/@overckd/collection/adapter-fs/src/index.ts"
-      ]
+      ],
+      "@overckd-app/ui": ["libs/@overckd-app/ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

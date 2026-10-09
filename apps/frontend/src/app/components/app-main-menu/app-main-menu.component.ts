@@ -1,5 +1,5 @@
 import { CollectionMainMenuGroupComponent } from '@_shared/collection/ui';
-import { SharedUiModule } from '@_shared/ui';
+import { SharedUiModule } from '@overckd-app/ui';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { MatListModule } from '@angular/material/list';
