@@ -8,7 +8,7 @@ import {
   output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Portion } from '@overckd/domain-experimental';
+import { Portion } from '@overckd/domain';
 import { Option } from 'effect';
 
 /**

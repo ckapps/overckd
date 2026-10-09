@@ -1,8 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import {
-  PreparationStep,
-  RecipePreparation,
-} from '@overckd/domain-experimental';
+import { PreparationStep, RecipePreparation } from '@overckd/domain';
 import { recipeParts } from '../recipe-parts';
 import { PreparationStepComponent } from '../preparation-step/preparation-step.component';
 

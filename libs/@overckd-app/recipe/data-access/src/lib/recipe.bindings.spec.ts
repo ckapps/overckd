@@ -9,7 +9,7 @@ import {
   RecipeIngredient,
   RecipeNotFound,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { RecipeQueries } from '@overckd/recipe/application';
 import { Effect, Layer, Option } from 'effect';
 import { beforeEach, describe, expect, it } from 'vitest';

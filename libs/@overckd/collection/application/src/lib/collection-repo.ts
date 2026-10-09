@@ -1,8 +1,4 @@
-import {
-  Collection,
-  CollectionId,
-  CollectionNotFound,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, CollectionNotFound } from '@overckd/domain';
 import { Context, Effect } from 'effect';
 
 /** Outbound port: where collections are stored. */

@@ -2,7 +2,7 @@ import {
   CollectionIdFromString,
   CollectionJson,
   CollectionNotFound,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Schema } from 'effect';
 import {
   HttpApiEndpoint,

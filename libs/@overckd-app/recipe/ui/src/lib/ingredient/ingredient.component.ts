@@ -1,8 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import {
-  RecipeIngredient,
-  scaleRecipeIngredient,
-} from '@overckd/domain-experimental';
+import { RecipeIngredient, scaleRecipeIngredient } from '@overckd/domain';
 import { Option } from 'effect';
 import { IngredientAmountPipe } from '../ingredient-amount/ingredient-amount.pipe';
 

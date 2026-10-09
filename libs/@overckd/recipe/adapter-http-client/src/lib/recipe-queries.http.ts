@@ -1,5 +1,5 @@
 import { OverckdApi } from '@overckd/api-http';
-import { RecipeFindByIdPayload } from '@overckd/domain-experimental';
+import { RecipeFindByIdPayload } from '@overckd/domain';
 import { RecipeQueries } from '@overckd/recipe/application';
 import { Effect, Layer } from 'effect';
 import { HttpClient } from 'effect/http';

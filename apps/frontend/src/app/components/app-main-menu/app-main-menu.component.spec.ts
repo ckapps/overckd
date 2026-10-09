@@ -3,7 +3,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { provideEffectRuntime } from '@ckapp/angular-effect';
 import { CollectionQueries } from '@overckd/collection/application';
-import { Collection, CollectionId } from '@overckd/domain-experimental';
+import { Collection, CollectionId } from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { AppMainMenuComponent } from './app-main-menu.component';
 

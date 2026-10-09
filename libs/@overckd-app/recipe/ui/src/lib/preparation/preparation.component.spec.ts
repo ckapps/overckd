@@ -6,7 +6,7 @@ import {
   RecipeId,
   RecipeIngredient,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Option } from 'effect';
 import { PreparationComponent } from './preparation.component';
 

@@ -5,7 +5,7 @@ import {
   RecipeIngredient,
   RecipeNotFound,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Effect, Layer, Option } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { RecipeQueries } from './recipe-queries';

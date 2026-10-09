@@ -7,7 +7,7 @@ import {
   CollectionFindByIdPayload,
   CollectionId,
   CollectionNotFound,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { injectCollectionQueries } from './collection.bindings';

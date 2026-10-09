@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Portion } from '@overckd/domain-experimental';
+import { Portion } from '@overckd/domain';
 
 @Pipe({ name: 'portionKind' })
 export class PortionKindPipe implements PipeTransform {

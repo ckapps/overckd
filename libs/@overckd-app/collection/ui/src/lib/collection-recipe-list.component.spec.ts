@@ -1,10 +1,5 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import {
-  Collection,
-  CollectionId,
-  RecipeId,
-  RecipeRef,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, RecipeId, RecipeRef } from '@overckd/domain';
 import { CollectionRecipeListComponent } from './collection-recipe-list.component';
 
 describe('CollectionRecipeListComponent', () => {

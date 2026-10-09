@@ -5,7 +5,7 @@ import {
   FractionIngredientAmount,
   LabelIngredientAmount,
   UnitIngredientAmount,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { IngredientAmountPipe } from './ingredient-amount.pipe';
 
 describe('IngredientAmountPipe', () => {

@@ -1,9 +1,4 @@
-import {
-  Collection,
-  CollectionId,
-  RecipeId,
-  RecipeRef,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, RecipeId, RecipeRef } from '@overckd/domain';
 import { Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { CollectionsFileYaml } from './collections-file';

@@ -2,7 +2,7 @@ import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { injectCollectionQueries } from '@overckd-app/collection/data-access';
 import { CollectionRecipeListComponent } from '@overckd-app/collection/ui';
-import { RecipeRef } from '@overckd/domain-experimental';
+import { RecipeRef } from '@overckd/domain';
 
 @Component({
   templateUrl: './recipes-page.component.html',

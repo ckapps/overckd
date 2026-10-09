@@ -1,5 +1,5 @@
 import { booleanAttribute, Component, input } from '@angular/core';
-import { PreparationStep } from '@overckd/domain-experimental';
+import { PreparationStep } from '@overckd/domain';
 
 /**
  * Component for displaying a recipe preparation step

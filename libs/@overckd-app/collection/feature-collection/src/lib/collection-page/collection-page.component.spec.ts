@@ -8,7 +8,7 @@ import {
   CollectionNotFound,
   RecipeId,
   RecipeRef,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { CollectionPageComponent } from './collection-page.component';
 
 const pancakes = RecipeRef.make({

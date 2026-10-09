@@ -2,7 +2,7 @@ import {
   BasicRecipePreparation,
   RecipePreparation,
   UnionRecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 
 /**
  * A part of a recipe to show: a group of a union recipe with its label, or

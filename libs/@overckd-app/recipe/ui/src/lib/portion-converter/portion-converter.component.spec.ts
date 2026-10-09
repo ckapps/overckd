@@ -1,5 +1,5 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { Portion } from '@overckd/domain-experimental';
+import { Portion } from '@overckd/domain';
 import { Option } from 'effect';
 import { PortionConverterComponent } from './portion-converter.component';
 

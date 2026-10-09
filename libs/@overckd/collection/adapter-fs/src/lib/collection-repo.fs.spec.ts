@@ -1,6 +1,6 @@
 import { fromYamlString } from '@overckd/codec-yaml';
 import { CollectionRepo } from '@overckd/collection/application';
-import { Collection, RecipeId } from '@overckd/domain-experimental';
+import { Collection, RecipeId } from '@overckd/domain';
 import { collectionRepoConformance } from '@overckd/testing';
 import { Effect, Exit, FileSystem, Layer, PlatformError, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';

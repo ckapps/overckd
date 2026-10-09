@@ -5,7 +5,7 @@ import {
   IngredientId,
   RecipeIngredient,
   UnitIngredientAmount,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Option } from 'effect';
 import { IngredientComponent } from './ingredient.component';
 

@@ -1,5 +1,5 @@
 import { CollectionRepo } from '@overckd/collection/application';
-import { CollectionId, CollectionNotFound } from '@overckd/domain-experimental';
+import { CollectionId, CollectionNotFound } from '@overckd/domain';
 import { Context, Effect, FileSystem, Layer } from 'effect';
 import { CollectionsFileCodec, readCollectionsFile } from './collection-file';
 

@@ -1,8 +1,4 @@
-import {
-  RecipeId,
-  RecipeNotFound,
-  RecipePreparation,
-} from '@overckd/domain-experimental';
+import { RecipeId, RecipeNotFound, RecipePreparation } from '@overckd/domain';
 import { RecipeRepo } from '@overckd/recipe/application';
 import {
   Context,

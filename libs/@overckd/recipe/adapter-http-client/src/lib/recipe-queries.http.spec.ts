@@ -6,7 +6,7 @@ import {
   RecipeNotFound,
   RecipePreparation,
   RecipePreparationJson,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { RecipeQueries } from '@overckd/recipe/application';
 import { Cause, Effect, Exit, Layer, Option, Schema } from 'effect';
 import { FetchHttpClient, HttpClient, HttpClientRequest } from 'effect/http';
