@@ -1,4 +1,4 @@
-import { defaultServerConfig } from '@overckd/server';
+import { defaultServerConfig } from './server-config';
 import { defaultAppPathsConfig } from '../paths/config/app-paths.defaults';
 import { AppConfig } from './app-config.types';
 
