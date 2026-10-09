@@ -118,6 +118,32 @@ describe('RecipeRepoFs', () => {
     expect(found).toMatchObject({ id: 'Pancakes', name: 'Pancakes' });
   });
 
+  it('should link the images of the media under the media URL', async () => {
+    const files = new Map([
+      [
+        'pancakes.recipe.yaml',
+        pancakesFile.replace(
+          'images: []',
+          'images:\n    - /images/pancakes.jpeg',
+        ),
+      ],
+    ]);
+    const withUrl = await run(
+      recipeRepoFs(files, {
+        dir,
+        codec: 'yaml',
+        mediaUrl: 'http://localhost:3000/images',
+      }),
+      findById('Pancakes'),
+    );
+    const withoutUrl = await run(recipeRepoFs(files), findById('Pancakes'));
+
+    expect(withUrl.images).toEqual([
+      'http://localhost:3000/images/pancakes.jpeg',
+    ]);
+    expect(withoutUrl.images).toEqual([]);
+  });
+
   it('should read only the *.recipe.yaml files', async () => {
     const repo = recipeRepoFs(
       new Map([

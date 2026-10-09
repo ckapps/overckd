@@ -238,12 +238,15 @@ export const UnionRecipePreparationJson = UnionRecipePreparationJsonStruct.pipe(
 
 const recipePreparationFields = {
   portion: Portion,
-  /** URLs of the images of the recipe. */
+  /**
+   * Absolute URLs of the images of the recipe. The server builds them: it
+   * stores the keys of its media and turns them into URLs.
+   */
   images: RecipeImages,
 };
 const recipePreparationFieldsJson = {
   portion: PortionJson,
-  /** URLs of the images of the recipe. */
+  /** Absolute URLs of the images of the recipe. */
   images: RecipeImages,
 };
 /**

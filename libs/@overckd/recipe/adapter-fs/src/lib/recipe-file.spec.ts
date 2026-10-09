@@ -16,9 +16,23 @@ recipe:
   styles: {}
 `;
 
+const withImagesFile = pancakesFile.replace(
+  'images: []',
+  'images:\n    - /images/pancakes.jpeg\n    - https://example.com/waffles.jpeg',
+);
+
+const mediaUrl = 'http://localhost:3000/images';
+
 /** Reads `file` from a file system in which it has the text `text`, if any */
-const read = (text?: string) =>
-  readRecipeFile(file, 'yaml').pipe(
+const read = (
+  text?: string,
+  options: { readonly mediaUrl?: string } = { mediaUrl },
+) =>
+  readRecipeFile({
+    path: file,
+    codec: 'yaml',
+    mediaUrl: options.mediaUrl,
+  }).pipe(
     Effect.provideService(
       FileSystem.FileSystem,
       FileSystem.makeNoop({
@@ -42,6 +56,21 @@ describe('readRecipeFile', () => {
     const recipe = await Effect.runPromise(read(pancakesFile));
 
     expect(recipe).toMatchObject({ id: 'Pancakes', name: 'Pancakes' });
+  });
+
+  it('should link the images of the media under the media URL', async () => {
+    const recipe = await Effect.runPromise(read(withImagesFile));
+
+    expect(recipe.images).toEqual([
+      'http://localhost:3000/images/pancakes.jpeg',
+      'https://example.com/waffles.jpeg',
+    ]);
+  });
+
+  it('should leave out the images of the media without a media URL', async () => {
+    const recipe = await Effect.runPromise(read(withImagesFile, {}));
+
+    expect(recipe.images).toEqual(['https://example.com/waffles.jpeg']);
   });
 
   it('should fail with a SchemaError on a broken file', async () => {
