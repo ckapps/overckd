@@ -1,5 +1,4 @@
 export * from './lib/collection';
-export * as Compat from './lib/compat';
 export * from './lib/ingredient';
 export * from './lib/ingredient-amount';
 export * as Portion from './lib/portion';

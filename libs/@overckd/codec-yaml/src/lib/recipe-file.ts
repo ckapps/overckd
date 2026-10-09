@@ -1,6 +1,7 @@
-import { Compat, RecipePreparation } from '@overckd/domain';
+import { RecipePreparation } from '@overckd/domain';
 import { Schema, SchemaGetter } from 'effect';
 import { overckdFile } from './overckd-file';
+import { RecipePreparationLegacyJson } from './recipe-yaml';
 import { fromYamlString } from './yaml';
 
 /**
@@ -12,7 +13,7 @@ import { fromYamlString } from './yaml';
  * waits for the first command that writes a recipe file.
  */
 export const RecipeFileYaml = fromYamlString(
-  overckdFile({ recipe: Compat.RecipePreparationLegacyJson }),
+  overckdFile({ recipe: RecipePreparationLegacyJson }),
 ).pipe(
   Schema.decodeTo(Schema.toType(RecipePreparation), {
     decode: SchemaGetter.transform(file => file.recipe),

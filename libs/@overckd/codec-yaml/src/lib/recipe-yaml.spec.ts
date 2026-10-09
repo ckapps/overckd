@@ -1,10 +1,10 @@
 import { Option, Schema, Struct } from 'effect';
 import { describe, expect, it } from 'vitest';
-import { RecipePreparationLegacyJson } from './recipe-preparation.compat';
 import {
   BasicRecipePreparation,
   UnionRecipePreparation,
-} from './recipe-preparation.model';
+} from '@overckd/domain';
+import { RecipePreparationLegacyJson } from './recipe-yaml';
 
 type LegacyRecipeJson = Schema.Codec.Encoded<
   typeof RecipePreparationLegacyJson
