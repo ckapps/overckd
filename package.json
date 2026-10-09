@@ -39,7 +39,6 @@
     "axios": "1.8.1",
     "bootstrap": "^5.3.0",
     "effect": "4.0.0-rc.118",
-    "electron-log": "^5.3.2",
     "fp-ts": "^2.13.1",
     "io-ts": "^2.2.20",
     "js-yaml": "^3.3.0",
