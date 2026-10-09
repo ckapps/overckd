@@ -1,4 +1,21 @@
 import {
+  BasicRecipePreparation,
+  CountIngredientAmount,
+  FractionIngredientAmount,
+  IngredientAmount,
+  IngredientId,
+  LabelIngredientAmount,
+  NonEmptyHtmlString,
+  Portion,
+  PreparationStep,
+  RecipeId,
+  RecipeIngredient,
+  RecipeIngredientGroup,
+  RecipePreparation,
+  UnionRecipePreparation,
+  UnitIngredientAmount,
+} from '@overckd/domain';
+import {
   Array as Arr,
   Match,
   Option,
@@ -6,27 +23,8 @@ import {
   Schema,
   SchemaTransformation,
 } from 'effect';
-import {
-  CountIngredientAmount,
-  FractionIngredientAmount,
-  IngredientAmount,
-  LabelIngredientAmount,
-  UnitIngredientAmount,
-} from './ingredient-amount.model';
-import { IngredientId } from './ingredient.model';
-import { Portion } from './portion.model';
-import {
-  RecipeIngredient,
-  RecipeIngredientGroup,
-} from './recipe-ingredient.model';
-import {
-  AnyRecipePreparation,
-  BasicRecipePreparation,
-  PreparationStep,
-  RecipePreparation,
-} from './recipe-preparation.model';
-import { RecipeId } from './recipe.model';
-import { NonEmptyHtmlString, Positive } from './shared.model';
+
+const Positive = Schema.Number.check(Schema.isGreaterThan(0));
 
 // The recipe JSON of the legacy pages (`Recipe` in `libs/domain`), restricted
 // to the values `RecipePreparation` can hold. Styles and timers are left out:
@@ -125,7 +123,7 @@ const noSteps: PreparationStep = {
 };
 
 /** The portion of a legacy recipe without one. */
-const defaultPortion: Portion = {
+const defaultPortion: Portion.Portion = {
   kind: 'quantity',
   label: Option.none(),
   quantity: 1,
@@ -144,18 +142,21 @@ const nonEmptyOr = <A>(
 const quantityPortion = (
   quantity: number,
   label: string | undefined,
-): Portion => ({
+): Portion.Portion => ({
   kind: 'quantity',
   label: label ? Option.some(label) : Option.none(),
   quantity,
 });
 
-const portionFromLegacy: (portion: LegacyPortion) => Portion =
+const portionFromLegacy: (portion: LegacyPortion) => Portion.Portion =
   Match.type<LegacyPortion>().pipe(
     Match.discriminatorsExhaustive('kind')({
       label: ({ label }) => quantityPortion(1, label),
       quantity: ({ count, label }) => quantityPortion(count, label),
-      springform: ({ diameter }): Portion => ({ kind: 'springform', diameter }),
+      springform: ({ diameter }): Portion.Portion => ({
+        kind: 'springform',
+        diameter,
+      }),
     }),
   );
 
@@ -287,25 +288,26 @@ const fromLegacy = (legacy: LegacyRecipe): RecipePreparation => {
 // RecipePreparation → Legacy
 // ----------------------------------------------------------------------------
 
-const portionToLegacy: (portion: Portion) => Option.Option<LegacyPortion> =
-  Match.type<Portion>().pipe(
-    Match.discriminatorsExhaustive('kind')({
-      // Recipes without a portion decode to the default portion.
-      quantity: ({ quantity, label }) =>
-        quantity === 1 && Option.isNone(label)
-          ? Option.none()
-          : Option.some<LegacyPortion>({
-              kind: 'quantity',
-              count: quantity,
-              ...Option.match(label, {
-                onNone: () => ({}),
-                onSome: label => ({ label }),
-              }),
+const portionToLegacy: (
+  portion: Portion.Portion,
+) => Option.Option<LegacyPortion> = Match.type<Portion.Portion>().pipe(
+  Match.discriminatorsExhaustive('kind')({
+    // Recipes without a portion decode to the default portion.
+    quantity: ({ quantity, label }) =>
+      quantity === 1 && Option.isNone(label)
+        ? Option.none()
+        : Option.some<LegacyPortion>({
+            kind: 'quantity',
+            count: quantity,
+            ...Option.match(label, {
+              onNone: () => ({}),
+              onSome: label => ({ label }),
             }),
-      springform: ({ diameter }) =>
-        Option.some<LegacyPortion>({ kind: 'springform', diameter }),
-    }),
-  );
+          }),
+    springform: ({ diameter }) =>
+      Option.some<LegacyPortion>({ kind: 'springform', diameter }),
+  }),
+);
 
 const scaleFactorToLegacy = (scaleFactor: number) =>
   scaleFactor === 1 ? {} : { scaleFactor };
@@ -410,7 +412,7 @@ const groupToLegacy = (
 
 /** Legacy recipes don't nest, so nested unions are flattened. */
 const partsOf = (
-  preparation: AnyRecipePreparation,
+  preparation: BasicRecipePreparation | UnionRecipePreparation,
 ): ReadonlyArray<BasicRecipePreparation> =>
   preparation._tag === 'BasicRecipePreparation'
     ? [preparation]
