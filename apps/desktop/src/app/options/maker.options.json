@@ -1,3 +1,18 @@
 {
-  "$schema": "../../../../../node_modules/nx-electron/src/validation/maker.schema.json"
+  "$schema": "../../../../../node_modules/nx-electron/src/validation/maker.schema.json",
+  "productName": "Overckd",
+  "extraMetadata": {
+    "productName": "Overckd"
+  },
+  "npmRebuild": false,
+  "directories": {
+    "app": "dist/apps/desktop"
+  },
+  "files": [
+    {
+      "from": "frontend-electron/browser",
+      "to": "frontend",
+      "filter": ["**/!(*.+(js|css).map)"]
+    }
+  ]
 }
