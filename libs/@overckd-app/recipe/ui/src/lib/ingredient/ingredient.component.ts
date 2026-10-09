@@ -4,7 +4,7 @@ import {
   scaleRecipeIngredient,
 } from '@overckd/domain-experimental';
 import { Option } from 'effect';
-import { IngredientAmountPipe } from '../../../ingredient/modules/ingredient-common/pipes/ingredient-amount.pipe';
+import { IngredientAmountPipe } from '../ingredient-amount/ingredient-amount.pipe';
 
 /**
  * Lists the alternatives of an ingredient: "a", "a oder b", "a, b oder c"

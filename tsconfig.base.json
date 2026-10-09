@@ -89,6 +89,7 @@
       "@overckd-app/recipe/data-access": [
         "libs/@overckd-app/recipe/data-access/src/index.ts"
       ],
+      "@overckd-app/recipe/ui": ["libs/@overckd-app/recipe/ui/src/index.ts"],
       "@overckd-app/ui": ["libs/@overckd-app/ui/src/index.ts"]
     }
   },
