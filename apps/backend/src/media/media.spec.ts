@@ -8,6 +8,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { MediaLive } from './media';
 import { FullMediaConfig, MediaConfig } from './media.config';
 
+const origin = 'http://localhost:3000';
 let dir: string;
 
 beforeAll(async () => {
@@ -38,7 +39,7 @@ const get = async (config: FullMediaConfig, path: string) => {
 describe('MediaLive', () => {
   it('serves the files of a filesystem dir under its path', async () => {
     const response = await get(
-      { type: 'filesystem', dir, path: '/images' },
+      { type: 'filesystem', dir, path: '/images', origin },
       '/images/recipe-1.jpeg',
     );
 
@@ -50,7 +51,7 @@ describe('MediaLive', () => {
 
   it('answers 404 for a file the dir lacks', async () => {
     const response = await get(
-      { type: 'filesystem', dir, path: '/media' },
+      { type: 'filesystem', dir, path: '/media', origin },
       '/media/missing.jpeg',
     );
 
@@ -59,7 +60,7 @@ describe('MediaLive', () => {
 
   it('answers 404 for a path that leaves the dir', async () => {
     const response = await get(
-      { type: 'filesystem', dir, path: '/media' },
+      { type: 'filesystem', dir, path: '/media', origin },
       '/media/..%2Fpasswd',
     );
 
@@ -68,7 +69,7 @@ describe('MediaLive', () => {
 
   it('serves nothing outside its path', async () => {
     const response = await get(
-      { type: 'filesystem', dir, path: '/images' },
+      { type: 'filesystem', dir, path: '/images', origin },
       '/media/recipe-1.jpeg',
     );
 

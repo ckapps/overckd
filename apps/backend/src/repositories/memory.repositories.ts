@@ -46,15 +46,18 @@ const readSeed = <A, E, R>(
         ),
       );
 
-/** Memory repositories, each filled from the files of its seed at startup */
-export const MemoryReposLive = ({
-  recipes,
-  collections,
-}: MemoryRepositoriesConfig) =>
+/**
+ * Memory repositories, each filled from the files of its seed at startup. The
+ * recipes link their images under `mediaUrl`, if any.
+ */
+export const MemoryReposLive = (
+  { recipes, collections }: MemoryRepositoriesConfig,
+  mediaUrl: string | undefined,
+) =>
   Layer.mergeAll(
     Layer.unwrap(
       readSeed(recipes?.seed, file =>
-        readRecipeFile({ path: file, codec: 'yaml', mediaUrl: undefined }),
+        readRecipeFile({ path: file, codec: 'yaml', mediaUrl }),
       ).pipe(Effect.map(RecipeRepoMemory)),
     ),
     Layer.unwrap(

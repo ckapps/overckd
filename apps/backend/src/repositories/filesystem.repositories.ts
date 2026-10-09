@@ -28,17 +28,20 @@ export type FilesystemCollectionRepositoryConfig = Schema.Schema.Type<
   typeof FilesystemCollectionRepositoryConfig
 >;
 
-/** File repositories, which read the files on every call */
-export const FilesystemReposLive = ({
-  recipes,
-  collections,
-}: FilesystemRepositoriesConfig) =>
+/**
+ * File repositories, which read the files on every call. The recipes link
+ * their images under `mediaUrl`, if any.
+ */
+export const FilesystemReposLive = (
+  { recipes, collections }: FilesystemRepositoriesConfig,
+  mediaUrl: string | undefined,
+) =>
   Layer.mergeAll(
     RecipeRepoFs.pipe(
       Layer.provide(
         Layer.succeed(
           RecipeRepoFsConfig,
-          RecipeRepoFsConfig.of({ dir: recipes.dir, codec: 'yaml' }),
+          RecipeRepoFsConfig.of({ dir: recipes.dir, codec: 'yaml', mediaUrl }),
         ),
       ),
     ),
