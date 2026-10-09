@@ -1,4 +1,3 @@
-import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig } from '@angular/core';
 import {
   ErrorStateMatcher,
@@ -24,7 +23,6 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideStore(),
     provideEffects(),
-    provideHttpClient(),
     provideRouter(
       appRoutes,
       withEnabledBlockingInitialNavigation(),

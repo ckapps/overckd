@@ -8,7 +8,6 @@ import { FrontendEnvironment } from './environment.type';
 export const environment: FrontendEnvironment = {
   production: false,
   shell: ApplicationShell.Web,
-  legacyApiUrl: '/api',
   api: {
     url: '',
   },
