@@ -11,7 +11,7 @@ export class AppDirectory extends Context.Service<
     /** The directory of the recipe images */
     readonly images: string;
   }
->()('@overckd/backend/AppDirectory') {
+>()('@overckd/desktop/AppDirectory') {
   /** The app directory at `root` */
   static readonly layer = (root: string) =>
     Layer.effect(
