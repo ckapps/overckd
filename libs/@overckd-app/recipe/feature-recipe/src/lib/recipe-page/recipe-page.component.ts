@@ -4,8 +4,8 @@ import { injectRecipeQueries } from '@overckd-app/recipe/data-access';
 import { RecipeId, RecipeNotFound } from '@overckd/domain-experimental';
 
 @Component({
-  templateUrl: './recipe.component.html',
-  styleUrls: ['./recipe.component.scss'],
+  templateUrl: './recipe-page.component.html',
+  styleUrls: ['./recipe-page.component.scss'],
   imports: [RecipeComponent],
 })
 export class RecipePageComponent {

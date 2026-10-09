@@ -1,15 +1,13 @@
+import { resource } from '@angular/core';
 import { Router } from '@angular/router';
-import { provideEffectRuntime } from '@ckapp/angular-effect';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { CollectionQueries } from '@overckd/collection/application';
 import {
   Collection,
   CollectionId,
   RecipeId,
   RecipeRef,
 } from '@overckd/domain-experimental';
-import { Effect, Layer } from 'effect';
-import { RecipesPageComponent } from './recipes.component';
+import { RecipesPageComponent } from './recipes-page.component';
 
 const collection = (id: string, name: string, recipes: Array<string>) =>
   Collection.make({
@@ -21,21 +19,27 @@ const collection = (id: string, name: string, recipes: Array<string>) =>
     ),
   });
 
+/** `getAll` of the collection queries */
+const getAll = () =>
+  resource({
+    loader: () =>
+      Promise.resolve([
+        collection('sweet', 'Sweets', ['Pancakes', 'Waffles']),
+        collection('salty', 'Salty', ['Fries']),
+      ]),
+  });
+
+// A feature lib reaches the ports only through data access, so the specs
+// replace the binding instead of the port.
+vi.mock('@overckd-app/collection/data-access', () => ({
+  injectCollectionQueries: () => ({ getAll }),
+}));
+
 describe('RecipesPageComponent', () => {
   let spectator: Spectator<RecipesPageComponent>;
   const createComponent = createComponentFactory({
     component: RecipesPageComponent,
-    providers: [
-      { provide: Router, useValue: { navigate: vi.fn() } },
-      provideEffectRuntime(
-        Layer.mock(CollectionQueries, {
-          getAll: Effect.succeed([
-            collection('sweet', 'Sweets', ['Pancakes', 'Waffles']),
-            collection('salty', 'Salty', ['Fries']),
-          ]),
-        }),
-      ),
-    ],
+    providers: [{ provide: Router, useValue: { navigate: vi.fn() } }],
   });
 
   beforeEach(async () => {

@@ -25,8 +25,8 @@ const blankIngredient = RecipeIngredient.make({
  * three tips and the notes.
  */
 @Component({
-  templateUrl: './empty-recipe.component.html',
-  styleUrls: ['./empty-recipe.component.scss'],
+  templateUrl: './empty-recipe-page.component.html',
+  styleUrls: ['./empty-recipe-page.component.scss'],
   imports: [RecipeComponent],
 })
 export class EmptyRecipePageComponent {

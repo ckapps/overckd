@@ -10,7 +10,7 @@ import {
   RecipePreparation,
 } from '@overckd/domain-experimental';
 import { Option } from 'effect';
-import { RecipePageComponent } from './recipe.component';
+import { RecipePageComponent } from './recipe-page.component';
 
 const pancakes: RecipePreparation = {
   _tag: 'BasicRecipePreparation',
