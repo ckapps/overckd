@@ -46,7 +46,7 @@ describe('ConfigLive', () => {
   it('takes the defaults for an empty config file', async () => {
     expect(await Effect.runPromise(serverConfig(''))).toEqual({
       port: 3000,
-      apiVersion: 'legacy',
+      apiVersion: 'next',
     });
   });
 
@@ -61,13 +61,10 @@ describe('ConfigLive', () => {
 
   it('prefers a flag to a variable', async () => {
     vi.stubEnv('OVERCKD_SERVER_PORT', '4000');
-    vi.stubEnv('OVERCKD_SERVER_API_VERSION', 'next');
 
     expect(
-      await Effect.runPromise(
-        serverConfig(yaml, { server: { port: 5000, apiVersion: 'legacy' } }),
-      ),
-    ).toEqual({ port: 5000, apiVersion: 'legacy' });
+      await Effect.runPromise(serverConfig(yaml, { server: { port: 5000 } })),
+    ).toEqual({ port: 5000, apiVersion: 'next' });
   });
 
   it('leaves the keys of unset flags to the other sources', async () => {

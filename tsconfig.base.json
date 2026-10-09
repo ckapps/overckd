@@ -61,9 +61,6 @@
       "@overckd/recipe/adapter-memory": [
         "libs/@overckd/recipe/adapter-memory/src/index.ts"
       ],
-      "@overckd/adapter-http-server-legacy": [
-        "libs/@overckd/adapter-http-server-legacy/src/index.ts"
-      ],
       "@overckd/codec-yaml": ["libs/@overckd/codec-yaml/src/index.ts"],
       "@overckd/recipe/adapter-fs": [
         "libs/@overckd/recipe/adapter-fs/src/index.ts"

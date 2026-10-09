@@ -1,10 +1,8 @@
 import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
-import {
-  CollectionLegacyHttpController,
-  OverckdLegacyApi,
-  RecipeLegacyHttpController,
-} from '@overckd/adapter-http-server-legacy';
+import { OverckdApi } from '@overckd/api-http';
+import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
+import { RecipeHttpController } from '@overckd/recipe/adapter-http-server';
 import { RecipeQueriesLocal } from '@overckd/recipe/application';
 import { Layer, ManagedRuntime } from 'effect';
 import { HttpRouter, HttpStaticServer } from 'effect/http';
@@ -40,17 +38,13 @@ const MediaLive = Layer.unwrap(
 );
 
 /**
- * The API of the legacy frontend, as the backend serves it with
- * `apiVersion: legacy`, and the images, on the files of the app directory.
- * Clients reach the server at `origin`.
+ * The API, as the backend serves it with `apiVersion: next`, and the images,
+ * on the files of the app directory. Clients reach the server at `origin`.
  */
 export const HttpAppLive = (origin: string) =>
   Layer.mergeAll(
-    HttpApiBuilder.layer(OverckdLegacyApi).pipe(
-      Layer.provide([
-        CollectionLegacyHttpController,
-        RecipeLegacyHttpController,
-      ]),
+    HttpApiBuilder.layer(OverckdApi).pipe(
+      Layer.provide([CollectionHttpController, RecipeHttpController]),
     ),
     MediaLive,
     HttpRouter.cors(),

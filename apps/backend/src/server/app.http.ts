@@ -1,8 +1,3 @@
-import {
-  CollectionLegacyHttpController,
-  OverckdLegacyApi,
-  RecipeLegacyHttpController,
-} from '@overckd/adapter-http-server-legacy';
 import { OverckdApi as OverckdNextApi } from '@overckd/api-http';
 import { CollectionHttpController } from '@overckd/collection/adapter-http-server';
 import { CollectionQueriesLocal } from '@overckd/collection/application';
@@ -27,18 +22,7 @@ const NextApiLive = Layer.mergeAll(
   HttpApiSwagger.layer(OverckdNextApi),
 );
 
-// The API of the legacy frontend, until its recipe pages are migrated
-const LegacyApiLive = Layer.mergeAll(
-  HttpApiBuilder.layer(OverckdLegacyApi, {
-    openapiPath: '/openapi.json',
-  }).pipe(
-    Layer.provide([CollectionLegacyHttpController, RecipeLegacyHttpController]),
-  ),
-  HttpApiSwagger.layer(OverckdLegacyApi),
-);
-
 const withApi = Match.type<ApiVersion>().pipe(
-  Match.when('legacy', () => LegacyApiLive),
   Match.when('next', () => NextApiLive),
   Match.exhaustive,
 );

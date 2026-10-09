@@ -2,7 +2,7 @@ import { Config, Context, Effect, Layer, Schema } from 'effect';
 import { ConfigFileSection } from '../common/config-file';
 
 /** The versions of the HTTP API the backend can serve. */
-export const ApiVersions = ['legacy', 'next'] as const;
+export const ApiVersions = ['next'] as const;
 export type ApiVersion = (typeof ApiVersions)[number];
 
 export const FullServerConfig = Schema.Struct({
@@ -14,7 +14,7 @@ export const FullServerConfig = Schema.Struct({
   }),
   /** Version of the HTTP API to serve */
   apiVersion: Schema.Literals(ApiVersions)
-    .pipe(Schema.withDecodingDefaultKey(Effect.succeed('legacy' as const)))
+    .pipe(Schema.withDecodingDefaultKey(Effect.succeed('next' as const)))
     .annotate({
       description: 'Version of the HTTP API to serve',
     }),

@@ -1,9 +1,0 @@
-{
-  "name": "overckd-adapter-http-server-legacy",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/@overckd/adapter-http-server-legacy/src",
-  "projectType": "library",
-  "tags": ["type:adapter", "platform:any"],
-  "// targets": "to see all targets run: nx show project overckd-adapter-http-server-legacy --web",
-  "targets": {}
-}
