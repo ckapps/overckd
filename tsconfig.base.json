@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@_shared/collection/ui": ["libs/shared/collection/ui/src/index.ts"],
       "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
       "@ckapp/angular-desktop": ["libs/@ckapp/angular-desktop/src/index.ts"],
       "@ckapp/angular-desktop/window": [
@@ -80,6 +79,9 @@
       ],
       "@overckd-app/collection/data-access": [
         "libs/@overckd-app/collection/data-access/src/index.ts"
+      ],
+      "@overckd-app/collection/ui": [
+        "libs/@overckd-app/collection/ui/src/index.ts"
       ],
       "@overckd-app/recipe/data-access": [
         "libs/@overckd-app/recipe/data-access/src/index.ts"

@@ -13,7 +13,5 @@
     "src/**/*.test.ts",
     "vite.config.mts"
   ],
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"]
 }

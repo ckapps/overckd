@@ -1,4 +1,4 @@
-import { CollectionMainMenuGroupComponent } from '@_shared/collection/ui';
+import { CollectionMainMenuGroupComponent } from '@overckd-app/collection/ui';
 import { SharedUiModule } from '@overckd-app/ui';
 import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
