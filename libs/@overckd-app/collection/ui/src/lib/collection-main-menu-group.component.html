@@ -1,6 +1,6 @@
 <ckad-main-menu-group [groupName]="'Collections'" [icon]="faListAlt">
   <mat-nav-list>
-    @for (collection of collections(); track collection) {
+    @for (collection of collections(); track collection.id) {
       <a
         mat-list-item
         [class]="itemClass"

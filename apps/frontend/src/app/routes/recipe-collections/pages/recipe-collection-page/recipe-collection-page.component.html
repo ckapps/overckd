@@ -1,4 +1,8 @@
-@if (recipeCollection$ | async; as recipeCollection) {
+@if (notFound()) {
+  <p>This collection does not exist.</p>
+} @else if (collection.error()) {
+  <p>Could not load this collection.</p>
+} @else if (collection.value(); as recipeCollection) {
   <article>
     <overckd-collection-recipe-list
       [collection]="recipeCollection"

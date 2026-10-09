@@ -1,46 +1,46 @@
-import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
-import { EMPTY } from 'rxjs';
-import { RecipeCollectionService } from '../../modules/domain/recipe-collection/services/recipe-collection.service';
+import { provideEffectRuntime } from '@ckapp/angular-effect';
+import { CollectionQueries } from '@overckd/collection/application';
+import { Collection, CollectionId } from '@overckd/domain-experimental';
+import { Effect, Layer } from 'effect';
 import { AppMainMenuComponent } from './app-main-menu.component';
 
-@Component({
-  selector: 'overckd-collections-main-menu-group',
-  template: '',
-  standalone: true,
-})
-class MockCollectionsMainMenuGroupComponent {}
-
 describe('AppMainMenuComponent', () => {
-  let component: AppMainMenuComponent;
   let fixture: ComponentFixture<AppMainMenuComponent>;
 
-  const mockRecipeCollectionService = {
-    collections$: EMPTY,
-  };
+  const desserts = Collection.make({
+    id: CollectionId.make('desserts'),
+    name: 'Desserts',
+    description: '',
+    recipes: [],
+  });
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  const create = async (getAll: CollectionQueries['Service']['getAll']) => {
+    TestBed.configureTestingModule({
       providers: [
         provideRouter([]),
         provideNoopAnimations(),
-        {
-          provide: RecipeCollectionService,
-          useValue: mockRecipeCollectionService,
-        },
+        provideEffectRuntime(Layer.mock(CollectionQueries, { getAll })),
       ],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
+    });
     fixture = TestBed.createComponent(AppMainMenuComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
+  };
+
+  it('links the collections', async () => {
+    await create(Effect.succeed([desserts]));
+
+    const link = fixture.nativeElement.querySelector(
+      'a[href="/collections/collection/desserts"]',
+    );
+    expect(link?.textContent).toContain('Desserts');
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('shows the menu when the collections cannot be loaded', async () => {
+    await create(Effect.die(new Error('offline')));
+
+    expect(fixture.nativeElement.textContent).toContain('Print template');
   });
 });

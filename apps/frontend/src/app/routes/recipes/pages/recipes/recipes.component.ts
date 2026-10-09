@@ -1,22 +1,25 @@
-import { CollectionRecipeListComponent } from '@overckd-app/collection/ui';
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { CollectionRecipe } from '@overckd/domain';
-import { RecipeCollectionService } from '../../../../modules/domain/recipe-collection/services/recipe-collection.service';
+import { injectCollectionQueries } from '@overckd-app/collection/data-access';
+import { CollectionRecipeListComponent } from '@overckd-app/collection/ui';
+import { RecipeRef } from '@overckd/domain-experimental';
 
 @Component({
   templateUrl: './recipes.component.html',
   styleUrls: ['./recipes.component.scss'],
-  imports: [CollectionRecipeListComponent, AsyncPipe],
+  imports: [CollectionRecipeListComponent],
 })
 export class RecipesPageComponent {
   readonly #router = inject(Router);
-  readonly #recipeCollectionService = inject(RecipeCollectionService);
 
-  recipeGroups$ = this.#recipeCollectionService.collections$;
+  readonly #collections = injectCollectionQueries().getAll();
 
-  onRecipeSelected(recipe: CollectionRecipe) {
-    this.#router.navigate(['/recipes', 'recipe', recipe.name]);
+  /** The collections, or none while they load or when they failed to load */
+  protected readonly collections = computed(() =>
+    this.#collections.hasValue() ? this.#collections.value() : [],
+  );
+
+  protected onRecipeSelected(recipe: RecipeRef) {
+    void this.#router.navigate(['/recipes', 'recipe', recipe.id]);
   }
 }

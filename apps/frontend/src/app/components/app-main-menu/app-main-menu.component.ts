@@ -1,7 +1,7 @@
+import { injectCollectionQueries } from '@overckd-app/collection/data-access';
 import { CollectionMainMenuGroupComponent } from '@overckd-app/collection/ui';
 import { SharedUiModule } from '@overckd-app/ui';
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component, computed } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { RouterModule } from '@angular/router';
 import { CkadMainMenuModule } from '@ckapp/angular/main-menu';
@@ -12,7 +12,6 @@ import {
   faUtensils,
   faWallet,
 } from '@fortawesome/free-solid-svg-icons';
-import { RecipeCollectionService } from '../../modules/domain/recipe-collection/services/recipe-collection.service';
 
 /**
  * Component that displays the apps
@@ -31,13 +30,11 @@ import { RecipeCollectionService } from '../../modules/domain/recipe-collection/
   ],
 })
 export class AppMainMenuComponent {
-  readonly #recipeCollectionService = inject(RecipeCollectionService);
+  readonly #collections = injectCollectionQueries().getAll();
 
-  protected readonly collections = toSignal(
-    this.#recipeCollectionService.collections$,
-    {
-      initialValue: [],
-    },
+  /** The collections, or none while they load or when they failed to load */
+  protected readonly collections = computed(() =>
+    this.#collections.hasValue() ? this.#collections.value() : [],
   );
 
   readonly itemClass = 'ckapps-main-menu-item';
