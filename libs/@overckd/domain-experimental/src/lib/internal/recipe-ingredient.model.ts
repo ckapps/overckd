@@ -1,7 +1,8 @@
-import { Effect, Schema } from 'effect';
+import { Effect, Function as Fn, Option as O, Schema } from 'effect';
 import {
   IngredientAmount,
   IngredientAmountJson,
+  scaleIngredientAmount,
 } from './ingredient-amount.model';
 import { IngredientId, IngredientIdFromString } from './ingredient.model';
 
@@ -42,6 +43,28 @@ export class RecipeIngredient extends Schema.Class<RecipeIngredient>(
  * @category instances
  */
 export const Equivalence = Schema.toEquivalence(RecipeIngredient);
+
+/**
+ * Scales the amount of the given `ingredient` by the given `scalar` (see
+ * `scaleIngredientAmount`).
+ *
+ * @param ingredient The ingredient with the amount to scale
+ * @param scalar The scalar by which to scale
+ *
+ * @returns
+ * The ingredient with the scaled amount
+ */
+export const scaleRecipeIngredient: {
+  (scalar: number): (ingredient: RecipeIngredient) => RecipeIngredient;
+  (ingredient: RecipeIngredient, scalar: number): RecipeIngredient;
+} = Fn.dual(
+  2,
+  (ingredient: RecipeIngredient, scalar: number): RecipeIngredient =>
+    RecipeIngredient.make({
+      ...ingredient,
+      amount: O.map(ingredient.amount, scaleIngredientAmount(scalar)),
+    }),
+);
 
 /**
  * @category Schemas

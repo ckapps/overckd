@@ -1,10 +1,15 @@
 import { Option, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
-import { IngredientAmount } from './ingredient-amount.model';
+import {
+  IngredientAmount,
+  UnitIngredientAmount,
+} from './ingredient-amount.model';
+import { IngredientId } from './ingredient.model';
 import {
   RecipeIngredient,
   RecipeIngredientGroupJson,
   RecipeIngredientJson,
+  scaleRecipeIngredient,
 } from './recipe-ingredient.model';
 
 describe('RecipeIngredient', () => {
@@ -93,5 +98,34 @@ describe('RecipeIngredientGroup', () => {
         ingredients: [],
       }),
     ).toThrow();
+  });
+});
+
+describe('scaleRecipeIngredient', () => {
+  const flour = RecipeIngredient.make({
+    uri: IngredientId.make('flour'),
+    name: 'Flour',
+    amount: Option.some(
+      UnitIngredientAmount.make({ unit: 'g', value: 150, scaleFactor: 1 }),
+    ),
+    optional: true,
+    alternatives: ['spelt flour'],
+  });
+
+  it('scales the amount and keeps the rest', () => {
+    expect(scaleRecipeIngredient(flour, 2)).toEqual(
+      RecipeIngredient.make({
+        ...flour,
+        amount: Option.some(
+          UnitIngredientAmount.make({ unit: 'g', value: 300, scaleFactor: 1 }),
+        ),
+      }),
+    );
+  });
+
+  it('keeps an ingredient without amount', () => {
+    const salt = RecipeIngredient.make({ ...flour, amount: Option.none() });
+
+    expect(scaleRecipeIngredient(salt, 2).amount).toEqual(Option.none());
   });
 });
