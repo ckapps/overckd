@@ -1,11 +1,11 @@
 import { provideRouter } from '@angular/router';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { RecipeCollectionPageWrapperComponent } from './recipe-collection-page-wrapper.component';
+import { CollectionPageWrapperComponent } from './collection-page-wrapper.component';
 
-describe('RecipeCollectionPageWrapperComponent', () => {
-  let spectator: Spectator<RecipeCollectionPageWrapperComponent>;
+describe('CollectionPageWrapperComponent', () => {
+  let spectator: Spectator<CollectionPageWrapperComponent>;
   const createComponent = createComponentFactory({
-    component: RecipeCollectionPageWrapperComponent,
+    component: CollectionPageWrapperComponent,
     providers: [provideRouter([])],
   });
 

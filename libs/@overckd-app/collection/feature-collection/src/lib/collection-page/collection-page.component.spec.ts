@@ -9,7 +9,7 @@ import {
   RecipeId,
   RecipeRef,
 } from '@overckd/domain-experimental';
-import { RecipeCollectionPageComponent } from './recipe-collection-page.component';
+import { CollectionPageComponent } from './collection-page.component';
 
 const pancakes = RecipeRef.make({
   id: RecipeId.make('Pancakes'),
@@ -43,10 +43,10 @@ vi.mock('@overckd-app/collection/data-access', () => ({
   injectCollectionQueries: () => ({ findById }),
 }));
 
-describe('RecipeCollectionPageComponent', () => {
-  let spectator: Spectator<RecipeCollectionPageComponent>;
+describe('CollectionPageComponent', () => {
+  let spectator: Spectator<CollectionPageComponent>;
   const createComponent = createComponentFactory({
-    component: RecipeCollectionPageComponent,
+    component: CollectionPageComponent,
     providers: [{ provide: Router, useValue: { navigate: vi.fn() } }],
     detectChanges: false,
   });

@@ -21,8 +21,8 @@ export const appRoutes: Route[] = [
   {
     path: 'collections',
     loadChildren: () =>
-      import('./routes/recipe-collections/recipe-collections.module').then(
-        m => m.RecipeCollectionsModule,
+      import('@overckd-app/collection/feature-collection').then(
+        m => m.collectionRoutes,
       ),
   },
   { path: '**', component: NotFoundPageComponent },
