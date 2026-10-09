@@ -1,0 +1,10 @@
+{
+  "name": "overckd-app-collection-data-access",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd-app/collection/data-access/src",
+  "prefix": "overckd",
+  "projectType": "library",
+  "tags": ["type:data-access", "platform:browser"],
+  "// targets": "to see all targets run: nx show project overckd-app-collection-data-access --web",
+  "targets": {}
+}

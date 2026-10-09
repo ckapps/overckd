@@ -78,6 +78,9 @@
       "@overckd/collection/adapter-http-client": [
         "libs/@overckd/collection/adapter-http-client/src/index.ts"
       ],
+      "@overckd-app/collection/data-access": [
+        "libs/@overckd-app/collection/data-access/src/index.ts"
+      ],
       "@overckd-app/ui": ["libs/@overckd-app/ui/src/index.ts"]
     }
   },
