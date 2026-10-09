@@ -1,8 +1,8 @@
 import { Component, computed, HostBinding, input, signal } from '@angular/core';
 import { RecipePreparation } from '@overckd/domain-experimental';
 import { Option } from 'effect';
-import { PortionConverterComponent } from '../../../portion/modules/portion-common/components/portion-converter/portion-converter.component';
-import { RecipePart, recipeParts } from '../../recipe-parts';
+import { PortionConverterComponent } from '../portion-converter/portion-converter.component';
+import { RecipePart, recipeParts } from '../recipe-parts';
 import { ImprovementNotesComponent } from '../improvement-notes/improvement-notes.component';
 import { IngredientGroupComponent } from '../ingredient-group/ingredient-group.component';
 import { IngredientListComponent } from '../ingredient-list/ingredient-list.component';

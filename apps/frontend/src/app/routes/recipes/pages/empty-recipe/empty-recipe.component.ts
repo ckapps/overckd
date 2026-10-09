@@ -1,3 +1,4 @@
+import { RecipeComponent } from '@overckd-app/recipe/ui';
 import { Component } from '@angular/core';
 import {
   IngredientId,
@@ -7,7 +8,6 @@ import {
   RecipePreparation,
 } from '@overckd/domain-experimental';
 import { Array as Arr, Option } from 'effect';
-import { RecipeComponent } from '../../../../modules/domain/recipe/components/recipe/recipe.component';
 
 /** Blank space, to write on by hand */
 const blank = ' ';

@@ -1,0 +1,10 @@
+{
+  "name": "overckd-app-recipe-ui",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd-app/recipe/ui/src",
+  "prefix": "overckd",
+  "projectType": "library",
+  "tags": ["type:ui", "platform:browser"],
+  "// targets": "to see all targets run: nx show project overckd-app-recipe-ui --web",
+  "targets": {}
+}

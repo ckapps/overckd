@@ -3,7 +3,7 @@ import {
   PreparationStep,
   RecipePreparation,
 } from '@overckd/domain-experimental';
-import { recipeParts } from '../../recipe-parts';
+import { recipeParts } from '../recipe-parts';
 import { PreparationStepComponent } from '../preparation-step/preparation-step.component';
 
 interface PreparationGroup {

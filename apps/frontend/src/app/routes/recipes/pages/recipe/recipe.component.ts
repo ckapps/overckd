@@ -1,7 +1,7 @@
+import { RecipeComponent } from '@overckd-app/recipe/ui';
 import { Component, computed, input } from '@angular/core';
 import { injectRecipeQueries } from '@overckd-app/recipe/data-access';
 import { RecipeId, RecipeNotFound } from '@overckd/domain-experimental';
-import { RecipeComponent } from '../../../../modules/domain/recipe/components/recipe/recipe.component';
 
 @Component({
   templateUrl: './recipe.component.html',

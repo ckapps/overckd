@@ -13,7 +13,16 @@ import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
 import { Portion } from '@overckd/domain-experimental';
 import * as Fn from 'effect/Function';
-import { PortionKindPipe } from '../../../portion-common/pipes/portion-kind.pipe';
+import { PortionKindPipe } from '../portion-kind/portion-kind.pipe';
+
+/**
+ * The value of the input: the kind of a portion, its quantity and its label
+ */
+export interface PortionInputValue {
+  kind: Portion.PortionKind | null;
+  quantity: number | null;
+  label: string | null;
+}
 
 @Component({
   selector: 'overckd-portion-quantifier-input',
@@ -54,15 +63,15 @@ export class PortionQuantifierInputComponent implements ControlValueAccessor {
   private _onChange: (v: unknown) => void = Fn.constVoid;
   private _onTouched: () => void = Fn.constVoid;
 
-  writeValue(obj: any): void {
-    if (obj) {
-      this.form.setValue(obj);
+  writeValue(value: PortionInputValue | null): void {
+    if (value) {
+      this.form.setValue(value);
     }
   }
-  registerOnChange(fn: any): void {
-    this._onChange = fn;
+  registerOnChange(fn: (value: PortionInputValue) => void): void {
+    this._onChange = fn as (value: unknown) => void;
   }
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this._onTouched = fn;
   }
 }

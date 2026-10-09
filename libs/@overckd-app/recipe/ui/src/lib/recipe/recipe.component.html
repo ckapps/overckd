@@ -44,14 +44,14 @@
       }
     </div>
     @if (_recipe.tips.length > 0) {
-      <img src="./assets/divider.png" [class]="dividerCssClass" />
+      <img src="./assets/divider.png" alt="" [class]="dividerCssClass" />
       <div>
         <h4 class="subtitle--v2">Tipps</h4>
         <overckd-recipe-tips [tips]="_recipe.tips" />
       </div>
     }
 
-    <img src="./assets/divider.png" [class]="dividerCssClass" />
+    <img src="./assets/divider.png" alt="" [class]="dividerCssClass" />
     <div>
       <h4 class="subtitle--v2">Verbesserungen</h4>
       <overckd-improvement-notes [numberOfLines]="numberOfLines()" />
@@ -70,13 +70,13 @@
           <div [class]="secondaryImageContainerCssClass()">
             @for (image of secondaryImages(); track $index) {
               <div class="d-flex w-100">
-                <img [src]="image" class="w-100" />
+                <img [src]="image" [alt]="_recipe.name" class="w-100" />
               </div>
             }
           </div>
 
           <div class="d-flex col">
-            <img [src]="_primaryImage" class="w-100" />
+            <img [src]="_primaryImage" [alt]="_recipe.name" class="w-100" />
           </div>
         </div>
       </div>
