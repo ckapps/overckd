@@ -6,7 +6,7 @@ import {
   CkadMainMenuItemComponent,
 } from '@ckapp/angular/main-menu';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
-import { RecipeCollection } from '@overckd/domain';
+import { Collection } from '@overckd/domain-experimental';
 
 @Component({
   selector: 'overckd-collection-main-menu-group',
@@ -21,7 +21,7 @@ import { RecipeCollection } from '@overckd/domain';
   ],
 })
 export class CollectionMainMenuGroupComponent {
-  readonly collections = input.required<ReadonlyArray<RecipeCollection>>();
+  readonly collections = input.required<ReadonlyArray<Collection>>();
 
   readonly itemClass = 'ckapps-main-menu-item';
   readonly itemActiveClass = 'ckapps-main-menu-item--active';

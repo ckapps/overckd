@@ -1,4 +1,4 @@
-@for (recipeCollection of recipeGroups$ | async; track recipeCollection) {
+@for (recipeCollection of collections(); track recipeCollection.id) {
   <section>
     <overckd-collection-recipe-list
       [collection]="recipeCollection"

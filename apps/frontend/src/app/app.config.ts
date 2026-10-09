@@ -7,6 +7,7 @@ import {
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   provideRouter,
+  withComponentInputBinding,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
 import { provideEffectRuntime } from '@ckapp/angular-effect';
@@ -18,9 +19,7 @@ import { Layer } from 'effect';
 import { environment } from '../environments/environment';
 import { appRoutes } from './app.routes';
 import { ApiHttpClient } from './config/api.config';
-import { RecipeCollectionService } from './modules/domain/recipe-collection/services/recipe-collection.service';
 import { RecipeService } from './modules/domain/recipe/services/recipe.service';
-import { AppRecipeCollectionService } from './services/app-recipe-collection.service';
 import { AppRecipeService } from './services/app-recipe.service';
 
 export const appConfig: ApplicationConfig = {
@@ -28,7 +27,12 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideEffects(),
     provideHttpClient(),
-    provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
+    provideRouter(
+      appRoutes,
+      withEnabledBlockingInitialNavigation(),
+      // Route parameters reach the pages as inputs
+      withComponentInputBinding(),
+    ),
     provideAnimations(),
     // External modules
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
@@ -42,10 +46,6 @@ export const appConfig: ApplicationConfig = {
     {
       provide: RecipeService,
       useClass: AppRecipeService,
-    },
-    {
-      provide: RecipeCollectionService,
-      useClass: AppRecipeCollectionService,
     },
   ],
 };
