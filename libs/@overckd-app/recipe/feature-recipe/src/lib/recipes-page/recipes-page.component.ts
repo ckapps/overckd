@@ -5,8 +5,8 @@ import { CollectionRecipeListComponent } from '@overckd-app/collection/ui';
 import { RecipeRef } from '@overckd/domain-experimental';
 
 @Component({
-  templateUrl: './recipes.component.html',
-  styleUrls: ['./recipes.component.scss'],
+  templateUrl: './recipes-page.component.html',
+  styleUrls: ['./recipes-page.component.scss'],
   imports: [CollectionRecipeListComponent],
 })
 export class RecipesPageComponent {

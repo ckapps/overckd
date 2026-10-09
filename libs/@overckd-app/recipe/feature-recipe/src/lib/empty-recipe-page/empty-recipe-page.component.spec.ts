@@ -1,5 +1,5 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { EmptyRecipePageComponent } from './empty-recipe.component';
+import { EmptyRecipePageComponent } from './empty-recipe-page.component';
 
 describe('EmptyRecipePageComponent', () => {
   let spectator: Spectator<EmptyRecipePageComponent>;

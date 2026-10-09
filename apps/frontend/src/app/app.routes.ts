@@ -16,7 +16,7 @@ export const appRoutes: Route[] = [
   {
     path: 'recipes',
     loadChildren: () =>
-      import('./routes/recipes/recipes.module').then(m => m.RecipesModule),
+      import('@overckd-app/recipe/feature-recipe').then(m => m.recipeRoutes),
   },
   {
     path: 'collections',
