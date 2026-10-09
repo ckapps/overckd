@@ -5,10 +5,10 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 
 export default defineConfig(() => ({
   root: __dirname,
-  cacheDir: '../../../../node_modules/.vite/libs/shared/collection/ui',
+  cacheDir: '../../../../node_modules/.vite/libs/@overckd-app/collection/ui',
   plugins: [angular(), nxViteTsPaths()],
   test: {
-    name: 'collection-ui',
+    name: 'overckd-app-collection-ui',
     watch: false,
     globals: true,
     environment: 'jsdom',
@@ -19,7 +19,7 @@ export default defineConfig(() => ({
     // that setupTestBed() initializes.
     server: { deps: { inline: ['@ngneat/spectator'] } },
     coverage: {
-      reportsDirectory: '../../../../coverage/libs/shared/collection/ui',
+      reportsDirectory: '../../../../coverage/libs/@overckd-app/collection/ui',
       provider: 'v8' as const,
     },
   },

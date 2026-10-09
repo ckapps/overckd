@@ -1,4 +1,4 @@
-import { CollectionRecipeListComponent } from '@_shared/collection/ui';
+import { CollectionRecipeListComponent } from '@overckd-app/collection/ui';
 import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
