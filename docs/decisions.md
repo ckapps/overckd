@@ -229,18 +229,38 @@ See [configuration](architecture/configuration.md). Made on 2026-10-02.
   Unprefixed environment variables (`PORT`, `API_VERSION`): they clash with
   other programs' variables.
 
-## Recipe images: an `image` feature in the core
+## Media: stored by key, linked by absolute URL
 
-The backend and the desktop app serve recipe images through an `image`
-feature: the port `ImageQueries` with `ImageQueriesLocal` on `ImageRepo`,
-`ImageRepoFs` for a directory, and `ImageHttpRoute` for `GET /images/:name`. The route sits next to `OverckdApi`, not in it, because
-the recipe files link their images without the `/api` prefix. Which directory
-the images come from is a setting (`server.images`). Made on 2026-10-02.
+A server stores the media of its recipes (today, their images) under keys; in
+a recipe file, `/images/<name>` is the key `<name>`. Its repository adapters
+turn each key into an absolute URL: the `origin` and the `path` of the `media`
+setting, followed by the key. So ports and the wire carry only absolute URLs,
+and clients use them as they come. URLs of other sites pass through unchanged.
+Serving media is not a feature of the core: the backend serves a directory
+with Effect's `HttpStaticServer` under `path`, or a reverse proxy or a CDN
+serves it under the same path. Without the `media` setting, a server has no
+media. A `media` feature in the core comes with the first command that adds
+media. Made on 2026-10-02, changed on 2026-10-09.
 
-- **Why:** both apps serve the same images, the source can change (another
-  directory, none behind a reverse proxy) without touching the route, and the
-  check that keeps a request inside the images directory exists once, with
-  tests.
-- **Rejected:** a static-file route in each app (written twice, and the
-  traversal check with it). Images in `OverckdApi`: their URLs would move
-  under `/api`, which changes the links in every recipe file.
+- **Why:** a client can talk to several servers (your own, a friend's, one
+  that proxies a recipe website), and only a server knows where its media
+  lives: on its own route, behind a CDN, on another site. Absolute URLs keep
+  their meaning when a recipe moves between servers. Keys keep the stored
+  recipes free of the deployment, so moving to another host or a CDN changes
+  one setting, not every recipe. `HttpStaticServer` already does what a static
+  route needs: it keeps requests inside the directory and handles content
+  types, byte ranges and 304s. The route and the URLs share `path`, so they
+  can't drift apart. No media by default, because serving a directory
+  publishes it.
+- **Rejected:** an `image` feature whose port `ImageQueries` returns the bytes
+  for an `ImageHttpRoute` (the decision of 2026-10-02): it rebuilds a
+  static-file server, and a CDN can't use it. URLs in the stored recipes: they
+  tie every recipe to one host. Clients building the URLs from keys, as
+  Angular's image loaders do: a client would have to know every server's media
+  host and CDN, and couldn't link the media of a proxied site. URLs relative
+  to the API's URL: they break when a recipe moves to another server, and
+  can't point at a CDN. The media route in `OverckdApi`: static files have no
+  JSON contract. One `url` for the links, apart from the route's path: the
+  path would be set twice. The setting under `server` (`server.images`): it chooses where
+  media is stored, which isn't about the HTTP server, and the desktop app needs
+  it too.
