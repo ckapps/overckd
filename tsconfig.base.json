@@ -19,9 +19,6 @@
         "libs/shared/collection/infra-rxdb/src/index.ts"
       ],
       "@_shared/collection/ui": ["libs/shared/collection/ui/src/index.ts"],
-      "@_shared/ingredient/infra-rxdb": [
-        "libs/shared/ingredient/infra-rxdb/src/index.ts"
-      ],
       "@_shared/ui": ["libs/shared/ui/src/index.ts"],
       "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
       "@ckapp/angular-desktop": ["libs/@ckapp/angular-desktop/src/index.ts"],
