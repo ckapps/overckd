@@ -72,6 +72,9 @@
       "@overckd/collection/adapter-fs": [
         "libs/@overckd/collection/adapter-fs/src/index.ts"
       ],
+      "@overckd/collection/adapter-http-client": [
+        "libs/@overckd/collection/adapter-http-client/src/index.ts"
+      ],
       "@overckd-app/ui": ["libs/@overckd-app/ui/src/index.ts"]
     }
   },
