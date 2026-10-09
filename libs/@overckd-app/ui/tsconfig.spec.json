@@ -13,9 +13,7 @@
     "moduleResolution": "bundler",
     "isolatedModules": true
   },
-  "files": [
-    "src/test-setup.ts"
-  ],
+  "files": ["src/test-setup.ts"],
   "include": [
     "vite.config.mts",
     "src/**/*.test.ts",

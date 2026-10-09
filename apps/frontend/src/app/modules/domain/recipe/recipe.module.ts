@@ -1,4 +1,4 @@
-import { SharedUiModule } from '@_shared/ui';
+import { SharedUiModule } from '@overckd-app/ui';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IngredientModule } from '../ingredient/ingredient.module';

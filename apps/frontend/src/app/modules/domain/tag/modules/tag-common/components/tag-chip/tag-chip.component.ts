@@ -1,4 +1,4 @@
-import { IconsModule } from '@_shared/ui';
+import { IconsModule } from '@overckd-app/ui';
 import { NgStyle } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { MatChip } from '@angular/material/chips';

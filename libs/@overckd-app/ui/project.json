@@ -1,9 +1,10 @@
 {
-  "name": "ui",
+  "name": "overckd-app-ui",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/ui/src",
+  "sourceRoot": "libs/@overckd-app/ui/src",
   "prefix": "lib",
   "projectType": "library",
   "tags": ["type:ui", "platform:browser"],
+  "// targets": "to see all targets run: nx show project overckd-app-ui --web",
   "targets": {}
 }
