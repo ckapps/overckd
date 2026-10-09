@@ -93,7 +93,9 @@ describe('ConfigLive', () => {
   it('accepts a media section', async () => {
     expect(
       await Effect.runPromise(
-        serverConfig(`${yaml}media:\n  type: filesystem\n  dir: ./images\n`),
+        serverConfig(
+          `${yaml}media:\n  type: filesystem\n  dir: ./images\n  origin: http://localhost:3000\n`,
+        ),
       ),
     ).toEqual({ port: 3001, apiVersion: 'next' });
   });

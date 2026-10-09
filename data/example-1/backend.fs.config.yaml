@@ -13,5 +13,5 @@ repositories:
 media:
   type: filesystem
   dir: ./app/images
-  # the recipe files link their images as /images/<name>
+  origin: http://localhost:3000
   path: /images

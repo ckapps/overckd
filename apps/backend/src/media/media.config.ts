@@ -13,6 +13,27 @@ export const MediaPath = Schema.String.check(
   }),
 );
 
+/**
+ * Whether `value` is an origin: scheme, host and port, without a path or a
+ * trailing `/`. Unlike `URL.origin`, it accepts custom schemes
+ * (`overckd://app`).
+ */
+const isOrigin = (value: string) => {
+  try {
+    const url = new URL(value);
+    return url.host !== '' && value === `${url.protocol}//${url.host}`;
+  } catch {
+    return false;
+  }
+};
+
+/** An origin such as `http://localhost:3000` */
+export const MediaOrigin = Schema.String.check(
+  Schema.makeFilter(isOrigin, {
+    message: 'Expected an origin such as http://localhost:3000, without a path',
+  }),
+);
+
 export const FilesystemMediaConfig = Schema.Struct({
   type: Schema.Literal('filesystem'),
   /** The directory of the media files */
@@ -25,6 +46,11 @@ export const FilesystemMediaConfig = Schema.Struct({
     Schema.withDecodingDefaultKey(Effect.succeed('/media')),
   ).annotate({
     description: 'The URL path under which the backend serves the files',
+  }),
+  /** Where clients reach the files: the backend, or a CDN or reverse proxy in front of it */
+  origin: MediaOrigin.annotate({
+    description:
+      'Where clients reach the files: the backend, or a CDN or a reverse proxy in front of it that serves them under the same path',
   }),
 });
 export type FilesystemMediaConfig = Schema.Schema.Type<
@@ -66,3 +92,15 @@ export class MediaConfig extends Context.Service<
     }),
   );
 }
+
+/**
+ * Where clients reach the media of `config`, `<origin><path>`, which the
+ * recipes link their images under; none for `none`.
+ */
+export const mediaUrl = (config: FullMediaConfig): string | undefined =>
+  Match.value(config).pipe(
+    Match.discriminatorsExhaustive('type')({
+      none: () => undefined,
+      filesystem: ({ origin, path }) => `${origin}${path}`,
+    }),
+  );
