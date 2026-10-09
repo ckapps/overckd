@@ -238,18 +238,6 @@ importers:
       '@angular/router':
         specifier: 21.2.9
         version: 21.2.9(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))(@angular/platform-browser@21.2.9(@angular/animations@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3)))(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3)))(rxjs@7.8.2)
-      '@ckapp/rxjs-electron':
-        specifier: ~0.1.4
-        version: 0.1.4(electron@35.7.5(supports-color@8.1.1))(rxjs@7.8.2)
-      '@ckapp/rxjs-node-fs':
-        specifier: ^0.6.1
-        version: 0.6.1(rxjs@7.8.2)
-      '@ckapp/rxjs-node-process':
-        specifier: ^0.6.1
-        version: 0.6.1(rxjs@7.8.2)
-      '@ckapp/rxjs-snafu':
-        specifier: ~0.1.9
-        version: 0.1.11(rxjs@7.8.2)
       '@effect/platform-browser':
         specifier: 4.0.0-rc.118
         version: 4.0.0-rc.118(effect@4.0.0-rc.118)
@@ -532,9 +520,6 @@ importers:
       '@angular/router':
         specifier: 21.2.9
         version: 21.2.9(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))(@angular/platform-browser@21.2.9(@angular/animations@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3)))(@angular/common@21.2.9(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))(rxjs@7.8.2))(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3)))(rxjs@7.8.2)
-      '@ckapp/rxjs-snafu':
-        specifier: ~0.1.9
-        version: 0.1.11(rxjs@7.8.2)
       '@fortawesome/angular-fontawesome':
         specifier: ^1.0.0
         version: 1.0.0(@angular/core@21.2.9(@angular/compiler@21.2.9)(rxjs@7.8.2)(zone.js@0.16.3))
@@ -1592,41 +1577,6 @@ packages:
 
   '@bufbuild/protobuf@2.15.0':
     resolution: {integrity: sha512-DAheWUkVr/SJTWCc+lg9dhY0eN4SaWlf4+bG1KzHeXbnqt0AfB/NX0Z+VunGlM1ki1B4zVvye27MpKh/svySUA==}
-
-  '@ckapp/math@0.0.57':
-    resolution: {integrity: sha512-+X16iAImLavQTjV3HwrD6jhR0WrAjaUbjgKEUl7tthf/ovbtn5x+YrobnxM82JjppCfn3c205UGU2Doq+SenoQ==}
-
-  '@ckapp/math@0.0.58':
-    resolution: {integrity: sha512-xIi1qYEj/1UDTbq+Y6rqGF38Y3pYrLQGi8O3nWXdsujK/O3NYiQCcsMn6r/mKdHB1dGmnNztvvOtoXybgszBEw==}
-
-  '@ckapp/rxjs-electron@0.1.4':
-    resolution: {integrity: sha512-o7oFHMPa916RzjOwEh7kVsUFuZO/kINTOSuZG5Cwz5c8YmW80TK6s23jZcwYpE7h58d12CL5w0oCZ1r9cWSnEA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      electron: ^23.0.0
-      rxjs: ^7.5.0
-
-  '@ckapp/rxjs-node-fs@0.6.1':
-    resolution: {integrity: sha512-hGbqfCU8tc93dhQxa4S6wcabrvCQqYY7hQwxnamEa1SQuXUk0i8bb5oax7sdyX0zko163oOuvYpcqNyDnxjlWA==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      rxjs: ^7.5.0
-
-  '@ckapp/rxjs-node-process@0.6.1':
-    resolution: {integrity: sha512-AXHCZv7zPq3HAiEByYd74rY18W4uNLHohl0Ba6kkjy5yTU7sbNZfxuWQjEryu0cIXiUgMNVLinWnZGZ1DqOKCg==}
-    engines: {node: '>=16'}
-    peerDependencies:
-      rxjs: ^7.5.0
-
-  '@ckapp/rxjs-snafu@0.1.11':
-    resolution: {integrity: sha512-pvAVfbDEE+4ucAOmu2SO+6fjL0G2EE0MWfmQ+zw+D6nltciqO++lWI80cix/+fFj7zokgFAf3HTgvnmFO/gK/g==}
-    peerDependencies:
-      rxjs: ^7.5.6
-
-  '@ckapp/rxjs-snafu@0.1.9':
-    resolution: {integrity: sha512-hvVX0m1/2fDccz5sUInePdoTjeZOw0di7SHtlziaaIY0Qrm8WxwDOt08+TpqyPdA1p62CAymgonSZlqf4fbZXA==}
-    peerDependencies:
-      rxjs: ^7.5.6
 
   '@colordx/core@5.8.0':
     resolution: {integrity: sha512-cG0QJAO6VkaRUlIb0zOzX9gfJgs1pjoOL9gZ/PK1kfvBs0GCkADu5oQh6gPxXgQnZ3gV575h+lQRC0NlMDTclA==}
@@ -7017,9 +6967,6 @@ packages:
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
-
-  fp-ts@2.16.11:
-    resolution: {integrity: sha512-LaI+KaX2NFkfn1ZGHoKCmcfv7yrZsC3b8NtWsTVQeHkq4F27vI5igUuO53sxqDEa2gNQMHFPmpojDw/1zmUK7w==}
 
   fraction.js@5.3.4:
     resolution: {integrity: sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==}
@@ -13803,44 +13750,6 @@ snapshots:
 
   '@bufbuild/protobuf@2.15.0': {}
 
-  '@ckapp/math@0.0.57':
-    dependencies:
-      fp-ts: 2.16.11
-      tslib: 2.8.1
-
-  '@ckapp/math@0.0.58':
-    dependencies:
-      fp-ts: 2.16.11
-      tslib: 2.8.1
-
-  '@ckapp/rxjs-electron@0.1.4(electron@35.7.5(supports-color@8.1.1))(rxjs@7.8.2)':
-    dependencies:
-      '@ckapp/math': 0.0.57
-      '@ckapp/rxjs-snafu': 0.1.9(rxjs@7.8.2)
-      electron: 35.7.5(supports-color@8.1.1)
-      rxjs: 7.8.2
-      tslib: 2.8.1
-
-  '@ckapp/rxjs-node-fs@0.6.1(rxjs@7.8.2)':
-    dependencies:
-      rxjs: 7.8.2
-
-  '@ckapp/rxjs-node-process@0.6.1(rxjs@7.8.2)':
-    dependencies:
-      rxjs: 7.8.2
-
-  '@ckapp/rxjs-snafu@0.1.11(rxjs@7.8.2)':
-    dependencies:
-      '@ckapp/math': 0.0.58
-      rxjs: 7.8.2
-      tslib: 2.8.1
-
-  '@ckapp/rxjs-snafu@0.1.9(rxjs@7.8.2)':
-    dependencies:
-      '@ckapp/math': 0.0.57
-      rxjs: 7.8.2
-      tslib: 2.8.1
-
   '@colordx/core@5.8.0': {}
 
   '@commitlint/cli@17.8.1(@swc/core@1.16.2(@swc/helpers@0.5.23))':
@@ -20281,8 +20190,6 @@ snapshots:
       mime-types: 2.1.35
 
   forwarded@0.2.0: {}
-
-  fp-ts@2.16.11: {}
 
   fraction.js@5.3.4: {}
 
