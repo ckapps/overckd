@@ -1,0 +1,9 @@
+{
+  "name": "overckd-recipe-adapter-http-client",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@overckd/recipe/adapter-http-client/src",
+  "projectType": "library",
+  "tags": ["type:adapter", "platform:any"],
+  "// targets": "to see all targets run: nx show project overckd-recipe-adapter-http-client --web",
+  "targets": {}
+}
