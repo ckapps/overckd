@@ -106,7 +106,7 @@ describe('ConfigLive', () => {
     ['an invalid value', 'server:\n  port: 1.5', 'Expected an integer'],
     ['an unknown section', 'sever:\n  port: 3001', 'Unknown configuration'],
     ['an unknown key', 'server:\n  prot: 3001', 'Unknown configuration'],
-    ['an unknown repository type', 'repositories:\n  type: rxdb', 'memory'],
+    ['an unknown repository type', 'repositories:\n  type: unknown', 'memory'],
     ['an unknown media type', 'media:\n  type: s3', 'filesystem'],
   ])('fails for a config file with %s', async (_, text, message) => {
     const error = await Effect.runPromise(Effect.flip(serverConfig(text)));
