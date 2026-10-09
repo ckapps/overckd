@@ -4,16 +4,17 @@ import {
   BasicRecipePreparation,
   UnionRecipePreparation,
 } from '@overckd/domain';
-import { RecipePreparationLegacyJson } from './recipe-yaml';
+import { RecipeYaml } from './recipe-yaml';
 
-type LegacyRecipeJson = Schema.Codec.Encoded<
-  typeof RecipePreparationLegacyJson
->;
+type RecipeYamlEncoded = Schema.Codec.Encoded<typeof RecipeYaml>;
 
 const loremIpsum =
   'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.';
 
-const serverCliRecipe1 = {
+// Two recipes written for the tests: one without ingredients, one with every
+// kind of amount.
+
+const exampleRecipe1 = {
   name: 'recipe 1',
   images: [],
   ingredients: [],
@@ -26,7 +27,7 @@ const serverCliRecipe1 = {
   tips: [],
 };
 
-const serverCliRecipe2 = {
+const exampleRecipe2 = {
   name: 'recipe 2',
   portion: { kind: 'quantity', count: 2 },
   images: [],
@@ -46,8 +47,7 @@ const serverCliRecipe2 = {
   tips: [],
 };
 
-// The recipes of the files in `data/example-1/app/recipes`, as the legacy
-// codec decodes them.
+// The recipes of the files in `data/example-1/app/recipes`.
 
 const dataRecipe1 = {
   name: 'Recipe 1',
@@ -271,22 +271,22 @@ const dataRecipe3 = {
   },
 };
 
-// What the legacy page gets back: styles and timers are gone, text steps are
-// plain strings, and a text amount includes its unit.
+// What they encode to: styles and timers are gone, text steps are plain
+// strings, and a text amount includes its unit.
 
-const expectedServerCliRecipe1: LegacyRecipeJson = {
-  ...serverCliRecipe1,
+const expectedExampleRecipe1: RecipeYamlEncoded = {
+  ...exampleRecipe1,
   id: 'recipe 1',
   steps: ['step 1', 'step 2', 'Loorem Ipsum dolor'],
 };
 
-const expectedServerCliRecipe2: LegacyRecipeJson = {
-  ...serverCliRecipe2,
+const expectedExampleRecipe2: RecipeYamlEncoded = {
+  ...exampleRecipe2,
   id: 'recipe 2',
   portion: { kind: 'quantity', count: 2 },
 };
 
-const expectedDataRecipe1: LegacyRecipeJson = {
+const expectedDataRecipe1: RecipeYamlEncoded = {
   ...Struct.omit(dataRecipe1, ['timers']),
   id: 'Recipe 1',
   ingredients: [
@@ -311,7 +311,7 @@ const expectedDataRecipe1: LegacyRecipeJson = {
   styles: {},
 };
 
-const expectedDataRecipe2: LegacyRecipeJson = {
+const expectedDataRecipe2: RecipeYamlEncoded = {
   ...dataRecipe2,
   id: 'Some other sweet sweet recipe',
   steps: [
@@ -324,29 +324,29 @@ const expectedDataRecipe2: LegacyRecipeJson = {
   ],
 };
 
-const expectedDataRecipe3: LegacyRecipeJson = {
+const expectedDataRecipe3: RecipeYamlEncoded = {
   ...dataRecipe3,
   id: 'Some delicous salty recipe',
   portion: { kind: 'quantity', count: 2 },
   styles: {},
 };
 
-describe('RecipePreparationLegacyJson', () => {
-  const decode = Schema.decodeUnknownSync(RecipePreparationLegacyJson);
-  const encode = Schema.encodeSync(RecipePreparationLegacyJson);
+describe('RecipeYaml', () => {
+  const decode = Schema.decodeUnknownSync(RecipeYaml);
+  const encode = Schema.encodeSync(RecipeYaml);
 
   describe.each([
-    ['recipe 1', serverCliRecipe1, expectedServerCliRecipe1],
-    ['recipe 2', serverCliRecipe2, expectedServerCliRecipe2],
+    ['recipe 1', exampleRecipe1, expectedExampleRecipe1],
+    ['recipe 2', exampleRecipe2, expectedExampleRecipe2],
     ['Recipe 1', dataRecipe1, expectedDataRecipe1],
     ['Some other sweet sweet recipe', dataRecipe2, expectedDataRecipe2],
     ['Some delicous salty recipe', dataRecipe3, expectedDataRecipe3],
-  ])('the legacy recipe %s', (_, legacy, expected) => {
-    it('should encode back to what the legacy page shows', () => {
-      expect(encode(decode(legacy))).toStrictEqual(expected);
+  ])('the recipe %s', (_, yaml, expected) => {
+    it('should encode back without styles and timers', () => {
+      expect(encode(decode(yaml))).toStrictEqual(expected);
     });
     it('should decode what it encodes to the same recipe', () => {
-      expect(decode(encode(decode(legacy)))).toEqual(decode(legacy));
+      expect(decode(encode(decode(yaml)))).toEqual(decode(yaml));
     });
   });
 
@@ -380,29 +380,27 @@ describe('RecipePreparationLegacyJson', () => {
         'amount' in ingredient ? ingredient.amount : Option.none(),
       );
 
-    expect(amounts(decode(serverCliRecipe2) as BasicRecipePreparation)).toEqual(
-      [
-        Option.some({
-          _tag: 'UnitIngredientAmount',
-          unit: 'kg',
-          value: 3,
-          scaleFactor: 1,
-        }),
-        Option.some({
-          _tag: 'UnitIngredientAmount',
-          unit: 'ml',
-          value: 10,
-          scaleFactor: 1,
-        }),
-        Option.some({
-          _tag: 'UnitIngredientAmount',
-          unit: 'TL',
-          value: 5,
-          scaleFactor: 0.25,
-        }),
-        Option.some({ _tag: 'LabelIngredientAmount', label: '1 Prise' }),
-      ],
-    );
+    expect(amounts(decode(exampleRecipe2) as BasicRecipePreparation)).toEqual([
+      Option.some({
+        _tag: 'UnitIngredientAmount',
+        unit: 'kg',
+        value: 3,
+        scaleFactor: 1,
+      }),
+      Option.some({
+        _tag: 'UnitIngredientAmount',
+        unit: 'ml',
+        value: 10,
+        scaleFactor: 1,
+      }),
+      Option.some({
+        _tag: 'UnitIngredientAmount',
+        unit: 'TL',
+        value: 5,
+        scaleFactor: 0.25,
+      }),
+      Option.some({ _tag: 'LabelIngredientAmount', label: '1 Prise' }),
+    ]);
     expect(amounts(decode(dataRecipe3) as BasicRecipePreparation)).toEqual([
       Option.none(),
       Option.some({ _tag: 'CountIngredientAmount', count: 2, scaleFactor: 1 }),
@@ -462,22 +460,8 @@ describe('RecipePreparationLegacyJson', () => {
     });
   });
 
-  it('should read optional keys that hold undefined', () => {
-    // The legacy codecs write `label: undefined` into portions without label.
-    const legacy = {
-      ...dataRecipe3,
-      portion: { kind: 'quantity', count: 2, label: undefined },
-      ingredients: [{ name: 'Rucola', amount: undefined, uri: undefined }],
-    };
-
-    expect(encode(decode(legacy))).toStrictEqual({
-      ...expectedDataRecipe3,
-      ingredients: [{ name: 'Rucola' }],
-    });
-  });
-
   it('should stand in for an empty list of ingredients', () => {
-    const recipe = decode(serverCliRecipe1) as BasicRecipePreparation;
+    const recipe = decode(exampleRecipe1) as BasicRecipePreparation;
 
     expect(recipe.ingredients).toMatchObject([{ name: 'No ingredients' }]);
   });

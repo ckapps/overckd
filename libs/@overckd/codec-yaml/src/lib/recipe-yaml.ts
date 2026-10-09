@@ -24,15 +24,12 @@ import {
   SchemaTransformation,
 } from 'effect';
 
+// The `recipe` of a recipe file, restricted to the values `RecipePreparation`
+// can hold. Styles and timers are left out: the model has no place for them.
+
 const Positive = Schema.Number.check(Schema.isGreaterThan(0));
 
-// The recipe JSON of the legacy pages (`Recipe` in `libs/domain`), restricted
-// to the values `RecipePreparation` can hold. Styles and timers are left out:
-// the new model has no place for them. Optional keys may hold `undefined`, as
-// in the legacy types: the legacy codecs write `label: undefined` into
-// portions without a label.
-
-const LegacyRecipeIngredient = Schema.Struct({
+const RecipeIngredientYaml = Schema.Struct({
   uri: Schema.optional(Schema.NonEmptyString),
   name: Schema.NonEmptyString,
   amount: Schema.optional(Schema.Union([Positive, Schema.NonEmptyString])),
@@ -41,25 +38,25 @@ const LegacyRecipeIngredient = Schema.Struct({
   optional: Schema.optional(Schema.Boolean),
   alternatives: Schema.optional(Schema.Array(Schema.NonEmptyString)),
 });
-type LegacyRecipeIngredient = typeof LegacyRecipeIngredient.Type;
+type RecipeIngredientYaml = typeof RecipeIngredientYaml.Type;
 
-const LegacyRecipeIngredientGroup = Schema.Struct({
+const RecipeIngredientGroupYaml = Schema.Struct({
   group: Schema.NonEmptyString,
   label: Schema.NonEmptyString,
-  ingredients: Schema.Array(LegacyRecipeIngredient),
+  ingredients: Schema.Array(RecipeIngredientYaml),
 });
-type LegacyRecipeIngredientGroup = typeof LegacyRecipeIngredientGroup.Type;
+type RecipeIngredientGroupYaml = typeof RecipeIngredientGroupYaml.Type;
 
-const LegacyPreparationStep = Schema.Union([
+const PreparationStepYaml = Schema.Union([
   Schema.String,
   Schema.Struct({
     text: Schema.optional(Schema.String),
     html: Schema.optional(Schema.String),
   }),
 ]);
-type LegacyPreparationStep = typeof LegacyPreparationStep.Type;
+type PreparationStepYaml = typeof PreparationStepYaml.Type;
 
-const LegacyPortion = Schema.Union([
+const PortionYaml = Schema.Union([
   Schema.Struct({ kind: Schema.Literal('label'), label: Schema.String }),
   Schema.Struct({
     kind: Schema.Literal('quantity'),
@@ -68,37 +65,37 @@ const LegacyPortion = Schema.Union([
   }),
   Schema.Struct({ kind: Schema.Literal('springform'), diameter: Positive }),
 ]);
-type LegacyPortion = typeof LegacyPortion.Type;
+type PortionYaml = typeof PortionYaml.Type;
 
-const legacyBaseRecipeFields = {
+const baseRecipeYamlFields = {
   name: Schema.NonEmptyString,
   basedOn: Schema.optional(Schema.Array(Schema.NonEmptyString)),
-  portion: Schema.optional(LegacyPortion),
-  steps: Schema.Array(LegacyPreparationStep),
+  portion: Schema.optional(PortionYaml),
+  steps: Schema.Array(PreparationStepYaml),
   tips: Schema.Array(Schema.NonEmptyString),
   stepsEnumerated: Schema.optional(Schema.Boolean),
 };
 
-const LegacyRecipeGroup = Schema.Struct({
-  ...legacyBaseRecipeFields,
+const RecipeGroupYaml = Schema.Struct({
+  ...baseRecipeYamlFields,
   label: Schema.NonEmptyString,
-  ingredients: Schema.Array(LegacyRecipeIngredient),
+  ingredients: Schema.Array(RecipeIngredientYaml),
 });
-type LegacyRecipeGroup = typeof LegacyRecipeGroup.Type;
+type RecipeGroupYaml = typeof RecipeGroupYaml.Type;
 
-const LegacyRecipe = Schema.Struct({
+const RecipeYamlStruct = Schema.Struct({
   id: Schema.optional(Schema.NonEmptyString),
-  ...legacyBaseRecipeFields,
+  ...baseRecipeYamlFields,
   ingredients: Schema.Array(
-    Schema.Union([LegacyRecipeIngredientGroup, LegacyRecipeIngredient]),
+    Schema.Union([RecipeIngredientGroupYaml, RecipeIngredientYaml]),
   ),
   images: Schema.Array(Schema.NonEmptyString),
-  groups: Schema.optional(Schema.Array(LegacyRecipeGroup)),
+  groups: Schema.optional(Schema.Array(RecipeGroupYaml)),
   styles: Schema.Struct({}),
 });
-type LegacyRecipe = typeof LegacyRecipe.Type;
+type RecipeYamlStruct = typeof RecipeYamlStruct.Type;
 
-/** The slug of the legacy code: trimmed, lower case, dashes for spaces. */
+/** A slug: trimmed, lower case, dashes for spaces. */
 const slugify = (s: string): string =>
   s.trim().toLowerCase().replace(/\s+/g, '-');
 
@@ -108,7 +105,7 @@ const escapeHtml = (text: string): string =>
 /** Characters that text has to escape in HTML. */
 const htmlSpecialCharacters = /[&<>]/;
 
-/** Stands in for a list of ingredients that the legacy recipe left empty. */
+/** Stands in for a list of ingredients that the file left empty. */
 const noIngredients = RecipeIngredient.make({
   uri: IngredientId.make('overckd://compat/no-ingredients'),
   name: 'No ingredients',
@@ -117,12 +114,12 @@ const noIngredients = RecipeIngredient.make({
   alternatives: [],
 });
 
-/** Stands in for a list of steps that the legacy recipe left empty. */
+/** Stands in for a list of steps that the file left empty. */
 const noSteps: PreparationStep = {
   instruction: NonEmptyHtmlString.make('No steps'),
 };
 
-/** The portion of a legacy recipe without one. */
+/** The portion of a recipe whose file has none. */
 const defaultPortion: Portion.Portion = {
   kind: 'quantity',
   label: Option.none(),
@@ -136,7 +133,7 @@ const nonEmptyOr = <A>(
   Arr.isReadonlyArrayNonEmpty(as) ? as : [fallback];
 
 // ----------------------------------------------------------------------------
-// Legacy → RecipePreparation
+// YAML → RecipePreparation
 // ----------------------------------------------------------------------------
 
 const quantityPortion = (
@@ -148,8 +145,8 @@ const quantityPortion = (
   quantity,
 });
 
-const portionFromLegacy: (portion: LegacyPortion) => Portion.Portion =
-  Match.type<LegacyPortion>().pipe(
+const portionFromYaml: (portion: PortionYaml) => Portion.Portion =
+  Match.type<PortionYaml>().pipe(
     Match.discriminatorsExhaustive('kind')({
       label: ({ label }) => quantityPortion(1, label),
       quantity: ({ count, label }) => quantityPortion(count, label),
@@ -160,11 +157,11 @@ const portionFromLegacy: (portion: LegacyPortion) => Portion.Portion =
     }),
   );
 
-const amountFromLegacy = ({
+const amountFromYaml = ({
   amount,
   unit,
   scaleFactor = 1,
-}: LegacyRecipeIngredient): Option.Option<IngredientAmount> => {
+}: RecipeIngredientYaml): Option.Option<IngredientAmount> => {
   if (amount === undefined) {
     return Option.none();
   }
@@ -187,33 +184,33 @@ const amountFromLegacy = ({
   );
 };
 
-const ingredientFromLegacy = (
-  ingredient: LegacyRecipeIngredient,
+const ingredientFromYaml = (
+  ingredient: RecipeIngredientYaml,
 ): RecipeIngredient =>
   RecipeIngredient.make({
     uri: IngredientId.make(ingredient.uri ?? slugify(ingredient.name)),
     name: ingredient.name,
-    amount: amountFromLegacy(ingredient),
+    amount: amountFromYaml(ingredient),
     optional: ingredient.optional ?? false,
     alternatives: ingredient.alternatives ?? [],
   });
 
-const ingredientOrGroupFromLegacy = (
-  item: LegacyRecipeIngredient | LegacyRecipeIngredientGroup,
+const ingredientOrGroupFromYaml = (
+  item: RecipeIngredientYaml | RecipeIngredientGroupYaml,
 ): RecipeIngredient | RecipeIngredientGroup =>
-  Schema.is(LegacyRecipeIngredientGroup)(item)
+  Schema.is(RecipeIngredientGroupYaml)(item)
     ? RecipeIngredientGroup.make({
         name: item.group,
         label: item.label,
         ingredients: nonEmptyOr(
-          item.ingredients.map(ingredientFromLegacy),
+          item.ingredients.map(ingredientFromYaml),
           noIngredients,
         ),
       })
-    : ingredientFromLegacy(item);
+    : ingredientFromYaml(item);
 
-const stepFromLegacy = (
-  step: LegacyPreparationStep,
+const stepFromYaml = (
+  step: PreparationStepYaml,
 ): ReadonlyArray<PreparationStep> => {
   const html = Predicate.isString(step)
     ? escapeHtml(step)
@@ -221,11 +218,11 @@ const stepFromLegacy = (
   return html === '' ? [] : [{ instruction: NonEmptyHtmlString.make(html) }];
 };
 
-const basicFromLegacy = (
+const basicFromYaml = (
   id: RecipeId,
   name: string,
   tips: ReadonlyArray<string>,
-  part: LegacyRecipe | LegacyRecipeGroup,
+  part: RecipeYamlStruct | RecipeGroupYaml,
 ): BasicRecipePreparation => ({
   _tag: 'BasicRecipePreparation',
   id,
@@ -233,36 +230,36 @@ const basicFromLegacy = (
   tips,
   basedOn: part.basedOn ?? [],
   ingredients: nonEmptyOr(
-    part.ingredients.map(ingredientOrGroupFromLegacy),
+    part.ingredients.map(ingredientOrGroupFromYaml),
     noIngredients,
   ),
-  steps: nonEmptyOr(part.steps.flatMap(stepFromLegacy), noSteps),
+  steps: nonEmptyOr(part.steps.flatMap(stepFromYaml), noSteps),
   stepsEnumerated: part.stepsEnumerated ?? false,
 });
 
-const fromLegacy = (legacy: LegacyRecipe): RecipePreparation => {
-  const id = RecipeId.make(legacy.id ?? legacy.name);
+const fromYaml = (yaml: RecipeYamlStruct): RecipePreparation => {
+  const id = RecipeId.make(yaml.id ?? yaml.name);
   const recipeFields = {
     portion:
-      legacy.portion === undefined
+      yaml.portion === undefined
         ? defaultPortion
-        : portionFromLegacy(legacy.portion),
-    images: legacy.images,
+        : portionFromYaml(yaml.portion),
+    images: yaml.images,
   };
-  const groups = legacy.groups ?? [];
+  const groups = yaml.groups ?? [];
 
   if (!Arr.isReadonlyArrayNonEmpty(groups)) {
     return {
-      ...basicFromLegacy(id, legacy.name, legacy.tips, legacy),
+      ...basicFromYaml(id, yaml.name, yaml.tips, yaml),
       ...recipeFields,
     };
   }
 
-  // The legacy page shows the groups first and the recipe's own ingredients
-  // and steps last. The own part keeps the id of the recipe; a group's id is
+  // The groups come first and the recipe's own ingredients and steps last,
+  // as the recipe page shows them. The own part keeps the id of the recipe; a group's id is
   // the recipe's id and the group's name.
   const groupParts = Arr.map(groups, group =>
-    basicFromLegacy(
+    basicFromYaml(
       RecipeId.make(`${id}/${group.name}`),
       group.label,
       group.tips,
@@ -270,73 +267,72 @@ const fromLegacy = (legacy: LegacyRecipe): RecipePreparation => {
     ),
   );
   const ownPart =
-    legacy.ingredients.length > 0 || legacy.steps.length > 0
-      ? [basicFromLegacy(id, legacy.name, [], legacy)]
+    yaml.ingredients.length > 0 || yaml.steps.length > 0
+      ? [basicFromYaml(id, yaml.name, [], yaml)]
       : [];
 
   return {
     _tag: 'UnionRecipePreparation',
     id,
-    name: legacy.name,
-    tips: legacy.tips,
+    name: yaml.name,
+    tips: yaml.tips,
     recipes: Arr.appendAll(groupParts, ownPart),
     ...recipeFields,
   };
 };
 
 // ----------------------------------------------------------------------------
-// RecipePreparation → Legacy
+// RecipePreparation → YAML
 // ----------------------------------------------------------------------------
 
-const portionToLegacy: (
-  portion: Portion.Portion,
-) => Option.Option<LegacyPortion> = Match.type<Portion.Portion>().pipe(
-  Match.discriminatorsExhaustive('kind')({
-    // Recipes without a portion decode to the default portion.
-    quantity: ({ quantity, label }) =>
-      quantity === 1 && Option.isNone(label)
-        ? Option.none()
-        : Option.some<LegacyPortion>({
-            kind: 'quantity',
-            count: quantity,
-            ...Option.match(label, {
-              onNone: () => ({}),
-              onSome: label => ({ label }),
+const portionToYaml: (portion: Portion.Portion) => Option.Option<PortionYaml> =
+  Match.type<Portion.Portion>().pipe(
+    Match.discriminatorsExhaustive('kind')({
+      // Recipes without a portion decode to the default portion.
+      quantity: ({ quantity, label }) =>
+        quantity === 1 && Option.isNone(label)
+          ? Option.none()
+          : Option.some<PortionYaml>({
+              kind: 'quantity',
+              count: quantity,
+              ...Option.match(label, {
+                onNone: () => ({}),
+                onSome: label => ({ label }),
+              }),
             }),
-          }),
-    springform: ({ diameter }) =>
-      Option.some<LegacyPortion>({ kind: 'springform', diameter }),
-  }),
-);
+      springform: ({ diameter }) =>
+        Option.some<PortionYaml>({ kind: 'springform', diameter }),
+    }),
+  );
 
-const scaleFactorToLegacy = (scaleFactor: number) =>
+const scaleFactorToYaml = (scaleFactor: number) =>
   scaleFactor === 1 ? {} : { scaleFactor };
 
-const amountToLegacy: (
+const amountToYaml: (
   amount: IngredientAmount,
-) => Pick<LegacyRecipeIngredient, 'amount' | 'unit' | 'scaleFactor'> =
+) => Pick<RecipeIngredientYaml, 'amount' | 'unit' | 'scaleFactor'> =
   Match.type<IngredientAmount>().pipe(
     Match.tagsExhaustive({
       CountIngredientAmount: ({ count, scaleFactor }) => ({
         amount: count,
-        ...scaleFactorToLegacy(scaleFactor),
+        ...scaleFactorToYaml(scaleFactor),
       }),
       FractionIngredientAmount: ({ value, scaleFactor }) => ({
         amount: value,
-        ...scaleFactorToLegacy(scaleFactor),
+        ...scaleFactorToYaml(scaleFactor),
       }),
       UnitIngredientAmount: ({ unit, value, scaleFactor }) => ({
         amount: value,
         unit,
-        ...scaleFactorToLegacy(scaleFactor),
+        ...scaleFactorToYaml(scaleFactor),
       }),
       LabelIngredientAmount: ({ label }) => ({ amount: label }),
     }),
   );
 
-const ingredientToLegacy = (
+const ingredientToYaml = (
   ingredient: RecipeIngredient,
-): LegacyRecipeIngredient => ({
+): RecipeIngredientYaml => ({
   // Decoding derives the slug of the name for ingredients without a uri.
   ...(ingredient.uri === slugify(ingredient.name)
     ? {}
@@ -344,7 +340,7 @@ const ingredientToLegacy = (
   name: ingredient.name,
   ...Option.match(ingredient.amount, {
     onNone: () => ({}),
-    onSome: amountToLegacy,
+    onSome: amountToYaml,
   }),
   ...(ingredient.optional ? { optional: true } : {}),
   ...(Arr.isReadonlyArrayNonEmpty(ingredient.alternatives)
@@ -352,29 +348,29 @@ const ingredientToLegacy = (
     : {}),
 });
 
-const ingredientsToLegacy = (
+const ingredientsToYaml = (
   ingredients: ReadonlyArray<RecipeIngredient>,
-): ReadonlyArray<LegacyRecipeIngredient> =>
+): ReadonlyArray<RecipeIngredientYaml> =>
   ingredients
     .filter(ingredient => ingredient.uri !== noIngredients.uri)
-    .map(ingredientToLegacy);
+    .map(ingredientToYaml);
 
-const ingredientsOrGroupsToLegacy = (
+const ingredientsOrGroupsToYaml = (
   items: ReadonlyArray<RecipeIngredient | RecipeIngredientGroup>,
-): ReadonlyArray<LegacyRecipeIngredient | LegacyRecipeIngredientGroup> =>
-  items.flatMap<LegacyRecipeIngredient | LegacyRecipeIngredientGroup>(item =>
+): ReadonlyArray<RecipeIngredientYaml | RecipeIngredientGroupYaml> =>
+  items.flatMap<RecipeIngredientYaml | RecipeIngredientGroupYaml>(item =>
     Schema.is(RecipeIngredientGroup)(item)
       ? [
           {
             group: item.name,
             label: item.label,
-            ingredients: ingredientsToLegacy(item.ingredients),
+            ingredients: ingredientsToYaml(item.ingredients),
           },
         ]
-      : ingredientsToLegacy([item]),
+      : ingredientsToYaml([item]),
   );
 
-/** Legacy groups hold no ingredient groups, so their ingredients are joined. */
+/** A file's groups hold no ingredient groups, so their ingredients are joined. */
 const flattenIngredients = (
   items: ReadonlyArray<RecipeIngredient | RecipeIngredientGroup>,
 ): ReadonlyArray<RecipeIngredient> =>
@@ -382,35 +378,33 @@ const flattenIngredients = (
     Schema.is(RecipeIngredientGroup)(item) ? item.ingredients : [item],
   );
 
-const stepToLegacy = ({
-  instruction,
-}: PreparationStep): LegacyPreparationStep =>
+const stepToYaml = ({ instruction }: PreparationStep): PreparationStepYaml =>
   htmlSpecialCharacters.test(instruction) ? { html: instruction } : instruction;
 
-const partToLegacy = (part: BasicRecipePreparation) => ({
+const partToYaml = (part: BasicRecipePreparation) => ({
   ...(Arr.isReadonlyArrayNonEmpty(part.basedOn)
     ? { basedOn: part.basedOn }
     : {}),
   steps: part.steps
     .filter(step => step.instruction !== noSteps.instruction)
-    .map(stepToLegacy),
+    .map(stepToYaml),
   ...(part.stepsEnumerated ? { stepsEnumerated: true } : {}),
 });
 
-const groupToLegacy = (
+const groupToYaml = (
   recipeId: RecipeId,
   part: BasicRecipePreparation,
-): LegacyRecipeGroup => ({
+): RecipeGroupYaml => ({
   name: part.id.startsWith(`${recipeId}/`)
     ? part.id.slice(recipeId.length + 1)
     : part.id,
   label: part.name,
-  ...partToLegacy(part),
-  ingredients: ingredientsToLegacy(flattenIngredients(part.ingredients)),
+  ...partToYaml(part),
+  ingredients: ingredientsToYaml(flattenIngredients(part.ingredients)),
   tips: part.tips,
 });
 
-/** Legacy recipes don't nest, so nested unions are flattened. */
+/** Recipe files don't nest groups, so nested unions are flattened. */
 const partsOf = (
   preparation: BasicRecipePreparation | UnionRecipePreparation,
 ): ReadonlyArray<BasicRecipePreparation> =>
@@ -418,23 +412,23 @@ const partsOf = (
     ? [preparation]
     : preparation.recipes.flatMap(partsOf);
 
-const toLegacy = (recipe: RecipePreparation): LegacyRecipe => {
+const toYaml = (recipe: RecipePreparation): RecipeYamlStruct => {
   const parts = partsOf(recipe);
   const ownPart = parts.find(part => part.id === recipe.id);
   const groups = parts
     .filter(part => part !== ownPart)
-    .map(part => groupToLegacy(recipe.id, part));
-  const portion = portionToLegacy(recipe.portion);
+    .map(part => groupToYaml(recipe.id, part));
+  const portion = portionToYaml(recipe.portion);
 
   return {
     id: recipe.id,
     name: recipe.name,
     ...(Option.isSome(portion) ? { portion: portion.value } : {}),
-    ...(ownPart === undefined ? { steps: [] } : partToLegacy(ownPart)),
+    ...(ownPart === undefined ? { steps: [] } : partToYaml(ownPart)),
     ingredients:
       ownPart === undefined
         ? []
-        : ingredientsOrGroupsToLegacy(ownPart.ingredients),
+        : ingredientsOrGroupsToYaml(ownPart.ingredients),
     tips:
       ownPart === undefined || ownPart === recipe
         ? recipe.tips
@@ -446,20 +440,19 @@ const toLegacy = (recipe: RecipePreparation): LegacyRecipe => {
 };
 
 /**
- * `RecipePreparation` in the JSON of the legacy recipe page, which is also the
- * shape of a recipe in the recipe files.
+ * The `recipe` of a recipe file → `RecipePreparation`.
  *
- * Decoding takes a recipe's name as its id when the JSON has none, derives the
+ * Decoding takes a recipe's name as its id when the file has none, derives the
  * uri of an ingredient from its name, gives recipes without a portion the
- * portion 1, and turns legacy groups into a `UnionRecipePreparation`. Encoding
+ * portion 1, and turns groups into a `UnionRecipePreparation`. Encoding
  * reverses this, but drops what `RecipePreparation` doesn't hold: styles and
  * timers.
  *
  * @category Schemas
  */
-export const RecipePreparationLegacyJson = LegacyRecipe.pipe(
+export const RecipeYaml = RecipeYamlStruct.pipe(
   Schema.decodeTo(
     Schema.toType(RecipePreparation),
-    SchemaTransformation.transform({ decode: fromLegacy, encode: toLegacy }),
+    SchemaTransformation.transform({ decode: fromYaml, encode: toYaml }),
   ),
 );
