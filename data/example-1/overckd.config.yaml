@@ -1,16 +1,5 @@
 overckd: 1.0.0
 
-###########################
-# Application file paths
-###########################
-paths:
-  app: ./app
-  cache: ./cache
-  logs: ./logs
-  temp: ./temp
-
-###########################
-# Server
-###########################
-server:
-  port: 3000
+# The app directory: recipes/, overckd.collections.yaml and images/
+app:
+  dir: ./app

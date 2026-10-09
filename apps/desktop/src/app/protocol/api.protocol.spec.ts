@@ -8,7 +8,7 @@ import {
 } from '@overckd/domain-experimental';
 import { RecipeQueriesHttp } from '@overckd/recipe/adapter-http-client';
 import { RecipeQueries } from '@overckd/recipe/application';
-import { Effect, Layer } from 'effect';
+import { Effect, Layer, Logger, Path } from 'effect';
 import {
   FetchHttpClient,
   HttpClient,
@@ -20,7 +20,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { AppDirectory } from '../common/app-directory';
-import { ApiLive } from './api.protocol';
+import { ApiLive, apiHandler } from './api.protocol';
 
 const pancakesFile = `overckd: 1.0.0
 recipe:
@@ -49,21 +49,21 @@ recipes:
       - *sweet
 `;
 
-const mediaUrl = 'http://localhost:3000/images';
-
 let dir: string;
 let handler: (request: Request) => Promise<Response>;
 let dispose: () => Promise<void>;
 
-/** `ApiLive` on an app directory with one recipe and one collection */
+/** `ApiLive` on an app directory with one recipe, one collection and one image */
 beforeAll(async () => {
   dir = await mkdtemp(join(tmpdir(), 'overckd-app-'));
   await mkdir(join(dir, 'recipes'));
+  await mkdir(join(dir, 'images'));
   await writeFile(join(dir, 'recipes', 'pancakes.recipe.yaml'), pancakesFile);
   await writeFile(join(dir, 'overckd.collections.yaml'), collectionsFile);
+  await writeFile(join(dir, 'images', 'pancakes.jpeg'), 'jpeg bytes');
 
   ({ handler, dispose } = HttpRouter.toWebHandler(
-    ApiLive(mediaUrl).pipe(
+    ApiLive.pipe(
       Layer.provide(AppDirectory.layer(dir)),
       Layer.provide(NodeHttpServer.layerHttpServices),
     ),
@@ -94,7 +94,7 @@ describe('ApiLive', () => {
     ]);
   });
 
-  it('answers a recipe in the JSON of OverckdApi, linking its images under the media URL', async () => {
+  it('answers a recipe in the JSON of OverckdApi, linking its images under overckd://app/images', async () => {
     const response = await get('/api/recipes/Pancakes');
 
     expect(response.status).toBe(200);
@@ -103,7 +103,7 @@ describe('ApiLive', () => {
       id: 'Pancakes',
       name: 'Pancakes',
       steps: [{ instruction: 'Mix and fry' }],
-      images: ['http://localhost:3000/images/pancakes.jpeg'],
+      images: ['overckd://app/images/pancakes.jpeg'],
     });
   });
 
@@ -123,6 +123,21 @@ describe('ApiLive', () => {
     });
 
     expect(response.headers.get('access-control-allow-origin')).toBe('*');
+  });
+
+  it('serves the images of the app directory', async () => {
+    const response = await get('/images/pancakes.jpeg');
+
+    expect(response.status).toBe(200);
+    expect(response.headers.get('content-type')).toBe('image/jpeg');
+    expect(response.headers.get('cache-control')).toBe('no-cache');
+    expect(await response.text()).toBe('jpeg bytes');
+  });
+
+  it('answers an unknown image with a 404', async () => {
+    const response = await get('/images/waffles.jpeg');
+
+    expect(response.status).toBe(404);
   });
 });
 
@@ -168,9 +183,7 @@ describe('the renderer clients over overckd://', () => {
     );
 
     expect(recipe.name).toBe('Pancakes');
-    expect(recipe.images).toEqual([
-      'http://localhost:3000/images/pancakes.jpeg',
-    ]);
+    expect(recipe.images).toEqual(['overckd://app/images/pancakes.jpeg']);
   });
 
   it('keep the typed error of an unknown collection', async () => {
@@ -181,5 +194,28 @@ describe('the renderer clients over overckd://', () => {
     );
 
     expect(error).toBeInstanceOf(CollectionNotFound);
+  });
+});
+
+describe('apiHandler', () => {
+  it('logs the requests with the given loggers', async () => {
+    const messages: Array<string> = [];
+    const logger = Logger.make(({ message }) => {
+      messages.push(String(message));
+    });
+    const appDirectory = await Effect.runPromise(
+      AppDirectory.useSync(appDirectory => appDirectory).pipe(
+        Effect.provide(AppDirectory.layer(dir).pipe(Layer.provide(Path.layer))),
+      ),
+    );
+    const api = apiHandler(appDirectory, new Set([logger]));
+
+    try {
+      await api.handler(new Request('overckd://app/api/collections'));
+    } finally {
+      await api.dispose();
+    }
+
+    expect(messages.join('\n')).toContain('Sent HTTP response');
   });
 });

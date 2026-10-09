@@ -1,4 +1,5 @@
 import { Context, Effect, Layer, Path } from 'effect';
+import { AppConfig } from './app.config';
 
 /** Where the files of an app directory are (see `data/example-1/app`). */
 export class AppDirectory extends Context.Service<
@@ -25,4 +26,9 @@ export class AppDirectory extends Context.Service<
         });
       }),
     );
+
+  /** The app directory of the `app` section */
+  static readonly layerConfig = Layer.unwrap(
+    AppConfig.useSync(({ dir }) => AppDirectory.layer(dir)),
+  );
 }
