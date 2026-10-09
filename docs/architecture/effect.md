@@ -153,8 +153,7 @@ Effects are run only by composition roots:
 - the Angular bridge in `libs/@ckapp/angular-effect` (`injectQueries`, `injectCommands`);
 - tests.
 
-Libraries never call `Effect.runPromise` / `Effect.runSync`. The only exception
-is legacy bridge code (`libs/domain-rx`), which is frozen.
+Libraries never call `Effect.runPromise` / `Effect.runSync`.
 
 ## Configuration
 

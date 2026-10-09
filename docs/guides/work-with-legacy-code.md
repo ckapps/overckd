@@ -7,15 +7,14 @@ feature (strangler pattern), not rewritten in one go.
 
 - Projects tagged `type:legacy` (see the
   [mapping](../architecture/libraries.md#current-to-target-mapping)): `domain`
-  (`@overckd/domain`), `domain-rx`, `server`, `yaml`, the `*-infra-rxdb` libs and
-  `collection-ui`.
+  (`@overckd/domain`), `yaml` and `collection-ui`.
 - Code built on fp-ts, io-ts, rxjs services or marblejs.
 - Inside apps: `apps/desktop/src/app/legacy`, and the
   frontend's abstract-class services (`RecipeCollectionService`,
   `AppRecipeCollectionService`, …).
 
-`collection-ui` and the `*-infra-rxdb` libs are tagged legacy only because they
-still use the legacy domain types; they have a place in the target layout.
+`collection-ui` is tagged legacy only because it still uses the legacy domain
+types; it has a place in the target layout.
 
 ## Rules
 
@@ -31,9 +30,8 @@ still use the legacy domain types; they have a place in the target layout.
 
 ## The bridge pattern
 
-`libs/domain-rx` already runs the new use cases inside the legacy marblejs
-server: `RecipeCollectionRepoMarbleInterop` implements the new
-`CollectionRepo` port with the legacy repository, and the marble effects run
-`CollectionQueries` through `Effect.runPromise`. Bridges like this are allowed in
-legacy code (and only there), so a feature can switch to the new core before
-its surroundings are migrated.
+A bridge runs the new use cases inside legacy code: a legacy repository
+implements the new port (for example `CollectionRepo`), and the legacy effects
+run the port's queries through `Effect.runPromise`. Bridges like this are
+allowed in legacy code (and only there), so a feature can switch to the new
+core before its surroundings are migrated.
