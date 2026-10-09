@@ -12,5 +12,4 @@ allowBuilds:
   nice-napi: true
   nx: true
   protobufjs: true
-  rxdb: true
   unrs-resolver: false

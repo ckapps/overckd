@@ -32,7 +32,7 @@ import { NonEmptyHtmlString, Positive } from './shared.model';
 // to the values `RecipePreparation` can hold. Styles and timers are left out:
 // the new model has no place for them. Optional keys may hold `undefined`, as
 // in the legacy types: the legacy codecs write `label: undefined` into
-// portions without a label, and rxdb keeps it.
+// portions without a label.
 
 const LegacyRecipeIngredient = Schema.Struct({
   uri: Schema.optional(Schema.NonEmptyString),
