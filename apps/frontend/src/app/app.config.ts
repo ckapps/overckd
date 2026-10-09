@@ -9,9 +9,15 @@ import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
+import { provideEffectRuntime } from '@ckapp/angular-effect';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
+import { CollectionQueriesHttp } from '@overckd/collection/adapter-http-client';
+import { RecipeQueriesHttp } from '@overckd/recipe/adapter-http-client';
+import { Layer } from 'effect';
+import { environment } from '../environments/environment';
 import { appRoutes } from './app.routes';
+import { ApiHttpClient } from './config/api.config';
 import { RecipeCollectionService } from './modules/domain/recipe-collection/services/recipe-collection.service';
 import { RecipeService } from './modules/domain/recipe/services/recipe.service';
 import { AppRecipeCollectionService } from './services/app-recipe-collection.service';
@@ -26,6 +32,12 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     // External modules
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    // Ports, backed by the API
+    provideEffectRuntime(
+      Layer.mergeAll(CollectionQueriesHttp, RecipeQueriesHttp).pipe(
+        Layer.provide(ApiHttpClient(environment.api)),
+      ),
+    ),
     // Our modules
     {
       provide: RecipeService,

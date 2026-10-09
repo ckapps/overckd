@@ -3,9 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 import { ApplicationShell } from './application-shell.enum';
+import { FrontendEnvironment } from './environment.type';
 
-export const environment = {
+export const environment: FrontendEnvironment = {
   production: false,
-  apiUrl: '/api',
   shell: ApplicationShell.Web,
+  legacyApiUrl: '/api',
+  api: {
+    url: '',
+  },
 };
