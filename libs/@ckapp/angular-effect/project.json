@@ -1,0 +1,10 @@
+{
+  "name": "ckapp-angular-effect",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/@ckapp/angular-effect/src",
+  "prefix": "ckapp",
+  "projectType": "library",
+  "tags": ["type:util", "platform:browser"],
+  "// targets": "to see all targets run: nx show project ckapp-angular-effect --web",
+  "targets": {}
+}

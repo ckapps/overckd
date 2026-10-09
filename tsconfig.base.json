@@ -21,6 +21,7 @@
       "@ckapp/angular-desktop/window": [
         "libs/@ckapp/angular-desktop/window/src/index.ts"
       ],
+      "@ckapp/angular-effect": ["libs/@ckapp/angular-effect/src/index.ts"],
       "@ckapp/angular/button": ["libs/@ckapp/angular/button/src/index.ts"],
       "@ckapp/angular/list": ["libs/@ckapp/angular/list/src/index.ts"],
       "@ckapp/angular/main-menu": [
