@@ -81,15 +81,15 @@ nx run-many -t build
 
 You can serve the projects on their own, but in general you have 2 options:
 
-1. Serve via server-cli
-2. Run as desktop app
+1. Serve via backend
+2. Run as `desktop` app
 
 Both options perform the same more or less, which is
 
-- serving data via server (either server-cli or app)
+- serving data via server (either `backend` or `desktop`)
 - serving the frontend and connect to the given server
 
-#### Serve via server-cli
+#### Serve via backend
 
 For convenience you can just run
 
@@ -97,7 +97,7 @@ For convenience you can just run
 pnpm run serve:web
 ```
 
-This will start the serve command for both projects, `server-cli` and `frontend`.
+This will start the serve command for both projects, `backend` and `frontend`.
 
 #### As desktop app
 
