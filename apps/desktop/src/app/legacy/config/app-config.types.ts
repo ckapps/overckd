@@ -1,4 +1,4 @@
-import { ServerConfig, ServerConfigFile } from '@overckd/server';
+import { ServerConfig, ServerConfigFile } from './server-config';
 import { AppPaths } from '../paths/config/app-paths.types';
 
 /**
