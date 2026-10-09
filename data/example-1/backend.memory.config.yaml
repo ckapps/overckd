@@ -12,3 +12,8 @@ repositories:
   collections:
     seed:
       files: ./app/overckd.collections.yaml
+media:
+  type: filesystem
+  dir: ./app/images
+  # the recipe files link their images as /images/<name>
+  path: /images
