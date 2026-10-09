@@ -53,9 +53,9 @@ export const MemoryReposLive = ({
 }: MemoryRepositoriesConfig) =>
   Layer.mergeAll(
     Layer.unwrap(
-      readSeed(recipes?.seed, file => readRecipeFile(file, 'yaml')).pipe(
-        Effect.map(RecipeRepoMemory),
-      ),
+      readSeed(recipes?.seed, file =>
+        readRecipeFile({ path: file, codec: 'yaml', mediaUrl: undefined }),
+      ).pipe(Effect.map(RecipeRepoMemory)),
     ),
     Layer.unwrap(
       readSeed(collections?.seed, file =>

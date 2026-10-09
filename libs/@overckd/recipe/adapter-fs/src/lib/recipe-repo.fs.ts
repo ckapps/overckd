@@ -28,6 +28,12 @@ export class RecipeRepoFsConfig extends Context.Service<
     readonly dir: string;
     /** The codec of the recipe files, which also gives the suffix of their names */
     readonly codec: RecipeFileCodec;
+    /**
+     * Where the server's media are, such as `http://localhost:3000/images`:
+     * the recipes link their images there. Without it, they link none of
+     * them.
+     */
+    readonly mediaUrl?: string | undefined;
   }
 >()('@overckd/recipe/adapter-fs/RecipeRepoFsConfig') {}
 
@@ -46,7 +52,7 @@ class FindRecipeById extends Request.Class<
 export const RecipeRepoFs = Layer.effect(
   RecipeRepo,
   Effect.gen(function* () {
-    const { dir, codec } = yield* RecipeRepoFsConfig;
+    const { dir, codec, mediaUrl } = yield* RecipeRepoFsConfig;
     const fs = yield* FileSystem.FileSystem;
     const path = yield* Path.Path;
     const { suffix } = recipeFileFormats[codec];
@@ -55,7 +61,12 @@ export const RecipeRepoFs = Layer.effect(
       const names = yield* fs.readDirectory(dir);
       return yield* Effect.forEach(
         names.filter(name => name.endsWith(suffix)),
-        name => readRecipeFile(path.join(dir, name), codec),
+        name =>
+          readRecipeFile({
+            path: path.join(dir, name),
+            codec,
+            mediaUrl,
+          }),
         { concurrency: 'unbounded' },
       );
     }).pipe(Effect.provideService(FileSystem.FileSystem, fs), Effect.orDie);
