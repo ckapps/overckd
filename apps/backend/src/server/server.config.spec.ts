@@ -13,7 +13,7 @@ describe('ServerConfig', () => {
   it('takes the defaults without a server section', async () => {
     expect(await Effect.runPromise(serverConfig({}))).toEqual({
       port: 3000,
-      apiVersion: 'legacy',
+      apiVersion: 'next',
     });
   });
 
@@ -37,6 +37,14 @@ describe('ServerConfig', () => {
     );
 
     expect(error._tag).toBe('ConfigError');
+    expect(error.message).toContain('["server"]["apiVersion"]');
+  });
+
+  it('rejects the legacy API, which is gone', async () => {
+    const error = await Effect.runPromise(
+      Effect.flip(serverConfig({ server: { apiVersion: 'legacy' } })),
+    );
+
     expect(error.message).toContain('["server"]["apiVersion"]');
   });
 });

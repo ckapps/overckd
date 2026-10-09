@@ -82,14 +82,15 @@ describe('HttpAppLive', () => {
     ]);
   });
 
-  it('answers a recipe in the legacy JSON, linking its images under the origin', async () => {
+  it('answers a recipe in the JSON of OverckdApi, linking its images under the origin', async () => {
     const response = await get('/api/recipes/Pancakes');
 
     expect(response.status).toBe(200);
     expect(await response.json()).toMatchObject({
+      _tag: 'BasicRecipePreparation',
       id: 'Pancakes',
       name: 'Pancakes',
-      steps: ['Mix and fry'],
+      steps: [{ instruction: 'Mix and fry' }],
       ingredients: [{ name: 'Flour' }],
       images: ['http://localhost:3000/images/pancakes.jpeg'],
     });
