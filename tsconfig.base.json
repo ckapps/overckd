@@ -69,6 +69,9 @@
       "@overckd/recipe/adapter-fs": [
         "libs/@overckd/recipe/adapter-fs/src/index.ts"
       ],
+      "@overckd/recipe/adapter-http-client": [
+        "libs/@overckd/recipe/adapter-http-client/src/index.ts"
+      ],
       "@overckd/collection/adapter-fs": [
         "libs/@overckd/collection/adapter-fs/src/index.ts"
       ],
