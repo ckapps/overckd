@@ -7,7 +7,7 @@ import nx from '@nx/eslint-plugin';
 // which adapter is decided in the composition roots, not here.
 // -----------------------------------------------------------------------------
 
-/** Pre-architecture stacks: only `type:legacy` projects and apps may use them. */
+/** Pre-architecture stacks, replaced by Effect: no lib may use them again. */
 const legacyStacks = ['fp-ts*', 'io-ts*', '@marblejs/*'];
 
 /** Transport, persistence and UI technology: never inside domain or application. */
@@ -104,8 +104,6 @@ const typeConstraints = [
   },
   // Composition roots wire everything together.
   { sourceTag: 'type:app', onlyDependOnLibsWithTags: ['*'] },
-  // Frozen pre-architecture code; may bridge into the new code (strangler).
-  { sourceTag: 'type:legacy', onlyDependOnLibsWithTags: ['*'] },
 ];
 
 /** Which runtime a project's code can execute on. */
