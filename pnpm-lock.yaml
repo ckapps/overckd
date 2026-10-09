@@ -568,9 +568,6 @@ importers:
       '@fortawesome/free-solid-svg-icons':
         specifier: ^6.7.2
         version: 6.7.2
-      '@overckd/domain':
-        specifier: workspace:*
-        version: link:../../libs/domain
       bootstrap:
         specifier: ^5.3.0
         version: 5.3.8(@popperjs/core@2.11.8)
