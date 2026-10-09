@@ -3,6 +3,7 @@ import {
   RecipeIngredientGroup,
   RecipeIngredientGroupJson,
   RecipeIngredientJson,
+  scaleRecipeIngredient,
 } from './internal/recipe-ingredient.model';
 
 export {
@@ -10,4 +11,5 @@ export {
   RecipeIngredientGroup,
   RecipeIngredientGroupJson,
   RecipeIngredientJson,
+  scaleRecipeIngredient,
 };

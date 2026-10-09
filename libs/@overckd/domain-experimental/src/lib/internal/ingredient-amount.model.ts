@@ -111,7 +111,13 @@ export const IngredientAmountJson = Schema.Union([
 ]).pipe(Schema.decodeTo(IngredientAmount));
 
 /**
- * Scales the given `amount` by the given `scalar`.
+ * Scales the given `amount` by the given `scalar`, the factor between two
+ * portions (see `Portion.scaleFactor`), which must be positive.
+ *
+ * A value scales by `scalar ** scaleFactor`: a `scaleFactor` below `1` makes
+ * the ingredient grow and shrink less than the portion, one above `1` more,
+ * and the value stays positive either way. A count stays a count when
+ * `scalar` is whole, and becomes a fraction otherwise. A label doesn't scale.
  *
  * @param amount The ingredient amount to scale
  * @param scalar The scalar by which to scale the ingredient amount
@@ -119,39 +125,42 @@ export const IngredientAmountJson = Schema.Union([
  * @returns
  * Scaled ingredient amount
  */
-export const scale: {
+export const scaleIngredientAmount: {
   (scalar: number): (amount: IngredientAmount) => IngredientAmount;
   (amount: IngredientAmount, scalar: number): IngredientAmount;
-} = Fn.dual(2, (amount: IngredientAmount, scalar: number): IngredientAmount => {
-  const transform = _getScaleTransform(scalar);
+} = Fn.dual(
+  2,
+  (amount: IngredientAmount, scalar: number): IngredientAmount =>
+    scalar === 1
+      ? amount
+      : Match.value(amount).pipe(
+          Match.tagsExhaustive({
+            CountIngredientAmount: ({ count, scaleFactor }) =>
+              Number.isInteger(scalar)
+                ? CountIngredientAmount.make({
+                    count: _scale(count, scalar, scaleFactor),
+                    scaleFactor,
+                  })
+                : FractionIngredientAmount.make({
+                    value: _scale(count, scalar, scaleFactor),
+                    scaleFactor,
+                  }),
+            FractionIngredientAmount: ({ value, scaleFactor }) =>
+              FractionIngredientAmount.make({
+                value: _scale(value, scalar, scaleFactor),
+                scaleFactor,
+              }),
+            UnitIngredientAmount: ({ unit, value, scaleFactor }) =>
+              UnitIngredientAmount.make({
+                unit,
+                value: _scale(value, scalar, scaleFactor),
+                scaleFactor,
+              }),
+            LabelIngredientAmount: label => label,
+          }),
+        ),
+);
 
-  return transform(amount);
-});
-
-function _getScaleTransform(scalar: number) {
-  return Match.type<IngredientAmount>().pipe(
-    Match.tags({
-      CountIngredientAmount: ({ count, scaleFactor }) =>
-        CountIngredientAmount.make({
-          count,
-          scaleFactor,
-        }),
-      FractionIngredientAmount: ({ value, scaleFactor }) =>
-        FractionIngredientAmount.make({
-          value: _scale(value, scalar, scaleFactor),
-          scaleFactor,
-        }),
-      UnitIngredientAmount: ({ unit, value, scaleFactor }) =>
-        UnitIngredientAmount.make({
-          unit,
-          value: _scale(value, scalar, scaleFactor),
-          scaleFactor,
-        }),
-    }),
-    Match.orElse(i => i),
-  );
-}
-
-function _scale(amount: number, scalar: number, scaleFactor: number): number {
-  return amount + amount * (scalar - 1) * scaleFactor;
+function _scale(value: number, scalar: number, scaleFactor: number): number {
+  return value * scalar ** scaleFactor;
 }

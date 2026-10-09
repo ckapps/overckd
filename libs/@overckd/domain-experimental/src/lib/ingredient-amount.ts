@@ -4,6 +4,7 @@ import {
   IngredientAmount,
   IngredientAmountJson,
   LabelIngredientAmount,
+  scaleIngredientAmount,
   UnitIngredientAmount,
 } from './internal/ingredient-amount.model';
 
@@ -13,5 +14,6 @@ export {
   IngredientAmount,
   IngredientAmountJson,
   LabelIngredientAmount,
+  scaleIngredientAmount,
   UnitIngredientAmount,
 };
