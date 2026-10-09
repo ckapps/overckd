@@ -4,6 +4,7 @@ import {
   catchError,
   combineLatest,
   concatMap,
+  defer,
   from,
   map,
   mergeMap,
@@ -11,12 +12,12 @@ import {
   of,
   throwError,
 } from 'rxjs';
-import { startServer } from '../server/server';
+import { handleApiProtocol, registerApiScheme } from '../protocol/api.protocol';
+import { serverMediaUrl, startServer } from '../server/server';
 import { AppConfig, loadConfig } from './config';
 import { ExitCode } from './exit-code.enum';
 import { LogScope, scoped } from './logging';
 import { parseArgs } from './process-args';
-import { initProtocols } from './protocol';
 
 const appLog = scoped(LogScope.App);
 const appEventLog = scoped(LogScope.AppEvent);
@@ -122,21 +123,32 @@ function initConfig$(fromArgs: typeof args): Observable<AppConfig> {
 }
 
 /**
+ * Serves the API over `overckd://`, from the files of the app directory. The
+ * recipes link their images on the port of the server.
+ *
+ * @param config App configuration
+ *
  * @returns
- * An observable that emits with `true`, when the protocols where
- * initialized
+ * An observable that emits with `true`, when the protocol was initialized
  */
-function initProtocols$(): Observable<boolean> {
-  return of(initProtocols()).pipe(
-    map(initialized => {
-      if (!initialized) {
-        throw new AppInitError(
-          ExitCode.ProtocolRegistrationFailed,
-          'could not initialize protocols',
-        );
-      }
-      return true;
-    }),
+function startProtocol$(config: AppConfig): Observable<boolean> {
+  return defer(() => {
+    handleApiProtocol({
+      appDirectory: config.paths.app,
+      mediaUrl: serverMediaUrl(config.server.port),
+    });
+    return of(true);
+  }).pipe(
+    catchError(error =>
+      throwError(
+        () =>
+          new AppInitError(
+            ExitCode.ProtocolRegistrationFailed,
+            'could not initialize protocols',
+            error instanceof Error ? error : new Error(String(error)),
+          ),
+      ),
+    ),
   );
 }
 
@@ -176,9 +188,11 @@ function startServer$(config: AppConfig): Observable<boolean> {
  * If an error occurs, it will throw an `AppInitError`
  */
 function stabilize$(fromArgs: typeof args): Observable<boolean> {
-  return combineLatest([initConfig$(fromArgs), initProtocols$()]).pipe(
-    map(([appConfig]) => appConfig),
-    mergeMap(config => startServer$(config)),
+  return initConfig$(fromArgs).pipe(
+    mergeMap(config =>
+      combineLatest([startProtocol$(config), startServer$(config)]),
+    ),
+    map(() => true),
   );
 }
 
@@ -203,6 +217,9 @@ function stabilize$(fromArgs: typeof args): Observable<boolean> {
 // });
 
 export function start() {
+  // Must run before the app is ready
+  registerApiScheme();
+
   from(app.whenReady())
     .pipe(concatMap(() => stabilize$(args)))
     .subscribe({
