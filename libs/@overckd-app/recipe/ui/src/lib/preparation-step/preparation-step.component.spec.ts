@@ -1,5 +1,5 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { NonEmptyHtmlString } from '@overckd/domain-experimental';
+import { NonEmptyHtmlString } from '@overckd/domain';
 import { PreparationStepComponent } from './preparation-step.component';
 
 describe('PreparationStepComponent', () => {

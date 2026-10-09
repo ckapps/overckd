@@ -11,7 +11,7 @@ import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { Portion } from '@overckd/domain-experimental';
+import { Portion } from '@overckd/domain';
 import * as Fn from 'effect/Function';
 import { PortionKindPipe } from '../portion-kind/portion-kind.pipe';
 

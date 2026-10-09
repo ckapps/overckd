@@ -1,6 +1,6 @@
 import { provideRouter } from '@angular/router';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { Collection, CollectionId } from '@overckd/domain-experimental';
+import { Collection, CollectionId } from '@overckd/domain';
 import { CollectionMainMenuGroupComponent } from './collection-main-menu-group.component';
 
 describe('CollectionMainMenuGroupComponent', () => {

@@ -1,4 +1,4 @@
-import { RecipeFindByIdPayload } from '@overckd/domain-experimental';
+import { RecipeFindByIdPayload } from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { RecipeQueries } from './recipe-queries';
 import { RecipeRepo } from './recipe-repo';

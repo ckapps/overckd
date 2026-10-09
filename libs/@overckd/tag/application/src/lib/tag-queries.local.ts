@@ -1,4 +1,4 @@
-import { TagFindByIdPayload } from '@overckd/domain-experimental';
+import { TagFindByIdPayload } from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { TagQueries } from './tag-queries';
 import { TagRepo } from './tag-repo';

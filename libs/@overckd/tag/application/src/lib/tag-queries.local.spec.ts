@@ -1,4 +1,4 @@
-import { Tag, TagId, TagNotFound } from '@overckd/domain-experimental';
+import { Tag, TagId, TagNotFound } from '@overckd/domain';
 import { Effect, Layer, Option } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { TagQueries } from './tag-queries';

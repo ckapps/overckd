@@ -1,8 +1,4 @@
-import {
-  RecipeId,
-  RecipeNotFound,
-  RecipePreparation,
-} from '@overckd/domain-experimental';
+import { RecipeId, RecipeNotFound, RecipePreparation } from '@overckd/domain';
 import { Context, Effect } from 'effect';
 
 /** Outbound port: where recipes are stored. */

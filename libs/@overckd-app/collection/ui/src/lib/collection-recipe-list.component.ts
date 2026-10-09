@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { MatDivider } from '@angular/material/divider';
 import { MatList, MatListItem } from '@angular/material/list';
-import { Collection, RecipeRef } from '@overckd/domain-experimental';
+import { Collection, RecipeRef } from '@overckd/domain';
 
 @Component({
   selector: 'overckd-collection-recipe-list',

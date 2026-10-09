@@ -1,4 +1,4 @@
-import { Compat, RecipePreparation } from '@overckd/domain-experimental';
+import { Compat, RecipePreparation } from '@overckd/domain';
 import { Schema, SchemaGetter } from 'effect';
 import { overckdFile } from './overckd-file';
 import { fromYamlString } from './yaml';

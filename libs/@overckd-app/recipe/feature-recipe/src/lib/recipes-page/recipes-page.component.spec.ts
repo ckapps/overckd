@@ -1,12 +1,7 @@
 import { resource } from '@angular/core';
 import { Router } from '@angular/router';
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import {
-  Collection,
-  CollectionId,
-  RecipeId,
-  RecipeRef,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, RecipeId, RecipeRef } from '@overckd/domain';
 import { RecipesPageComponent } from './recipes-page.component';
 
 const collection = (id: string, name: string, recipes: Array<string>) =>

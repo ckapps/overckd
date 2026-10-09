@@ -1,4 +1,4 @@
-import { UnionRecipePreparation } from '@overckd/domain-experimental';
+import { UnionRecipePreparation } from '@overckd/domain';
 import { Option, Schema } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { RecipeFileYaml } from './recipe-file';

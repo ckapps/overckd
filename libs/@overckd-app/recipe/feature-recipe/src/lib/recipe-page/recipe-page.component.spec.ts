@@ -8,7 +8,7 @@ import {
   RecipeIngredient,
   RecipeNotFound,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Option } from 'effect';
 import { RecipePageComponent } from './recipe-page.component';
 

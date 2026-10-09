@@ -1,6 +1,6 @@
 import { formatNumber } from '@angular/common';
 import { LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
-import { IngredientAmount } from '@overckd/domain-experimental';
+import { IngredientAmount } from '@overckd/domain';
 import { Match } from 'effect';
 
 /**

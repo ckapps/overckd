@@ -1,4 +1,4 @@
-import { RecipePreparation } from '@overckd/domain-experimental';
+import { RecipePreparation } from '@overckd/domain';
 import { Array, Option } from 'effect';
 
 /** How a recipe file links an image of the server's media: `/images/<name>` */

@@ -4,7 +4,7 @@ import {
   CollectionIdFromString,
   RecipeId,
   RecipeRef,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Schema, SchemaGetter } from 'effect';
 import { overckdFile } from './overckd-file';
 import { fromYamlString } from './yaml';

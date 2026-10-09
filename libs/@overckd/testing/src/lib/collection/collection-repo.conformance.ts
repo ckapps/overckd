@@ -4,7 +4,7 @@ import {
   CollectionNotFound,
   RecipeId,
   RecipeRef,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { CollectionRepo } from '@overckd/collection/application';

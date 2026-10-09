@@ -1,8 +1,4 @@
-import {
-  Tag,
-  TagFindByIdError,
-  TagFindByIdPayload,
-} from '@overckd/domain-experimental';
+import { Tag, TagFindByIdError, TagFindByIdPayload } from '@overckd/domain';
 import { Context, Effect } from 'effect';
 
 /** Inbound port: everything that reads tags. */

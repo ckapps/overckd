@@ -2,7 +2,7 @@ import {
   RecipeIdFromString,
   RecipeNotFound,
   RecipePreparationJson,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import {
   HttpApiEndpoint,
   HttpApiGroup,

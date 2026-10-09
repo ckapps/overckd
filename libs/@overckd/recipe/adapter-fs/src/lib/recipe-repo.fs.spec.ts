@@ -4,7 +4,7 @@ import {
   RecipeId,
   RecipeNotFound,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { RecipeRepo } from '@overckd/recipe/application';
 import { recipeRepoConformance } from '@overckd/testing';
 import {

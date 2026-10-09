@@ -1,6 +1,6 @@
 import { OverckdApi } from '@overckd/api-http';
 import { CollectionQueries } from '@overckd/collection/application';
-import { CollectionFindByIdPayload } from '@overckd/domain-experimental';
+import { CollectionFindByIdPayload } from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { HttpClient } from 'effect/http';
 import { HttpApiClient } from 'effect/http-api';

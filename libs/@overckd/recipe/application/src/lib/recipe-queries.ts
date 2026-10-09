@@ -2,7 +2,7 @@ import {
   RecipeFindByIdError,
   RecipeFindByIdPayload,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Context, Effect } from 'effect';
 
 /** Inbound port: everything that reads recipes. */

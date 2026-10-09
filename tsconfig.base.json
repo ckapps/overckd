@@ -26,9 +26,6 @@
       "@ckapp/angular/main-menu": [
         "libs/@ckapp/angular/main-menu/src/index.ts"
       ],
-      "@overckd/domain-experimental": [
-        "libs/@overckd/domain-experimental/src/index.ts"
-      ],
       "@overckd/collection/application": [
         "libs/@overckd/collection/application/src/index.ts"
       ],
@@ -87,7 +84,8 @@
       "@overckd-app/ui": ["libs/@overckd-app/ui/src/index.ts"],
       "@overckd-app/recipe/feature-recipe": [
         "libs/@overckd-app/recipe/feature-recipe/src/index.ts"
-      ]
+      ],
+      "@overckd/domain": ["libs/@overckd/domain/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

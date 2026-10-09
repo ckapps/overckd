@@ -1,5 +1,5 @@
 import { Component, computed, HostBinding, input, signal } from '@angular/core';
-import { RecipePreparation } from '@overckd/domain-experimental';
+import { RecipePreparation } from '@overckd/domain';
 import { Option } from 'effect';
 import { PortionConverterComponent } from '../portion-converter/portion-converter.component';
 import { RecipePart, recipeParts } from '../recipe-parts';

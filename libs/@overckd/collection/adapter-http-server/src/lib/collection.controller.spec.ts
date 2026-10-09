@@ -1,10 +1,6 @@
 import { OverckdApi } from '@overckd/api-http';
 import { CollectionQueries } from '@overckd/collection/application';
-import {
-  Collection,
-  CollectionId,
-  CollectionNotFound,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, CollectionNotFound } from '@overckd/domain';
 import { Effect, Layer, Scope } from 'effect';
 import { HttpServer } from 'effect/http';
 import { HttpApiTest } from 'effect/http-api';

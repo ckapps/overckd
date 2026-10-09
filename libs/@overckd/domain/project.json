@@ -1,7 +1,7 @@
 {
-  "name": "overckd-domain-experimental",
+  "name": "overckd-domain",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/@overckd/domain-experimental/src",
+  "sourceRoot": "libs/@overckd/domain/src",
   "projectType": "library",
   "tags": ["type:domain", "platform:any"],
   "targets": {
@@ -9,9 +9,9 @@
       "executor": "@nx/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/@overckd/domain-experimental",
-        "main": "libs/@overckd/domain-experimental/src/index.ts",
-        "tsConfig": "libs/@overckd/domain-experimental/tsconfig.lib.json",
+        "outputPath": "dist/libs/@overckd/domain",
+        "main": "libs/@overckd/domain/src/index.ts",
+        "tsConfig": "libs/@overckd/domain/tsconfig.lib.json",
         "assets": [],
         "format": ["cjs"]
       }

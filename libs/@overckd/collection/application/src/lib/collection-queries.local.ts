@@ -1,4 +1,4 @@
-import { CollectionFindByIdPayload } from '@overckd/domain-experimental';
+import { CollectionFindByIdPayload } from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { CollectionQueries } from './collection-queries';
 import { CollectionRepo } from './collection-repo';

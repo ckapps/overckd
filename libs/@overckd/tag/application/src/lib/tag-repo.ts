@@ -1,4 +1,4 @@
-import { Tag, TagId, TagNotFound } from '@overckd/domain-experimental';
+import { Tag, TagId, TagNotFound } from '@overckd/domain';
 import { Context, Effect } from 'effect';
 
 /** Outbound port: where tags are stored. */

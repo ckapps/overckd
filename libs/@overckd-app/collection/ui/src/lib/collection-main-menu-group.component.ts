@@ -6,7 +6,7 @@ import {
   CkadMainMenuItemComponent,
 } from '@ckapp/angular/main-menu';
 import { faListAlt } from '@fortawesome/free-solid-svg-icons';
-import { Collection } from '@overckd/domain-experimental';
+import { Collection } from '@overckd/domain';
 
 @Component({
   selector: 'overckd-collection-main-menu-group',

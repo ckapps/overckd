@@ -1,8 +1,5 @@
 import { Component, computed, input } from '@angular/core';
-import {
-  RecipeIngredient,
-  RecipeIngredientGroup,
-} from '@overckd/domain-experimental';
+import { RecipeIngredient, RecipeIngredientGroup } from '@overckd/domain';
 import { Predicate } from 'effect';
 import { IngredientGroupComponent } from '../ingredient-group/ingredient-group.component';
 import { IngredientComponent } from '../ingredient/ingredient.component';

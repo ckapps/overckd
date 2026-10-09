@@ -9,7 +9,7 @@ export default [
     rules: {},
     languageOptions: {
       parserOptions: {
-        project: ['libs/@overckd/domain-experimental/tsconfig.*?.json'],
+        project: ['libs/@overckd/domain/tsconfig.*?.json'],
       },
     },
   },

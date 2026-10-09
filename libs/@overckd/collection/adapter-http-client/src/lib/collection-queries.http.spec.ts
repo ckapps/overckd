@@ -5,7 +5,7 @@ import {
   CollectionNotFound,
   RecipeId,
   RecipeRef,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Cause, Effect, Exit, Layer } from 'effect';
 import { FetchHttpClient, HttpClient, HttpClientRequest } from 'effect/http';
 import { describe, expect, it } from 'vitest';

@@ -1,8 +1,4 @@
-import {
-  Collection,
-  CollectionId,
-  CollectionNotFound,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, CollectionNotFound } from '@overckd/domain';
 import { Effect, Layer } from 'effect';
 import { describe, expect, it } from 'vitest';
 import { CollectionQueries } from './collection-queries';

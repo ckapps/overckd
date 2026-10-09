@@ -6,7 +6,7 @@ import {
   RecipeId,
   RecipeIngredient,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Array as Arr, Option } from 'effect';
 
 /** Blank space, to write on by hand */

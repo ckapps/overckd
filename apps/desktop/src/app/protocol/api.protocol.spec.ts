@@ -1,11 +1,7 @@
 import * as NodeHttpServer from '@effect/platform-node/NodeHttpServer';
 import { CollectionQueriesHttp } from '@overckd/collection/adapter-http-client';
 import { CollectionQueries } from '@overckd/collection/application';
-import {
-  CollectionId,
-  CollectionNotFound,
-  RecipeId,
-} from '@overckd/domain-experimental';
+import { CollectionId, CollectionNotFound, RecipeId } from '@overckd/domain';
 import { RecipeQueriesHttp } from '@overckd/recipe/adapter-http-client';
 import { RecipeQueries } from '@overckd/recipe/application';
 import { Effect, Layer, Logger, Path } from 'effect';

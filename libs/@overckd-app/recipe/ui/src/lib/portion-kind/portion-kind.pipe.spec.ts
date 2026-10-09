@@ -1,4 +1,4 @@
-import { Portion } from '@overckd/domain-experimental';
+import { Portion } from '@overckd/domain';
 import { PortionKindPipe } from './portion-kind.pipe';
 
 describe('PortionKindPipe', () => {

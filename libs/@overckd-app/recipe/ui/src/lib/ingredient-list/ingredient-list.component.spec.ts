@@ -4,7 +4,7 @@ import {
   RecipeIngredient,
   RecipeIngredientGroup,
   UnitIngredientAmount,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { Option } from 'effect';
 import { IngredientListComponent } from './ingredient-list.component';
 

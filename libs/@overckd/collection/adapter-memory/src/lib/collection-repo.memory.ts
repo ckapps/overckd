@@ -1,9 +1,5 @@
 import { CollectionRepo } from '@overckd/collection/application';
-import {
-  Collection,
-  CollectionId,
-  CollectionNotFound,
-} from '@overckd/domain-experimental';
+import { Collection, CollectionId, CollectionNotFound } from '@overckd/domain';
 import { Effect, Layer, Ref } from 'effect';
 
 /**

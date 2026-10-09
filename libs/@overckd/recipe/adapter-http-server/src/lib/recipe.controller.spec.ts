@@ -6,7 +6,7 @@ import {
   RecipeIngredient,
   RecipeNotFound,
   RecipePreparation,
-} from '@overckd/domain-experimental';
+} from '@overckd/domain';
 import { RecipeQueries } from '@overckd/recipe/application';
 import { Effect, Layer, Option, Scope } from 'effect';
 import { HttpServer } from 'effect/http';
