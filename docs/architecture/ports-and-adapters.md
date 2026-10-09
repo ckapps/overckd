@@ -334,7 +334,7 @@ the same way back.
 // libs/@overckd/codec-yaml/src/lib/yaml.ts
 import { CollectionJson } from '@overckd/domain';
 import { Effect, Schema, SchemaIssue, SchemaTransformation } from 'effect';
-import { safeDump, safeLoad } from 'js-yaml';
+import { Yaml } from 'effect/encoding';
 
 /** YAML text as plain data; invalid YAML is a schema issue like any other. */
 const YamlString = Schema.String.pipe(
@@ -343,10 +343,11 @@ const YamlString = Schema.String.pipe(
     SchemaTransformation.transformEffect<unknown, string>({
       decode: (text, options) =>
         Effect.try({
-          try: () => safeLoad(text),
+          try: () => Yaml.parse(text),
           catch: () => new SchemaIssue.InvalidValue({ message: 'Invalid YAML' }, text, options),
         }),
-      encode: value => Effect.succeed(safeDump(value)),
+      // Effect's Yaml only parses; JSON is YAML too
+      encode: value => Effect.succeed(JSON.stringify(value)),
     }),
   ),
 );

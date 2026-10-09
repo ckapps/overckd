@@ -57,8 +57,8 @@ interface RecipeEntry {
 }
 
 /**
- * The text of a collections file holding `collections`. As in the files in
- * `data/`, each recipe lists its collections through YAML anchors.
+ * The text of a collections file holding `collections`. Unlike the files in
+ * `data/`, each recipe repeats its collections instead of naming YAML anchors.
  */
 const collectionsFile = (collections: ReadonlyArray<Collection>) => {
   const collectionEntries: Array<object> = [];

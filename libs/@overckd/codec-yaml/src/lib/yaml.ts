@@ -1,14 +1,20 @@
 import { Effect, Schema, SchemaIssue, SchemaTransformation } from 'effect';
-import { safeDump, safeLoad } from 'js-yaml';
+import { Yaml } from 'effect/encoding';
 
-/** YAML text as plain data; invalid YAML is a schema issue like any other. */
+/**
+ * YAML text as plain data; invalid YAML is a schema issue like any other.
+ *
+ * Effect's `Yaml` only parses, so the encoding writes JSON on one line: JSON is
+ * YAML too, and `Yaml.parse` reads it back. Files that people edit need a YAML
+ * writer, which waits for the first command that writes one.
+ */
 const YamlString = Schema.String.pipe(
   Schema.decodeTo(
     Schema.Unknown,
     SchemaTransformation.transformEffect<unknown, string>({
       decode: (text, options) =>
         Effect.try({
-          try: () => safeLoad(text),
+          try: () => Yaml.parse(text),
           catch: () =>
             new SchemaIssue.InvalidValue(
               { message: 'Invalid YAML' },
@@ -16,7 +22,7 @@ const YamlString = Schema.String.pipe(
               options,
             ),
         }),
-      encode: value => Effect.succeed(safeDump(value)),
+      encode: value => Effect.succeed(JSON.stringify(value)),
     }),
   ),
 );
