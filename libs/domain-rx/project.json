@@ -1,8 +1,0 @@
-{
-  "name": "domain-rx",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/domain-rx/src",
-  "projectType": "library",
-  "targets": {},
-  "tags": ["type:legacy", "platform:node"]
-}
