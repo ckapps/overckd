@@ -4,7 +4,6 @@
   "packageManager": "pnpm@12.6.0",
   "scripts": {
     "serve:web": "nx run-many -t serve -p frontend,backend",
-    "serve:web:legacy": "nx run-many -t serve -p frontend,server-cli",
     "serve:desktop": "nx run-many -t serve -p frontend,desktop -c desktop",
     "prepare": "husky install",
     "postinstall": "electron-builder install-app-deps"
