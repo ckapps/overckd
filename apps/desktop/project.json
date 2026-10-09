@@ -20,6 +20,7 @@
           "optimization": true,
           "extractLicenses": true,
           "inspect": false,
+          "externalDependencies": "none",
           "fileReplacements": [
             {
               "replace": "apps/desktop/src/environments/environment.ts",
@@ -38,8 +39,7 @@
     "package": {
       "executor": "nx-electron:package",
       "options": {
-        "name": "Overckd",
-        "frontendProject": "frontend",
+        "name": "desktop",
         "sourcePath": "dist/apps",
         "outputPath": "dist/packages",
         "prepackageOnly": true
@@ -48,8 +48,7 @@
     "make": {
       "executor": "nx-electron:make",
       "options": {
-        "name": "Overckd",
-        "frontendProject": "frontend",
+        "name": "desktop",
         "sourcePath": "dist/apps",
         "outputPath": "dist/executables"
       }
