@@ -1,17 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { PortionKind } from '@overckd/domain';
+import { Portion } from '@overckd/domain-experimental';
 
 @Pipe({ name: 'portionKind' })
 export class PortionKindPipe implements PipeTransform {
-  private readonly mapping: { [P in PortionKind]: string } = {
-    [PortionKind.Label]: 'by label',
-    [PortionKind.Quantity]: 'by quantity',
-    [PortionKind.Springform]: 'Springform',
+  private readonly mapping: { [P in Portion.PortionKind]: string } = {
+    [Portion.PortionKind.Quantity]: 'by quantity',
+    [Portion.PortionKind.Springform]: 'Springform',
   };
 
-  transform(value: PortionKind, ...args: unknown[]): string {
-    const label = this.mapping[value];
-
-    return label;
+  transform(value: Portion.PortionKind): string {
+    return this.mapping[value];
   }
 }

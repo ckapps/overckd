@@ -2,7 +2,7 @@
   <mat-form-field>
     <mat-label>Kind</mat-label>
     <mat-select formControlName="kind">
-      @for (kind of kinds$ | async; track kind) {
+      @for (kind of kinds; track kind) {
         <mat-option [value]="kind">
           <span>{{ kind | portionKind }}</span>
         </mat-option>
@@ -10,7 +10,7 @@
     </mat-select>
   </mat-form-field>
 
-  @if (kind === PortionKind.Quantity || kind === PortionKind.Label) {
+  @if (kind === PortionKind.Quantity) {
     <mat-form-field>
       <mat-label>Quantity</mat-label>
       <input

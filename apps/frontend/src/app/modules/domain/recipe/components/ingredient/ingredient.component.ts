@@ -1,26 +1,31 @@
-import { AsyncPipe } from '@angular/common';
+import { Component, computed, input } from '@angular/core';
 import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-  input,
-} from '@angular/core';
-import { RecipeIngredient } from '@overckd/domain';
-import { BehaviorSubject, Observable, combineLatest, map } from 'rxjs';
+  RecipeIngredient,
+  scaleRecipeIngredient,
+} from '@overckd/domain-experimental';
+import { Option } from 'effect';
 import { IngredientAmountPipe } from '../../../ingredient/modules/ingredient-common/pipes/ingredient-amount.pipe';
-import { PortionConverterService } from '../../../portion/modules/portion-common/services/portion-converter.service';
+
+/**
+ * Lists the alternatives of an ingredient: "a", "a oder b", "a, b oder c"
+ */
+const listAlternatives = (alternatives: ReadonlyArray<string>) =>
+  alternatives.length === 0
+    ? undefined
+    : alternatives.reduce((acc, cur, i) => {
+        const separator =
+          i === 0 ? '' : i + 1 < alternatives.length ? ', ' : ' oder ';
+
+        return `${acc}${separator}${cur}`;
+      }, '');
 
 @Component({
   selector: 'overckd-ingredient',
   templateUrl: './ingredient.component.html',
   styleUrls: ['./ingredient.component.scss'],
-  imports: [AsyncPipe, IngredientAmountPipe],
+  imports: [IngredientAmountPipe],
 })
-export class IngredientComponent implements OnInit, OnChanges {
-  readonly #portionConverterService = inject(PortionConverterService);
-
+export class IngredientComponent {
   /**
    * The ingredient
    */
@@ -32,58 +37,25 @@ export class IngredientComponent implements OnInit, OnChanges {
   readonly amountScale = input(1);
 
   /**
-   * The ingredient
+   * The ingredient, with its amount scaled
    */
-  public ingredient$!: Observable<RecipeIngredient>;
+  protected readonly scaled = computed(() =>
+    scaleRecipeIngredient(this.ingredient(), this.amountScale()),
+  );
+
+  protected readonly amount = computed(() =>
+    Option.getOrUndefined(this.scaled().amount),
+  );
+
+  protected readonly unit = computed(() => {
+    const amount = this.amount();
+    return amount?._tag === 'UnitIngredientAmount' ? amount.unit : undefined;
+  });
+
   /**
    * Alternatives for the ingredient
    */
-  public alternatives$!: Observable<string | null>;
-
-  private passedIngredient$!: BehaviorSubject<RecipeIngredient>;
-  private passedAmountScale$ = new BehaviorSubject<number>(this.amountScale());
-
-  ngOnInit() {
-    this.passedIngredient$ = new BehaviorSubject(this.ingredient());
-    this.passedAmountScale$.next(this.amountScale());
-
-    // Set up the actual ingredient
-    this.ingredient$ = combineLatest([
-      this.passedIngredient$.asObservable(),
-      this.passedAmountScale$.asObservable(),
-    ]).pipe(
-      this.#portionConverterService.scaleIngredientAmount$(),
-      map(([ingredient, amount]) => ({
-        ...ingredient,
-        amount,
-      })),
-    );
-
-    // Set up alternatives$
-    this.alternatives$ = this.passedIngredient$.pipe(
-      map(({ alternatives }) =>
-        (alternatives || []).length === 0
-          ? null
-          : alternatives!.reduce((acc, cur, i) => {
-              let separator = '';
-
-              if (i > 0) {
-                separator =
-                  i + 1 < (this.ingredient().alternatives?.length ?? 0)
-                    ? ', '
-                    : ' oder ';
-              }
-
-              return `${acc}${separator}${cur}`;
-            }, ''),
-      ),
-    );
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    const { amountScale } = changes;
-    if (amountScale && !amountScale.firstChange) {
-      this.passedAmountScale$.next(amountScale.currentValue);
-    }
-  }
+  protected readonly alternatives = computed(() =>
+    listAlternatives(this.ingredient().alternatives),
+  );
 }

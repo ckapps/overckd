@@ -1,25 +1,33 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, OnInit, input } from '@angular/core';
+import { Component, computed, input } from '@angular/core';
 import {
-  Recipe,
   RecipeIngredient,
   RecipeIngredientGroup,
-  isRecipeIngredient,
-  isRecipeIngredientGroup,
-} from '@overckd/domain';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+} from '@overckd/domain-experimental';
+import { Predicate } from 'effect';
 import { IngredientGroupComponent } from '../ingredient-group/ingredient-group.component';
 import { IngredientComponent } from '../ingredient/ingredient.component';
 
-type Ingredients = Recipe['ingredients'];
+type Ingredients = ReadonlyArray<RecipeIngredient | RecipeIngredientGroup>;
 
+const isGroup = (
+  item: RecipeIngredient | RecipeIngredientGroup,
+): item is RecipeIngredientGroup =>
+  Predicate.isTagged(item, 'RecipeIngredientGroup');
+
+const isIngredient = (
+  item: RecipeIngredient | RecipeIngredientGroup,
+): item is RecipeIngredient => !isGroup(item);
+
+/**
+ * Lists ingredients: the groups first, then the other ingredients
+ */
 @Component({
   selector: 'overckd-ingredient-list',
   templateUrl: './ingredient-list.component.html',
   styleUrls: ['./ingredient-list.component.scss'],
-  imports: [IngredientGroupComponent, IngredientComponent, AsyncPipe],
+  imports: [IngredientGroupComponent, IngredientComponent],
 })
-export class IngredientListComponent implements OnInit {
+export class IngredientListComponent {
   /**
    * The ingredients to show
    */
@@ -33,31 +41,14 @@ export class IngredientListComponent implements OnInit {
   /**
    * Ingredient groups from the passed ingredients
    */
-  public ingredientGroups$!: Observable<RecipeIngredientGroup[]>;
+  protected readonly ingredientGroups = computed(() =>
+    this.ingredients().filter(isGroup),
+  );
+
   /**
    * Ingredient list from the passed ingredients
    */
-  public ingredientList$!: Observable<RecipeIngredient[]>;
-
-  private passedIngredients$!: BehaviorSubject<Ingredients>;
-
-  ngOnInit() {
-    this.passedIngredients$ = new BehaviorSubject(this.ingredients());
-
-    this.ingredientGroups$ = this.passedIngredients$.pipe(
-      map(
-        ingredients =>
-          ingredients.filter(f =>
-            isRecipeIngredientGroup(f),
-          ) as RecipeIngredientGroup[],
-      ),
-    );
-
-    this.ingredientList$ = this.passedIngredients$.pipe(
-      map(
-        ingredients =>
-          ingredients.filter(f => isRecipeIngredient(f)) as RecipeIngredient[],
-      ),
-    );
-  }
+  protected readonly ingredientList = computed(() =>
+    this.ingredients().filter(isIngredient),
+  );
 }

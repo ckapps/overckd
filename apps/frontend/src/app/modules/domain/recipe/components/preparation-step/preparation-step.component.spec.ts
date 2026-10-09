@@ -1,22 +1,23 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
-import { RecipePreparationStep } from '@overckd/domain';
+import { NonEmptyHtmlString } from '@overckd/domain-experimental';
 import { PreparationStepComponent } from './preparation-step.component';
 
 describe('PreparationStepComponent', () => {
   let spectator: Spectator<PreparationStepComponent>;
   const createComponent = createComponentFactory(PreparationStepComponent);
 
-  const step: RecipePreparationStep = 'mock-step';
+  const step = { instruction: NonEmptyHtmlString.make('Mix <b>well</b>') };
 
-  beforeEach(() => {
-    spectator = createComponent({
-      props: {
-        step,
-      },
-    });
+  it('shows the instruction as HTML', () => {
+    spectator = createComponent({ props: { step } });
+
+    expect(spectator.query('div b')).toHaveText('well');
+    expect(spectator.query('li')).toBeNull();
   });
 
-  it('should create', () => {
-    expect(spectator.component).toBeTruthy();
+  it('is a list item when the steps are enumerated', () => {
+    spectator = createComponent({ props: { step, stepsEnumerated: true } });
+
+    expect(spectator.query('li')).toHaveText('Mix well');
   });
 });

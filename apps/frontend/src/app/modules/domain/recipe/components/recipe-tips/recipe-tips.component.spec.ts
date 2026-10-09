@@ -5,24 +5,15 @@ describe('RecipeTipsComponent', () => {
   let spectator: Spectator<RecipeTipsComponent>;
   const createComponent = createComponentFactory(RecipeTipsComponent);
 
-  const recipe = {
-    images: [],
-    name: 'mock-name',
-    ingredients: [],
-    steps: [],
-    tips: ['mock-tip-1', 'mock-tip-2'],
-    styles: {},
-  };
-
-  beforeEach(() => {
+  it('lists the tips as HTML', () => {
     spectator = createComponent({
-      props: {
-        recipe,
-      },
+      props: { tips: ['Try it with <b>zucchinis</b>!', 'Add oregano'] },
     });
-  });
 
-  it('should create', () => {
-    expect(spectator.component).toBeTruthy();
+    expect(spectator.queryAll('li')).toHaveText([
+      'Try it with zucchinis!',
+      'Add oregano',
+    ]);
+    expect(spectator.query('li b')).toHaveText('zucchinis');
   });
 });

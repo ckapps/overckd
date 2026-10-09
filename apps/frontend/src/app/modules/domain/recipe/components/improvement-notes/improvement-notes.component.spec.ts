@@ -5,16 +5,9 @@ describe('ImprovementNotesComponent', () => {
   let spectator: Spectator<ImprovementNotesComponent>;
   const createComponent = createComponentFactory(ImprovementNotesComponent);
 
-  beforeEach(
-    () =>
-      (spectator = createComponent({
-        props: {
-          numberOfLines: 5,
-        },
-      })),
-  );
+  it('draws the given number of lines', () => {
+    spectator = createComponent({ props: { numberOfLines: 5 } });
 
-  it('should create', () => {
-    expect(spectator.component).toBeTruthy();
+    expect(spectator.queryAll('hr')).toHaveLength(5);
   });
 });

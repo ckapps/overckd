@@ -1,23 +1,22 @@
-import { AsyncPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import * as P from 'effect/Predicate';
-import { filter, map, switchMap } from 'rxjs';
+import { Component, computed, input } from '@angular/core';
+import { injectRecipeQueries } from '@overckd-app/recipe/data-access';
+import { RecipeId, RecipeNotFound } from '@overckd/domain-experimental';
 import { RecipeComponent } from '../../../../modules/domain/recipe/components/recipe/recipe.component';
-import { RecipeService } from '../../../../modules/domain/recipe/services/recipe.service';
 
 @Component({
   templateUrl: './recipe.component.html',
   styleUrls: ['./recipe.component.scss'],
-  imports: [RecipeComponent, AsyncPipe],
+  imports: [RecipeComponent],
 })
 export class RecipePageComponent {
-  readonly #route = inject(ActivatedRoute);
-  readonly #recipeService = inject(RecipeService);
+  /** The id of the recipe, from the route */
+  readonly id = input.required<string>();
 
-  recipe$ = this.#route.paramMap.pipe(
-    map(paramMap => paramMap.get('name')),
-    filter(P.isString),
-    switchMap(name => this.#recipeService.get(name)),
+  protected readonly recipe = injectRecipeQueries().findById(
+    computed(() => ({ id: RecipeId.make(this.id()) })),
+  );
+
+  protected readonly notFound = computed(
+    () => this.recipe.error() instanceof RecipeNotFound,
   );
 }

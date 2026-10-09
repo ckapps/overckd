@@ -1,25 +1,18 @@
-import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
+import { createHostFactory, SpectatorHost } from '@ngneat/spectator/vitest';
 import { IngredientGroupComponent } from './ingredient-group.component';
 
 describe('IngredientGroupComponent', () => {
-  let spectator: Spectator<IngredientGroupComponent>;
-  const createComponent = createComponentFactory(IngredientGroupComponent);
+  let spectator: SpectatorHost<IngredientGroupComponent>;
+  const createHost = createHostFactory(IngredientGroupComponent);
 
-  const ingredientGroup = {
-    group: 'mock-group',
-    label: 'mock-label',
-    ingredients: [{ name: 'mock-ingredient' }],
-  };
+  it('shows the label above the ingredient list', () => {
+    spectator = createHost(
+      `<overckd-ingredient-group label="For the dough">
+        <overckd-ingredient-list>Flour</overckd-ingredient-list>
+      </overckd-ingredient-group>`,
+    );
 
-  beforeEach(() => {
-    spectator = createComponent({
-      props: {
-        ingredientGroup,
-      },
-    });
-  });
-
-  it('should create', () => {
-    expect(spectator.component).toBeTruthy();
+    expect(spectator.query('h6')).toHaveText('For the dough');
+    expect(spectator.query('overckd-ingredient-list')).toHaveText('Flour');
   });
 });

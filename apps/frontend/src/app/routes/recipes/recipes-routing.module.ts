@@ -24,7 +24,7 @@ const routes: Routes = [
         path: 'recipe',
         children: [
           {
-            path: ':name',
+            path: ':id',
             component: RecipePageComponent,
           },
         ],

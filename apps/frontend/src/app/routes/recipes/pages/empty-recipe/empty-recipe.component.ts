@@ -1,31 +1,45 @@
 import { Component } from '@angular/core';
-import { Recipe } from '@overckd/domain';
+import {
+  IngredientId,
+  NonEmptyHtmlString,
+  RecipeId,
+  RecipeIngredient,
+  RecipePreparation,
+} from '@overckd/domain-experimental';
+import { Array as Arr, Option } from 'effect';
 import { RecipeComponent } from '../../../../modules/domain/recipe/components/recipe/recipe.component';
 
-function generateEmpty<T>(count: number, object: T): T[] {
-  const result = [];
+/** Blank space, to write on by hand */
+const blank = ' ';
 
-  for (let i = count; i > 0; --i) {
-    result.push(object);
-  }
+const blankIngredient = RecipeIngredient.make({
+  uri: IngredientId.make('blank'),
+  name: blank,
+  amount: Option.none(),
+  optional: false,
+  alternatives: [],
+});
 
-  return result;
-}
-
+/**
+ * A recipe to print and fill in by hand: room for the name, 15 ingredients,
+ * three tips and the notes.
+ */
 @Component({
   templateUrl: './empty-recipe.component.html',
   styleUrls: ['./empty-recipe.component.scss'],
   imports: [RecipeComponent],
 })
 export class EmptyRecipePageComponent {
-  recipe: Recipe = {
-    name: generateEmpty(25, '').join(' '),
-    tips: generateEmpty(3, '<br /><br />'),
-    steps: [],
-    ingredients: generateEmpty(15, { name: '' }),
+  readonly recipe: RecipePreparation = {
+    _tag: 'BasicRecipePreparation',
+    id: RecipeId.make('print-template'),
+    name: blank.repeat(24),
+    tips: Arr.replicate('<br /><br />', 3),
+    basedOn: [],
+    ingredients: Arr.replicate(blankIngredient, 15),
+    steps: [{ instruction: NonEmptyHtmlString.make(blank) }],
+    stepsEnumerated: false,
+    portion: { kind: 'quantity', label: Option.none(), quantity: 1 },
     images: [],
-    styles: {
-      title: 'w-100 border-bottom',
-    },
   };
 }

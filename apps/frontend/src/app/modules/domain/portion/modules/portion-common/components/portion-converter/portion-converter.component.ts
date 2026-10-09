@@ -1,22 +1,15 @@
 import {
   Component,
+  computed,
+  effect,
   HostBinding,
-  inject,
   input,
-  OnDestroy,
-  OnInit,
+  linkedSignal,
   output,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { PortionKind, PortionQuantifier } from '@overckd/domain';
-import {
-  BehaviorSubject,
-  distinctUntilChanged,
-  map,
-  ReplaySubject,
-  takeUntil,
-} from 'rxjs';
-import { PortionConverterService } from '../../services/portion-converter.service';
+import { Portion } from '@overckd/domain-experimental';
+import { Option } from 'effect';
 
 /**
  * Component for displaying and changing the portion sizes
@@ -28,9 +21,7 @@ import { PortionConverterService } from '../../services/portion-converter.servic
   styleUrls: ['./portion-converter.component.scss'],
   imports: [FormsModule],
 })
-export class PortionConverterComponent implements OnInit, OnDestroy {
-  readonly #portionConverterService = inject(PortionConverterService);
-
+export class PortionConverterComponent {
   @HostBinding('class') componentClasses = [
     'ml-auto',
     'subtitle--v2',
@@ -38,53 +29,34 @@ export class PortionConverterComponent implements OnInit, OnDestroy {
     'badge-pill',
   ].join(' ');
 
-  readonly source = input.required<PortionQuantifier>();
+  readonly source = input.required<Portion.Portion>();
 
   /**
    * Emits a value when the scaling factor changes
    */
   readonly scaleFactorChanged = output<number>();
 
-  public PortionKind = PortionKind;
+  /**
+   * The target amount, initially the quantity of the source portion
+   */
+  protected readonly amount = linkedSignal(() =>
+    Portion.getQuantity(this.source()),
+  );
 
-  private amount$ = new BehaviorSubject(1);
-  private destroyed$ = new ReplaySubject<boolean>(1);
+  protected readonly label = computed(() => {
+    const source = this.source();
+    return source.kind === Portion.PortionKind.Quantity
+      ? Option.getOrUndefined(source.label)
+      : undefined;
+  });
 
-  public get amount() {
-    return this.amount$.value;
-  }
-
-  public set amount(newValue: number) {
-    this.amount$.next(newValue);
-  }
-
-  ngOnInit(): void {
-    // If the recipe has a specified portion quantity, we want to initialze
-    // the target amount with the provided portion quantity
-    const initialAmount = this.#portionConverterService.getPortionQuantity(
-      this.source(),
-    );
-    this.amount$.next(initialAmount);
-
-    this.amount$
-      .asObservable()
-      .pipe(
-        map(amount =>
-          this.#portionConverterService.calculateScalingFactorFromSource(
-            this.source(),
-            amount,
-          ),
-        ),
-        distinctUntilChanged(),
-        takeUntil(this.destroyed$),
-      )
-      .subscribe(scaleFactor => {
-        this.scaleFactorChanged.emit(scaleFactor);
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
+  constructor() {
+    // An amount that isn't positive keeps the last scaling factor
+    effect(() => {
+      const scaleFactor = Portion.scaleFactorTo(this.source(), this.amount());
+      if (Option.isSome(scaleFactor)) {
+        this.scaleFactorChanged.emit(scaleFactor.value);
+      }
+    });
   }
 }

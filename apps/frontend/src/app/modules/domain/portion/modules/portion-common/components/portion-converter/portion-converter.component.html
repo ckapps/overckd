@@ -1,11 +1,5 @@
-@let portionQuantifier = source();
-@switch (portionQuantifier.kind) {
-  @case (PortionKind.Label) {
-    <div>
-      {{ portionQuantifier.label }}
-    </div>
-  }
-  @case (PortionKind.Quantity) {
+@switch (source().kind) {
+  @case ('quantity') {
     <div class="portion-converter portion-converter--quantity">
       <label class="portion-converter__label">
         {{ 'For' }}
@@ -16,7 +10,7 @@
           class="form-control portion-converter__input"
         />
 
-        @if (portionQuantifier.label; as label) {
+        @if (label(); as label) {
           <span class="portion-converter__additional-label">
             {{ label }}
           </span>
@@ -24,9 +18,9 @@
       </label>
     </div>
   }
-  @case (PortionKind.Springform) {
+  @case ('springform') {
     <div>
-      {{ portionQuantifier.diameter }}
+      {{ amount() }}
     </div>
   }
 }
