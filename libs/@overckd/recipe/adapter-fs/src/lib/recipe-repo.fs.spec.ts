@@ -1,7 +1,4 @@
-import {
-  fromYamlString,
-  RecipePreparationLegacyJson,
-} from '@overckd/codec-yaml';
+import { fromYamlString, RecipeYaml } from '@overckd/codec-yaml';
 import { RecipeId, RecipeNotFound, RecipePreparation } from '@overckd/domain';
 import { RecipeRepo } from '@overckd/recipe/application';
 import { recipeRepoConformance } from '@overckd/testing';
@@ -81,7 +78,7 @@ const recipeFile = (recipe: RecipePreparation) =>
     fromYamlString(
       Schema.Struct({
         overckd: Schema.Literal('1.0.0'),
-        recipe: RecipePreparationLegacyJson,
+        recipe: RecipeYaml,
       }),
     ),
   )({ overckd: '1.0.0', recipe });
