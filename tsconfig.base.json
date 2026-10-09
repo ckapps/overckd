@@ -80,6 +80,9 @@
       "@overckd-app/collection/data-access": [
         "libs/@overckd-app/collection/data-access/src/index.ts"
       ],
+      "@overckd-app/collection/feature-collection": [
+        "libs/@overckd-app/collection/feature-collection/src/index.ts"
+      ],
       "@overckd-app/collection/ui": [
         "libs/@overckd-app/collection/ui/src/index.ts"
       ],

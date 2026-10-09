@@ -9,11 +9,11 @@ import {
 } from '@overckd/domain-experimental';
 
 @Component({
-  templateUrl: './recipe-collection-page.component.html',
-  styleUrls: ['./recipe-collection-page.component.scss'],
+  templateUrl: './collection-page.component.html',
+  styleUrls: ['./collection-page.component.scss'],
   imports: [CollectionRecipeListComponent],
 })
-export class RecipeCollectionPageComponent {
+export class CollectionPageComponent {
   /** The id of the collection, from the route */
   readonly id = input.required<string>();
 
