@@ -32,13 +32,16 @@ This is the order most tools use (Viper, Spring Boot, Docker). The details:
 A config file uses only the keys it needs; everything else takes its default:
 
 ```yaml
-# data/example-1/backend.config.yaml
+# data/example-1/backend.fs.config.yaml
 server:
   port: 3000
   apiVersion: legacy
 repositories:
-  type: filesystem # or memory, with an optional seed directory
-  dir: ./app
+  type: filesystem # or memory, each repository optionally seeded from files
+  recipes:
+    dir: ./app/recipes
+  collections:
+    file: ./app/overckd.collections.yaml
 media: # optional; without it, the backend has no media
   type: filesystem
   dir: ./app/images
@@ -53,7 +56,7 @@ media: # optional; without it, the backend has no media
 | the sources and their order            | `apps/<app>/src/common/config.ts`                            | `ConfigLive`, `ConfigFile` |
 | a section: its schema and its service  | `apps/<app>/src/<section>/<section>.config.ts`               | `ServerConfig`             |
 | the layers a section chooses or builds | `apps/<app>/src/<section>/<section>.ts`                      | `RepositoriesLive`         |
-| what several sections share            | `apps/<app>/src/common/`                                     | `AppDirectory`             |
+| what several sections share            | `apps/<app>/src/common/`                                     | `ConfigFileSection`        |
 | flags, and wiring it all together      | `apps/<app>/src/cli.ts`                                      | `--port`                   |
 | what an adapter needs to know          | a service in the adapter lib, named `<Implementation>Config` | `RecipeRepoFsConfig`       |
 
@@ -217,16 +220,24 @@ When a setting chooses between implementations, its section is a union on
 
 ```ts
 // apps/backend/src/repositories/repositories.config.ts
+/** A memory repository; its `seed` is a glob of the files to fill it from at startup */
+const MemoryRepositoryConfig = Schema.Struct({
+  seed: Schema.optionalKey(Schema.Struct({ files: Schema.String })),
+});
+type MemoryRepositoryConfig = typeof MemoryRepositoryConfig.Type;
+
 const RepositoriesConfigSchema = Schema.Union([
   Schema.Struct({
     type: Schema.Literal('memory'),
-    /** An app directory to fill the repositories from at startup */
-    seed: Schema.optionalKey(Schema.String),
+    recipes: Schema.optionalKey(MemoryRepositoryConfig),
+    collections: Schema.optionalKey(MemoryRepositoryConfig),
   }),
   Schema.Struct({
     type: Schema.Literal('filesystem'),
-    /** The app directory */
-    dir: Schema.String,
+    /** The directory of the recipe files */
+    recipes: Schema.Struct({ dir: Schema.String }),
+    /** The collections file */
+    collections: Schema.Struct({ file: Schema.String }),
   }),
 ]);
 type RepositoriesConfigType = typeof RepositoriesConfigSchema.Type;
@@ -238,11 +249,21 @@ export class RepositoriesConfig extends Context.Service<RepositoriesConfig, Repo
     Effect.gen(function* () {
       const { resolve } = yield* ConfigFile;
       const config = yield* Config.schema(RepositoriesConfigSchema, 'repositories').pipe(Config.withDefault<RepositoriesConfigType>({ type: 'memory' }));
+      /** `repository` with the glob of its seed resolved against the config file */
+      const resolveSeed = (repository: MemoryRepositoryConfig): MemoryRepositoryConfig => (repository.seed === undefined ? repository : { seed: { files: resolve(repository.seed.files) } });
       switch (config.type) {
         case 'memory':
-          return config.seed === undefined ? config : { ...config, seed: resolve(config.seed) };
+          return {
+            ...config,
+            ...(config.recipes && { recipes: resolveSeed(config.recipes) }),
+            ...(config.collections && { collections: resolveSeed(config.collections) }),
+          };
         case 'filesystem':
-          return { ...config, dir: resolve(config.dir) };
+          return {
+            ...config,
+            recipes: { dir: resolve(config.recipes.dir) },
+            collections: { file: resolve(config.collections.file) },
+          };
       }
     }),
   );
@@ -258,18 +279,21 @@ so a new member doesn't compile until every choice handles it:
 export const RepositoriesLive = Layer.unwrap(
   Effect.gen(function* () {
     const config = yield* RepositoriesConfig;
+    // The recipes link their images under the URL of the media
+    const media = mediaUrl(yield* MediaConfig);
     return Match.value(config).pipe(
       Match.discriminatorsExhaustive('type')({
-        memory: () => Layer.mergeAll(CollectionRepoMemory(), RecipeRepoMemory()),
-        filesystem: ({ dir }) => Layer.mergeAll(CollectionRepoFs, RecipeRepoFs).pipe(Layer.provide(FsConfigsLive), Layer.provide(AppDirectory.layer(dir))),
+        memory: config => MemoryReposLive(config, media),
+        filesystem: config => FilesystemReposLive(config, media),
       }),
     );
   }),
 );
 ```
 
-`memory` with a `seed` reads the app directory once at startup, with the
-readers the fs adapters use themselves, and keeps changes in memory.
+`memory` reads the files of each repository's `seed` once at startup, with the
+readers the fs adapters use themselves (`readRecipeFile`,
+`readCollectionsFile`), and keeps changes in memory.
 `filesystem` reads the files on every call, so edits on disk show without a
 restart.
 
@@ -294,12 +318,15 @@ The adapter knows nothing about sections, keys or the config file. The app
 provides the service from what its sections say, tests with
 `Layer.succeed(RecipeRepoFsConfig, { dir })`.
 
-Where the files of an app directory are (the layout of `data/example-1/app`) is
-known in one place, the `AppDirectory` service. The fs adapters' settings are
-derived from it:
+The backend's `repositories` section names each file, and the backend provides
+the adapters' settings from it. The desktop app's config names one app
+directory instead, the layout of `data/example-1/app`. Where the files in it
+are is known in one place, the desktop's `AppDirectory` service, and the fs
+adapters' settings are derived from it
+([decision](../decisions.md#the-app-directorys-layout-lives-in-the-desktop-app)):
 
 ```ts
-// apps/backend/src/common/app-directory.ts
+// apps/desktop/src/app/common/app-directory.ts
 /** Where the files of an app directory are (see `data/example-1/app`). */
 export class AppDirectory extends Context.Service<
   AppDirectory,
@@ -311,7 +338,7 @@ export class AppDirectory extends Context.Service<
     /** The directory of the recipe images */
     readonly images: string;
   }
->()('@overckd/backend/AppDirectory') {
+>()('@overckd/desktop/AppDirectory') {
   static readonly layer = (root: string) =>
     Layer.effect(
       AppDirectory,
@@ -326,18 +353,31 @@ export class AppDirectory extends Context.Service<
     );
 }
 
-// apps/backend/src/repositories/repositories.ts
-const FsConfigsLive = Layer.mergeAll(
-  Layer.effect(
-    RecipeRepoFsConfig,
-    AppDirectory.useSync(({ recipes }) => ({ dir: recipes })),
-  ),
-  Layer.effect(
-    CollectionRepoFsConfig,
-    AppDirectory.useSync(({ collectionsFile }) => ({ file: collectionsFile })),
-  ),
-);
+// apps/desktop/src/app/server/server.ts
+const RepositoriesLive = (mediaUrl: string) =>
+  Layer.mergeAll(
+    RecipeRepoFs.pipe(
+      Layer.provide(
+        Layer.effect(
+          RecipeRepoFsConfig,
+          AppDirectory.useSync(({ recipes }) => RecipeRepoFsConfig.of({ dir: recipes, codec: 'yaml', mediaUrl })),
+        ),
+      ),
+    ),
+    CollectionRepoFs.pipe(
+      Layer.provide(
+        Layer.effect(
+          CollectionRepoFsConfig,
+          AppDirectory.useSync(({ collectionsFile }) => CollectionRepoFsConfig.of({ file: collectionsFile, codec: 'yaml' })),
+        ),
+      ),
+    ),
+  );
 ```
+
+> **Status:** target. Today the desktop app still reads its legacy config
+> (`overckd.config.yaml`, without sections), and `AppDirectory` takes its root
+> from `paths.app` there.
 
 ## Testing
 

@@ -87,13 +87,14 @@ export class RecipeRepoFsConfig extends Context.Service<RecipeRepoFsConfig, { re
 ```
 
 The adapter reads it with `yield* RecipeRepoFsConfig` when its layer is
-built, and its tests provide it with `Layer.succeed`. The app provides it from
-a section or from `AppDirectory`
+built, and its tests provide it with `Layer.succeed`. The app provides it: the
+backend from a section, the desktop app from `AppDirectory`
 ([adapter settings](../architecture/configuration.md#adapter-settings)).
 
-A new kind of file in the app directory (tags, ingredients) gets its path in
-`AppDirectory`, the only place that knows the directory's layout. The adapter
-still takes the path through its own `<Implementation>Config`.
+A new kind of file (tags, ingredients) gets a setting of its own in the
+backend's `repositories` section, and its path in the desktop's
+`AppDirectory`, the only place that knows the layout of an app directory. The
+adapter still takes the path through its own `<Implementation>Config`.
 
 ## 5. Add a flag
 

@@ -216,8 +216,8 @@ See [configuration](architecture/configuration.md). Made on 2026-10-02.
   section and names the key path in its errors. Defaults in the sections let
   code add a setting before any file mentions it, and tests provide a section
   or a provider without files or environment. An adapter's settings service
-  can be derived from other services in a layer (`AppDirectory`), and the
-  adapter stays unaware of the file's shape.
+  can be derived from other services in a layer (the desktop's
+  `AppDirectory`), and the adapter stays unaware of the file's shape.
 - **Rejected:** a fallback config per flag (`Flag.withFallbackConfig`, the
   backend's first approach): every setting would need a flag, and the file
   can't be a source, because the flags are parsed before the file is known.
@@ -264,3 +264,23 @@ media. Made on 2026-10-02, changed on 2026-10-09.
   path would be set twice. The setting under `server` (`server.images`): it chooses where
   media is stored, which isn't about the HTTP server, and the desktop app needs
   it too.
+
+## The app directory's layout lives in the desktop app
+
+An app directory holds the files of a server: `recipes/`,
+`overckd.collections.yaml` and `images/` (see `data/example-1/app`). The
+backend's config names each of them itself (`repositories.recipes.dir`,
+`repositories.collections.file`, the globs of the seeds, `media.dir`), so the
+backend doesn't know the layout. The desktop app's config names one app
+directory, and its `AppDirectory` service (`apps/desktop`) is the only place
+that knows where the files in it are; the desktop derives the fs adapters'
+settings from it. Made on 2026-10-09.
+
+- **Why:** only the desktop app needs the layout. A server configured file by
+  file can keep its files anywhere, for example its media on another disk,
+  while the desktop app keeps one folder per user that needs no further
+  settings.
+- **Rejected:** a `type:contract` lib, on the grounds that the layout is part
+  of the file format: no adapter reads it, as the adapters take paths, and a
+  lib with one consumer shares nothing. A copy in each app: the backend doesn't
+  use it.
