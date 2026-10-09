@@ -10,12 +10,10 @@ import { HttpApiBuilder } from 'effect/http-api';
 import { protocol } from 'electron';
 import { AppDirectory } from '../common/app-directory';
 import { RepositoriesLive } from '../common/repositories';
-
-/** The scheme of the API: the renderer calls `overckd://app/api/…` */
-const scheme = 'overckd';
+import { apiScheme } from './schemes';
 
 /** Where clients reach the API and its media */
-export const apiOrigin = `${scheme}://app`;
+export const apiOrigin = `${apiScheme}://app`;
 
 /** The URL path of the images, where the recipe files link them */
 const mediaPath = '/images';
@@ -53,26 +51,6 @@ export const ApiLive = Layer.mergeAll(
 );
 
 /**
- * Registers the scheme of the API. Must run before the app is ready.
- *
- * `standard` parses `overckd://app/api/…` like an http URL, `secure` makes it
- * a secure context, `supportFetchAPI` allows `fetch`, and `corsEnabled`
- * allows the calls from the renderer's origin.
- */
-export const registerApiScheme = () =>
-  protocol.registerSchemesAsPrivileged([
-    {
-      scheme,
-      privileges: {
-        standard: true,
-        secure: true,
-        supportFetchAPI: true,
-        corsEnabled: true,
-      },
-    },
-  ]);
-
-/**
  * `ApiLive` as a Fetch handler on the given app directory. It runs on a
  * runtime of its own, which logs with the given `loggers`.
  */
@@ -92,7 +70,7 @@ export const apiHandler = (
 
 /**
  * Serves `ApiLive` over `overckd://` while the layer lives, logging like the
- * app. Build it once the app is ready, after `registerApiScheme`.
+ * app. Build it once the app is ready, after `registerSchemes`.
  */
 export const ApiProtocolLive = Layer.effectDiscard(
   Effect.gen(function* () {
@@ -102,10 +80,10 @@ export const ApiProtocolLive = Layer.effectDiscard(
       yield* Logger.CurrentLoggers,
     );
 
-    protocol.handle(scheme, request => handler(request));
+    protocol.handle(apiScheme, request => handler(request));
     yield* Effect.addFinalizer(() =>
       Effect.promise(() => {
-        protocol.unhandle(scheme);
+        protocol.unhandle(apiScheme);
         return dispose();
       }),
     );

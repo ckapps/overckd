@@ -1,8 +1,8 @@
 import { BrowserWindow, screen, shell } from 'electron';
 import { join } from 'path';
-import { format } from 'url';
 import { environment } from '../environments/environment';
 import { rendererAppName, rendererAppPort } from './constants';
+import { rendererOrigin } from './protocol/renderer.protocol';
 import { start } from './start';
 
 export default class App {
@@ -103,13 +103,7 @@ export default class App {
     if (!App.application.isPackaged) {
       App.mainWindow.loadURL(`http://localhost:${rendererAppPort}`);
     } else {
-      App.mainWindow.loadURL(
-        format({
-          pathname: join(__dirname, '..', rendererAppName, 'index.html'),
-          protocol: 'file:',
-          slashes: true,
-        }),
-      );
+      App.mainWindow.loadURL(`${rendererOrigin}/`);
     }
   }
 
@@ -123,9 +117,10 @@ export default class App {
     App.application = app;
 
     App.application.on('window-all-closed', App.onWindowAllClosed); // Quit when all windows are closed.
-    App.application.on('ready', App.onReady); // App is ready to load data
+
     App.application.on('activate', App.onActivate); // App is activated
 
-    start();
+    // The window opens once the main process serves the protocols
+    start().then(App.onReady, () => undefined);
   }
 }
