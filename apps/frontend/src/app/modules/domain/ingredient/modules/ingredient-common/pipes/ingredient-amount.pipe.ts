@@ -1,9 +1,10 @@
 import { formatNumber } from '@angular/common';
 import { LOCALE_ID, Pipe, PipeTransform, inject } from '@angular/core';
-import { RecipeIngredient } from '@overckd/domain';
+import { IngredientAmount } from '@overckd/domain-experimental';
+import { Match } from 'effect';
 
 /**
- * Formats the amount for an ingredient
+ * Formats the amount of an ingredient, without its unit
  */
 @Pipe({ name: 'ingredientAmount' })
 export class IngredientAmountPipe implements PipeTransform {
@@ -14,24 +15,28 @@ export class IngredientAmountPipe implements PipeTransform {
    */
   private readonly digitFormat = '0.0-2';
 
-  transform(value: RecipeIngredient, ...args: unknown[]): string | undefined {
-    const { amount } = value;
-
-    // Nothing to do, if amount isn't a number
-    if (typeof amount !== 'number') {
-      return amount;
-    }
-
-    // Let's see if we can render some fancy fraction
-    const fraction = this.getNiceFraction(amount);
-
-    return fraction
-      ? this.formatWithFractionSymbol(amount, fraction)
-      : formatNumber(amount, this.#locale, this.digitFormat);
+  transform(amount: IngredientAmount): string {
+    return Match.value(amount).pipe(
+      Match.tagsExhaustive({
+        CountIngredientAmount: ({ count }) => this.formatValue(count),
+        FractionIngredientAmount: ({ value }) => this.formatValue(value),
+        UnitIngredientAmount: ({ value }) => this.formatValue(value),
+        LabelIngredientAmount: ({ label }) => label,
+      }),
+    );
   }
 
-  private formatWithFractionSymbol(amount: number, fraction: string) {
-    const formattedValue = formatNumber(amount, this.#locale, '0.2-2');
+  private formatValue(value: number) {
+    // Let's see if we can render some fancy fraction
+    const fraction = this.getNiceFraction(value);
+
+    return fraction
+      ? this.formatWithFractionSymbol(value, fraction)
+      : formatNumber(value, this.#locale, this.digitFormat);
+  }
+
+  private formatWithFractionSymbol(value: number, fraction: string) {
+    const formattedValue = formatNumber(value, this.#locale, '0.2-2');
 
     const integer = formattedValue.substring(0, formattedValue.length - 3);
 

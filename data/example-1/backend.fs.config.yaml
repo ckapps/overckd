@@ -3,7 +3,7 @@
 # defaults. See docs/architecture/configuration.md.
 server:
   port: 3000
-  apiVersion: legacy
+  apiVersion: next
 repositories:
   type: filesystem
   recipes:

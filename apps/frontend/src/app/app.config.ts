@@ -19,8 +19,6 @@ import { Layer } from 'effect';
 import { environment } from '../environments/environment';
 import { appRoutes } from './app.routes';
 import { ApiHttpClient } from './config/api.config';
-import { RecipeService } from './modules/domain/recipe/services/recipe.service';
-import { AppRecipeService } from './services/app-recipe.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -42,10 +40,5 @@ export const appConfig: ApplicationConfig = {
         Layer.provide(ApiHttpClient(environment.api)),
       ),
     ),
-    // Our modules
-    {
-      provide: RecipeService,
-      useClass: AppRecipeService,
-    },
   ],
 };

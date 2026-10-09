@@ -1,11 +1,4 @@
-import { AsyncPipe } from '@angular/common';
-import {
-  Component,
-  forwardRef,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import {
   ControlValueAccessor,
   FormControl,
@@ -18,17 +11,9 @@ import { MatOption } from '@angular/material/core';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { MatSelect } from '@angular/material/select';
-import { PortionKind } from '@overckd/domain';
+import { Portion } from '@overckd/domain-experimental';
 import * as Fn from 'effect/Function';
-import { BehaviorSubject, ReplaySubject, takeUntil } from 'rxjs';
 import { PortionKindPipe } from '../../../portion-common/pipes/portion-kind.pipe';
-import { PortionQuantifierService } from '../../../portion-common/services/portion-quantifier.service';
-
-export interface PortionQuantifier {
-  kind: PortionKind.Label;
-  quantity: number | null;
-  label: string;
-}
 
 @Component({
   selector: 'overckd-portion-quantifier-input',
@@ -49,17 +34,12 @@ export interface PortionQuantifier {
     MatSelect,
     MatOption,
     MatInput,
-    AsyncPipe,
     PortionKindPipe,
   ],
 })
-export class PortionQuantifierInputComponent
-  implements OnInit, OnDestroy, ControlValueAccessor
-{
-  readonly #portionQuantifierService = inject(PortionQuantifierService);
-
+export class PortionQuantifierInputComponent implements ControlValueAccessor {
   public form = new FormGroup({
-    kind: new FormControl(PortionKind.Label),
+    kind: new FormControl(Portion.PortionKind.Quantity),
     quantity: new FormControl<number | null>(null),
     label: new FormControl(''),
   });
@@ -67,14 +47,9 @@ export class PortionQuantifierInputComponent
   public get kind() {
     return this.form.value.kind;
   }
-  private kindsSubject = new BehaviorSubject<PortionKind[]>(
-    this.#portionQuantifierService.getAllKinds(),
-  );
 
-  public kinds$ = this.kindsSubject.asObservable();
-  public PortionKind = PortionKind;
-
-  private destroyed$ = new ReplaySubject<boolean>(1);
+  public readonly kinds = Portion.kinds;
+  public PortionKind = Portion.PortionKind;
 
   private _onChange: (v: unknown) => void = Fn.constVoid;
   private _onTouched: () => void = Fn.constVoid;
@@ -89,21 +64,5 @@ export class PortionQuantifierInputComponent
   }
   registerOnTouched(fn: any): void {
     this._onTouched = fn;
-  }
-
-  ngOnInit(): void {
-    this.form.controls
-      .quantity!.valueChanges.pipe(takeUntil(this.destroyed$))
-      .subscribe(quantity => {
-        const kind =
-          quantity === null ? PortionKind.Label : PortionKind.Quantity;
-
-        this.form.patchValue({ kind });
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.destroyed$.next(true);
-    this.destroyed$.complete();
   }
 }

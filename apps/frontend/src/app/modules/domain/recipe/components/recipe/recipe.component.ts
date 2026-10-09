@@ -1,7 +1,10 @@
-import { Component, computed, HostBinding, input } from '@angular/core';
-import { Recipe, RecipeIngredientGroup } from '@overckd/domain';
+import { Component, computed, HostBinding, input, signal } from '@angular/core';
+import { RecipePreparation } from '@overckd/domain-experimental';
+import { Option } from 'effect';
 import { PortionConverterComponent } from '../../../portion/modules/portion-common/components/portion-converter/portion-converter.component';
+import { RecipePart, recipeParts } from '../../recipe-parts';
 import { ImprovementNotesComponent } from '../improvement-notes/improvement-notes.component';
+import { IngredientGroupComponent } from '../ingredient-group/ingredient-group.component';
 import { IngredientListComponent } from '../ingredient-list/ingredient-list.component';
 import { PreparationComponent } from '../preparation/preparation.component';
 import { RecipeTipsComponent } from '../recipe-tips/recipe-tips.component';
@@ -15,6 +18,7 @@ import { RecipeTipsComponent } from '../recipe-tips/recipe-tips.component';
   styleUrls: ['./recipe.component.scss'],
   imports: [
     PortionConverterComponent,
+    IngredientGroupComponent,
     IngredientListComponent,
     RecipeTipsComponent,
     ImprovementNotesComponent,
@@ -23,74 +27,78 @@ import { RecipeTipsComponent } from '../recipe-tips/recipe-tips.component';
 })
 export class RecipeComponent {
   @HostBinding('class') componentClass = 'container-fluid';
-  readonly recipe = input.required<Recipe>();
+  readonly recipe = input.required<RecipePreparation>();
   readonly numberOfLines = input(5);
 
-  readonly ingredients = computed<Recipe['ingredients']>(() => {
-    const recipe = this.recipe();
-    const { groups } = recipe;
-    const ingredientGroups = groups
-      ? groups.map<RecipeIngredientGroup>(g => ({
-          label: g.label,
-          group: g.name,
-          ingredients: g.ingredients,
-        }))
-      : [];
+  /**
+   * Classes for the title, in addition to its own
+   */
+  readonly titleClass = input('');
 
-    return [...ingredientGroups, ...recipe.ingredients];
+  protected readonly parts = computed(() => recipeParts(this.recipe()));
+
+  /**
+   * The groups of a union recipe; their ingredients come first
+   */
+  protected readonly groups = computed(() =>
+    this.parts().filter(
+      (part): part is RecipePart & { readonly label: string } =>
+        part.label !== undefined,
+    ),
+  );
+
+  /**
+   * The recipe's own part
+   */
+  protected readonly ownParts = computed(() =>
+    this.parts().filter(part => part.label === undefined),
+  );
+
+  /**
+   * A recipe without a portion has one unlabeled portion, which isn't worth
+   * converting
+   */
+  protected readonly showPortion = computed(() => {
+    const { portion } = this.recipe();
+
+    return !(
+      portion.kind === 'quantity' &&
+      portion.quantity === 1 &&
+      Option.isNone(portion.label)
+    );
   });
 
   /**
    * This is the target amount for the portion size
    */
-  public portionScaling = 1;
+  protected readonly portionScaling = signal(1);
 
-  public get leftColCssClass() {
-    const justify = true;
+  protected readonly primaryImage = computed(() => this.recipe().images[0]);
 
-    return [
-      'col-4',
-      'd-flex',
-      'flex-column',
-      'border-right',
-      'mr-5',
-      justify ? 'justify-content-between' : '',
-    ].join(' ');
-  }
+  protected readonly secondaryImages = computed(() =>
+    this.recipe().images.slice(1),
+  );
 
-  get primaryImage() {
-    return this.recipe().images[0];
-  }
+  protected readonly leftColCssClass = [
+    'col-4',
+    'd-flex',
+    'flex-column',
+    'border-right',
+    'mr-5',
+    'justify-content-between',
+  ].join(' ');
 
-  get secondaryImages() {
-    return this.recipe().images.filter((_, i) => i !== 0);
-  }
+  protected readonly dividerCssClass = [
+    'w-75',
+    'align-self-center',
+    'my-3',
+  ].join(' ');
 
-  getImageCssClass(index: number) {
-    const { images } = this.recipe().styles;
-
-    return (images && images[index]) || 'w-100';
-  }
-
-  get dividerCssClass() {
-    return ['w-75', 'align-self-center', 'my-3'].join(' ');
-  }
-
-  get primaryImageContainerCssClass() {
-    return ['d-flex', 'col', this.recipe().styles.imagesContainer || ''].join(
-      ' ',
-    );
-  }
-
-  get secondaryImageContainerCssClass() {
-    return [
+  protected readonly secondaryImageContainerCssClass = computed(() =>
+    [
       'col',
-      this.secondaryImages.length > 0 ? 'd-flex' : 'd-none',
-      this.recipe().styles.secondaryImagesContainer || 'flex-column',
-    ].join(' ');
-  }
-
-  public onScaleFactorChanged(scaleFactor: number) {
-    this.portionScaling = scaleFactor;
-  }
+      this.secondaryImages().length > 0 ? 'd-flex' : 'd-none',
+      'flex-column',
+    ].join(' '),
+  );
 }

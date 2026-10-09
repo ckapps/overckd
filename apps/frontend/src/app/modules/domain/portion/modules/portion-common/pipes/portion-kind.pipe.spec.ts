@@ -1,8 +1,13 @@
+import { Portion } from '@overckd/domain-experimental';
 import { PortionKindPipe } from './portion-kind.pipe';
 
 describe('PortionKindPipe', () => {
-  it('create an instance', () => {
+  it('names every kind of portion', () => {
     const pipe = new PortionKindPipe();
-    expect(pipe).toBeTruthy();
+
+    expect(Portion.kinds.map(kind => pipe.transform(kind))).toEqual([
+      'by quantity',
+      'Springform',
+    ]);
   });
 });

@@ -8,7 +8,7 @@
         'd-flex',
         'flex-row',
         'align-items-center',
-        _recipe.styles.title || '',
+        titleClass(),
       ].join(' ')
     "
   >
@@ -18,27 +18,36 @@
 
 <div class="row flex-grow-1">
   <div [class]="leftColCssClass">
-    @if (_recipe.portion) {
+    @if (showPortion()) {
       <overckd-portion-converter
         [source]="_recipe.portion"
-        (scaleFactorChanged)="onScaleFactorChanged($event)"
-      >
-      </overckd-portion-converter>
+        (scaleFactorChanged)="portionScaling.set($event)"
+      />
     }
-    @if (ingredients(); as _ingredients) {
-      <div>
-        <h4 class="d-none subtitle--v2">Zutaten</h4>
+    <div>
+      <h4 class="d-none subtitle--v2">Zutaten</h4>
+      @for (group of groups(); track $index) {
+        <div>
+          <overckd-ingredient-group [label]="group.label">
+            <overckd-ingredient-list
+              [ingredients]="group.recipe.ingredients"
+              [amountScale]="portionScaling()"
+            />
+          </overckd-ingredient-group>
+        </div>
+      }
+      @for (part of ownParts(); track $index) {
         <overckd-ingredient-list
-          [ingredients]="_ingredients"
-          [amountScale]="portionScaling"
+          [ingredients]="part.recipe.ingredients"
+          [amountScale]="portionScaling()"
         />
-      </div>
-    }
+      }
+    </div>
     @if (_recipe.tips.length > 0) {
       <img src="./assets/divider.png" [class]="dividerCssClass" />
       <div>
         <h4 class="subtitle--v2">Tipps</h4>
-        <overckd-recipe-tips [recipe]="_recipe" />
+        <overckd-recipe-tips [tips]="_recipe.tips" />
       </div>
     }
 
@@ -55,19 +64,19 @@
       <overckd-preparation [recipe]="_recipe" />
     </div>
 
-    @if (primaryImage) {
+    @if (primaryImage(); as _primaryImage) {
       <div class="container-fluid mt-5">
         <div class="row">
-          <div [class]="secondaryImageContainerCssClass">
-            @for (image of secondaryImages; track image; let i = $index) {
-              <div [class]="'d-flex ' + getImageCssClass(i + 1)">
+          <div [class]="secondaryImageContainerCssClass()">
+            @for (image of secondaryImages(); track $index) {
+              <div class="d-flex w-100">
                 <img [src]="image" class="w-100" />
               </div>
             }
           </div>
 
-          <div [class]="primaryImageContainerCssClass">
-            <img [src]="primaryImage" [class]="getImageCssClass(0)" />
+          <div class="d-flex col">
+            <img [src]="_primaryImage" class="w-100" />
           </div>
         </div>
       </div>

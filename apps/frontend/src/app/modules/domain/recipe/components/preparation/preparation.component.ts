@@ -1,14 +1,17 @@
-import { Component, OnInit, input } from '@angular/core';
-import { Recipe } from '@overckd/domain';
-import { BehaviorSubject, map, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { Component, computed, input } from '@angular/core';
+import {
+  PreparationStep,
+  RecipePreparation,
+} from '@overckd/domain-experimental';
+import { recipeParts } from '../../recipe-parts';
 import { PreparationStepComponent } from '../preparation-step/preparation-step.component';
 
 interface PreparationGroup {
-  label?: string;
-  steps: Recipe['steps'];
-  stepsEnumerated?: Recipe['stepsEnumerated'];
-  start?: number;
+  readonly label: string | undefined;
+  readonly steps: ReadonlyArray<PreparationStep>;
+  readonly stepsEnumerated: boolean;
+  /** The number of the first step */
+  readonly start: number;
 }
 
 /**
@@ -18,62 +21,30 @@ interface PreparationGroup {
   selector: 'overckd-preparation',
   templateUrl: './preparation.component.html',
   styleUrls: ['./preparation.component.scss'],
-  imports: [PreparationStepComponent, AsyncPipe],
+  imports: [PreparationStepComponent],
 })
-export class PreparationComponent implements OnInit {
-  readonly recipe = input.required<Recipe>();
+export class PreparationComponent {
+  readonly recipe = input.required<RecipePreparation>();
 
-  private recipe$!: BehaviorSubject<Recipe>;
-  public preparationGroups$!: Observable<PreparationGroup[]>;
-
-  ngOnInit() {
-    this.recipe$ = new BehaviorSubject<Recipe>(this.recipe());
-
-    this.preparationGroups$ = this.recipe$
-      .asObservable()
-      .pipe(map(recipe => this.getPreparationGroups(recipe)));
-  }
-
-  public isArray(obj: any) {
-    return Array.isArray(obj);
-  }
-
-  private getPreparationGroups(recipe: Recipe): PreparationGroup[] {
-    const { groups } = recipe;
-
-    if (!groups || groups.length === 0) {
-      return [
-        {
-          steps: recipe.steps,
-          stepsEnumerated: recipe.stepsEnumerated,
-        },
-      ];
-    }
-
+  /**
+   * The steps of every part, numbered across the parts. With groups, the
+   * recipe's own steps come last, as further preparation.
+   */
+  protected readonly preparationGroups = computed(() => {
+    const parts = recipeParts(this.recipe());
+    const hasGroups = parts.some(({ label }) => label !== undefined);
     let start = 1;
-    const stepsFromGroups = groups.map<PreparationGroup>(
-      ({ label, steps, stepsEnumerated }) => {
-        const group = {
-          start,
-          label,
-          steps,
-          stepsEnumerated,
-        };
 
-        start += steps.length;
-
-        return group;
-      },
-    );
-
-    return [
-      ...stepsFromGroups,
-      {
-        label: 'Weitere Zubereitung',
-        start,
+    return parts.map(({ label, recipe }): PreparationGroup => {
+      const group = {
+        label: label ?? (hasGroups ? 'Weitere Zubereitung' : undefined),
         steps: recipe.steps,
         stepsEnumerated: recipe.stepsEnumerated,
-      },
-    ];
-  }
+        start,
+      };
+      start += recipe.steps.length;
+
+      return group;
+    });
+  });
 }

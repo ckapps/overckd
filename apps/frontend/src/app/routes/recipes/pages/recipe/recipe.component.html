@@ -1,5 +1,9 @@
-@if (recipe$ | async; as recipe) {
+@if (notFound()) {
+  <p>This recipe does not exist.</p>
+} @else if (recipe.error()) {
+  <p>Could not load this recipe.</p>
+} @else if (recipe.value(); as _recipe) {
   <article>
-    <overckd-recipe [recipe]="recipe" />
+    <overckd-recipe [recipe]="_recipe" />
   </article>
 }

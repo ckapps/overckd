@@ -1,6 +1,8 @@
 import { Component, input } from '@angular/core';
-import { Recipe } from '@overckd/domain';
 
+/**
+ * The tips of a recipe, as HTML
+ */
 @Component({
   selector: 'overckd-recipe-tips',
   templateUrl: './recipe-tips.component.html',
@@ -8,5 +10,5 @@ import { Recipe } from '@overckd/domain';
   imports: [],
 })
 export class RecipeTipsComponent {
-  readonly recipe = input.required<Recipe>();
+  readonly tips = input.required<ReadonlyArray<string>>();
 }

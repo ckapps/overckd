@@ -1,6 +1,6 @@
-@for (group of ingredientGroups$ | async; track group) {
+@for (group of ingredientGroups(); track $index) {
   <div>
-    <overckd-ingredient-group [ingredientGroup]="group">
+    <overckd-ingredient-group [label]="group.label">
       <overckd-ingredient-list
         [ingredients]="group.ingredients"
         [amountScale]="amountScale()"
@@ -10,7 +10,7 @@
 }
 
 <ul>
-  @for (ingredient of ingredientList$ | async; track ingredient) {
+  @for (ingredient of ingredientList(); track $index) {
     <overckd-ingredient
       [ingredient]="ingredient"
       [amountScale]="amountScale()"

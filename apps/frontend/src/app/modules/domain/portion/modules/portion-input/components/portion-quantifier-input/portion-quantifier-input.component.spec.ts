@@ -3,22 +3,20 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { PortionQuantifierInputComponent } from './portion-quantifier-input.component';
 
 describe('PortionQuantifierInputComponent', () => {
-  let component: PortionQuantifierInputComponent;
   let fixture: ComponentFixture<PortionQuantifierInputComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      providers: [provideNoopAnimations()],
-    }).compileComponents();
-  });
-
-  beforeEach(() => {
+    TestBed.configureTestingModule({ providers: [provideNoopAnimations()] });
     fixture = TestBed.createComponent(PortionQuantifierInputComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    await fixture.whenStable();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('starts with a quantity and its label', () => {
+    const labels = [...fixture.nativeElement.querySelectorAll('mat-label')].map(
+      (label: HTMLElement) => label.textContent?.trim(),
+    );
+
+    expect(fixture.componentInstance.kind).toBe('quantity');
+    expect(labels).toEqual(['Kind', 'Quantity', 'Label']);
   });
 });

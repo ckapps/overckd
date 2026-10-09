@@ -1,7 +1,7 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator/vitest';
 import { EmptyRecipePageComponent } from './empty-recipe.component';
 
-describe('EmptyComponent', () => {
+describe('EmptyRecipePageComponent', () => {
   let spectator: Spectator<EmptyRecipePageComponent>;
   const createComponent = createComponentFactory(EmptyRecipePageComponent);
 
@@ -9,7 +9,10 @@ describe('EmptyComponent', () => {
     spectator = createComponent();
   });
 
-  it('should create', () => {
-    expect(spectator.component).toBeTruthy();
+  it('leaves room to write a recipe by hand', () => {
+    expect(spectator.query('h3')).toHaveClass('border-bottom');
+    expect(spectator.queryAll('overckd-ingredient')).toHaveLength(15);
+    expect(spectator.queryAll('overckd-improvement-notes hr')).toHaveLength(7);
+    expect(spectator.query('overckd-portion-converter')).toBeNull();
   });
 });

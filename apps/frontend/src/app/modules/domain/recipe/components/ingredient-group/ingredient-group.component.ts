@@ -1,6 +1,8 @@
 import { Component, input } from '@angular/core';
-import { RecipeIngredientGroup } from '@overckd/domain';
 
+/**
+ * A labeled group of ingredients, given as an `overckd-ingredient-list`
+ */
 @Component({
   selector: 'overckd-ingredient-group',
   templateUrl: './ingredient-group.component.html',
@@ -8,7 +10,7 @@ import { RecipeIngredientGroup } from '@overckd/domain';
 })
 export class IngredientGroupComponent {
   /**
-   * The ingredient group to display
+   * The label of the group
    */
-  readonly ingredientGroup = input.required<RecipeIngredientGroup>();
+  readonly label = input.required<string>();
 }
