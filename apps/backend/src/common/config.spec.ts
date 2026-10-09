@@ -90,6 +90,14 @@ describe('ConfigLive', () => {
     ).toEqual({ port: 3001, apiVersion: 'next' });
   });
 
+  it('accepts a media section', async () => {
+    expect(
+      await Effect.runPromise(
+        serverConfig(`${yaml}media:\n  type: filesystem\n  dir: ./images\n`),
+      ),
+    ).toEqual({ port: 3001, apiVersion: 'next' });
+  });
+
   it.each([
     ['no YAML', 'server: [3000', 'is no valid YAML'],
     ['no mapping', '- 3000', 'Expected a mapping of sections'],
@@ -97,6 +105,7 @@ describe('ConfigLive', () => {
     ['an unknown section', 'sever:\n  port: 3001', 'Unknown configuration'],
     ['an unknown key', 'server:\n  prot: 3001', 'Unknown configuration'],
     ['an unknown repository type', 'repositories:\n  type: rxdb', 'memory'],
+    ['an unknown media type', 'media:\n  type: s3', 'filesystem'],
   ])('fails for a config file with %s', async (_, text, message) => {
     const error = await Effect.runPromise(Effect.flip(serverConfig(text)));
 
