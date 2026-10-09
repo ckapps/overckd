@@ -25,7 +25,6 @@
       "@_shared/recipe/infra-rxdb": [
         "libs/shared/recipe/infra-rxdb/src/index.ts"
       ],
-      "@_shared/tag/infra-rxdb": ["libs/shared/tag/infra-rxdb/src/index.ts"],
       "@_shared/ui": ["libs/shared/ui/src/index.ts"],
       "@ckapp/angular": ["libs/@ckapp/angular/src/index.ts"],
       "@ckapp/angular-desktop": ["libs/@ckapp/angular-desktop/src/index.ts"],
