@@ -19,8 +19,7 @@
           "apps/frontend/src/styles/vendors/material.vendor.scss",
           "apps/frontend/src/styles.scss"
         ],
-        "scripts": [],
-        "allowedCommonJsDependencies": ["qs"]
+        "scripts": []
       },
       "configurations": {
         "production": {
