@@ -17,9 +17,10 @@ main      protocol.handle('overckd', handler) ─▶ CollectionHttpController �
             ─▶ CollectionQueriesLocal ─▶ CollectionRepoFs (YAML files)
 ```
 
-> **Status:** target. Today the main process starts the legacy marble server
-> (`libs/server`) on a TCP port, backed by an in-memory rxdb seeded from YAML,
-> and `apps/desktop/src/app/legacy/protocol.ts` holds a stub that uses the
+> **Status:** target. Today the main process serves the backend's legacy API
+> (`OverckdLegacyApi`) on a TCP port (`apps/desktop/src/app/server/server.ts`),
+> with the file repositories and the images of the app directory, and
+> `apps/desktop/src/app/legacy/protocol.ts` holds a stub that uses the
 > deprecated `protocol.registerStringProtocol`.
 
 ## Main process
