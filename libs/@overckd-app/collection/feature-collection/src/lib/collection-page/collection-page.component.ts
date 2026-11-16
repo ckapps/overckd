@@ -11,12 +11,14 @@ import { CollectionId, CollectionNotFound, RecipeRef } from '@overckd/domain';
 })
 export class CollectionPageComponent {
   /** The id of the collection, from the route */
-  readonly id = input.required<string>();
+  readonly id = input.required({
+    transform: CollectionId.make,
+  });
 
   readonly #router = inject(Router);
 
   protected readonly collection = injectCollectionQueries().findById(
-    computed(() => ({ id: CollectionId.make(this.id()) })),
+    computed(() => ({ id: this.id() })),
   );
 
   protected readonly notFound = computed(
